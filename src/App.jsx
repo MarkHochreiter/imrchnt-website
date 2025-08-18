@@ -156,10 +156,10 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-              Be the next store they line up for
+              Seamless POS. Anywhere, anytime
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-              Dream big, build fast, and grow far on our commerce platform.
+              In store, Pop up, Off site, on line or off. Intuitive design for minimal training.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="bg-[#f08e80] hover:bg-green-700 text-white text-lg px-8 py-4">
@@ -177,11 +177,10 @@ function App() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            The one commerce platform behind it all
+            Cross platform point of sale
           </h2>
           <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-            Sell online and in person. Sell locally and globally. Sell direct and wholesale. 
-            Sell on desktop and mobile.
+             Available as Web, Client, Android or iOS. Sell on desktop, mobile, tablet, or card reader. 
           </p>
           
           <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -189,27 +188,27 @@ function App() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Zap className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Get started fast</h3>
+              <h3 className="text-xl font-semibold mb-2">Start fast</h3>
               <p className="text-gray-600">
-                Solo sellers can start selling organic products online and at local markets.
+                Instant KYC option paired with Tap to Pay on smartphone gets you selling rapidly. 
               </p>
             </div>
             <div className="text-center">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <BarChart3 className="h-8 w-8 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Grow as big as you want</h3>
+              <h3 className="text-xl font-semibold mb-2">Go big</h3>
               <p className="text-gray-600">
-                Brands can grow from garage startups to global juggernauts with $500M+ sales.
+                Seamlessly scale from Pop Up to Multistore.
               </p>
             </div>
             <div className="text-center">
               <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="h-8 w-8 text-purple-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Raise the bar</h3>
+              <h3 className="text-xl font-semibold mb-2">Go home</h3>
               <p className="text-gray-600">
-                Enterprise companies can sell iconic products direct to customers worldwide.
+                Monitor your organization from home or anywhere else you might be, track sales in real time from any device.
               </p>
             </div>
           </div>
