@@ -165,9 +165,6 @@ function App() {
               <Button size="lg" className="bg-[#f08e80] hover:bg-green-700 text-white text-lg px-8 py-4">
                 Start for free
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black text-lg px-8 py-4">
-                Why we build Commerce
-              </Button>
             </div>
           </div>
         </div>
