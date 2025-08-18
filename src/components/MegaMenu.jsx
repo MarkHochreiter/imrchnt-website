@@ -38,13 +38,13 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
           icon: <Monitor className="h-5 w-5" />
         },
         {
-          title: "CLIENTELING",
+          title: "Clienteling (COMING SOON)",
           subtitle: "Customer Relationship Management",
           icon: <Users className="h-5 w-5" />
         },
         {
-          title: "ON FLOOR ASSISTANCE",
-          subtitle: "Optimize Checkout Flow",
+          title: "On Floor Assistant",
+          subtitle: "Optimize the in store experience",
           icon: <Zap className="h-5 w-5" />
         }
       ]
@@ -165,8 +165,8 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                       }
                       const sectionMap = {
                         'POS': 'pos',
-                        'CLIENTELING': 'clienteling',
-                        'ON FLOOR ASSISTANCE': 'on-floor-assistance',
+                        'Clienteling': 'clienteling',
+                        'On Floor Assistance': 'on-floor-assistance',
                         'Single Device': 'single-device',
                         'Import Items': 'import-items',
                         'Add Items': 'add-items',
