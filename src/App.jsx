@@ -95,7 +95,7 @@ function App() {
             {/* Right side buttons */}
             <div className="hidden md:flex items-center space-x-4">
               <a href="#" className="text-gray-700 hover:text-gray-900">Log in</a>
-              <Button className="bg-[#f08e80] hover:bg-green-700 text-white">
+              <Button className="bg-[#f08e80] hover:bg-violet-400 text-white">
                 Start for free
               </Button>
             </div>
@@ -162,7 +162,7 @@ function App() {
               In store, Pop up, Off site, on line or off. Intuitive design for minimal training.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-[#f08e80] hover:bg-green-700 text-white text-lg px-8 py-4">
+              <Button size="lg" className="bg-[#f08e80] hover:bg-violet-400 text-white text-lg px-8 py-4">
                 Start for free
               </Button>
             </div>
