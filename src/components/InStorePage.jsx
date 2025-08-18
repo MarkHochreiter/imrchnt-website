@@ -34,7 +34,7 @@ function InStorePage() {
               <div className="flex items-center mb-6">
                 <Monitor className="h-12 w-12 text-[#f08e80] mr-4" />
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                  Point of Sale (POS)
+                  Point of sale (POS)
                 </h2>
               </div>
               <p className="text-lg text-gray-600 mb-8">
@@ -128,7 +128,7 @@ function InStorePage() {
               <div className="flex items-center mb-6">
                 <Zap className="h-12 w-12 text-[#f08e80] mr-4" />
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                  ON FLOOR ASSISTANCE
+                  On floor assistance
                 </h2>
               </div>
               <p className="text-lg text-gray-600 mb-8">
@@ -138,19 +138,19 @@ function InStorePage() {
               <div className="space-y-4 mb-8">
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Add items manually or by scan</span>
+                  <span>Lane Cutting POS</span>
+                </div>
+                <div className="flex items-center">
+                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
+                  <span>Tap to Pay on Android or Apple smartphones</span>
+                </div>
+                <div className="flex items-center">
+                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
+                  <span>Handselling assistant</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
                   <span>Blazing fast inventory lookup</span>
-                </div>
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Handsell assistant</span>
-                </div>
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Attribute customization</span>
                 </div>
               </div>
               <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
