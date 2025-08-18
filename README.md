@@ -1,6 +1,6 @@
-# Shopify-Inspired Website
+# imrchnt Website
 
-A modern, responsive website built with React and Tailwind CSS, inspired by Shopify's design language with custom branding for imrchnt.
+A modern, responsive website built with React and Tailwind CSS, inspired by other design language with custom branding for imrchnt.
 
 ## 🎨 Features
 
