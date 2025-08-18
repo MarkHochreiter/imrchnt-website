@@ -34,7 +34,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
       items: [
         {
           title: "POS",
-          subtitle: "Point of Sale",
+          subtitle: "Cross platform Point of Sale",
           icon: <Monitor className="h-5 w-5" />
         },
         {
@@ -107,7 +107,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
       items: [
         {
           title: "Payouts",
-          subtitle: "Manage payouts",
+          subtitle: "Manually manage or automate payouts",
           icon: <DollarSign className="h-5 w-5" />
         },
         {
