@@ -319,7 +319,7 @@ function App() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Start selling in no time
           </h2>
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-3 gap-5 mb-12">
             <div className="flex items-center justify-center">
               <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
                 1
