@@ -39,7 +39,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
         },
         {
           title: "Clienteling (COMING SOON)",
-          subtitle: "Customer Relationship Management",
+          subtitle: "Make each customers experience unique ",
           icon: <Users className="h-5 w-5" />
         },
         {
@@ -55,17 +55,17 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
       items: [
         {
           title: "Single Device",
-          subtitle: "Run on one device",
+          subtitle: "Full POS all in one device",
           icon: <Smartphone className="h-5 w-5" />
         },
         {
           title: "Import Items",
-          subtitle: "Bulk item upload",
+          subtitle: "Upload thousands of items in seconds",
           icon: <Layers className="h-5 w-5" />
         },
         {
           title: "Add Items",
-          subtitle: "Manually add products",
+          subtitle: "Manually add items mid sale",
           icon: <Package className="h-5 w-5" />
         },
         {
@@ -81,7 +81,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
       items: [
         {
           title: "Analytics",
-          subtitle: "Track sales, orders & analytics",
+          subtitle: "Visualize data in real time",
           icon: <BarChart3 className="h-5 w-5" />
         },
         {
@@ -107,7 +107,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
       items: [
         {
           title: "Payouts",
-          subtitle: "Manage your payouts",
+          subtitle: "Manage payouts",
           icon: <DollarSign className="h-5 w-5" />
         },
         {
