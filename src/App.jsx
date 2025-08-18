@@ -187,7 +187,7 @@ function App() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Start fast</h3>
               <p className="text-gray-600">
-                Instant KYC option paired with Tap to Pay on smartphone gets you selling rapidly. 
+                Instant KYC and Tap to Pay on smartphone gets you selling rapidly. 
               </p>
             </div>
             <div className="text-center">
@@ -196,7 +196,7 @@ function App() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Go big</h3>
               <p className="text-gray-600">
-                Seamlessly scale from Pop Up to Multistore.
+                A single platform that seamlessly scales from Pop Up to Multistore.
               </p>
             </div>
             <div className="text-center">
@@ -205,7 +205,7 @@ function App() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Go home</h3>
               <p className="text-gray-600">
-                Monitor your organization from home or anywhere else you might be, track sales in real time from any device.
+                Track sales in real time from any device at home or anywhere you might be.
               </p>
             </div>
           </div>
@@ -330,7 +330,7 @@ function App() {
               <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
                 2
               </div>
-              <span>Add your first items</span>
+              <span>Add items</span>
             </div>
             <div className="flex items-center justify-center">
               <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
