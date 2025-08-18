@@ -294,20 +294,20 @@ function App() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12">
-            There's no better place for you to build
+            There's no better place for your store
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <div className="text-4xl font-bold text-[#f08e80] mb-2">$5B</div>
-              <div className="text-gray-600">Loaned out so far</div>
+              <div className="text-4xl font-bold text-[#f08e80] mb-2">34</div>
+              <div className="text-gray-600">stores</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">$2M</div>
-              <div className="text-gray-600">Loans up to</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">$200k</div>
+              <div className="text-gray-600">dollars processed</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-purple-600 mb-2">0%</div>
-              <div className="text-gray-600">Equity taken</div>
+              <div className="text-4xl font-bold text-purple-600 mb-2">2k</div>
+              <div className="text-gray-600">transactions</div>
             </div>
           </div>
         </div>
@@ -324,19 +324,19 @@ function App() {
               <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
                 1
               </div>
-              <span>Add your first product</span>
+              <span>Get approved</span>
             </div>
             <div className="flex items-center justify-center">
               <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
                 2
               </div>
-              <span>Customize your store</span>
+              <span>Add your first items</span>
             </div>
             <div className="flex items-center justify-center">
               <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
                 3
               </div>
-              <span>Set up payments</span>
+              <span>Start selling</span>
             </div>
           </div>
           <Button size="lg" className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4">
