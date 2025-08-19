@@ -14,7 +14,7 @@ function PricingPage() {
     {
       name: "Card present",
       description: "Tap / Dip / Swipe",
-      monthlyPrice: 2.55, // 2.55% as a decimal
+      monthlyPrice: .0255, // 2.55% as a decimal
       yearlyPrice: 0.15,    // 15 cents
       badge: null,
       features: [
@@ -29,7 +29,7 @@ function PricingPage() {
     {
       name: "MOTO",
       description: "Mail/Telephone Order",
-      monthlyPrice: 0.15, // 0.15%
+      monthlyPrice: 0.0015, // 0.15%
       yearlyPrice: 0.15,    // 15 cents
       badge: null,
       features: [
@@ -43,7 +43,7 @@ function PricingPage() {
     {
       name: "MKE",
       description: "Manual key entry",
-      monthlyPrice: 0.15, // 0.15%
+      monthlyPrice: 0.0015, // 0.15%
       yearlyPrice: 0.15,    // 15 cents
       badge: null,
       features: [
@@ -57,7 +57,7 @@ function PricingPage() {
     {
       name: "International",
       description: "Foreign Cards",
-      monthlyPrice: 0.15, // 0.15%
+      monthlyPrice: 0.0015, // 0.15%
       yearlyPrice: 0.15,    // 15 cents
       badge: null,
       features: [
@@ -190,8 +190,8 @@ function PricingPage() {
                   
                   <div className="mb-4">
                     <span className="text-4xl font-extrabold text-gray-900">
-                    {isYearly? `${plan.yearlyPrice}c`             // yearly: flat cents
-                      : `${(plan.monthlyPrice * 100).toFixed(2)}%`}  // monthly: percentage
+                    {isYearly? `${plan.yearlyPrice}c`             
+                      : `${(plan.monthlyPrice * 100).toFixed(2)}%`}
                     </span>
                     <span className="text-gray-600 ml-1">
                     {isYearly ? '/transaction' : '/transaction'}
