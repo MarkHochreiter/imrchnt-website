@@ -270,9 +270,9 @@ function PricingPage() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4">In person sales anywhere</h3>
+              <h3 className="text-xl font-extrabold mb-4">Single device POS</h3>
               <p className="text-gray-600">
-                Sell in person in store or offsite.
+                Bring one piece of hardware to your next offsite.
               </p>
             </div>
             
@@ -290,9 +290,9 @@ function PricingPage() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4">In-depth analytics</h3>
+              <h3 className="text-xl font-extrabold mb-4">Connectivity</h3>
               <p className="text-gray-600">
-                Access reports to track store performance and identify optimization opportunities.
+                All in one card reader connects via WiFi or 4g LTE connection.
               </p>
             </div>
             
@@ -300,9 +300,9 @@ function PricingPage() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4">Secure login</h3>
+              <h3 className="text-xl font-extrabold mb-4">Offline Mode</h3>
               <p className="text-gray-600">
-                Set up 2FA login for Admin and Management roles.
+                No connection, no problem. Offline functionality included.
               </p>
             </div>
             
@@ -310,9 +310,9 @@ function PricingPage() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4">24/7 support</h3>
+              <h3 className="text-xl font-extrabold mb-4">Inventory Management</h3>
               <p className="text-gray-600">
-                Get help whenever you need it with our round-the-clock customer support.
+                Add / Update / Delete Inventory.                  
               </p>
             </div>
           </div>
