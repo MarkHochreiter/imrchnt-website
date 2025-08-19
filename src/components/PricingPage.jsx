@@ -14,8 +14,8 @@ function PricingPage() {
     {
       name: "Card Present",
       description: "For solo entrepreneurs",
-      monthlyPrice: .0255,
-      yearlyPrice: .15,
+      monthlyPrice: 25,
+      yearlyPrice: 29,
       badge: null,
       features: [
         "Online store",
