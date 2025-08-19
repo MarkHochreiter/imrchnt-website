@@ -115,8 +115,11 @@ function PricingPage() {
            Flat Pricing
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8">
-            processing rates made simple<br />
-            <span className="text-[#f08e80] font-bold">2.55% + .15 cents per in person card transaction</span>
+            processing rates made simple<br /><br />
+            <span className="text-[#f08e80] font-bold">2.55% + .15 cents per in person domestic card transaction</span>
+            <br />
+            <span className="text-[#f08e80] font-bold">Interchange++ .15% + .15 cents for everything else</span>
+            
           </p> 
           
           {/* Email Signup */}
