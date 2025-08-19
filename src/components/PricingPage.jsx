@@ -148,7 +148,7 @@ function PricingPage() {
                   !isYearly ? 'bg-white shadow-sm' : 'text-gray-600'
                 }`}
               >
-                Pay monthly
+                %/Transaction
               </button>
               <button
                 onClick={() => setIsYearly(true)}
@@ -156,7 +156,7 @@ function PricingPage() {
                   isYearly ? 'bg-white shadow-sm' : 'text-gray-600'
                 }`}
               >
-                Pay yearly (save 25%)
+                Transaction Fee              
               </button>
             </div>
           </div>
