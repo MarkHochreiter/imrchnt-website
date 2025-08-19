@@ -233,7 +233,7 @@ function PricingPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-16">
-            What every plan gets you
+            What 2.55% + .15c gets you
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -241,9 +241,9 @@ function PricingPage() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4">World's best checkout</h3>
+              <h3 className="text-xl font-extrabold mb-4">Simple POS</h3>
               <p className="text-gray-600">
-                Our checkout converts 15% better on average than other commerce platforms.
+                Train new users to operate POS in less than a minute. 
               </p>
             </div>
             
@@ -251,9 +251,9 @@ function PricingPage() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4">In-person selling</h3>
+              <h3 className="text-xl font-extrabold mb-4">Single device POS</h3>
               <p className="text-gray-600">
-                Sell in person and keep inventory in sync with online sales.
+                Bring one piece of hardware to your next offsite.
               </p>
             </div>
             
@@ -261,9 +261,9 @@ function PricingPage() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4">Multiple sales channels</h3>
+              <h3 className="text-xl font-extrabold mb-4">Multi platform</h3>
               <p className="text-gray-600">
-                Promote and sell products on Instagram, TikTok, Google, and other channels.
+                Sell from an all in one card reader, tablet, smartphone, pc or mac
               </p>
             </div>
             
@@ -271,9 +271,9 @@ function PricingPage() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4">In-depth analytics</h3>
+              <h3 className="text-xl font-extrabold mb-4">Connectivity</h3>
               <p className="text-gray-600">
-                Access reports to track store performance and identify optimization opportunities.
+                All in one card reader connects via WiFi or 4g LTE connection.
               </p>
             </div>
             
@@ -281,9 +281,9 @@ function PricingPage() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4">Commerce apps</h3>
+              <h3 className="text-xl font-extrabold mb-4">Offline Mode</h3>
               <p className="text-gray-600">
-                Use apps for everything from product sourcing to customizing your store.
+                No connection, no problem. Offline functionality included.
               </p>
             </div>
             
@@ -291,9 +291,9 @@ function PricingPage() {
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="h-8 w-8 text-[#f08e80]" />
               </div>
-              <h3 className="text-xl font-extrabold mb-4">24/7 support</h3>
+              <h3 className="text-xl font-extrabold mb-4">Inventory Management</h3>
               <p className="text-gray-600">
-                Get help whenever you need it with our round-the-clock customer support.
+                Add / Update / Delete Inventory.                  
               </p>
             </div>
           </div>
