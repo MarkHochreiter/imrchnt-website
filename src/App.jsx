@@ -303,7 +303,7 @@ function App() {
               <Globe className="h-12 w-12 text-indigo-600 mb-4" />
               <h3 className="text-xl font-semibold mb-2">Multi-Channel Selling</h3>
               <p className="text-gray-600">
-                Sell online, in-store, and on social media from one platform.
+                InStore, Offsite, Pop-Up, all on one platform.
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
