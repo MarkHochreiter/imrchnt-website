@@ -118,6 +118,7 @@ function PricingPage() {
             processing rates made simple<br /><br />
             <span className="text-[#f08e80] font-bold">2.55% + .15 cents per in person domestic card transaction</span>
             <br />
+            <br />
             <span className="text-[#f08e80] font-bold">Interchange++ .15% + .15 cents for everything else</span>
             
           </p> 
