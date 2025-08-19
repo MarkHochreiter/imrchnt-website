@@ -95,7 +95,7 @@ function PricingPage() {
       questions: [
         {
           question: "What is imrchnt and how does it work?",
-          answer: "imrchnt is a multi platform application that helps stores sell Instore, offsite, online or off. Our platform provides everything you need to run pos, accept credit cards, print receipts from one device Or run POS from a PC, Apple, iOS / Android Tablet, iOS / Android smartphone, Android card reader."
+          answer: "imrchnt is a multi platform application that helps stores sell Instore, offsite, online or off. Our platform provides everything you need to run pos, accept credit cards, print receipts from one device. Run on a PC, Apple, iOS / Android Tablet, iOS / Android smartphone, Android card reader."
         },
         {
           question: "How much does imrchnt cost?",
