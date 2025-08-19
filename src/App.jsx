@@ -184,7 +184,7 @@ function App() {
             Cross platform point of sale
           </h2>
           <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-             Available as Web, Client, Android or iOS. Sell on desktop, mobile, tablet, or card reader. 
+             Web, Client, PC, Mac, Android or iOS.</br> Sell on desktop, mobile, tablet, or card reader. 
           </p>
           
           <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -203,7 +203,7 @@ function App() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Go big</h3>
               <p className="text-gray-600">
-                A single platform that seamlessly scales from Pop Up to Multistore.
+                A single platform that scales seamlessly from Pop Up to Multistore.
               </p>
             </div>
             <div className="text-center">
@@ -219,6 +219,7 @@ function App() {
         </div>
       </section>
 
+      {/*
       {/* Features Grid */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -296,6 +297,7 @@ function App() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Stats Section */}
       <section className="py-20 bg-white">
