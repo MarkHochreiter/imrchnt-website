@@ -70,7 +70,7 @@ function PricingPage() {
 ]
 
   
-  {/* old pricing plans
+  /* old pricing plans
       name: "Card present",
       description: "Tap / Dip / Swipe",
       monthlyPrice: 2.55%,
@@ -136,7 +136,7 @@ function PricingPage() {
       ]
     }
   ]
-*/}
+*/
   
   const faqs = [
     {
