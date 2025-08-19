@@ -69,75 +69,6 @@ function PricingPage() {
     }
   ]
 
-  {/*
-    old pricing plans
-    {
-      name: "Card present",
-      description: "Tap / Dip / Swipe",
-      monthlyPrice: 2.55%,
-      yearlyPrice: .15c,
-      badge: null,
-      features: [
-        "Apple Pay",
-        "Visa",
-        "MasterCard",
-        "American Express",
-        "Discover",
-        "Domestic cards"
-      ]
-    },
-    {
-      name: "Card not present",
-      description: "",
-      monthlyPrice: Interchange Fees + .15%,
-      yearlyPrice: .15c,
-      badge: null,
-      features: [
-        "Manual Key Entry",
-        "Mail order / Telephone order",
-        "Foreign Cards"
-      ]
-    },
-    {
-      name: "Advanced",
-      description: "As your business scales",
-      monthlyPrice: 299,
-      yearlyPrice: 224,
-      badge: null,
-      features: [
-        "Everything in Grow",
-        "Advanced report builder",
-        "Third-party calculated shipping rates",
-        "Advanced discount codes",
-        "Launchpad for managing campaigns",
-        "Flow automation platform",
-        "Custom report builder",
-        "Advanced shipping discounts",
-        "International pricing",
-        "Calculated shipping rates"
-      ]
-    },
-    {
-      name: "Plus",
-      description: "For more complex businesses",
-      monthlyPrice: 2300,
-      yearlyPrice: 1725,
-      badge: null,
-      features: [
-        "Everything in Advanced",
-        "Dedicated success manager",
-        "Launchpad for managing campaigns",
-        "Flow automation platform",
-        "Scripts for checkout customization",
-        "Wholesale channel",
-        "Advanced security features",
-        "Higher API limits",
-        "Multiple expansion stores",
-        "Custom checkout experiences"
-      ]
-    }
-  */}
-
   const faqs = [
     {
       category: "General questions",
@@ -212,7 +143,6 @@ function PricingPage() {
           </div>
 
           {/* Monthly/Yearly Toggle */}
-          {/*
           <div className="flex justify-center mb-12">
             <div className="bg-gray-100 p-1 rounded-lg">
               <button
@@ -233,13 +163,8 @@ function PricingPage() {
               </button>
             </div>
           </div>
-          */}
         </div>
       </section>
-
-      {/* Pricing */}
-      {/* ... the rest of your component remains unchanged ... */}
-    </div>
   )
 }
 
