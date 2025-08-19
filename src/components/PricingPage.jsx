@@ -190,18 +190,14 @@ function PricingPage() {
                   
                   <div className="mb-4">
                     <span className="text-4xl font-extrabold text-gray-900">
-                      {isYearly ? plan.monthlyPrice}
+                    {isYearly? `${plan.yearlyPrice}c`             // yearly: flat cents
+                      : `${(plan.monthlyPrice * 100).toFixed(2)}%`}  // monthly: percentage
                     </span>
-                    <span className="text-gray-600 ml-1">%/transaction</span>
+                    <span className="text-gray-600 ml-1">
+                    {isYearly ? '/transaction' : '/transaction'}
+                    </span>
                   </div>
 
-                    <div className="mb-4">
-                    <span className="text-4xl font-extrabold text-gray-900">
-                      {isYearly ? plan.yearlyPrice}
-                    </span>
-                    <span className="text-gray-600 ml-1">cents/transaction</span>
-                  </div>
-                
                 </div>
 
                 <Button 
