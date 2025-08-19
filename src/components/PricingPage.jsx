@@ -112,15 +112,12 @@ function PricingPage() {
       <section className="bg-gradient-to-br from-[#f08e80]/10 to-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-            Plans & pricing
+           Flat Pricing
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8">
-            Start for free, then enjoy<br />
-            <span className="text-[#f08e80] font-bold">$1/month for 3 months</span>
-          </p>
-          <p className="text-lg text-gray-600 mb-12">
-            Choose the best plan for your business. Change plans as you grow.
-          </p>
+            processing rates made simple<br />
+            <span className="text-[#f08e80] font-bold">2.55% + .15 cents per in person card transaction</span>
+          </p> 
           
           {/* Email Signup */}
           <div className="max-w-md mx-auto mb-12">
