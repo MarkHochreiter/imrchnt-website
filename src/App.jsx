@@ -172,6 +172,13 @@ function App() {
               <Button size="lg" className="bg-[#f08e80] hover:bg-violet-400 text-white text-lg px-8 py-4">
                 Start for free
               </Button>
+              <p className="text-base text-gray-300">
+             "I've never had such a smooth time at a large offsite and I can't tell you how excited I am about it!"
+              </p>
+              <p className="text-base text-gray-300">
+              H - Bookstore Manager
+              Still North Books & Bar Hanover, NH
+              </p>
             </div>
           </div>
         </div>
