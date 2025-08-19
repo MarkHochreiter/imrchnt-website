@@ -12,6 +12,69 @@ function PricingPage() {
 
   const plans = [
     {
+      const pricingOptions = [
+  {
+    name: "Card present",
+    description: "Tap / Dip / Swipe",
+    monthlyPrice: 0.0255, // 2.55% as a decimal
+    yearlyPrice: 0.15,    // 15 cents
+    badge: null,
+    features: [
+        "Apple Pay",
+        "Visa",
+        "MasterCard",
+        "American Express",
+        "Discover",
+        "Domestic cards"
+      ]
+
+  },
+  {
+    name: "MOTO",
+    description: "Mail Order / Telephone Order",
+    monthlyPrice: 0.0015, // .15%
+    yearlyPrice: 0.15,    // 15 cents
+    badge: null,
+    features: [
+        "variable rate",
+        ".15% on top of Interchange++ fees",
+        ".15c per transaction",
+        "Domestic",
+        "International"
+      ]
+  },
+  {
+    name: "MKE",
+    description: "Manual key entry",
+    monthlyPrice: 0.0015, // .15%
+    yearlyPrice: 0.15,    // 15 cents
+    badge: null,
+    features: [
+        "variable rate",
+        ".15% on top of Interchange++ fees",
+        ".15c per transaction",
+        "Domestic",
+        "International"
+      ]
+  },
+  {
+    name: "International",
+    description: "Foreign Cards",
+    monthlyPrice: 0.0015, // 0.15%
+    yearlyPrice: 0.15,    // 15 cents
+    badge: null,
+    features: [
+        "variable rate",
+        ".15% on top of Interchange++ fees",
+        ".15c per transaction",
+        "International"
+      ]
+  }
+]
+
+export default pricingOptions
+  
+  {/* old pricing plans
       name: "Card present",
       description: "Tap / Dip / Swipe",
       monthlyPrice: 2.55%,
@@ -37,8 +100,7 @@ function PricingPage() {
         "Mail order / Telephone order",
         "Foreign Cards"
       ]
-    }
-    {/*,
+    },
     {
       name: "Advanced",
       description: "As your business scales",
@@ -77,9 +139,9 @@ function PricingPage() {
         "Custom checkout experiences"
       ]
     }
-    *}
   ]
-
+*/}
+  
   const faqs = [
     {
       category: "General questions",
