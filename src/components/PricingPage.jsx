@@ -11,8 +11,6 @@ function PricingPage() {
   }
 
   const plans = [
-    {
-      const pricingOptions = [
   {
     name: "Card present",
     description: "Tap / Dip / Swipe",
@@ -71,8 +69,6 @@ function PricingPage() {
       ]
   }
 ]
-
-export default pricingOptions
   
   {/* old pricing plans
       name: "Card present",
