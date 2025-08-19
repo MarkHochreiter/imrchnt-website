@@ -112,10 +112,10 @@ function PricingPage() {
       <section className="bg-gradient-to-br from-[#f08e80]/10 to-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-           Flat Pricing
+           Payments made simple
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8">
-            processing rates made simple<br /><br />
+            Fees deducted instantly, no monthly invoices to pay.<br /><br />
             <span className="text-[#f08e80] font-bold">2.55% + .15 cents per in person domestic card transaction</span>
             <br />
             <br />
