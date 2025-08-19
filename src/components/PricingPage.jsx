@@ -228,7 +228,154 @@ function PricingPage() {
           </div>
         </div>
       </section>   
+
+      {/* What Every Plan Gets You */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-16">
+            What every plan gets you
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">World's best checkout</h3>
+              <p className="text-gray-600">
+                Our checkout converts 15% better on average than other commerce platforms.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">In-person selling</h3>
+              <p className="text-gray-600">
+                Sell in person and keep inventory in sync with online sales.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">Multiple sales channels</h3>
+              <p className="text-gray-600">
+                Promote and sell products on Instagram, TikTok, Google, and other channels.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">In-depth analytics</h3>
+              <p className="text-gray-600">
+                Access reports to track store performance and identify optimization opportunities.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">Commerce apps</h3>
+              <p className="text-gray-600">
+                Use apps for everything from product sourcing to customizing your store.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">24/7 support</h3>
+              <p className="text-gray-600">
+                Get help whenever you need it with our round-the-clock customer support.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-16">
+            Frequently asked questions
+          </h2>
+          
+          {faqs.map((category, categoryIndex) => (
+            <div key={categoryIndex} className="mb-12">
+              <h3 className="text-xl font-extrabold text-gray-900 mb-6">
+                {category.category}
+              </h3>
+              
+              <div className="space-y-4">
+                {category.questions.map((faq, faqIndex) => {
+                  const globalIndex = categoryIndex * 100 + faqIndex
+                  return (
+                    <div key={faqIndex} className="bg-white rounded-lg shadow-sm">
+                      <button
+                        onClick={() => toggleFaq(globalIndex)}
+                        className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50"
+                      >
+                        <span className="font-medium text-gray-900">
+                          {faq.question}
+                        </span>
+                        {openFaq === globalIndex ? (
+                          <ChevronUp className="h-5 w-5 text-gray-500" />
+                        ) : (
+                          <ChevronDown className="h-5 w-5 text-gray-500" />
+                        )}
+                      </button>
+                      
+                      {openFaq === globalIndex && (
+                        <div className="px-6 pb-4">
+                          <p className="text-gray-600">{faq.answer}</p>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 bg-[#f08e80] text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
+            Everything you need to sell online, all in one place
+          </h2>
+          <p className="text-xl mb-12">
+            Whether you're building a website, managing inventory, or responding to customers, 
+            you can do it all with imrchnt.
+          </p>
+          
+          <div className="max-w-md mx-auto">
+            <div className="flex">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                className="flex-1 px-4 py-3 border border-white/20 rounded-l-lg bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white"
+              />
+              <Button className="bg-white text-[#f08e80] hover:bg-gray-100 px-6 py-3 rounded-r-lg font-medium">
+                Start free trial
+              </Button>
+            </div>
+            <p className="text-sm text-white/80 mt-2">
+              Try imrchnt free, no credit card required.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
+
   )
 }
 
