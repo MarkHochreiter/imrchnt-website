@@ -161,6 +161,12 @@ function App() {
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
               In store, Pop up, Off site, on line or off. Intuitive design for minimal training.
             </p>
+            <p className="text-base md:text-right text-gray-300 mb-8 max-w-2xl">
+             "I've never had such a smooth time at a large offsite and I can't tell you how excited I am about it!"
+            </p>
+            <p className="text-base md:text-right text-gray-300 mb-8 max-w-2xl">
+            H - Still North Books & Bar Hanover, NH
+            </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="bg-[#f08e80] hover:bg-violet-400 text-white text-lg px-8 py-4">
                 Start for free
