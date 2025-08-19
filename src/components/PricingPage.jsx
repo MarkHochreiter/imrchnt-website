@@ -18,42 +18,41 @@ function PricingPage() {
     yearlyPrice: 0.15,    // 15 cents
     badge: null,
     features: [
-        "Apple Pay",
-        "Visa",
-        "MasterCard",
-        "American Express",
-        "Discover",
-        "Domestic cards"
-      ]
-
+      "Apple Pay",
+      "Visa",
+      "MasterCard",
+      "American Express",
+      "Discover",
+      "Domestic cards"
+    ]
   },
   {
     name: "MOTO",
     description: "Mail Order / Telephone Order",
-    monthlyPrice: 0.0015, // .15%
+    monthlyPrice: 0.0015, // 0.15%
     yearlyPrice: 0.15,    // 15 cents
     badge: null,
     features: [
-        "variable rate",
-        ".15% on top of Interchange++ fees",
-        ".15c per transaction",
-        "Domestic",
-        "International"
-      ]
+      "variable rate",
+      ".15% on top of Interchange++ fees",
+      ".15c per transaction",
+      "Domestic",
+      "International"
+    ]
   },
   {
     name: "MKE",
     description: "Manual key entry",
-    monthlyPrice: 0.0015, // .15%
+    monthlyPrice: 0.0015, // 0.15%
     yearlyPrice: 0.15,    // 15 cents
     badge: null,
     features: [
-        "variable rate",
-        ".15% on top of Interchange++ fees",
-        ".15c per transaction",
-        "Domestic",
-        "International"
-      ]
+      "variable rate",
+      ".15% on top of Interchange++ fees",
+      ".15c per transaction",
+      "Domestic",
+      "International"
+    ]
   },
   {
     name: "International",
@@ -62,13 +61,14 @@ function PricingPage() {
     yearlyPrice: 0.15,    // 15 cents
     badge: null,
     features: [
-        "variable rate",
-        ".15% on top of Interchange++ fees",
-        ".15c per transaction",
-        "International"
-      ]
+      "variable rate",
+      ".15% on top of Interchange++ fees",
+      ".15c per transaction",
+      "International"
+    ]
   }
 ]
+
   
   {/* old pricing plans
       name: "Card present",
