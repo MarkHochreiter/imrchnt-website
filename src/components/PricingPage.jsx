@@ -12,10 +12,10 @@ function PricingPage() {
 
   const plans = [
     {
-      name: "Card Present",
+      name: "Basic",
       description: "For solo entrepreneurs",
-      monthlyPrice: 25,
-      yearlyPrice: 29,
+      monthlyPrice: 29,
+      yearlyPrice: 22,
       badge: null,
       features: [
         "Online store",
