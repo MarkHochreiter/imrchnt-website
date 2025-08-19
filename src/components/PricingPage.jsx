@@ -12,43 +12,33 @@ function PricingPage() {
 
   const plans = [
     {
-      name: "Basic",
-      description: "For solo entrepreneurs",
-      monthlyPrice: 29,
-      yearlyPrice: 22,
+      name: "Card present",
+      description: "Tap / Dip / Swipe",
+      monthlyPrice: 2.55%,
+      yearlyPrice: .15c,
       badge: null,
       features: [
-        "Online store",
-        "Unlimited products",
-        "24/7 support",
-        "Sales channels",
-        "Manual order creation",
-        "Discount codes",
-        "Free SSL certificate",
-        "Abandoned cart recovery",
-        "Gift cards",
-        "Professional reports"
+        "Apple Pay",
+        "Visa",
+        "MasterCard",
+        "American Express",
+        "Discover",
+        "Domestic cards"
       ]
     },
     {
-      name: "Grow",
-      description: "For small teams",
-      monthlyPrice: 79,
-      yearlyPrice: 59,
-      badge: "Most Popular",
+      name: "Card not present",
+      description: "",
+      monthlyPrice: Interchange Fees + .15%,
+      yearlyPrice: .15c,
+      badge: null,
       features: [
-        "Everything in Basic",
-        "Professional reports",
-        "Lower credit card rates",
-        "Gift cards",
-        "Professional reports",
-        "Abandoned cart recovery",
-        "Advanced report builder",
-        "Third-party calculated shipping rates",
-        "International domains and pricing",
-        "Advanced discount codes"
+        "Manual Key Entry",
+        "Mail order / Telephone order",
+        "Foreign Cards"
       ]
-    },
+    }
+    {/*,
     {
       name: "Advanced",
       description: "As your business scales",
@@ -87,6 +77,7 @@ function PricingPage() {
         "Custom checkout experiences"
       ]
     }
+    *}
   ]
 
   const faqs = [
