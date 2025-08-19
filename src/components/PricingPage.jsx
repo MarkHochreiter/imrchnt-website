@@ -12,90 +12,41 @@ function PricingPage() {
 
   const plans = [
     {
-      name: "Card present",
-      description: "Tap / Dip / Swipe",
-      monthlyPrice: 0.0255, // 2.55% as a decimal
-      yearlyPrice: 0.15,    // 15 cents
+      name: "Card Present",
+      description: "For solo entrepreneurs",
+      monthlyPrice: .0255,
+      yearlyPrice: .15,
       badge: null,
       features: [
-        "Apple Pay",
-        "Visa",
-        "MasterCard",
-        "American Express",
-        "Discover",
-        "Domestic cards"
+        "Online store",
+        "Unlimited products",
+        "24/7 support",
+        "Sales channels",
+        "Manual order creation",
+        "Discount codes",
+        "Free SSL certificate",
+        "Abandoned cart recovery",
+        "Gift cards",
+        "Professional reports"
       ]
     },
     {
-      name: "MOTO",
-      description: "Mail Order / Telephone Order",
-      monthlyPrice: 0.0015, // 0.15%
-      yearlyPrice: 0.15,    // 15 cents
-      badge: null,
+      name: "Grow",
+      description: "For small teams",
+      monthlyPrice: 79,
+      yearlyPrice: 59,
+      badge: "Most Popular",
       features: [
-        "variable rate",
-        ".15% on top of Interchange++ fees",
-        ".15c per transaction",
-        "Domestic",
-        "International"
-      ]
-    },
-    {
-      name: "MKE",
-      description: "Manual key entry",
-      monthlyPrice: 0.0015, // 0.15%
-      yearlyPrice: 0.15,    // 15 cents
-      badge: null,
-      features: [
-        "variable rate",
-        ".15% on top of Interchange++ fees",
-        ".15c per transaction",
-        "Domestic",
-        "International"
-      ]
-    },
-    {
-      name: "International",
-      description: "Foreign Cards",
-      monthlyPrice: 0.0015, // 0.15%
-      yearlyPrice: 0.15,    // 15 cents
-      badge: null,
-      features: [
-        "variable rate",
-        ".15% on top of Interchange++ fees",
-        ".15c per transaction",
-        "International"
-      ]
-    }
-  ]
-
-  {/*
-    old pricing plans
-    {
-      name: "Card present",
-      description: "Tap / Dip / Swipe",
-      monthlyPrice: 2.55%,
-      yearlyPrice: .15c,
-      badge: null,
-      features: [
-        "Apple Pay",
-        "Visa",
-        "MasterCard",
-        "American Express",
-        "Discover",
-        "Domestic cards"
-      ]
-    },
-    {
-      name: "Card not present",
-      description: "",
-      monthlyPrice: Interchange Fees + .15%,
-      yearlyPrice: .15c,
-      badge: null,
-      features: [
-        "Manual Key Entry",
-        "Mail order / Telephone order",
-        "Foreign Cards"
+        "Everything in Basic",
+        "Professional reports",
+        "Lower credit card rates",
+        "Gift cards",
+        "Professional reports",
+        "Abandoned cart recovery",
+        "Advanced report builder",
+        "Third-party calculated shipping rates",
+        "International domains and pricing",
+        "Advanced discount codes"
       ]
     },
     {
@@ -136,7 +87,7 @@ function PricingPage() {
         "Custom checkout experiences"
       ]
     }
-  */}
+  ]
 
   const faqs = [
     {
@@ -165,8 +116,7 @@ function PricingPage() {
       questions: [
         {
           question: "Can I accept contactless payments?",
-          answer: "Absolutely. We can even turn your iOS or Android smartphone into a contacless credit card reader."
-        },
+          answer: "Absolutely. We can even turn your iOS or Android smartphone into a contacless credit card reader." },
         {
           question: "Can I negotiate my rate?",
           answer: "If your store is doing more than $50,000 per month in Credit Card processing and has an average sale over $35 we can work together in setting a negotiated rate."
@@ -181,19 +131,17 @@ function PricingPage() {
       <section className="bg-gradient-to-br from-[#f08e80]/10 to-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-            Pricing
+           Pricing
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8">
             Flat fee on card present transactions, variable fee on card not present.
           </p>
 
-          {/* Example placeholder for a hidden section */}
           {/*
           <p className="text-lg text-gray-600 mb-12">
-            Hidden text here
-          </p>
-          */}
-
+            </p>
+            */}
+          
           {/* Email Signup */}
           <div className="max-w-md mx-auto mb-12">
             <div className="flex">
@@ -211,8 +159,7 @@ function PricingPage() {
             </p>
           </div>
 
-          {/* Monthly/Yearly Toggle */}
-          {/*
+          {/* Monthly/Yearly Toggle 
           <div className="flex justify-center mb-12">
             <div className="bg-gray-100 p-1 rounded-lg">
               <button
@@ -233,12 +180,221 @@ function PricingPage() {
               </button>
             </div>
           </div>
-          */}
+        </div>
+      </section>
+      */}
+
+      {/* Pricing */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-4 gap-8">
+            {plans.map((plan, index) => (
+              <div
+                key={plan.name}
+                className={`bg-white rounded-lg shadow-lg p-8 relative ${
+                  plan.badge ? 'ring-2 ring-[#f08e80]' : ''
+                }`}
+              >
+                {plan.badge && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-[#f08e80] text-white px-4 py-1 rounded-full text-sm font-medium">
+                      {plan.badge}
+                    </span>
+                  </div>
+                )}
+                
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-extrabold text-gray-900 mb-2">
+                    {plan.name}
+                  </h3>
+                  <p className="text-gray-600 mb-4">{plan.description}</p>
+                  
+                  <div className="mb-4">
+                    <span className="text-4xl font-extrabold text-gray-900">
+                      ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                    </span>
+                    <span className="text-gray-600 ml-1">USD/month</span>
+                  </div>
+                  
+                  {isYearly && (
+                    <p className="text-sm text-gray-500">billed once yearly</p>
+                  )}
+                </div>
+
+                <Button 
+                  className={`w-full mb-8 ${
+                    plan.badge 
+                      ? 'bg-[#f08e80] hover:bg-[#f08e80]/90 text-white' 
+                      : 'bg-gray-900 hover:bg-gray-800 text-white'
+                  }`}
+                >
+                  Start free trial
+                </Button>
+
+                <div className="space-y-3">
+                  {plan.features.slice(0, 5).map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-center">
+                      <Check className="h-5 w-5 text-[#f08e80] mr-3 flex-shrink-0" />
+                      <span className="text-gray-700">{feature}</span>
+                    </div>
+                  ))}
+                  {plan.features.length > 5 && (
+                    <p className="text-sm text-gray-500 mt-4">
+                      + {plan.features.length - 5} more features
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Pricing */}
-      {/* ... the rest of your component remains unchanged ... */}
+      {/* What Every Plan Gets You */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-16">
+            What 2.55% + .15c gets you
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">Simple POS</h3>
+              <p className="text-gray-600">
+                Train new users to operate POS in less than a minute. 
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">Single device POS</h3>
+              <p className="text-gray-600">
+                Bring one piece of hardware to your next offsite.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">Multi platform</h3>
+              <p className="text-gray-600">
+                Sell from an all in one card reader, tablet, smartphone, pc or mac
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">Connectivity</h3>
+              <p className="text-gray-600">
+                All in one card reader connects via WiFi or 4g LTE connection.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">Offline Mode</h3>
+              <p className="text-gray-600">
+                No connection, no problem. Offline functionality included.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-[#f08e80]" />
+              </div>
+              <h3 className="text-xl font-extrabold mb-4">Inventory Management</h3>
+              <p className="text-gray-600">
+                Add / Update / Delete Inventory.                  
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-16">
+            Frequently asked questions
+          </h2>
+          
+          {faqs.map((category, categoryIndex) => (
+            <div key={categoryIndex} className="mb-12">
+              <h3 className="text-xl font-extrabold text-gray-900 mb-6">
+                {category.category}
+              </h3>
+              
+              <div className="space-y-4">
+                {category.questions.map((faq, faqIndex) => {
+                  const globalIndex = categoryIndex * 100 + faqIndex
+                  return (
+                    <div key={faqIndex} className="bg-white rounded-lg shadow-sm">
+                      <button
+                        onClick={() => toggleFaq(globalIndex)}
+                        className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50"
+                      >
+                        <span className="font-medium text-gray-900">
+                          {faq.question}
+                        </span>
+                        {openFaq === globalIndex ? (
+                          <ChevronUp className="h-5 w-5 text-gray-500" />
+                        ) : (
+                          <ChevronDown className="h-5 w-5 text-gray-500" />
+                        )}
+                      </button>
+                      
+                      {openFaq === globalIndex && (
+                        <div className="px-6 pb-4">
+                          <p className="text-gray-600">{faq.answer}</p>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 bg-[#f08e80] text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
+            Everything you need to sell online, all in one place
+          </h2>
+          <p className="text-xl mb-12">
+            Whether you're building a website, managing inventory, or responding to customers, 
+            you can do it all with imrchnt.
+          </p>
+          
+          <div className="max-w-md mx-auto">
+            <div className="flex">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                className="flex-1 px-4 py-3 border border-white/20 rounded-l-lg bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white"
+              />
+              <Button className="bg-white text-[#f08e80] hover:bg-gray-100 px-6 py-3 rounded-r-lg font-medium">
+                Start free trial
+              </Button>
+            </div>
+            <p className="text-sm text-white/80 mt-2">
+              Try imrchnt free, no credit card required.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
