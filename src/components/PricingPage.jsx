@@ -95,15 +95,15 @@ function PricingPage() {
       questions: [
         {
           question: "What is imrchnt and how does it work?",
-          answer: "imrchnt is a comprehensive commerce platform that helps businesses sell online and in-person. Our platform provides everything you need to create, customize, and manage your online store, from product management to payment processing."
+          answer: "imrchnt is a multi platform application that helps stores sell Instore, offsite, online or off. Our platform provides everything you need to run pos, accept credit cards, print receipts from one device Or run POS from a PC, Apple, iOS / Android Tablet, iOS / Android smartphone, Android card reader."
         },
         {
           question: "How much does imrchnt cost?",
-          answer: "Our pricing starts at $29/month for the Basic plan. We offer four main plans to suit businesses of all sizes, from solo entrepreneurs to large enterprises. All plans include a free trial period."
+          answer: "We offer our application + credit card processing for one flat fee for card present transactions. 2.55% + .15c per transaction. Card Not Present transactions carry greater risk and therefore are charged a higher rate. For Card Not Present we use a variable rate of Interchange++ .15% + .15c per transaction. This means all Interchange fees are charged to your account and an additional .15% + .15c are collected by imrchnt."
         },
         {
           question: "How long are your contracts?",
-          answer: "We offer flexible month-to-month contracts with no long-term commitments. You can upgrade, downgrade, or cancel your plan at any time."
+          answer: "We don't do contracts, sign up to process credit cards and only get charged fees when credit cards are processed."
         },
         {
           question: "Can I cancel my account at any time?",
@@ -115,12 +115,11 @@ function PricingPage() {
       category: "Payment questions",
       questions: [
         {
-          question: "Are there third-party transaction fees?",
-          answer: "Transaction fees vary by plan. Our Basic plan includes standard rates, while higher-tier plans offer reduced transaction fees."
-        },
+          question: "Can I accept contactless payments?",
+          answer: "Absolutely. We can even turn your iOS or Android smartphone into a contacless credit card reader." },
         {
-          question: "Are there any credit card fees?",
-          answer: "Credit card processing fees are separate from your monthly subscription and depend on your payment processor and plan level."
+          question: "Can I negotiate my rate?",
+          answer: "If your store is doing more than $50,000 per month in Credit Card processing and has an average sale over $35 we can work together in setting a negotiated rate."
         }
       ]
     }
