@@ -106,25 +106,22 @@ function PricingPage() {
     }
   ]
 
-  return (
+    return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-[#f08e80]/10 to-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-            Pricing
+            Plans & pricing
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8">
-            Flat fee on card present transactions, variable fee on card not present.
+            Start for free, then enjoy<br />
+            <span className="text-[#f08e80] font-bold">$1/month for 3 months</span>
           </p>
-
-          {/* Example placeholder for a hidden section */}
-          {/*
           <p className="text-lg text-gray-600 mb-12">
-            Hidden text here
+            Choose the best plan for your business. Change plans as you grow.
           </p>
-          */}
-
+          
           {/* Email Signup */}
           <div className="max-w-md mx-auto mb-12">
             <div className="flex">
@@ -138,7 +135,7 @@ function PricingPage() {
               </Button>
             </div>
             <p className="text-sm text-gray-500 mt-2">
-              Try imrchnt free, no upfront fees.
+              Try imrchnt free, no credit card required.
             </p>
           </div>
 
@@ -165,6 +162,72 @@ function PricingPage() {
           </div>
         </div>
       </section>
+
+      {/* Pricing Plans */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-4 gap-8">
+            {plans.map((plan, index) => (
+              <div
+                key={plan.name}
+                className={`bg-white rounded-lg shadow-lg p-8 relative ${
+                  plan.badge ? 'ring-2 ring-[#f08e80]' : ''
+                }`}
+              >
+                {plan.badge && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-[#f08e80] text-white px-4 py-1 rounded-full text-sm font-medium">
+                      {plan.badge}
+                    </span>
+                  </div>
+                )}
+                
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-extrabold text-gray-900 mb-2">
+                    {plan.name}
+                  </h3>
+                  <p className="text-gray-600 mb-4">{plan.description}</p>
+                  
+                  <div className="mb-4">
+                    <span className="text-4xl font-extrabold text-gray-900">
+                      ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                    </span>
+                    <span className="text-gray-600 ml-1">USD/month</span>
+                  </div>
+                  
+                  {isYearly && (
+                    <p className="text-sm text-gray-500">billed once yearly</p>
+                  )}
+                </div>
+
+                <Button 
+                  className={`w-full mb-8 ${
+                    plan.badge 
+                      ? 'bg-[#f08e80] hover:bg-[#f08e80]/90 text-white' 
+                      : 'bg-gray-900 hover:bg-gray-800 text-white'
+                  }`}
+                >
+                  Start free trial
+                </Button>
+
+                <div className="space-y-3">
+                  {plan.features.slice(0, 5).map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-center">
+                      <Check className="h-5 w-5 text-[#f08e80] mr-3 flex-shrink-0" />
+                      <span className="text-gray-700">{feature}</span>
+                    </div>
+                  ))}
+                  {plan.features.length > 5 && (
+                    <p className="text-sm text-gray-500 mt-4">
+                      + {plan.features.length - 5} more features
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>   
     </div>
   )
 }
