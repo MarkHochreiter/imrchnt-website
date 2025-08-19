@@ -27,7 +27,7 @@ const SignupModal = ({ isOpen, onClose }) => {
 
     try {
       // Google Sheets integration using Google Apps Script Web App
-      const response = await fetch('https://script.google.com/macros/s/AKfycbzp1z5wWL_Xule9XUv4c-IJTy7CCZMsUUm2k7paJh0ecTG5u2R6X7IH8oX6UH8tCZbW3Q/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbyx2JTK79rHqO_hqAWTyw6dLp5GOyuYYiDFiEDPAVhrgDjZ30XiyAy94WpqDJpV2VFKDg/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const SignupModal = ({ isOpen, onClose }) => {
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Get Started Free</h2>
-            <p className="text-gray-600 mt-1">Join thousands of businesses using our platform</p>
+            <p className="text-gray-600 mt-1">Join fellow retailers using our platform</p>
           </div>
           <button
             onClick={onClose}
