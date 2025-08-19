@@ -131,16 +131,15 @@ function PricingPage() {
       <section className="bg-gradient-to-br from-[#f08e80]/10 to-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-           Pricing
+            Plans & pricing
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8">
-            Flat fee on card present transactions, variable fee on card not present.
+            Start for free, then enjoy<br />
+            <span className="text-[#f08e80] font-bold">$1/month for 3 months</span>
           </p>
-
-          {/*
           <p className="text-lg text-gray-600 mb-12">
-            </p>
-            */}
+            Choose the best plan for your business. Change plans as you grow.
+          </p>
           
           {/* Email Signup */}
           <div className="max-w-md mx-auto mb-12">
@@ -159,7 +158,7 @@ function PricingPage() {
             </p>
           </div>
 
-          {/* Monthly/Yearly Toggle 
+          {/* Monthly/Yearly Toggle */}
           <div className="flex justify-center mb-12">
             <div className="bg-gray-100 p-1 rounded-lg">
               <button
@@ -182,9 +181,8 @@ function PricingPage() {
           </div>
         </div>
       </section>
-      */}
 
-      {/* Pricing */}
+      {/* Pricing Plans */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-4 gap-8">
