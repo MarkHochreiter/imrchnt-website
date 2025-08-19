@@ -27,7 +27,7 @@ const SignupModal = ({ isOpen, onClose }) => {
 
     try {
       // Google Sheets integration using Google Apps Script Web App
-      const response = await fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbzp1z5wWL_Xule9XUv4c-IJTy7CCZMsUUm2k7paJh0ecTG5u2R6X7IH8oX6UH8tCZbW3Q/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
