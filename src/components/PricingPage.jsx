@@ -29,7 +29,7 @@ function PricingPage() {
     {
       name: "MOTO",
       description: "Mail Order / Telephone Order",
-      monthlyPrice: 0.0015, // 0.15%
+      monthlyPrice: 0.15, // 0.15%
       yearlyPrice: 0.15,    // 15 cents
       badge: null,
       features: [
@@ -57,7 +57,7 @@ function PricingPage() {
     {
       name: "International",
       description: "Foreign Cards",
-      monthlyPrice: 0.0015, // 0.15%
+      monthlyPrice: 0.15, // 0.15%
       yearlyPrice: 0.15,    // 15 cents
       badge: null,
       features: [
@@ -190,9 +190,9 @@ function PricingPage() {
                   
                   <div className="mb-4">
                     <span className="text-4xl font-extrabold text-gray-900">
-                      %{isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                      {isYearly ? plan.yearlyPrice : plan.monthlyPrice}
                     </span>
-                    <span className="text-gray-600 ml-1">/transaction</span>
+                    <span className="text-gray-600 ml-1">%/transaction</span>
                   </div>
                   
                   {isYearly && (
