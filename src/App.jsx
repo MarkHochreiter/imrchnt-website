@@ -170,7 +170,7 @@ function App() {
               </p>
             </div>
             <p className="text-base md:text-right text-gray-300 mb-8 max-w-2xl ml-auto">
-              H - Bookstore Manager
+              H - Bookstore Manager<br />
               Still North Books & Bar Hanover, NH
             </p>
           </div>
