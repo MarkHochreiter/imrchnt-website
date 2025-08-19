@@ -28,7 +28,7 @@ function PricingPage() {
     },
     {
       name: "MOTO",
-      description: "Mail Order / Telephone Order",
+      description: "Mail Order/Telephone Order",
       monthlyPrice: 0.15, // 0.15%
       yearlyPrice: 0.15,    // 15 cents
       badge: null,
