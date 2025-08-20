@@ -117,14 +117,22 @@ function App() {
 
             {/* Right side buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <a href="#" className="text-gray-700 hover:text-gray-900">Log in</a>
+              <a 
+                href="https://pos.imrchnt.com" 
+                className="text-gray-700 hover:text-gray-900"
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+              Log in
+              </a>
               <Button 
                 className="bg-[#f08e80] hover:bg-violet-400 text-white"
                 onClick={handleSignupClick}
               >
-                Request Access
+              Request Access
               </Button>
-            </div>
+              </div>
+
 
             {/* Mobile menu button */}
             <div className="md:hidden">
