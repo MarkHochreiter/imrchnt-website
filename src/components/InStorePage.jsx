@@ -15,8 +15,11 @@ function InStorePage() {
               Complete point-of-sale solutions for your physical retail locations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-[#f08e80] hover:bg-[#e07d70] text-white text-lg px-8 py-4">
-                Request Access
+              <Button 
+                className="bg-[#f08e80] hover:bg-violet-400 text-white"
+                onClick={handleSignupClick}
+              >
+              Request Access
               </Button>
             </div>
           </div>
