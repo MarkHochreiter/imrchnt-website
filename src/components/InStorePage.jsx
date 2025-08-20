@@ -1,7 +1,14 @@
 import { Monitor, Users, Zap, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
+import { useNavigate } from 'react-router-dom'
 
 function InStorePage() {
+  const navigate = useNavigate()
+
+  const handlePOSLearnMore = () => {
+    navigate('/pos-diagram')
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -59,7 +66,10 @@ function InStorePage() {
                   <span>Detailed sales reporting</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
+              <Button 
+                className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={handlePOSLearnMore}
+              >
                 Learn More About POS
               </Button>
             </div>
@@ -138,19 +148,19 @@ function InStorePage() {
               <div className="space-y-4 mb-8">
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Lane Cutting POS</span>
-                </div>
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Tap to Pay on Android or Apple smartphones</span>
-                </div>
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Handselling assistant</span>
+                  <span>Add items manually or by scan</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
                   <span>Blazing fast inventory lookup</span>
+                </div>
+                <div className="flex items-center">
+                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
+                  <span>Handsell assistant</span>
+                </div>
+                <div className="flex items-center">
+                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
+                  <span>Attribute customization</span>
                 </div>
               </div>
               <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
