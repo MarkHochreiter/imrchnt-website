@@ -371,7 +371,7 @@ function App() {
       ) : currentPage === 'pricing' ? (
         <PricingPage />
       ) : currentPage === 'instore' ? (
-        <InStorePage />
+        <InStorePage onNavigate={setCurrentPage} />
       ) : currentPage === 'offsite' ? (
         <OffsitePage />
       ) : currentPage === 'manage' ? (
