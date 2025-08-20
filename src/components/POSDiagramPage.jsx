@@ -204,7 +204,7 @@ function POSDiagramPage({ onNavigateBack }) {
                       {feature.hasVideo && feature.videoSrc && (
                         <div className="mb-3">
                           <video 
-                            className="w-full h-32 object-cover rounded-md"
+                            className="w-full h-48 object-cover rounded-md"
                             autoPlay
                             loop
                             muted
@@ -271,7 +271,7 @@ function POSDiagramPage({ onNavigateBack }) {
                         )}
                       </div>
                       
-                      {/* Show video preview in the feature list for id: 6 */}
+                      {/* Show video preview in the feature list for id: 6 
                       {feature.hasVideo && feature.videoSrc && (
                         <div className="mt-2">
                           <video 
@@ -285,7 +285,7 @@ function POSDiagramPage({ onNavigateBack }) {
                             Your browser does not support the video tag.
                           </video>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   </li>
                 ))}
