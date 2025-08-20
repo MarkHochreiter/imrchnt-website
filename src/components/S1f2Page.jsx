@@ -38,11 +38,11 @@ function S1f2Page({ onNavigateBack }) {
                 <CreditCard className="h-12 w-12 text-[#f08e80]" />
                 <div>
                   <h1 className="text-4xl font-bold text-gray-900">S1f2</h1>
-                  <p className="text-xl text-[#f08e80] font-medium">All-in-one Android device with printing power</p>
+                  <p className="text-xl text-[#f08e80] font-medium">All-in-one Android device with receipt printing power</p>
                 </div>
               </div>
               <p className="text-lg text-gray-600 mb-8">
-                A battery-powered Android payment terminal that you can turn into an all-in-one device by installing a POS app and other apps, like an inventory management system. It features a 5.5" touch display and a built-in printer.
+                A battery-powered Android card reader paired with our app makes this unit all you need to bring to run an Offsite or Pop Up. Featuring a large 5.5" touch display, built-in printer, and camera that acts as a scanner.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
@@ -69,7 +69,7 @@ function S1f2Page({ onNavigateBack }) {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <Smartphone className="h-8 w-8 text-[#f08e80] mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Android Platform</h3>
-              <p className="text-gray-600">Runs on Android 10 with the ability to install POS apps and other business applications.</p>
+              <p className="text-gray-600">Runs on Android 10 with a quad-core processor. Plenty of power to run our Android POS app.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <Printer className="h-8 w-8 text-[#f08e80] mb-4" />
@@ -88,8 +88,8 @@ function S1f2Page({ onNavigateBack }) {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <Wifi className="h-8 w-8 text-[#f08e80] mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Wireless Connectivity</h3>
-              <p className="text-gray-600">Wi-Fi connection for seamless payment processing and app updates.</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Dual Connectivity</h3>
+              <p className="text-gray-600">Wi-Fi and 4g LTE cellular connectivity with automatic failover for uninterrupted service.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <Battery className="h-8 w-8 text-[#f08e80] mb-4" />
@@ -135,7 +135,11 @@ function S1f2Page({ onNavigateBack }) {
               <div className="space-y-4">
                 <div className="flex justify-between py-2 border-b border-gray-200">
                   <span className="text-gray-600">Connectivity</span>
-                  <span className="text-gray-900">Wi-Fi, Bluetooth</span>
+                  <span className="text-gray-900">Wi-Fi, 4g LTE Cellular</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200">
+                  <span className="text-gray-600">Failover</span>
+                  <span className="text-gray-900">Offline capable</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-200">
                   <span className="text-gray-600">Payment Methods</span>
@@ -148,10 +152,6 @@ function S1f2Page({ onNavigateBack }) {
                 <div className="flex justify-between py-2 border-b border-gray-200">
                   <span className="text-gray-600">Battery Life</span>
                   <span className="text-gray-900">Up to 15 hours</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Charging</span>
-                  <span className="text-gray-900">USB-C</span>
                 </div>
               </div>
             </div>
