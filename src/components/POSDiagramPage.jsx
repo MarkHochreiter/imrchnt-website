@@ -71,7 +71,7 @@ function POSDiagramPage({ onNavigateBack }) {
       title: "Barcode Scanner",
        hasVideo: true,
       videoSrc: scanSampleVideo,
-      description: "Scans product barcodes or customer QR codes.",
+      description: "Scans product barcodes with device camera.",
       icon: <Zap size={20} />,
       position: { top: '45%', left: '78%' }
     },
