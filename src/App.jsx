@@ -226,7 +226,7 @@ function App() {
              Web, Client, PC, Mac, Android or iOS.<br/> Sell on desktop, mobile, tablet, or card reader. 
           </p>
           
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+       <div className="grid md:grid-cols-3 gap-8 mb-16">
             <div className="text-center">
               <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Zap className="h-8 w-8 text-[#f08e80]" />
@@ -237,21 +237,21 @@ function App() {
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-blue-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Globe className="h-8 w-8 text-blue-600" />
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BarChart3 className="h-8 w-8 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Scale globally</h3>
+              <h3 className="text-xl font-semibold mb-2">Go big</h3>
               <p className="text-gray-600">
-                From local markets to international expansion, grow without limits.
+                A single platform that scales seamlessly from Pop Up to Multistore.
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-purple-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <BarChart3 className="h-8 w-8 text-purple-600" />
+              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-purple-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Optimize everything</h3>
+              <h3 className="text-xl font-semibold mb-2">Go home</h3>
               <p className="text-gray-600">
-                Built-in analytics and insights to maximize your business potential.
+                Track sales in real time from any device at home or anywhere you might be.
               </p>
             </div>
           </div>
