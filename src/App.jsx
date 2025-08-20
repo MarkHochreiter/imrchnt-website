@@ -191,10 +191,10 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-              Seamless POS. Anywhere, anytime
+              Seamless POS. Intuitive Design.
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-              In store, Pop up, Off site, on line or off. Intuitive design for minimal training.
+              In store, Pop up, Off site. Network connection or not. Sell anywhere, anytime.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
