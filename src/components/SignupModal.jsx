@@ -28,7 +28,7 @@ const SignupModal = ({ isOpen, onClose }) => {
     setErrorDetails('')
 
     // Replace this with your actual Google Apps Script URL
-    const scriptUrl = 'https://script.google.com/macros/s/AKfycbyx2JTK79rHqO_hqAWTyw6dLp5GOyuYYiDFiEDPAVhrgDjZ30XiyAy94WpqDJpV2VFKDg/exec'
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbyx2JTK79rHqO_hqAWTyw6dLp5GOyuYYiDFiEDPAVhrgDjZ30XiyAy94WpqDJpV2VFKDg/execV2VFKDg/exec'
     
     console.log('=== FORM SUBMISSION DEBUG ===')
     console.log('Script URL:', scriptUrl)
