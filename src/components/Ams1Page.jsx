@@ -69,12 +69,17 @@ function Ams1Page({ onNavigateBack }) {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <Smartphone className="h-8 w-8 text-[#f08e80] mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Android Platform</h3>
-              <p className="text-gray-600">Full Android operating system for running business applications alongside payment processing.</p>
+              <p className="text-gray-600">Runs on Android 10 with a quad-core processor. Plenty of power to run our Android POS app.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <CreditCard className="h-8 w-8 text-[#f08e80] mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">All Payment Types</h3>
-              <p className="text-gray-600">Fully EMV (chip) & contactless enabled (NFC), accepts credit, debit, gift cards, and eWallets.</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Adaptable</h3>
+              <p className="text-gray-600">Mount on a countertop charging dock or carry throughout your space</p>
+            </div>
+             <div className="bg-white p-6 rounded-lg shadow-sm">
+              <CreditCard className="h-8 w-8 text-[#f08e80] mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Payment Ready</h3>
+              <p className="text-gray-600">Contactless payments, EMV chip cards, and magnetic stripe support.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <Monitor className="h-8 w-8 text-[#f08e80] mb-4" />
@@ -88,13 +93,8 @@ function Ams1Page({ onNavigateBack }) {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <Battery className="h-8 w-8 text-[#f08e80] mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Replaceable Battery</h3>
-              <p className="text-gray-600">2598 mAh replaceable battery for extended use and easy maintenance.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <Shield className="h-8 w-8 text-[#f08e80] mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Secure Processing</h3>
-              <p className="text-gray-600">Triple track bi-directional MagStripe Reader with advanced security features.</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Long Battery</h3>
+              <p className="text-gray-600">USB-C charging for all-day use.</p>
             </div>
           </div>
         </div>
