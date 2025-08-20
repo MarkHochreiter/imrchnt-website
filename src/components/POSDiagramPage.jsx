@@ -33,31 +33,31 @@ function POSDiagramPage({ onNavigateBack }) {
       title: "Contactless Reader",
       description: "Accepts NFC cards and mobile payments like Apple Pay & Google Pay.",
       icon: <Wifi size={20} />,
-      position: { top: '15%', left: '50%' }
+      position: { top: '15%', left: '49%' }
     },
     {
-      id: 2,
+      id: 2, // DONE
       title: "5.5\" HD Touchscreen",
       description: "Intuitive interface for you and your customers.",
       icon: <Smartphone size={20} />,
-      position: { top: '70%', left: '50%' }
+      position: { top: '70%', left: '49%' }
     },
     {
       id: 3, // DONE
       title: "Chip Card Slot",
       description: "Securely processes EMV chip cards.",
       icon: <CreditCard size={20} />,
-      position: { top: '94%', left: '50%' }
+      position: { top: '94%', left: '49%' }
     },
     {
-      id: 4,
+      id: 4, // DONE
       title: "Built-in Printer",
       description: "Fast thermal receipt printing for customer convenience.",
       icon: <Printer size={20} />,
-      position: { top: '30%', left: '78%' }
+      position: { top: '29%', left: '78%' }
     },
     {
-      id: 5,
+      id: 5, // DONE
       title: "Item Details",
       description: "Description, Product Number, Unit Price of item in Cart.",
       icon: <Shield size={20} />,
@@ -65,35 +65,35 @@ function POSDiagramPage({ onNavigateBack }) {
     },
     // New Features from our grid session
     {
-      id: 6,
+      id: 6, // DONE
       title: "Barcode Scanner",
       description: "Scans product barcodes or customer QR codes.",
       icon: <Zap size={20} />,
-      position: { top: '45%', left: '77%' }
+      position: { top: '45%', left: '78%' }
     },
     {
-      id: 7,
+      id: 7, // DONE
       title: "Delete Item",
       description: "Remove an item from the current order.",
       icon: <Trash2 size={20} />,
       position: { top: '51%', left: '80%' }
     },
     {
-      id: 8,
+      id: 8, 
       title: "Adjust Quantity",
       description: "Increase or decrease the quantity of the selected item.",
       icon: <PlusCircle size={20} />,
-      position: { top: '56%', left: '50%' }
+      position: { top: '57%', left: '80%' }
     },
     {
-      id: 9,
+      id: 9, // DONE
       title: "Search Products",
       description: "Quickly find a product or item in your inventory.",
       icon: <Search size={20} />,
       position: { top: '45%', left: '51%' }
     },
     {
-      id: 10,
+      id: 10, // DONE
       title: "POS Drawer",
       description: [
         "Access POS functions:",
@@ -105,7 +105,7 @@ function POSDiagramPage({ onNavigateBack }) {
       position: { top: '38%', left: '80%' }
     },
     {
-      id: 11,
+      id: 11, // DONE
       title: "Home Screen",
       description: [
         "Access Home dashboard functions:",
@@ -117,7 +117,7 @@ function POSDiagramPage({ onNavigateBack }) {
       position: { top: '38%', left: '18%' }
     },
      {
-      id: 12, 
+      id: 12, // DONE
       title: "Sale Total",
       description: "",
       icon: <DollarSign size={20} />,
