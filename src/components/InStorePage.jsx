@@ -1,7 +1,25 @@
-import { Monitor, Users, Zap, ChevronRight } from 'lucide-react'
-import { Button } from '@/components/ui/button.jsx'
+import { Monitor, Users, Zap, ChevronRight } from 'lucide-react';
 
-function InStorePage() {
+// It's good practice to define or import the Button component here as well.
+// If it's not imported, it should be passed in as a prop or defined locally.
+const Button = ({ children, className = '', size = 'default', onClick, ...props }) => {
+  const sizeClasses = {
+    default: 'px-4 py-2',
+    lg: 'px-6 py-3 text-lg'
+  };
+  
+  return (
+    <button
+      className={`inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${sizeClasses[size]} ${className}`}
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
+function InStorePage({ onSignupClick, onNavigate }) {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -17,7 +35,7 @@ function InStorePage() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 className="bg-[#f08e80] hover:bg-violet-400 text-white"
-                onClick={handleSignupClick}
+                onClick={onSignupClick}
               >
               Request Access
               </Button>
@@ -59,7 +77,10 @@ function InStorePage() {
                   <span>Detailed sales reporting</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
+              <Button 
+                className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={() => onNavigate('pos-diagram')}
+              >
                 Learn More About POS
               </Button>
             </div>
@@ -175,8 +196,8 @@ function InStorePage() {
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Get started with our comprehensive InStore solutions today and see the difference in your retail operations.
           </p>
-          <Button size="lg" className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4">
-            Start Your Free Trial
+          <Button size="lg" className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4" onClick={onSignupClick}>
+            Request Access
           </Button>
         </div>
       </section>
@@ -184,4 +205,4 @@ function InStorePage() {
   )
 }
 
-export default InStorePage
+export default InStorePage;
