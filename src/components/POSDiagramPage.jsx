@@ -1,6 +1,6 @@
 import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer } from 'lucide-react';
 import { useState } from 'react';
-import s1f2POS from '../assets/s1f2_pos.png;
+import s1f2POS from '../assets/s1f2_pos.png
 
 // A reusable Button component, matching the new aesthetic.
 const Button = ({ children, className = '', variant = 'primary', ...props }) => {
