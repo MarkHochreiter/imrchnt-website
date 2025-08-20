@@ -87,7 +87,7 @@ const SignupModal = ({ isOpen, onClose }) => {
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Get Started Free</h2>
-            <p className="text-gray-600 mt-1">Join thousands of businesses using our platform</p>
+            <p className="text-gray-600 mt-1">Join other retailers using our platform</p>
           </div>
           <button
             onClick={onClose}
