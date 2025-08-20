@@ -217,7 +217,7 @@ function POSDiagramPage({ onNavigateBack }) {
                       {feature.hasVideo && feature.videoSrc && (
                         <div className="mb-3">
                           <video 
-                            className="w-full h-60 object-cover rounded-md"
+                            className="w-full h-75 object-cover rounded-md"
                             autoPlay
                             loop
                             muted
