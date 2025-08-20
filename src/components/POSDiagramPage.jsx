@@ -125,6 +125,19 @@ function POSDiagramPage({ onNavigateBack }) {
       description: "",
       icon: <DollarSign size={20} />,
       position: { top: '45%', left: '18%' }
+    },
+        {
+      id: 13, 
+      title: "Payment",
+      description: [
+        "Tender Sale with:",
+        "Credit/Debit",
+        "Cash",
+        "Gift Card (COMING SOON)",
+        "Simple Tender"
+      ],
+      icon: <DollarSign size={20} />,
+      position: { top: '38%', left: '18%' }
     }
   ];
 
@@ -204,7 +217,7 @@ function POSDiagramPage({ onNavigateBack }) {
                       {feature.hasVideo && feature.videoSrc && (
                         <div className="mb-3">
                           <video 
-                            className="w-full h-48 object-cover rounded-md"
+                            className="w-full h-60 object-cover rounded-md"
                             autoPlay
                             loop
                             muted
