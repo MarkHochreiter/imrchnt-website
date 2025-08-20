@@ -40,10 +40,10 @@ function POSDiagramPage({ onNavigateBack }) {
       title: "5.5\" HD Touchscreen",
       description: "Intuitive interface for you and your customers.",
       icon: <Smartphone size={20} />,
-      position: { top: '75%', left: '50%' }
+      position: { top: '70%', left: '50%' }
     },
     {
-      id: 3,
+      id: 3, // DONE
       title: "Chip Card Slot",
       description: "Securely processes EMV chip cards.",
       icon: <CreditCard size={20} />,
@@ -54,14 +54,14 @@ function POSDiagramPage({ onNavigateBack }) {
       title: "Built-in Printer",
       description: "Fast thermal receipt printing for customer convenience.",
       icon: <Printer size={20} />,
-      position: { top: '30%', left: '85%' }
+      position: { top: '30%', left: '78%' }
     },
     {
       id: 5,
       title: "Item Details",
       description: "Description, Product Number, Unit Price of item in Cart.",
       icon: <Shield size={20} />,
-      position: { top: '55%', left: '18%' }
+      position: { top: '53%', left: '18%' }
     },
     // New Features from our grid session
     {
@@ -69,7 +69,7 @@ function POSDiagramPage({ onNavigateBack }) {
       title: "Barcode Scanner",
       description: "Scans product barcodes or customer QR codes.",
       icon: <Zap size={20} />,
-      position: { top: '48%', left: '77%' }
+      position: { top: '45%', left: '77%' }
     },
     {
       id: 7,
@@ -90,7 +90,7 @@ function POSDiagramPage({ onNavigateBack }) {
       title: "Search Products",
       description: "Quickly find a product or item in your inventory.",
       icon: <Search size={20} />,
-      position: { top: '48%', left: '50%' }
+      position: { top: '45%', left: '51%' }
     },
     {
       id: 10,
@@ -102,7 +102,7 @@ function POSDiagramPage({ onNavigateBack }) {
         "Transactions"
       ],
       icon: <Grid size={20} />,
-      position: { top: '35%', left: '88%' }
+      position: { top: '38%', left: '80%' }
     },
     {
       id: 11,
@@ -114,7 +114,7 @@ function POSDiagramPage({ onNavigateBack }) {
         "Sign out"
       ],
       icon: <Home size={20} />,
-      position: { top: '37%', left: '18%' }
+      position: { top: '38%', left: '18%' }
     }
   ];
 
