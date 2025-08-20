@@ -122,7 +122,7 @@ function App() {
                 className="bg-[#f08e80] hover:bg-violet-400 text-white"
                 onClick={handleSignupClick}
               >
-                Start for free
+                Request Access
               </Button>
             </div>
 
@@ -151,7 +151,7 @@ function App() {
                 className="w-full bg-[#f08e80] hover:bg-green-700 text-white mt-2"
                 onClick={handleSignupClick}
               >
-                Start for free
+                Request access
               </Button>
             </div>
           </div>
@@ -202,7 +202,7 @@ function App() {
                 className="bg-[#f08e80] hover:bg-violet-400 text-white text-lg px-8 py-4"
                 onClick={handleSignupClick}
               >
-                Start for free
+                Request access
               </Button>
               <p className="text-base md:text-right text-gray-300 mb-8 max-w-2xl ml-auto">
              "I've never had such a smooth time at a large offsite and I can't tell you how excited I am about it!"
@@ -372,7 +372,7 @@ function App() {
             className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4"
             onClick={handleSignupClick}
           >
-            Start for free
+            Request access
           </Button>
         </div>
       </section>
