@@ -1,6 +1,7 @@
 import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer, Trash2, PlusCircle, Search, Grid, Home, DollarSign } from 'lucide-react';
 import { useState } from 'react';
 import s1f2POS from '../assets/s1f2_pos.png';
+import scanSampleVideo from '../assets/scan_sample.mp4';
 
 // A reusable Button component, matching the new aesthetic.
 const Button = ({ children, className = '', variant = 'primary', ...props }) => {
@@ -65,11 +66,13 @@ function POSDiagramPage({ onNavigateBack }) {
     },
     // New Features from our grid session
     {
-      id: 6, // DONE
+      id: 6, // UPDATED - Now includes video
       title: "Barcode Scanner",
       description: "Scans product barcodes or customer QR codes.",
       icon: <Zap size={20} />,
-      position: { top: '45%', left: '78%' }
+      position: { top: '45%', left: '78%' },
+      hasVideo: true,
+      videoSrc: scanSampleVideo
     },
     {
       id: 7, // DONE
@@ -183,7 +186,9 @@ function POSDiagramPage({ onNavigateBack }) {
                   {/* Tooltip */}
                   {hoveredFeature === feature.id && (
                     <div 
-                      className="absolute z-10 bg-gray-900 text-white p-3 rounded-lg shadow-xl w-64"
+                      className={`absolute z-10 bg-gray-900 text-white p-3 rounded-lg shadow-xl ${
+                        feature.hasVideo ? 'w-80' : 'w-64'
+                      }`}
                       style={{
                         bottom: '150%', 
                         left: '50%',
@@ -194,6 +199,23 @@ function POSDiagramPage({ onNavigateBack }) {
                         <div className="text-[#f08e80] mr-2">{feature.icon}</div>
                         <h4 className="font-bold">{feature.title}</h4>
                       </div>
+                      
+                      {/* Video for Barcode Scanner (id: 6) */}
+                      {feature.hasVideo && feature.videoSrc && (
+                        <div className="mb-3">
+                          <video 
+                            className="w-full h-32 object-cover rounded-md"
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                          >
+                            <source src={feature.videoSrc} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                      )}
+                      
                       <div className="text-sm text-gray-300">
                         {Array.isArray(feature.description) ? (
                           <>
@@ -248,6 +270,22 @@ function POSDiagramPage({ onNavigateBack }) {
                           <p>{feature.description}</p>
                         )}
                       </div>
+                      
+                      {/* Show video preview in the feature list for id: 6 */}
+                      {feature.hasVideo && feature.videoSrc && (
+                        <div className="mt-2">
+                          <video 
+                            className="w-32 h-20 object-cover rounded-md border"
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                          >
+                            <source src={feature.videoSrc} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                      )}
                     </div>
                   </li>
                 ))}
@@ -261,3 +299,4 @@ function POSDiagramPage({ onNavigateBack }) {
 }
 
 export default POSDiagramPage;
+
