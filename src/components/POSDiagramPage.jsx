@@ -51,7 +51,7 @@ function POSDiagramPage({ onNavigateBack }) {
       position: { top: '94%', left: '49%' }
     },
     {
-      id: 4, // DONE
+      id: 13, // DONE
       title: "Built-in Printer",
       description: "Fast thermal receipt printing for customer convenience.",
       icon: <Printer size={20} />,
@@ -127,7 +127,7 @@ function POSDiagramPage({ onNavigateBack }) {
       position: { top: '45%', left: '18%' }
     },
         {
-      id: 13, 
+      id: 4, 
       title: "Payment",
       description: [
         "Tender Sale with:",
@@ -137,7 +137,7 @@ function POSDiagramPage({ onNavigateBack }) {
         "Simple Tender"
       ],
       icon: <DollarSign size={20} />,
-      position: { top: '38%', left: '18%' }
+      position: { top: '80%', left: '18%' }
     }
   ];
 
