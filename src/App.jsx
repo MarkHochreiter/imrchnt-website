@@ -202,7 +202,7 @@ function App() {
               Seamless POS. Intuitive Design.
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-              In store, Pop up, Off site. Network connection or not.<br /> Sell anywhere, anytime.
+              Pop up, Off site, In store. <br /> Network connection or not.<br /> Minimal training. <br /> Anyone, anywhere, anytime.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
