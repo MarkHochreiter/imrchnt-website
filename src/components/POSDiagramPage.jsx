@@ -1,4 +1,4 @@
-import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer } from 'lucide-react';
+import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer, Trash2, PlusCircle, Search, Grid, Home } from 'lucide-react';
 import { useState } from 'react';
 import s1f2POS from '../assets/s1f2_pos.png';
 
@@ -27,84 +27,90 @@ function POSDiagramPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
 
   const features = [
+    // Original Features with updated coordinates
     {
       id: 1,
       title: "Contactless Reader",
       description: "Accepts NFC cards and mobile payments like Apple Pay & Google Pay.",
       icon: <Wifi size={20} />,
-      position: { top: '18%', left: '50%' }
+      position: { top: '15%', left: '50%' }
     },
     {
       id: 2,
       title: "5.5\" HD Touchscreen",
       description: "Intuitive interface for you and your customers.",
       icon: <Smartphone size={20} />,
-      position: { top: '45%', left: '50%' }
+      position: { top: '55%', left: '50%' }
     },
     {
       id: 3,
       title: "Chip Card Slot",
       description: "Securely processes EMV chip cards.",
       icon: <CreditCard size={20} />,
-      position: { top: '88%', left: '50%' }
+      position: { top: '94%', left: '50%' }
     },
     {
       id: 4,
       title: "Built-in Printer",
       description: "Fast thermal receipt printing for customer convenience.",
       icon: <Printer size={20} />,
-      position: { top: '30%', left: '85%' }
+      position: { top: '10%', left: '85%' }
     },
     {
       id: 5,
       title: "Secure Android OS",
       description: "Powered by a secure and flexible operating system.",
       icon: <Shield size={20} />,
-      position: { top: '60%', left: '15%' }
+      position: { top: '35%', left: '18%' }
+    },
+    // New Features from our grid session
+    {
+      id: 6,
+      title: "Barcode Scanner",
+      description: "Scans product barcodes or customer QR codes.",
+      icon: <Zap size={20} />,
+      position: { top: '48%', left: '75%' }
     },
     {
-  id: 6, // Or the next available number
-  title: "Barcode Scanner", // This icon often represents a barcode or QR code scanner
-  description: "Scans product barcodes.",
-  icon: <Zap size={20} />, // Or another icon you prefer
-  position: { top: '48%', left: '75%' }
-  },
+      id: 7,
+      title: "Delete Item",
+      description: "Remove an item from the current order.",
+      icon: <Trash2 size={20} />,
+      position: { top: '65%', left: '85%' }
+    },
     {
-  id: 7, // Or the next available number
-  title: "Remove Item",
-  description: "Remove an item from the current order.",
-  icon: <Trash2 size={20} />, // Using a lucide-react icon
-  position: { top: '65%', left: '85%' }
-  },
+      id: 8,
+      title: "Adjust Quantity",
+      description: "Increase or decrease the quantity of the selected item.",
+      icon: <PlusCircle size={20} />,
+      position: { top: '73%', left: '80%' }
+    },
     {
-  id: 8, // Or the next available number
-  title: "Adjust Quantity",
-  description: "Increase or decrease the quantity of the selected item.",
-  icon: <PlusCircle size={20} />, // Example icon from lucide-react
-  position: { top: '73%', left: '80%' }
-},
+      id: 9,
+      title: "Search Products",
+      description: "Quickly find a product or item in your inventory.",
+      icon: <Search size={20} />,
+      position: { top: '56%', left: '65%' }
+    },
     {
-  id: 9, // Or the next available number
-  title: "Search Products",
-  description: "Quickly find a product or item in your inventory.",
-  icon: <Search size={20} />, // Using the lucide-react icon
-  position: { top: '56%', left: '65%' }
-},
+      id: 10,
+      title: "Product Grid",
+      description: "Switch to a grid view of your products or categories.",
+      icon: <Grid size={20} />,
+      position: { top: '35%', left: '88%' }
+    },
     {
-  id: 10, // Or the next available number
-  title: "POS Drawer",
-  description: "Access POS functions; Clear Cart, Close Day, Transactions",
-  icon: <Grid size={20} />, // Using a lucide-react icon
-  position: { top: '35%', left: '88%' }
-},
-    {
-  id: 11, // Or the next available number
-  title: "Home Screen",
-  description: "Return to the main dashboard; Continue sale, Manage offline settings, Sign out.",
-  icon: <Home size={20} />, // Using a lucide-react icon
-  position: { top: '35%', left: '18%' }
-},
-
+      id: 11,
+      title: "Home Screen",
+      description: [
+        "Return to the main dashboard or perform other actions:",
+        "Continue sale",
+        "Manage offline settings",
+        "Sign out"
+      ],
+      icon: <Home size={20} />,
+      position: { top: '35%', left: '18%' }
+    }
   ];
 
   return (
@@ -117,14 +123,12 @@ function POSDiagramPage({ onNavigateBack }) {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to InStore Solutions
             </Button>
-            {/* You can add action buttons here if needed */}
           </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-        {/* Page Title */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
             S1f2 Terminal Anatomy
@@ -143,14 +147,14 @@ function POSDiagramPage({ onNavigateBack }) {
             <div className="relative">
               <div className="bg-gray-50 p-8 rounded-2xl shadow-sm">
                 <img 
-                  src={s1f2POS} // s1f2 with pos
+                  src={s1f2POS}
                   alt="S1f2 Payment Terminal"
                   className="max-w-full h-auto max-h-[500px] object-contain"
                 />
               </div>
 
               {/* Interactive Feature Points */}
-              {features.map((feature ) => (
+              {features.map((feature) => (
                 <div
                   key={feature.id}
                   className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
@@ -175,7 +179,21 @@ function POSDiagramPage({ onNavigateBack }) {
                         <div className="text-[#f08e80] mr-2">{feature.icon}</div>
                         <h4 className="font-bold">{feature.title}</h4>
                       </div>
-                      <p className="text-sm text-gray-300">{feature.description}</p>
+                      {/* UPDATED DESCRIPTION LOGIC */}
+                      <div className="text-sm text-gray-300">
+                        {Array.isArray(feature.description) ? (
+                          <>
+                            <p>{feature.description[0]}</p>
+                            <ul className="list-disc list-inside mt-2 pl-2 space-y-1">
+                              {feature.description.slice(1).map((item, index) => (
+                                <li key={index}>{item}</li>
+                              ))}
+                            </ul>
+                          </>
+                        ) : (
+                          <p>{feature.description}</p>
+                        )}
+                      </div>
                       <div className="absolute w-4 h-4 bg-gray-900 transform rotate-45 -bottom-2 left-1/2 -translate-x-1/2" />
                     </div>
                   )}
@@ -202,7 +220,21 @@ function POSDiagramPage({ onNavigateBack }) {
                     </div>
                     <div className="ml-4">
                       <h3 className="text-lg font-semibold text-gray-800">{feature.title}</h3>
-                      <p className="text-gray-600">{feature.description}</p>
+                      {/* Also update the side list to handle array descriptions */}
+                      <div className="text-gray-600">
+                        {Array.isArray(feature.description) ? (
+                          <>
+                            <p>{feature.description[0]}</p>
+                            <ul className="list-disc list-inside mt-1 pl-2 text-sm">
+                              {feature.description.slice(1).map((item, index) => (
+                                <li key={index}>{item}</li>
+                              ))}
+                            </ul>
+                          </>
+                        ) : (
+                          <p>{feature.description}</p>
+                        )}
+                      </div>
                     </div>
                   </li>
                 ))}
