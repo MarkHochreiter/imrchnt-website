@@ -143,7 +143,7 @@ function POSDiagramPage({ onNavigateBack }) {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-            S1f2 Terminal Anatomy
+            All-in-one Anatomy
           </h1>
           <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
             An interactive look at the key components of our all-in-one payment solution. 
@@ -219,7 +219,7 @@ function POSDiagramPage({ onNavigateBack }) {
           {/* Right side: Feature List */}
           <div className="space-y-6">
             <div className="flex items-start">
-              <img src="https://i.imgur.com/vJeS4pC.png" alt="imrchnt logo" className="h-8 mr-4 mt-1" />
+              <img src={s1f2POS} alt="imrchnt logo" className="h-8 mr-4 mt-1" />
               <div>
                 <h2 className="text-3xl font-bold text-gray-800">Core Features</h2>
                 <p className="text-gray-500 mt-1">The S1f2 is designed for reliability and ease of use.</p>
