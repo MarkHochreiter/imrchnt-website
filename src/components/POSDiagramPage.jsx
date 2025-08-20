@@ -2,6 +2,7 @@ import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer, Trash2, 
 import { useState } from 'react';
 import s1f2POS from '../assets/s1f2_pos.png';
 import scanSampleVideo from '../assets/scan_sample.mp4';
+import paymentSampleVideo from '../assets/payment_sample.mp4';
 
 // A reusable Button component, matching the new aesthetic.
 const Button = ({ children, className = '', variant = 'primary', ...props }) => {
@@ -68,11 +69,11 @@ function POSDiagramPage({ onNavigateBack }) {
     {
       id: 6, // UPDATED - Now includes video
       title: "Barcode Scanner",
+       hasVideo: true,
+      videoSrc: scanSampleVideo,
       description: "Scans product barcodes or customer QR codes.",
       icon: <Zap size={20} />,
-      position: { top: '45%', left: '78%' },
-      hasVideo: true,
-      videoSrc: scanSampleVideo
+      position: { top: '45%', left: '78%' }
     },
     {
       id: 7, // DONE
@@ -127,8 +128,10 @@ function POSDiagramPage({ onNavigateBack }) {
       position: { top: '45%', left: '18%' }
     },
         {
-      id: 4, 
+      id: 4, // paymentSampleVideo
       title: "Payment",
+      hasVideo: true,
+      videoSrc: paymentSampleVideo,
       description: [
         "Tender Sale with:",
         "Credit/Debit",
@@ -217,7 +220,7 @@ function POSDiagramPage({ onNavigateBack }) {
                       {feature.hasVideo && feature.videoSrc && (
                         <div className="mb-3">
                           <video 
-                            className="w-full h-75 object-cover rounded-md"
+                            className="w-full h-full object-cover rounded-md"
                             autoPlay
                             loop
                             muted
