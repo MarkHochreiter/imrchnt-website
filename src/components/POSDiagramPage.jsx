@@ -62,6 +62,49 @@ function POSDiagramPage({ onNavigateBack }) {
       icon: <Shield size={20} />,
       position: { top: '60%', left: '15%' }
     },
+    {
+  id: 6, // Or the next available number
+  title: "Barcode Scanner", // This icon often represents a barcode or QR code scanner
+  description: "Scans product barcodes.",
+  icon: <Zap size={20} />, // Or another icon you prefer
+  position: { top: '48%', left: '75%' }
+  },
+    {
+  id: 7, // Or the next available number
+  title: "Remove Item",
+  description: "Remove an item from the current order.",
+  icon: <Trash2 size={20} />, // Using a lucide-react icon
+  position: { top: '65%', left: '85%' }
+  },
+    {
+  id: 8, // Or the next available number
+  title: "Adjust Quantity",
+  description: "Increase or decrease the quantity of the selected item.",
+  icon: <PlusCircle size={20} />, // Example icon from lucide-react
+  position: { top: '73%', left: '80%' }
+},
+    {
+  id: 9, // Or the next available number
+  title: "Search Products",
+  description: "Quickly find a product or item in your inventory.",
+  icon: <Search size={20} />, // Using the lucide-react icon
+  position: { top: '56%', left: '65%' }
+},
+    {
+  id: 10, // Or the next available number
+  title: "POS Drawer",
+  description: "Access POS functions; Clear Cart, Close Day, Transactions",
+  icon: <Grid size={20} />, // Using a lucide-react icon
+  position: { top: '35%', left: '88%' }
+},
+    {
+  id: 11, // Or the next available number
+  title: "Home Screen",
+  description: "Return to the main dashboard; Continue sale, Manage offline settings, Sign out.",
+  icon: <Home size={20} />, // Using a lucide-react icon
+  position: { top: '35%', left: '18%' }
+}
+
   ];
 
   return (
