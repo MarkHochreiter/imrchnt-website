@@ -13,6 +13,7 @@ import S1f2Page from './components/S1f2Page.jsx'
 import Ams1Page from './components/Ams1Page.jsx'
 import Sfo1Page from './components/Sfo1Page.jsx'
 import SignupModal from './components/SignupModal.jsx'
+import POSDiagramPage from './components/POSDiagramPage'
 import './App.css'
 
 // Button component
@@ -266,66 +267,6 @@ function App() {
         </div>
       </section>
 
-    {/* Features Grid
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Everything you need to sell
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              From payment processing to inventory management, we've got you covered.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <Smartphone className="h-12 w-12 text-[#f08e80] mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Mobile POS</h3>
-              <p className="text-gray-600">
-                Turn any device into a point of sale with our mobile app.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <ShoppingCart className="h-12 w-12 text-blue-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Inventory Management</h3>
-              <p className="text-gray-600">
-                Track stock levels, manage variants, and automate reordering.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <BarChart3 className="h-12 w-12 text-purple-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Analytics & Reports</h3>
-              <p className="text-gray-600">
-                Get insights into sales, customers, and business performance.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <Users className="h-12 w-12 text-green-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Customer Management</h3>
-              <p className="text-gray-600">
-                Build customer profiles and create targeted marketing campaigns.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <Globe className="h-12 w-12 text-indigo-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Multi-Channel Selling</h3>
-              <p className="text-gray-600">
-                InStore, Offsite, Pop-Up, all on one platform.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <Zap className="h-12 w-12 text-yellow-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Fast Checkout</h3>
-              <p className="text-gray-600">
-                Lightning-fast transactions with multiple payment options.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-          */}
-
       {/* Stats Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -390,41 +331,39 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <img src={logo} alt="Implus Offsite POS Logo" className="h-8" />
+              <img src={logo} alt="Implus Offsite POS Logo" className="h-8 mb-4" />
               <p className="text-gray-400">
-                The commerce platform trusted by millions of businesses worldwide.
+                The complete point-of-sale solution for modern businesses.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Company</h3>
+              <h3 className="font-semibold mb-4">Solutions</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">About</a></li>
-                <li><a href="#" className="hover:text-white">Careers</a></li>
-                <li><a href="#" className="hover:text-white">Press</a></li>
-                <li><a href="#" className="hover:text-white">News</a></li>
+                <li><a href="#" className="hover:text-white">InStore</a></li>
+                <li><a href="#" className="hover:text-white">Offsite</a></li>
+                <li><a href="#" className="hover:text-white">Manage</a></li>
+                <li><a href="#" className="hover:text-white">Credit Cards</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Resources</h3>
+              <h3 className="font-semibold mb-4">Hardware</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Blog</a></li>
-                <li><a href="#" className="hover:text-white">Help Center</a></li>
-                <li><a href="#" className="hover:text-white">API Docs</a></li>
-                <li><a href="#" className="hover:text-white">Community</a></li>
+                <li><a href="#" className="hover:text-white">S1f2</a></li>
+                <li><a href="#" className="hover:text-white">AMS1</a></li>
+                <li><a href="#" className="hover:text-white">SFO1</a></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold mb-4">Support</h3>
               <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white">Help Center</a></li>
                 <li><a href="#" className="hover:text-white">Contact</a></li>
                 <li><a href="#" className="hover:text-white">Status</a></li>
-                <li><a href="#" className="hover:text-white">Privacy</a></li>
-                <li><a href="#" className="hover:text-white">Terms</a></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Commerce Platform. All rights reserved.</p>
+            <p>&copy; 2024 Implus Offsite POS. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -440,11 +379,13 @@ function App() {
       ) : currentPage === 'credit-cards' ? (
         <CreditCardProcessingPage />
       ) : currentPage === 's1f2' ? (
-        <S1f2Page onNavigateBack={() => setCurrentPage('home')} />
+        <S1f2Page />
       ) : currentPage === 'ams1' ? (
-        <Ams1Page onNavigateBack={() => setCurrentPage('home')} />
+        <Ams1Page />
       ) : currentPage === 'sfo1' ? (
-        <Sfo1Page onNavigateBack={() => setCurrentPage('home')} />
+        <Sfo1Page />
+      ) : currentPage === 'pos-diagram' ? (
+        <POSDiagramPage />
       ) : null}
     </div>
   )
