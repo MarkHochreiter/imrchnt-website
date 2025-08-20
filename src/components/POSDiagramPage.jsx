@@ -1,5 +1,6 @@
 import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer } from 'lucide-react';
 import { useState } from 'react';
+import s1f2POS from '../assets/s1f2_pos.png;
 
 // A reusable Button component, matching the new aesthetic.
 const Button = ({ children, className = '', variant = 'primary', ...props }) => {
@@ -99,7 +100,7 @@ function POSDiagramPage({ onNavigateBack }) {
             <div className="relative">
               <div className="bg-gray-50 p-8 rounded-2xl shadow-sm">
                 <img 
-                  src="https://i.imgur.com/j5a9e9r.png" // Placeholder for the device image
+                  src={s1f2POS} // s1f2 with pos
                   alt="S1f2 Payment Terminal"
                   className="max-w-full h-auto max-h-[500px] object-contain"
                 />
