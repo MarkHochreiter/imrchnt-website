@@ -12,7 +12,6 @@ const SignupModal = ({ isOpen, onClose }) => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
-  const [errorDetails, setErrorDetails] = useState('')
 
   const handleInputChange = (e) => {
     setFormData({
@@ -25,57 +24,29 @@ const SignupModal = ({ isOpen, onClose }) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus(null)
-    setErrorDetails('')
-
-    // Replace this with your actual Google Apps Script URL
-    const scriptUrl = 'https://script.google.com/macros/s/AKfycbyx2JTK79rHqO_hqAWTyw6dLp5GOyuYYiDFiEDPAVhrgDjZ30XiyAy94WpqDJpV2VFKDg/execV2VFKDg/exec'
-    
-    console.log('=== FORM SUBMISSION DEBUG ===')
-    console.log('Script URL:', scriptUrl)
-    console.log('Form data being sent:', formData)
-    console.log('Timestamp:', new Date().toISOString())
 
     try {
-      const payload = {
-        ...formData,
-        timestamp: new Date().toISOString(),
-        source: 'Website Signup'
-      }
+      // Create FormData from the form
+      const form = e.target
+      const formDataToSend = new FormData(form)
       
-      console.log('Full payload:', payload)
-      console.log('JSON payload:', JSON.stringify(payload))
-
-      const response = await fetch(scriptUrl, {
+      // Add timestamp
+      formDataToSend.append('timestamp', new Date().toISOString())
+      
+      console.log('Submitting to Netlify Forms...')
+      
+      const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formDataToSend).toString()
       })
 
-      console.log('Response received:')
-      console.log('- Status:', response.status)
-      console.log('- Status Text:', response.statusText)
-      console.log('- OK:', response.ok)
-      console.log('- Headers:', Object.fromEntries(response.headers.entries()))
+      console.log('Response status:', response.status)
 
-      // Get response text first
-      const responseText = await response.text()
-      console.log('- Raw response text:', responseText)
-
-      // Try to parse as JSON
-      let responseData
-      try {
-        responseData = JSON.parse(responseText)
-        console.log('- Parsed response data:', responseData)
-      } catch (parseError) {
-        console.error('- Failed to parse response as JSON:', parseError)
-        responseData = { status: 'error', message: 'Invalid JSON response: ' + responseText }
-      }
-
-      if (response.ok && responseData.status === 'success') {
-        console.log('✅ SUCCESS: Form submitted successfully')
+      if (response.ok) {
+        console.log('✅ Form submitted successfully to Netlify')
         setSubmitStatus('success')
+        
         // Reset form
         setFormData({
           firstName: '',
@@ -85,40 +56,21 @@ const SignupModal = ({ isOpen, onClose }) => {
           phone: '',
           businessType: ''
         })
+        
         // Close modal after 2 seconds
         setTimeout(() => {
           onClose()
           setSubmitStatus(null)
         }, 2000)
       } else {
-        console.error('❌ SUBMISSION FAILED:')
-        console.error('- Response status:', response.status)
-        console.error('- Response data:', responseData)
-        
-        const errorMsg = responseData?.message || `HTTP ${response.status}: ${response.statusText}`
-        setErrorDetails(errorMsg)
+        console.error('❌ Form submission failed:', response.status)
         setSubmitStatus('error')
       }
     } catch (error) {
-      console.error('❌ FETCH ERROR:', error)
-      console.error('- Error name:', error.name)
-      console.error('- Error message:', error.message)
-      console.error('- Error stack:', error.stack)
-      
-      let errorMsg = 'Network error: ' + error.message
-      
-      // Check for common error types
-      if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        errorMsg = 'Cannot connect to server. Check your Google Apps Script URL.'
-      } else if (error.message.includes('CORS')) {
-        errorMsg = 'CORS error. Make sure your Google Apps Script is deployed with "Anyone" access.'
-      }
-      
-      setErrorDetails(errorMsg)
+      console.error('❌ Network error:', error)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
-      console.log('=== END FORM SUBMISSION DEBUG ===')
     }
   }
 
@@ -142,7 +94,16 @@ const SignupModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form 
+          onSubmit={handleSubmit} 
+          className="p-6 space-y-4"
+          data-netlify="true" 
+          name="signup"
+          method="POST"
+        >
+          {/* Hidden field for Netlify */}
+          <input type="hidden" name="form-name" value="signup" />
+          
           {/* First Name & Last Name */}
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -272,9 +233,7 @@ const SignupModal = ({ isOpen, onClose }) => {
 
           {submitStatus === 'error' && (
             <div className="bg-red-50 border border-red-200 rounded-md p-3">
-              <p className="text-red-800 text-sm font-medium">❌ Something went wrong:</p>
-              <p className="text-red-700 text-xs mt-1 break-words">{errorDetails || 'Please try again.'}</p>
-              <p className="text-red-600 text-xs mt-2">Check the browser console (F12) for more details.</p>
+              <p className="text-red-800 text-sm">❌ Something went wrong. Please try again.</p>
             </div>
           )}
 
@@ -301,3 +260,4 @@ const SignupModal = ({ isOpen, onClose }) => {
 }
 
 export default SignupModal
+
