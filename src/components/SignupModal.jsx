@@ -12,6 +12,7 @@ const SignupModal = ({ isOpen, onClose }) => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
+  const [errorDetails, setErrorDetails] = useState('')
 
   const handleInputChange = (e) => {
     setFormData({
@@ -24,22 +25,56 @@ const SignupModal = ({ isOpen, onClose }) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus(null)
+    setErrorDetails('')
+
+    // Replace this with your actual Google Apps Script URL
+    const scriptUrl = 'YOUR_GOOGLE_APPS_SCRIPT_URL'
+    
+    console.log('=== FORM SUBMISSION DEBUG ===')
+    console.log('Script URL:', scriptUrl)
+    console.log('Form data being sent:', formData)
+    console.log('Timestamp:', new Date().toISOString())
 
     try {
-      // Google Sheets integration using Google Apps Script Web App
-      const response = await fetch('https://script.google.com/macros/s/AKfycbyx2JTK79rHqO_hqAWTyw6dLp5GOyuYYiDFiEDPAVhrgDjZ30XiyAy94WpqDJpV2VFKDg/exec', {
+      const payload = {
+        ...formData,
+        timestamp: new Date().toISOString(),
+        source: 'Website Signup'
+      }
+      
+      console.log('Full payload:', payload)
+      console.log('JSON payload:', JSON.stringify(payload))
+
+      const response = await fetch(scriptUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          timestamp: new Date().toISOString(),
-          source: 'Website Signup'
-        })
+        body: JSON.stringify(payload)
       })
 
-      if (response.ok) {
+      console.log('Response received:')
+      console.log('- Status:', response.status)
+      console.log('- Status Text:', response.statusText)
+      console.log('- OK:', response.ok)
+      console.log('- Headers:', Object.fromEntries(response.headers.entries()))
+
+      // Get response text first
+      const responseText = await response.text()
+      console.log('- Raw response text:', responseText)
+
+      // Try to parse as JSON
+      let responseData
+      try {
+        responseData = JSON.parse(responseText)
+        console.log('- Parsed response data:', responseData)
+      } catch (parseError) {
+        console.error('- Failed to parse response as JSON:', parseError)
+        responseData = { status: 'error', message: 'Invalid JSON response: ' + responseText }
+      }
+
+      if (response.ok && responseData.status === 'success') {
+        console.log('✅ SUCCESS: Form submitted successfully')
         setSubmitStatus('success')
         // Reset form
         setFormData({
@@ -56,13 +91,34 @@ const SignupModal = ({ isOpen, onClose }) => {
           setSubmitStatus(null)
         }, 2000)
       } else {
+        console.error('❌ SUBMISSION FAILED:')
+        console.error('- Response status:', response.status)
+        console.error('- Response data:', responseData)
+        
+        const errorMsg = responseData?.message || `HTTP ${response.status}: ${response.statusText}`
+        setErrorDetails(errorMsg)
         setSubmitStatus('error')
       }
     } catch (error) {
-      console.error('Error submitting form:', error)
+      console.error('❌ FETCH ERROR:', error)
+      console.error('- Error name:', error.name)
+      console.error('- Error message:', error.message)
+      console.error('- Error stack:', error.stack)
+      
+      let errorMsg = 'Network error: ' + error.message
+      
+      // Check for common error types
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        errorMsg = 'Cannot connect to server. Check your Google Apps Script URL.'
+      } else if (error.message.includes('CORS')) {
+        errorMsg = 'CORS error. Make sure your Google Apps Script is deployed with "Anyone" access.'
+      }
+      
+      setErrorDetails(errorMsg)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
+      console.log('=== END FORM SUBMISSION DEBUG ===')
     }
   }
 
@@ -75,7 +131,7 @@ const SignupModal = ({ isOpen, onClose }) => {
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Get Started Free</h2>
-            <p className="text-gray-600 mt-1">Join fellow retailers using our platform</p>
+            <p className="text-gray-600 mt-1">Join thousands of businesses using our platform</p>
           </div>
           <button
             onClick={onClose}
@@ -216,7 +272,9 @@ const SignupModal = ({ isOpen, onClose }) => {
 
           {submitStatus === 'error' && (
             <div className="bg-red-50 border border-red-200 rounded-md p-3">
-              <p className="text-red-800 text-sm">❌ Something went wrong. Please try again.</p>
+              <p className="text-red-800 text-sm font-medium">❌ Something went wrong:</p>
+              <p className="text-red-700 text-xs mt-1 break-words">{errorDetails || 'Please try again.'}</p>
+              <p className="text-red-600 text-xs mt-2">Check the browser console (F12) for more details.</p>
             </div>
           )}
 
@@ -243,4 +301,3 @@ const SignupModal = ({ isOpen, onClose }) => {
 }
 
 export default SignupModal
-
