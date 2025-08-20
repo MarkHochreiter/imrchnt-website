@@ -115,6 +115,7 @@ function POSDiagramPage({ onNavigateBack }) {
       ],
       icon: <Home size={20} />,
       position: { top: '38%', left: '18%' }
+    },
      {
       id: 12, 
       title: "Sale Total",
