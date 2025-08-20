@@ -103,7 +103,7 @@ function POSDiagramPage({ onNavigateBack }) {
   description: "Return to the main dashboard; Continue sale, Manage offline settings, Sign out.",
   icon: <Home size={20} />, // Using a lucide-react icon
   position: { top: '35%', left: '18%' }
-}
+},
 
   ];
 
