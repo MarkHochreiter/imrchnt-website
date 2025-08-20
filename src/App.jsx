@@ -13,7 +13,7 @@ import S1f2Page from './components/S1f2Page.jsx'
 import Ams1Page from './components/Ams1Page.jsx'
 import Sfo1Page from './components/Sfo1Page.jsx'
 import SignupModal from './components/SignupModal.jsx'
-import POSDiagramPage from './components/POSDiagramPage'
+import POSDiagramPage from './components/POSDiagramPage.jsx'
 import './App.css'
 
 // Button component
