@@ -20,25 +20,29 @@ const SignupModal = ({ isOpen, onClose }) => {
     })
   }
 
+  const encode = (data) => {
+    return Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&")
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus(null)
 
     try {
-      // Create FormData from the form
-      const form = e.target
-      const formDataToSend = new FormData(form)
-      
-      // Add timestamp
-      formDataToSend.append('timestamp', new Date().toISOString())
-      
       console.log('Submitting to Netlify Forms...')
+      console.log('Form data:', formData)
       
-      const response = await fetch('/', {
-        method: 'POST',
+      const response = await fetch("/", {
+        method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formDataToSend).toString()
+        body: encode({
+          "form-name": "signup",
+          ...formData,
+          timestamp: new Date().toISOString()
+        })
       })
 
       console.log('Response status:', response.status)
@@ -94,16 +98,7 @@ const SignupModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Form */}
-        <form 
-          onSubmit={handleSubmit} 
-          className="p-6 space-y-4"
-          data-netlify="true" 
-          name="signup"
-          method="POST"
-        >
-          {/* Hidden field for Netlify */}
-          <input type="hidden" name="form-name" value="signup" />
-          
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* First Name & Last Name */}
           <div className="grid grid-cols-2 gap-4">
             <div>
