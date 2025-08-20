@@ -135,23 +135,23 @@ function Ams1Page({ onNavigateBack }) {
               <div className="space-y-4">
                 <div className="flex justify-between py-2 border-b border-gray-200">
                   <span className="text-gray-600">Connectivity</span>
-                  <span className="text-gray-900">Wi-Fi, Cellular, Bluetooth</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Payment Methods</span>
-                  <span className="text-gray-900">EMV Chip, Contactless NFC, MagStripe</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Card Types</span>
-                  <span className="text-gray-900">Credit, Debit, Gift Cards, eWallets</span>
+                  <span className="text-gray-900">Wi-Fi, 4g LTE Cellular</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-200">
                   <span className="text-gray-600">Failover</span>
-                  <span className="text-gray-900">Automatic cellular backup</span>
+                  <span className="text-gray-900">Offline capable</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Audio</span>
-                  <span className="text-gray-900">Speaker & Audio Jack</span>
+                  <span className="text-gray-600">Payment Methods</span>
+                  <span className="text-gray-900">Contactless, EMV Chip, Magnetic Stripe</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200">
+                  <span className="text-gray-600">Receipts</span>
+                  <span className="text-gray-900">Email receipts or re-print to companion receipt printer</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200">
+                  <span className="text-gray-600">Battery Life</span>
+                  <span className="text-gray-900">Designed to last the businessday</span>
                 </div>
               </div>
             </div>
