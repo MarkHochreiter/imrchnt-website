@@ -40,7 +40,7 @@ function POSDiagramPage({ onNavigateBack }) {
       title: "5.5\" HD Touchscreen",
       description: "Intuitive interface for you and your customers.",
       icon: <Smartphone size={20} />,
-      position: { top: '55%', left: '50%' }
+      position: { top: '58%', left: '50%' }
     },
     {
       id: 3,
@@ -54,7 +54,7 @@ function POSDiagramPage({ onNavigateBack }) {
       title: "Built-in Printer",
       description: "Fast thermal receipt printing for customer convenience.",
       icon: <Printer size={20} />,
-      position: { top: '10%', left: '85%' }
+      position: { top: '25%', left: '85%' }
     },
     {
       id: 5,
@@ -69,33 +69,37 @@ function POSDiagramPage({ onNavigateBack }) {
       title: "Barcode Scanner",
       description: "Scans product barcodes or customer QR codes.",
       icon: <Zap size={20} />,
-      position: { top: '48%', left: '75%' }
+      position: { top: '40%', left: '77%' }
     },
     {
       id: 7,
       title: "Delete Item",
       description: "Remove an item from the current order.",
       icon: <Trash2 size={20} />,
-      position: { top: '65%', left: '85%' }
+      position: { top: '50%', left: '80%' }
     },
     {
       id: 8,
       title: "Adjust Quantity",
       description: "Increase or decrease the quantity of the selected item.",
       icon: <PlusCircle size={20} />,
-      position: { top: '73%', left: '80%' }
+      position: { top: '58%', left: '50%' }
     },
     {
       id: 9,
       title: "Search Products",
       description: "Quickly find a product or item in your inventory.",
       icon: <Search size={20} />,
-      position: { top: '56%', left: '65%' }
+      position: { top: '40%', left: '50%' }
     },
     {
       id: 10,
-      title: "Product Grid",
-      description: "Switch to a grid view of your products or categories.",
+      title: "POS Drawer",
+      description: [
+        "Clear cart",
+        "Close Day",
+        "Transactions"
+      ],
       icon: <Grid size={20} />,
       position: { top: '35%', left: '88%' }
     },
@@ -103,13 +107,12 @@ function POSDiagramPage({ onNavigateBack }) {
       id: 11,
       title: "Home Screen",
       description: [
-        "Return to the main dashboard or perform other actions:",
         "Continue sale",
         "Manage offline settings",
         "Sign out"
       ],
       icon: <Home size={20} />,
-      position: { top: '35%', left: '18%' }
+      position: { top: '40%', left: '18%' }
     }
   ];
 
