@@ -29,6 +29,37 @@ import {
 function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
   const menuData = [
     {
+      title: "System",
+      icon: <Store className="h-8 w-8 text-[#f08e80]" />,
+      items: [
+        {
+          title: "POS",
+          subtitle: "Cross platform Point of Sale",
+          icon: <Monitor className="h-5 w-5" />
+        },
+        {
+          title: "Admin",
+          subtitle: "Manage with ease",
+          icon: <Users className="h-5 w-5" />
+        },
+        {
+          title: "Reports",
+          subtitle: "Your operations, at a glance",
+          icon: <BarChart3 className="h-5 w-5" />
+        },
+        {
+          title: "Products",
+          subtitle: "Simplified inventory management",
+          icon: <Package className="h-5 w-5" />
+        },
+        {
+          title: "Customers",
+          subtitle: "Optimize the customer experience",
+          icon: <Users className="h-5 w-5" />
+        }
+      ]
+    },
+    {
       title: "InStore",
       icon: <Store className="h-8 w-8 text-[#f08e80]" />,
       items: [
@@ -138,7 +169,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
       onMouseLeave={onMouseLeave}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-4 gap-12">
+        <div className="grid grid-cols-5 gap-12">
           {menuData.map((column, columnIndex) => (
             <div key={columnIndex} className="space-y-6">
               {/* Column Header */}
@@ -158,6 +189,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                     onClick={(e) => {
                       e.preventDefault()
                       const pageMap = {
+                        'System': 'system',
                         'InStore': 'instore',
                         'Offsite': 'offsite', 
                         'Manage': 'manage',
@@ -165,6 +197,10 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                       }
                       const sectionMap = {
                         'POS': 'pos',
+                        'Admin': 'admin',
+                        'Reports': 'reports',
+                        'Products': 'products',
+                        'Customers': 'customers',
                         'Clienteling': 'clienteling',
                         'On Floor Assistance': 'on-floor-assistance',
                         'Single Device': 'single-device',
