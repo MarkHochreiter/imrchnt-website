@@ -138,13 +138,13 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
   if (!isVisible) return null
 
   return (
-    <div 
-      className="fixed top-16 left-0 w-full bg-white shadow-2xl border-t border-gray-200 z-[999]"
+        <div 
+      className="fixed top-16 left-0 w-0 bg-white shadow-t border-t border-gray-200 z-[999]"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-5 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-4 gap-8">
           {menuData.map((column, columnIndex) => (
             <div key={columnIndex} className="space-y-6">
               {/* Column Header */}
@@ -154,7 +154,6 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                   {column.title}
                 </h3>
               </div>
-              
               {/* Column Items */}
               <div className="space-y-4">
                 {column.items.map((item, itemIndex) => (
