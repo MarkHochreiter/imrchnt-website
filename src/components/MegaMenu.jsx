@@ -24,7 +24,6 @@ import {
   Archive,
   Repeat,
   Smartphone,
-  Settings,
 } from 'lucide-react'
 
 function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
