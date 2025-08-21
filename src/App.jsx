@@ -13,7 +13,8 @@ import S1f2Page from './components/S1f2Page.jsx'
 import Ams1Page from './components/Ams1Page.jsx'
 import Sfo1Page from './components/Sfo1Page.jsx'
 import SignupModal from './components/SignupModal.jsx'
-import POSDiagramPage from './components/POSDiagramPage.jsx' // Import the new page
+import POSDiagramPage from './components/POSDiagramPage.jsx'
+import SystemPage from './components/SystemPage.jsx' // Import the new SystemPage
 import './App.css'
 
 // Button component
@@ -256,6 +257,8 @@ function App() {
         );
       case 'pricing':
         return <PricingPage />;
+      case 'system':
+        return <SystemPage onNavigate={navigateTo} />;
       case 'instore':
         return <InStorePage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       case 'offsite':
@@ -319,6 +322,12 @@ function App() {
                 >
                   Hardware <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
+                <HardwareMegaMenu 
+                  isVisible={hardwareMegaMenuVisible}
+                  onMouseEnter={() => setHardwareMegaMenuVisible(true)}
+                  onMouseLeave={() => setHardwareMegaMenuVisible(false)}
+                  onNavigate={handleHardwareNavigation}
+                />
               </div>
               <div className="relative group">
                 <button 
@@ -327,6 +336,11 @@ function App() {
                 >
                   Support <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
+                <SupportMegaMenu 
+                  isVisible={supportMegaMenuVisible}
+                  onMouseEnter={() => setSupportMegaMenuVisible(true)}
+                  onMouseLeave={() => setSupportMegaMenuVisible(false)}
+                />
               </div>
             </nav>
 
@@ -346,13 +360,12 @@ function App() {
               >
               Request Access
               </Button>
-              </div>
-
+            </div>
 
             {/* Mobile menu button */}
             <div className="md:hidden">
               <button
-                onClick={( ) => setMobileMenuOpen(!mobileMenuOpen)}
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="text-gray-700"
               >
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -374,44 +387,24 @@ function App() {
                 className="w-full bg-[#f08e80] hover:bg-green-700 text-white mt-2"
                 onClick={handleSignupClick}
               >
-                Request access
+                Request Access
               </Button>
             </div>
           </div>
         )}
       </header>
 
-      {/* Mega Menus */}
-      <MegaMenu 
-        isVisible={megaMenuVisible} 
-        onMouseEnter={() => setMegaMenuVisible(true)}
-        onMouseLeave={() => setMegaMenuVisible(false)}
-        onNavigate={handleNavigation}
-      />
-      <HardwareMegaMenu 
-        isVisible={hardwareMegaMenuVisible} 
-        onMouseEnter={() => setHardwareMegaMenuVisible(true)}
-        onMouseLeave={() => setHardwareMegaMenuVisible(false)}
-        onNavigate={handleHardwareNavigation}
-      />
-      <SupportMegaMenu 
-        isVisible={supportMegaMenuVisible} 
-        onMouseEnter={() => setSupportMegaMenuVisible(true)}
-        onMouseLeave={() => setSupportMegaMenuVisible(false)}
-      />
+      {/* Main Content */}
+      {renderContent()}
 
       {/* Signup Modal */}
       <SignupModal 
         isOpen={signupModalOpen}
         onClose={() => setSignupModalOpen(false)}
       />
-
-      {/* Conditional Page Rendering */}
-      <main>
-        {renderContent()}
-      </main>
     </div>
   )
 }
 
 export default App
+
