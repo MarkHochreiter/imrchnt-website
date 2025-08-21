@@ -7,7 +7,6 @@ import HardwareMegaMenu from './components/HardwareMegaMenu.jsx'
 import SupportMegaMenu from './components/SupportMegaMenu.jsx'
 import InStorePage from './components/InStorePage.jsx'
 import OffsitePage from './components/OffsitePage.jsx'
-import ManagePage from './components/ManagePage.jsx'
 import CreditCardProcessingPage from './components/CreditCardProcessingPage.jsx'
 import S1f2Page from './components/S1f2Page.jsx'
 import Ams1Page from './components/Ams1Page.jsx'
@@ -263,8 +262,6 @@ function App() {
         return <InStorePage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       case 'offsite':
         return <OffsitePage />;
-      case 'manage':
-        return <ManagePage />;
       case 'credit-cards':
         return <CreditCardProcessingPage />;
       case 'pos-diagram':
