@@ -107,32 +107,6 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
         }
       ]
     },
-    {/*
-      title: "Manage",
-      icon: <Settings className="h-8 w-8 text-[#f08e80]" />,
-      items: [
-        {
-          title: "Analytics",
-          subtitle: "Visualize data in real time",
-          icon: <BarChart3 className="h-5 w-5" />
-        },
-        {
-          title: "Transactions",
-          subtitle: "View and manage transactions",
-          icon: <CreditCard className="h-5 w-5" />
-        },
-        {
-          title: "Users",
-          subtitle: "Manage staff accounts",
-          icon: <Users className="h-5 w-5" />
-        },
-        {
-          title: "Stores",
-          subtitle: "Manage multiple store locations",
-          icon: <Store className="h-5 w-5" />
-        }
-      ]
-    */},
     {
       title: "Credit Cards",
       icon: <CreditCard className="h-8 w-8 text-[#f08e80]" />,
