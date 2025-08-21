@@ -24,14 +24,14 @@ import {
   Archive,
   Repeat,
   Smartphone,
-  App,
+  Monitor,
 } from 'lucide-react'
 
 function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
   const menuData = [
     {
       title: "System",
-      icon: <App className="h-8 w-8 text-[#f08e80]" />,
+      icon: <Monitor className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
           title: "POS",
