@@ -138,87 +138,84 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
   if (!isVisible) return null
 
   return (
-        <div 
-      className="fixed top-16 left-0 w-0 bg-white shadow-t border-t border-gray-200 z-[999]"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-4 gap-8">
-          {menuData.map((column, columnIndex) => (
-            <div key={columnIndex} className="space-y-6">
-              {/* Column Header */}
-              <div className="flex items-center space-x-3 mb-8">
-                {column.icon}
-                <h3 className="text-2xl font-extrabold text-gray-900">
-                  {column.title}
-                </h3>
-              </div>
-              {/* Column Items */}
-              <div className="space-y-4">
-                {column.items.map((item, itemIndex) => (
-                  <a
-                    key={itemIndex}
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      const pageMap = {
-                        'System': 'system',
-                        'InStore': 'instore',
-                        'Offsite': 'offsite', 
-                        'Credit Cards': 'credit-cards'
-                      }
-                      const sectionMap = {
-                        'POS': 'pos',
-                        'Admin': 'admin',
-                        'Reports': 'reports',
-                        'Products': 'products',
-                        'Customers': 'customers',
-                        'Clienteling': 'clienteling',
-                        'On Floor Assistance': 'on-floor-assistance',
-                        'Single Device': 'single-device',
-                        'Import Items': 'import-items',
-                        'Add Items': 'add-items',
-                        'Export Sales': 'export-sales',
-                        'Analytics': 'analytics',
-                        'Transactions': 'transactions',
-                        'Users': 'users',
-                        'Stores': 'stores',
-                        'Payouts': 'payouts',
-                        'Terminals': 'terminals',
-                        'Chargebacks': 'chargebacks',
-                        'Flat Fee': 'flat-fee'
-                      }
-                      const page = pageMap[column.title]
-                      const section = sectionMap[item.title]
-                      if (page && section) {
-                        onNavigate(page, section)
-                      }
-                    }}
-                    className="group block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <div className="flex items-start space-x-3">
-                      <div className="text-gray-400 group-hover:text-[#f08e80] transition-colors duration-200 mt-1">
-                        {item.icon}
+  <div 
+    className="fixed top-16 left-0 w-full bg-white shadow-2xl border-t border-gray-200 z-[999]"
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+  >
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="grid grid-cols-4 gap-12">
+        {menuData.map((column, columnIndex) => (
+          <div key={columnIndex} className="space-y-6">
+            {/* Column Header */}
+            <div className="flex items-center space-x-3 mb-8">
+              {column.icon}
+              <h3 className="text-2xl font-extrabold text-gray-900">
+                {column.title}
+              </h3>
+            </div>
+            
+            {/* Column Items */}
+            <div className="space-y-4">
+              {column.items.map((item, itemIndex) => (
+                <a
+                  key={itemIndex}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const pageMap = {
+                      'System': 'system',
+                      'InStore': 'instore',
+                      'Offsite': 'offsite', 
+                      'Credit Cards': 'credit-cards'
+                    }
+                    const sectionMap = {
+                      'POS': 'pos',
+                      'Admin': 'admin',
+                      'Reports': 'reports',
+                      'Products': 'products',
+                      'Customers': 'customers',
+                      'Clienteling': 'clienteling',
+                      'On Floor Assistance': 'on-floor-assistance',
+                      'Single Device': 'single-device',
+                      'Import Items': 'import-items',
+                      'Add Items': 'add-items',
+                      'Export Sales': 'export-sales',
+                      'Payouts': 'payouts',
+                      'Terminals': 'terminals',
+                      'Chargebacks': 'chargebacks',
+                      'Flat Fee': 'flat-fee'
+                    }
+                    const page = pageMap[column.title]
+                    const section = sectionMap[item.title]
+                    if (page && section) {
+                      onNavigate(page, section)
+                    }
+                  }}
+                  className="group block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                >
+                  <div className="flex items-start space-x-3">
+                    <div className="text-gray-400 group-hover:text-[#f08e80] transition-colors duration-200 mt-1">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <div className="text-gray-900 font-medium group-hover:text-[#f08e80] transition-colors duration-200">
+                        {item.title}
                       </div>
-                      <div>
-                        <div className="text-gray-900 font-medium group-hover:text-[#f08e80] transition-colors duration-200">
-                          {item.title}
-                        </div>
-                        <div className="text-sm text-gray-500 mt-1">
-                          {item.subtitle}
-                        </div>
+                      <div className="text-sm text-gray-500 mt-1">
+                        {item.subtitle}
                       </div>
                     </div>
-                  </a>
-                ))}
-              </div>
+                  </div>
+                </a>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
-  )
+  </div>
+)
 }
 
 export default MegaMenu
