@@ -347,7 +347,7 @@ function App() {
             {/* Right side buttons */}
             <div className="hidden md:flex items-center space-x-4">
               <a 
-                href="https://pos.imrchnt.com" 
+                href="https://pos.imrchnt.com/auth/sign-in" 
                 className="text-gray-700 hover:text-gray-900"
                 target="_blank" 
                 rel="noopener noreferrer"
