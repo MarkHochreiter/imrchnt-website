@@ -24,6 +24,7 @@ import {
   Archive,
   Repeat,
   Smartphone,
+  ShoppingBag,
 } from 'lucide-react'
 
 function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
@@ -82,7 +83,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
     },
     {
       title: "Offsite",
-      icon: <Globe className="h-8 w-8 text-[#f08e80]" />,
+      icon: <ShoppingBag className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
           title: "Single Device",
