@@ -167,7 +167,6 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                         'System': 'system',
                         'InStore': 'instore',
                         'Offsite': 'offsite', 
-                        'Manage': 'manage',
                         'Credit Cards': 'credit-cards'
                       }
                       const sectionMap = {
