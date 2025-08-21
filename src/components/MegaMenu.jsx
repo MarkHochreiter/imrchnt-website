@@ -107,7 +107,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
         }
       ]
     },
-    {
+    {/*
       title: "Manage",
       icon: <Settings className="h-8 w-8 text-[#f08e80]" />,
       items: [
@@ -132,7 +132,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
           icon: <Store className="h-5 w-5" />
         }
       ]
-    },
+    */},
     {
       title: "Credit Cards",
       icon: <CreditCard className="h-8 w-8 text-[#f08e80]" />,
