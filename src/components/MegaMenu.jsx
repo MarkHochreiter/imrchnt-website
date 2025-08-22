@@ -139,7 +139,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
 
   return (
   <div 
-    className="fixed top-16 left-0 w-full bg-white shadow-2xl border-t border-gray-200 z-[999]"
+    className="fixed top-16 left-0 w-full bg-white shadow-2xl border-t border-gray-200 z-[999] font-varela"
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
   >
@@ -150,7 +150,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
             {/* Column Header */}
             <div className="flex items-center space-x-3 mb-8">
               {column.icon}
-              <h3 className="text-2xl font-extrabold text-gray-900">
+              <h3 className="text-2xl font-extrabold text-gray-900 font-varela">
                 {column.title}
               </h3>
             </div>
@@ -199,10 +199,10 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                       {item.icon}
                     </div>
                     <div>
-                      <div className="text-gray-900 font-medium group-hover:text-[#f08e80] transition-colors duration-200">
+                      <div className="text-gray-900 font-medium group-hover:text-[#f08e80] transition-colors duration-200 font-varela">
                         {item.title}
                       </div>
-                      <div className="text-sm text-gray-500 mt-1">
+                      <div className="text-sm text-gray-500 mt-1 font-varela">
                         {item.subtitle}
                       </div>
                     </div>
