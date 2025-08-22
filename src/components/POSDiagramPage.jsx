@@ -65,36 +65,36 @@ function POSDiagramPage({ onNavigateBack }) {
       id: 'desktop',
       name: 'Desktop',
       icon: <Monitor className="h-5 w-5" />,
-      title: 'Desktop POS System',
+      title: 'Run on Desktop',
       subtitle: 'Full-featured desktop solution for comprehensive retail management',
-      description: 'Our desktop POS system provides the most comprehensive feature set with large display support, advanced reporting capabilities, and seamless integration with all your business peripherals.',
+      description: 'Our application on desktop provides the most comprehensive feature set with large display support, seamlessly integrate with all your business peripherals, pair with a touchscreen monitor for even greater ease of use.',
       imageSrc: desktopPOS
     },
     {
       id: 'tablet',
       name: 'Tablet',
       icon: <Tablet className="h-5 w-5" />,
-      title: 'Tablet POS Solution',
+      title: 'Run on Tablet',
       subtitle: 'Portable and flexible point-of-sale for modern retail environments',
-      description: 'Perfect for businesses that need mobility without sacrificing functionality. Our tablet POS solution offers touch-optimized interface and wireless connectivity for ultimate flexibility.',
-      imageSrc: s1f2POS // You can replace with tablet-specific image
+      description: 'Perfect for retailers that need mobility without sacrificing functionality. Our tablet POS solution offers touch-optimized interface, minimal device footprint. Pair with the S1F2 or AMS1 for ultimate flexibility.',
+      imageSrc: desktopPOS 
     },
     {
       id: 'phone',
       name: 'Phone',
       icon: <Smartphone className="h-5 w-5" />,
-      title: 'Mobile POS System',
+      title: 'Run on Smartphone',
       subtitle: 'Pocket-sized point-of-sale for ultimate mobility and convenience',
-      description: 'Transform any smartphone into a powerful POS system. Perfect for pop-up shops, delivery services, and businesses that need to process payments anywhere.',
+      description: 'Transform any smartphone into a powerful POS system. Perfect for pop-ups, events, and offsite. Turn your smartphone into a Card Reader with our Tap to Pay functionality or pair with an S1F2 or AMS1 for full card reader capabilities to process any type of payment anywhere.',
       imageSrc: s1f2POS // You can replace with phone-specific image
     },
     {
       id: 'all-in-one',
       name: 'All-in-one',
       icon: <Layers className="h-5 w-5" />,
-      title: 'All-in-one Anatomy',
-      subtitle: 'Complete integrated payment solution with everything you need',
-      description: 'An interactive look at the key components of our all-in-one payment solution. Hover over the points on the device to learn more.',
+      title: 'Run on Card Reader',
+      subtitle: 'Everything you need all in one unit',
+      description: 'Bring one piece of hardware to your next offsite.',
       imageSrc: s1f2POS // Current s1f2POS image
     }
   ];
