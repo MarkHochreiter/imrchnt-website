@@ -82,28 +82,28 @@ function POSDiagramPage({ onNavigateBack }) {
   },
 
   {
-    id: 2,
+    id: 2, // 
     title: "Store - Cashier",
     description: "Displays store you're selling from and cashier making the sale",
-    icon: <zap size={20} />,
+    icon: <Zap size={20} />,
     position: { top: '13%', left: '67%' }
   },
   {
-    id: 3,
+    id: 3, // DONE
     title: "POS drawer",
     description: "Navigate to Transactions, Close Day, Assign Card Reader, Attach Bluetooth scanner",
     icon: <Monitor size={20} />,
     position: { top: '13%', left: '83%' }
   },
   {
-    id: 4,
+    id: 4, // 
     title: "Home",
     description: "Navigate back to Home to access other app modules",
-    icon: <Monitor size={20} />,
-    position: { top: '13%', left: '90%' }
+    icon: <Home size={20} />,
+    position: { top: '13%', left: '94%' }
   },
   {
-    id: 5, // DONE
+    id: 5, // DONE // NEEDS ICON
     title: "Add Customer",
     description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
     icon: <Monitor size={20} />,
@@ -138,7 +138,7 @@ function POSDiagramPage({ onNavigateBack }) {
     position: { top: '59', left: '96%' }
   },
   {
-    id: 10,
+    id: 10, // DONE // NEEDS ICON - ERASER MAYBE
     title: "Clear order",
     description: "removes everything from sale",
     icon: <Monitor size={20} />,
@@ -159,14 +159,14 @@ function POSDiagramPage({ onNavigateBack }) {
     position: { top: '74%', left: '96%' }
   },
   {
-    id: 12,
+    id: 13,
     title: "Line Item",
     description: "Product Number and Description",
     icon: <Monitor size={20} />,
     position: { top: '41%', left: '5%' }
   },  
   {
-    id: 13,
+    id: 14,
     title: "Retail Price",
     description: "Unit Retail Price",
     icon: <Monitor size={20} />,
@@ -174,7 +174,7 @@ function POSDiagramPage({ onNavigateBack }) {
   },
   
   {
-    id: 14,
+    id: 15,
     title: "Quantity",
     description: "Click + or - to adjust quantity, auto adjusts with scan",
     icon: <Monitor size={20} />,
@@ -182,7 +182,7 @@ function POSDiagramPage({ onNavigateBack }) {
   },
  
   {
-    id: 15,
+    id: 16,
     title: "Total",
     description: "Item Total (Retail x Quantity",
     icon: <Monitor size={20} />,
@@ -190,7 +190,7 @@ function POSDiagramPage({ onNavigateBack }) {
   },
   
   {
-    id: 16,
+    id: 17,
     title: "Delete",
     description: "Remove item from sale",
     icon: <Monitor size={20} />,
