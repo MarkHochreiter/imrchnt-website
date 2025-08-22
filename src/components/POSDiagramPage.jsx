@@ -1,4 +1,4 @@
-import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer, Trash2, PlusCircle, Search, Grid, Home, DollarSign } from 'lucide-react';
+import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer, Trash2, PlusCircle, Search, Grid, Home, DollarSign, Monitor, Tablet, Layers, Battery, Cloud, Users, BarChart3, Package } from 'lucide-react';
 import { useState } from 'react';
 import s1f2POS from '../assets/s1f2_pos.png';
 import scanSampleVideo from '../assets/scan_sample.mp4';
@@ -27,122 +27,295 @@ const Button = ({ children, className = '', variant = 'primary', ...props }) => 
 // Main component for the POS Diagram Page
 function POSDiagramPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
+  const [selectedDeviceType, setSelectedDeviceType] = useState('all-in-one');
 
-  const features = [
-    // Original Features with updated coordinates
-        {
-      id: 1, // DONE
-      title: "Contactless Reader",
-      description: "Accepts NFC cards and mobile payments like Apple Pay & Google Pay.",
-      icon: <Wifi size={20} />,
-      position: { top: '15%', left: '49%' }
+  // Device type configurations
+  const deviceTypes = [
+    {
+      id: 'desktop',
+      name: 'Desktop',
+      icon: <Monitor className="h-5 w-5" />,
+      title: 'Desktop POS System',
+      subtitle: 'Full-featured desktop solution for comprehensive retail management',
+      description: 'Our desktop POS system provides the most comprehensive feature set with large display support, advanced reporting capabilities, and seamless integration with all your business peripherals.'
     },
     {
-      id: 2, // DONE
-      title: "5.5\" HD Touchscreen",
-      description: "Intuitive interface for you and your customers.",
-      icon: <Smartphone size={20} />,
-      position: { top: '70%', left: '49%' }
+      id: 'tablet',
+      name: 'Tablet',
+      icon: <Tablet className="h-5 w-5" />,
+      title: 'Tablet POS Solution',
+      subtitle: 'Portable and flexible point-of-sale for modern retail environments',
+      description: 'Perfect for businesses that need mobility without sacrificing functionality. Our tablet POS solution offers touch-optimized interface and wireless connectivity for ultimate flexibility.'
     },
     {
-      id: 3, // DONE
-      title: "Chip Card Slot",
-      description: "Securely processes EMV chip cards.",
-      icon: <CreditCard size={20} />,
-      position: { top: '94%', left: '49%' }
+      id: 'phone',
+      name: 'Phone',
+      icon: <Smartphone className="h-5 w-5" />,
+      title: 'Mobile POS System',
+      subtitle: 'Pocket-sized point-of-sale for ultimate mobility and convenience',
+      description: 'Transform any smartphone into a powerful POS system. Perfect for pop-up shops, delivery services, and businesses that need to process payments anywhere.'
     },
     {
-      id: 13, // DONE
-      title: "Built-in Printer",
-      description: "Fast thermal receipt printing for customer convenience.",
-      icon: <Printer size={20} />,
-      position: { top: '29%', left: '78%' }
-    },
-    {
-      id: 5, // DONE
-      title: "Item Details",
-      description: "Description, Product Number, Unit Price of item in Cart.",
-      icon: <Shield size={20} />,
-      position: { top: '53%', left: '18%' }
-    },
-    // New Features from our grid session
-    {
-      id: 6, // UPDATED - Now includes video
-      title: "Barcode Scanner",
-       hasVideo: true,
-      videoSrc: scanSampleVideo,
-      description: "Scans product barcodes with device camera.",
-      icon: <Zap size={20} />,
-      position: { top: '45%', left: '78%' }
-    },
-    {
-      id: 7, // DONE
-      title: "Delete Item",
-      description: "Remove an item from the current order.",
-      icon: <Trash2 size={20} />,
-      position: { top: '51%', left: '80%' }
-    },
-    {
-      id: 8, 
-      title: "Adjust Quantity",
-      description: "Increase or decrease the quantity of the selected item.",
-      icon: <PlusCircle size={20} />,
-      position: { top: '57%', left: '80%' }
-    },
-    {
-      id: 9, // DONE
-      title: "Search Products",
-      description: "Quickly find a product or item in your inventory.",
-      icon: <Search size={20} />,
-      position: { top: '45%', left: '51%' }
-    },
-    {
-      id: 10, // DONE
-      title: "POS Drawer",
-      description: [
-        "Access POS functions:",
-        "Clear cart",
-        "Close Day",
-        "Transactions"
-      ],
-      icon: <Grid size={20} />,
-      position: { top: '38%', left: '80%' }
-    },
-    {
-      id: 11, // DONE
-      title: "Home Screen",
-      description: [
-        "Access Home dashboard functions:",
-        "Continue sale",
-        "Manage offline settings",
-        "Sign out"
-      ],
-      icon: <Home size={20} />,
-      position: { top: '38%', left: '18%' }
-    },
-     {
-      id: 12, // DONE
-      title: "Sale Total",
-      description: "",
-      icon: <DollarSign size={20} />,
-      position: { top: '45%', left: '18%' }
-    },
-        {
-      id: 4, // paymentSampleVideo
-      title: "Payment",
-      hasVideo: true,
-      videoSrc: paymentSampleVideo,
-      description: [
-        "Tender Sale with:",
-        "Credit/Debit",
-        "Cash",
-        "Gift Card (COMING SOON)",
-        "Simple Tender"
-      ],
-      icon: <DollarSign size={20} />,
-      position: { top: '80%', left: '18%' }
+      id: 'all-in-one',
+      name: 'All-in-one',
+      icon: <Layers className="h-5 w-5" />,
+      title: 'All-in-one Anatomy',
+      subtitle: 'Complete integrated payment solution with everything you need',
+      description: 'An interactive look at the key components of our all-in-one payment solution. Hover over the points on the device to learn more.'
     }
   ];
+
+  // Features for different device types
+  const deviceFeatures = {
+    'desktop': [
+      {
+        id: 1,
+        title: "Large Display Interface",
+        description: "Expansive screen real estate for detailed product information and multi-window support.",
+        icon: <Monitor size={20} />,
+        position: { top: '20%', left: '50%' }
+      },
+      {
+        id: 2,
+        title: "Multi-Window Support",
+        description: "Run multiple applications simultaneously for enhanced productivity.",
+        icon: <Grid size={20} />,
+        position: { top: '40%', left: '30%' }
+      },
+      {
+        id: 3,
+        title: "Advanced Reporting",
+        description: "Comprehensive analytics and reporting tools for business insights.",
+        icon: <BarChart3 size={20} />,
+        position: { top: '60%', left: '70%' }
+      },
+      {
+        id: 4,
+        title: "Peripheral Integration",
+        description: "Connect barcode scanners, receipt printers, and cash drawers seamlessly.",
+        icon: <Printer size={20} />,
+        position: { top: '80%', left: '50%' }
+      },
+      {
+        id: 5,
+        title: "Inventory Management",
+        description: "Full inventory tracking with real-time stock updates and alerts.",
+        icon: <Package size={20} />,
+        position: { top: '30%', left: '80%' }
+      },
+      {
+        id: 6,
+        title: "Customer Database",
+        description: "Comprehensive customer management with purchase history and preferences.",
+        icon: <Users size={20} />,
+        position: { top: '70%', left: '20%' }
+      }
+    ],
+    'tablet': [
+      {
+        id: 1,
+        title: "Touch-Optimized Interface",
+        description: "Intuitive touch controls designed specifically for tablet interaction.",
+        icon: <Tablet size={20} />,
+        position: { top: '25%', left: '50%' }
+      },
+      {
+        id: 2,
+        title: "Portable Design",
+        description: "Lightweight and portable for flexible point-of-sale anywhere in your store.",
+        icon: <Zap size={20} />,
+        position: { top: '45%', left: '30%' }
+      },
+      {
+        id: 3,
+        title: "Battery Powered",
+        description: "Long-lasting battery life for all-day operation without charging.",
+        icon: <Battery size={20} />,
+        position: { top: '65%', left: '70%' }
+      },
+      {
+        id: 4,
+        title: "Wireless Connectivity",
+        description: "Wi-Fi and cellular connectivity for seamless operation anywhere.",
+        icon: <Wifi size={20} />,
+        position: { top: '85%', left: '50%' }
+      },
+      {
+        id: 5,
+        title: "Card Reader Integration",
+        description: "Built-in or attachable card readers for secure payment processing.",
+        icon: <CreditCard size={20} />,
+        position: { top: '35%', left: '80%' }
+      },
+      {
+        id: 6,
+        title: "Cloud Sync",
+        description: "Real-time synchronization with your main POS system and inventory.",
+        icon: <Cloud size={20} />,
+        position: { top: '75%', left: '20%' }
+      }
+    ],
+    'phone': [
+      {
+        id: 1,
+        title: "Pocket-Sized Solution",
+        description: "Complete POS functionality in a device that fits in your pocket.",
+        icon: <Smartphone size={20} />,
+        position: { top: '30%', left: '50%' }
+      },
+      {
+        id: 2,
+        title: "Quick Payments",
+        description: "Fast payment processing with tap, chip, and contactless options.",
+        icon: <Zap size={20} />,
+        position: { top: '50%', left: '30%' }
+      },
+      {
+        id: 3,
+        title: "Customer Engagement",
+        description: "Built-in camera for loyalty programs and customer interaction.",
+        icon: <Users size={20} />,
+        position: { top: '70%', left: '70%' }
+      },
+      {
+        id: 4,
+        title: "Real-Time Sync",
+        description: "Instant synchronization with your main POS system and inventory.",
+        icon: <Cloud size={20} />,
+        position: { top: '90%', left: '50%' }
+      },
+      {
+        id: 5,
+        title: "Mobile Receipts",
+        description: "Send digital receipts via SMS or email directly from the device.",
+        icon: <Printer size={20} />,
+        position: { top: '40%', left: '80%' }
+      },
+      {
+        id: 6,
+        title: "Offline Mode",
+        description: "Continue processing sales even without internet connectivity.",
+        icon: <Shield size={20} />,
+        position: { top: '80%', left: '20%' }
+      }
+    ],
+    'all-in-one': [
+      {
+        id: 1,
+        title: "Contactless Reader",
+        description: "Accepts NFC cards and mobile payments like Apple Pay & Google Pay.",
+        icon: <Wifi size={20} />,
+        position: { top: '15%', left: '49%' }
+      },
+      {
+        id: 2,
+        title: "5.5\" HD Touchscreen",
+        description: "Intuitive interface for you and your customers.",
+        icon: <Smartphone size={20} />,
+        position: { top: '70%', left: '49%' }
+      },
+      {
+        id: 3,
+        title: "Chip Card Slot",
+        description: "Securely processes EMV chip cards.",
+        icon: <CreditCard size={20} />,
+        position: { top: '94%', left: '49%' }
+      },
+      {
+        id: 13,
+        title: "Built-in Printer",
+        description: "Fast thermal receipt printing for customer convenience.",
+        icon: <Printer size={20} />,
+        position: { top: '29%', left: '78%' }
+      },
+      {
+        id: 5,
+        title: "Item Details",
+        description: "Description, Product Number, Unit Price of item in Cart.",
+        icon: <Shield size={20} />,
+        position: { top: '53%', left: '18%' }
+      },
+      {
+        id: 6,
+        title: "Barcode Scanner",
+        hasVideo: true,
+        videoSrc: scanSampleVideo,
+        description: "Scans product barcodes with device camera.",
+        icon: <Zap size={20} />,
+        position: { top: '45%', left: '78%' }
+      },
+      {
+        id: 7,
+        title: "Delete Item",
+        description: "Remove an item from the current order.",
+        icon: <Trash2 size={20} />,
+        position: { top: '51%', left: '80%' }
+      },
+      {
+        id: 8,
+        title: "Adjust Quantity",
+        description: "Increase or decrease the quantity of the selected item.",
+        icon: <PlusCircle size={20} />,
+        position: { top: '57%', left: '80%' }
+      },
+      {
+        id: 9,
+        title: "Search Products",
+        description: "Quickly find a product or item in your inventory.",
+        icon: <Search size={20} />,
+        position: { top: '45%', left: '51%' }
+      },
+      {
+        id: 10,
+        title: "POS Drawer",
+        description: [
+          "Access POS functions:",
+          "Clear cart",
+          "Close Day",
+          "Transactions"
+        ],
+        icon: <Grid size={20} />,
+        position: { top: '38%', left: '80%' }
+      },
+      {
+        id: 11,
+        title: "Home Screen",
+        description: [
+          "Access Home dashboard functions:",
+          "Continue sale",
+          "Manage offline settings",
+          "Sign out"
+        ],
+        icon: <Home size={20} />,
+        position: { top: '38%', left: '18%' }
+      },
+      {
+        id: 12,
+        title: "Sale Total",
+        description: "",
+        icon: <DollarSign size={20} />,
+        position: { top: '45%', left: '18%' }
+      },
+      {
+        id: 4,
+        title: "Payment",
+        hasVideo: true,
+        videoSrc: paymentSampleVideo,
+        description: [
+          "Tender Sale with:",
+          "Credit/Debit",
+          "Cash",
+          "Gift Card (COMING SOON)",
+          "Simple Tender"
+        ],
+        icon: <DollarSign size={20} />,
+        position: { top: '80%', left: '18%' }
+      }
+    ]
+  };
+
+  const currentDevice = deviceTypes.find(device => device.id === selectedDeviceType);
+  const currentFeatures = deviceFeatures[selectedDeviceType] || [];
 
   return (
     <div className="min-h-screen bg-white font-sans animate-fade-in">
@@ -160,13 +333,33 @@ function POSDiagramPage({ onNavigateBack }) {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        
+        {/* Device Type Selection Buttons */}
+        <div className="flex justify-center mb-12">
+          <div className="inline-flex rounded-lg border border-gray-200 bg-gray-50 p-1">
+            {deviceTypes.map((device) => (
+              <button
+                key={device.id}
+                onClick={() => setSelectedDeviceType(device.id)}
+                className={`inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  selectedDeviceType === device.id
+                    ? 'bg-[#f08e80] text-white shadow-sm'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-white'
+                }`}
+              >
+                <span className="mr-2">{device.icon}</span>
+                {device.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-            All-in-one Anatomy
+            {currentDevice?.title}
           </h1>
           <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-            An interactive look at the key components of our all-in-one payment solution. 
-            Hover over the points on the device to learn more.
+            {currentDevice?.description}
           </p>
         </div>
 
@@ -179,16 +372,15 @@ function POSDiagramPage({ onNavigateBack }) {
               <div className="bg-gray-50 p-8 rounded-2xl shadow-sm">
                 <img 
                   src={s1f2POS}
-                  alt="S1f2 Payment Terminal"
+                  alt={`${currentDevice?.name} POS System`}
                   className="max-w-full h-auto max-h-[500px] object-contain"
                 />
               </div>
 
               {/* Interactive Feature Points */}
-              {features.map((feature) => (
+              {currentFeatures.map((feature) => (
                 <div
                   key={feature.id}
-                  // UPDATED: Added conditional z-index for proper stacking
                   className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group ${
                     hoveredFeature === feature.id ? 'z-30' : 'z-10'
                   }`}
@@ -216,7 +408,7 @@ function POSDiagramPage({ onNavigateBack }) {
                         <h4 className="font-bold">{feature.title}</h4>
                       </div>
                       
-                      {/* Video for Barcode Scanner (id: 6) */}
+                      {/* Video for features that have it */}
                       {feature.hasVideo && feature.videoSrc && (
                         <div className="mb-3">
                           <video 
@@ -257,15 +449,17 @@ function POSDiagramPage({ onNavigateBack }) {
           {/* Right side: Feature List */}
           <div className="space-y-6">
             <div className="flex items-start">
-              <img src={s1f2POS} alt="imrchnt logo" className="h-8 mr-4 mt-1" />
+              <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-[#f08e80]/10 text-[#f08e80] rounded-lg mr-4 mt-1">
+                {currentDevice?.icon}
+              </div>
               <div>
                 <h2 className="text-3xl font-bold text-gray-800">Core Features</h2>
-                <p className="text-gray-500 mt-1">The S1f2 is designed for reliability and ease of use.</p>
+                <p className="text-gray-500 mt-1">{currentDevice?.subtitle}</p>
               </div>
             </div>
             <div className="border-t border-gray-200 pt-6">
               <ul className="space-y-5">
-                {features.map((feature ) => (
+                {currentFeatures.map((feature) => (
                   <li key={feature.id} className="flex items-start">
                     <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-[#f08e80]/10 text-[#f08e80] rounded-lg">
                       {feature.icon}
@@ -286,26 +480,31 @@ function POSDiagramPage({ onNavigateBack }) {
                           <p>{feature.description}</p>
                         )}
                       </div>
-                      
-                      {/* Show video preview in the feature list for id: 6 
-                      {feature.hasVideo && feature.videoSrc && (
-                        <div className="mt-2">
-                          <video 
-                            className="w-32 h-40 object-cover rounded-md border"
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                          >
-                            <source src={feature.videoSrc} type="video/mp4" />
-                            Your browser does not support the video tag.
-                          </video>
-                        </div>
-                      )} */}
                     </div>
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Call to Action Section */}
+        <div className="mt-20 text-center">
+          <div className="bg-gray-50 rounded-2xl p-8 md:p-12">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+              Ready to Get Started with {currentDevice?.name} POS?
+            </h3>
+            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+              Experience the power of our {selectedDeviceType.replace('-', ' ')} solution. 
+              Contact us today to learn more about pricing and implementation.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button className="px-8 py-3 text-base">
+                Start Free Trial
+              </Button>
+              <Button variant="secondary" className="px-8 py-3 text-base">
+                Schedule Demo
+              </Button>
             </div>
           </div>
         </div>
