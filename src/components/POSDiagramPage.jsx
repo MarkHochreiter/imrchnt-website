@@ -336,18 +336,18 @@ function POSDiagramPage({ onNavigateBack }) {
         
         {/* Device Type Selection Buttons */}
         <div className="flex justify-center mb-12">
-          <div className="inline-flex rounded-lg border border-gray-200 bg-gray-50 p-1">
+          <div className="inline-flex rounded-xl border border-gray-200 bg-gray-50 p-2">
             {deviceTypes.map((device) => (
               <button
                 key={device.id}
                 onClick={() => setSelectedDeviceType(device.id)}
-                className={`inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                className={`inline-flex items-center px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 min-w-[180px] justify-center ${
                   selectedDeviceType === device.id
-                    ? 'bg-[#f08e80] text-white shadow-sm'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-white'
+                    ? 'bg-[#f08e80] text-white shadow-lg transform scale-105'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-white hover:shadow-md'
                 }`}
               >
-                <span className="mr-2">{device.icon}</span>
+                <span className="mr-3 text-xl">{device.icon}</span>
                 {device.name}
               </button>
             ))}
