@@ -165,13 +165,7 @@ function POSDiagramPage({ onNavigateBack }) {
     icon: <Monitor size={20} />,
     position: { top: '40%', left: '5%' }
   },
-  {
-    id: 171,
-    title: "top 40 left 10",
-    description: "Position marker at 40% top, 10% left",
-    icon: <Monitor size={20} />,
-    position: { top: '40%', left: '10%' }
-  },
+ 
   {
     id: 172,
     title: "top 40 left 15",
@@ -179,13 +173,7 @@ function POSDiagramPage({ onNavigateBack }) {
     icon: <Monitor size={20} />,
     position: { top: '40%', left: '15%' }
   },
-  {
-    id: 173,
-    title: "top 40 left 20",
-    description: "Position marker at 40% top, 20% left",
-    icon: <Monitor size={20} />,
-    position: { top: '40%', left: '20%' }
-  },
+  
   {
     id: 174,
     title: "top 40 left 25",
@@ -193,13 +181,7 @@ function POSDiagramPage({ onNavigateBack }) {
     icon: <Monitor size={20} />,
     position: { top: '40%', left: '25%' }
   },
-  {
-    id: 175,
-    title: "top 40 left 30",
-    description: "Position marker at 40% top, 30% left",
-    icon: <Monitor size={20} />,
-    position: { top: '40%', left: '30%' }
-  },
+  
   {
     id: 176,
     title: "top 40 left 35",
@@ -207,13 +189,7 @@ function POSDiagramPage({ onNavigateBack }) {
     icon: <Monitor size={20} />,
     position: { top: '40%', left: '35%' }
   },
-  {
-    id: 177,
-    title: "top 40 left 40",
-    description: "Position marker at 40% top, 40% left",
-    icon: <Monitor size={20} />,
-    position: { top: '40%', left: '40%' }
-  },
+ 
   {
     id: 178,
     title: "top 40 left 45",
@@ -221,13 +197,7 @@ function POSDiagramPage({ onNavigateBack }) {
     icon: <Monitor size={20} />,
     position: { top: '40%', left: '45%' }
   },
-  {
-    id: 179,
-    title: "top 40 left 50",
-    description: "Position marker at 40% top, 50% left",
-    icon: <Monitor size={20} />,
-    position: { top: '40%', left: '50%' }
-  },
+  
   {
     id: 180,
     title: "top 40 left 55",
@@ -235,13 +205,7 @@ function POSDiagramPage({ onNavigateBack }) {
     icon: <Monitor size={20} />,
     position: { top: '40%', left: '55%' }
   },
-  {
-    id: 181,
-    title: "top 40 left 60",
-    description: "Position marker at 40% top, 60% left",
-    icon: <Monitor size={20} />,
-    position: { top: '40%', left: '60%' }
-  },
+  
     ],
     'tablet': [
       {
