@@ -1,7 +1,7 @@
 import { Monitor, Users, BarChart3, Package, ChevronRight, Zap, Settings, Database, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 
-function SystemPage() {
+function SystemPage(onNavigate) {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
