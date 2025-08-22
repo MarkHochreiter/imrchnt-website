@@ -712,7 +712,7 @@ function POSDiagramPage({ onNavigateBack }) {
         </div>
       </main>
     </div>
-  ));
+  );
 }
 
 export default POSDiagramPage;
