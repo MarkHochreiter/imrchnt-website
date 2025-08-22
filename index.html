@@ -4,12 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>imrchnt - Point of Sale System</title>
-    
-    <!-- Google Fonts - Varela Round -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Varela+Round:wght@400&display=swap" rel="stylesheet">
+    <title>imrchnt pos</title>
+  </head>
+  <body>
+    <div id="root"></div>
     
     <!-- Hidden form for Netlify Forms detection -->
     <form name="signup" netlify netlify-honeypot="bot-field" hidden>
@@ -18,13 +16,17 @@
       <input type="email" name="email" />
       <input type="text" name="company" />
       <input type="tel" name="phone" />
-      <input type="text" name="businessType" />
+      <select name="businessType">
+        <option value="retail">Retail Store</option>
+        <option value="restaurant">Restaurant/Food Service</option>
+        <option value="services">Professional Services</option>
+        <option value="ecommerce">E-commerce</option>
+        <option value="nonprofit">Non-profit</option>
+        <option value="other">Other</option>
+      </select>
       <input type="text" name="timestamp" />
     </form>
-  </head>
-  <body>
-    <div id="root"></div>
+    
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-
