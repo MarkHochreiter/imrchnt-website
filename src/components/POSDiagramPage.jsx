@@ -1,4 +1,29 @@
-import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer, Trash2, PlusCircle, Search, Grid, Home, DollarSign, Monitor, Tablet, Layers, Battery, Cloud, Users, BarChart3, Package, Percent } from 'lucide-react';
+import { 
+  ArrowLeft,
+  Wifi, 
+  CreditCard, 
+  Smartphone, 
+  Zap, 
+  Shield, 
+  Printer, 
+  Trash2, 
+  PlusCircle, 
+  Search, 
+  Grid, 
+  Home, 
+  DollarSign, 
+  Monitor, 
+  Tablet, 
+  Layers, 
+  Battery, 
+  Cloud, 
+  Users, 
+  BarChart3, 
+  Package, 
+  Percent, 
+  Shredder, 
+  Calculator,
+  Wallet} from 'lucide-react';
 import { useState } from 'react';
 import s1f2POS from '../assets/s1f2_pos.png';
 import scanSampleVideo from '../assets/scan_sample.mp4';
@@ -100,13 +125,13 @@ function POSDiagramPage({ onNavigateBack }) {
     title: "Home",
     description: "Navigate back to Home to access other app modules",
     icon: <Home size={20} />,
-    position: { top: '13%', left: '94%' }
+    position: { top: '13%', left: '96%' }
   },
   {
     id: 5, // DONE // NEEDS ICON
     title: "Add Customer",
     description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
-    icon: <Monitor size={20} />,
+    icon: <Users size={20} />,
     position: { top: '34%', left: '96%' }
   },
   {
@@ -114,41 +139,41 @@ function POSDiagramPage({ onNavigateBack }) {
     title: "Subtotal",
     description: "sale subtotal",
     icon: <Monitor size={20} />,
-    position: { top: '41', left: '96%' }
+    position: { top: '41%', left: '96%' }
   },
   {
     id: 7,
     title: "Discount",
     description: "Discount amount applied to sale",
     icon: <Monitor size={20} />,
-    position: { top: '47', left: '96%' }
+    position: { top: '47%', left: '96%' }
   },
   {
     id: 8,
     title: "Tax",
     description: "Tax amount applied to sale",
-    icon: <percent size={20} />,
-    position: { top: '53', left: '96%' }
+    icon: <Percent size={20} />,
+    position: { top: '53%', left: '96%' }
   },
   {
     id: 9,
     title: "Sale Total",
     description: "Total amount to be charged in sale",
     icon: <Monitor size={20} />,
-    position: { top: '59', left: '96%' }
+    position: { top: '59%', left: '96%' }
   },
   {
     id: 10, // DONE // NEEDS ICON - ERASER MAYBE
     title: "Clear order",
     description: "removes everything from sale",
-    icon: <Monitor size={20} />,
+    icon: <Shredder size={20} />,
     position: { top: '74%', left: '81%' }
   },
   {
     id: 12, // DONE
     title: "Payment",
     description: "Click on Payment to Tender and complete sale",
-    icon: <Monitor size={20} />,
+    icon: <Wallet size={20} />,
     position: { top: '85%', left: '96%' }
   },
   {
@@ -185,7 +210,7 @@ function POSDiagramPage({ onNavigateBack }) {
     id: 16,
     title: "Total",
     description: "Item Total (Retail x Quantity",
-    icon: <Monitor size={20} />,
+    icon: <Calculator size={20} />,
     position: { top: '41%', left: '50%' }
   },
   
@@ -193,7 +218,7 @@ function POSDiagramPage({ onNavigateBack }) {
     id: 17,
     title: "Delete",
     description: "Remove item from sale",
-    icon: <Monitor size={20} />,
+    icon: <Trash2 size={20} />,
     position: { top: '41%', left: '63%' }
   },
   
