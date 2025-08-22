@@ -25,7 +25,7 @@ const Button = ({ children, className = '', size = 'default', onClick, ...props 
   
   return (
     <button
-      className={`inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${sizeClasses[size]} ${className}`}
+      className={`inline-flex items-center justify-center rounded-md font-houschka-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${sizeClasses[size]} ${className}`}
       onClick={onClick}
       {...props}
     >
@@ -79,7 +79,7 @@ function App() {
             <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 lg:py-32">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-4xl">
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka leading-tight mb-6">
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-6">
                     Seamless POS. Intuitive Design.
                   </h1>
                   <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
@@ -94,11 +94,11 @@ function App() {
                     >
                       Request access
                     </Button>
-                    <p className="text-base md:text-right text-gray-300 mb-8 max-w-2xl ml-auto">
+                    <p className="text-base md:text-right text-gray-300 font-houschka-medium mb-8 max-w-2xl ml-auto">
                    "I've never had such a smooth time at a large offsite and I can't tell you how excited I am about it!"
                     </p>
                   </div>
-                  <p className="text-base md:text-right text-gray-300 mb-8 max-w-2xl ml-auto">
+                  <p className="text-base md:text-right text-gray-300 font-houschka-medium mb-8 max-w-2xl ml-auto">
                     H - Bookstore Manager  
 
                     Still North Books & Bar Hanover, NH
