@@ -3,6 +3,7 @@ import { useState } from 'react';
 import s1f2POS from '../assets/s1f2_pos.png';
 import scanSampleVideo from '../assets/scan_sample.mp4';
 import paymentSampleVideo from '../assets/payment_sample.mp4';
+import desktopPOS from '../assets/desktop_sample.png';
 
 // A reusable Button component, matching the new aesthetic.
 const Button = ({ children, className = '', variant = 'primary', ...props }) => {
@@ -37,7 +38,8 @@ function POSDiagramPage({ onNavigateBack }) {
       icon: <Monitor className="h-5 w-5" />,
       title: 'Desktop POS System',
       subtitle: 'Full-featured desktop solution for comprehensive retail management',
-      description: 'Our desktop POS system provides the most comprehensive feature set with large display support, advanced reporting capabilities, and seamless integration with all your business peripherals.'
+      description: 'Our desktop POS system provides the most comprehensive feature set with large display support, advanced reporting capabilities, and seamless integration with all your business peripherals.',
+      imageSrc: desktopPOS 
     },
     {
       id: 'tablet',
@@ -45,7 +47,8 @@ function POSDiagramPage({ onNavigateBack }) {
       icon: <Tablet className="h-5 w-5" />,
       title: 'Tablet POS Solution',
       subtitle: 'Portable and flexible point-of-sale for modern retail environments',
-      description: 'Perfect for businesses that need mobility without sacrificing functionality. Our tablet POS solution offers touch-optimized interface and wireless connectivity for ultimate flexibility.'
+      description: 'Perfect for businesses that need mobility without sacrificing functionality. Our tablet POS solution offers touch-optimized interface and wireless connectivity for ultimate flexibility.',
+      imageSrc: s1f2POS // You can replace with tablet-specific image
     },
     {
       id: 'phone',
@@ -53,7 +56,8 @@ function POSDiagramPage({ onNavigateBack }) {
       icon: <Smartphone className="h-5 w-5" />,
       title: 'Mobile POS System',
       subtitle: 'Pocket-sized point-of-sale for ultimate mobility and convenience',
-      description: 'Transform any smartphone into a powerful POS system. Perfect for pop-up shops, delivery services, and businesses that need to process payments anywhere.'
+      description: 'Transform any smartphone into a powerful POS system. Perfect for pop-up shops, delivery services, and businesses that need to process payments anywhere.',
+      imageSrc: s1f2POS // You can replace with phone-specific image
     },
     {
       id: 'all-in-one',
@@ -61,7 +65,8 @@ function POSDiagramPage({ onNavigateBack }) {
       icon: <Layers className="h-5 w-5" />,
       title: 'All-in-one Anatomy',
       subtitle: 'Complete integrated payment solution with everything you need',
-      description: 'An interactive look at the key components of our all-in-one payment solution. Hover over the points on the device to learn more.'
+      description: 'An interactive look at the key components of our all-in-one payment solution. Hover over the points on the device to learn more.',
+      imageSrc: s1f2POS // Current s1f2POS image
     }
   ];
 
@@ -371,7 +376,7 @@ function POSDiagramPage({ onNavigateBack }) {
             <div className="relative">
               <div className="bg-gray-50 p-8 rounded-2xl shadow-sm">
                 <img 
-                  src={s1f2POS}
+                  src={currentDevice?.imageSrc}
                   alt={`${currentDevice?.name} POS System`}
                   className="max-w-full h-auto max-h-[500px] object-contain"
                 />
