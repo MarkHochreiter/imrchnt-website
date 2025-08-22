@@ -23,7 +23,11 @@ import {
   Percent, 
   Shredder, 
   Calculator,
-  Wallet} from 'lucide-react';
+  BookPlus,
+  Flag,
+  Wallet,
+  Tag,
+  Book} from 'lucide-react';
 import { useState } from 'react';
 import s1f2POS from '../assets/s1f2_pos.png';
 import scanSampleVideo from '../assets/scan_sample.mp4';
@@ -107,7 +111,7 @@ function POSDiagramPage({ onNavigateBack }) {
   },
 
   {
-    id: 2, // 
+    id: 2, // DONE
     title: "Store - Cashier",
     description: "Displays store you're selling from and cashier making the sale",
     icon: <Zap size={20} />,
@@ -117,18 +121,18 @@ function POSDiagramPage({ onNavigateBack }) {
     id: 3, // DONE
     title: "POS drawer",
     description: "Navigate to Transactions, Close Day, Assign Card Reader, Attach Bluetooth scanner",
-    icon: <Monitor size={20} />,
+    icon: <Flag size={20} />,
     position: { top: '13%', left: '83%' }
   },
   {
-    id: 4, // 
+    id: 4, // DONE
     title: "Home",
     description: "Navigate back to Home to access other app modules",
     icon: <Home size={20} />,
     position: { top: '13%', left: '96%' }
   },
   {
-    id: 5, // DONE // NEEDS ICON
+    id: 5, // DONE 
     title: "Add Customer",
     description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
     icon: <Users size={20} />,
@@ -138,18 +142,18 @@ function POSDiagramPage({ onNavigateBack }) {
     id: 6,
     title: "Subtotal",
     description: "sale subtotal",
-    icon: <Monitor size={20} />,
+    icon: <DollarSign size={20} />,
     position: { top: '41%', left: '96%' }
   },
   {
     id: 7,
     title: "Discount",
     description: "Discount amount applied to sale",
-    icon: <Monitor size={20} />,
+    icon: <Tag size={20} />,
     position: { top: '47%', left: '96%' }
   },
   {
-    id: 8,
+    id: 8, // DONE
     title: "Tax",
     description: "Tax amount applied to sale",
     icon: <Percent size={20} />,
@@ -159,11 +163,11 @@ function POSDiagramPage({ onNavigateBack }) {
     id: 9,
     title: "Sale Total",
     description: "Total amount to be charged in sale",
-    icon: <Monitor size={20} />,
+    icon: <Calculator size={20} />,
     position: { top: '59%', left: '96%' }
   },
   {
-    id: 10, // DONE // NEEDS ICON - ERASER MAYBE
+    id: 10, // DONE 
     title: "Clear order",
     description: "removes everything from sale",
     icon: <Shredder size={20} />,
@@ -180,21 +184,21 @@ function POSDiagramPage({ onNavigateBack }) {
     id: 11, // DONE
     title: "Discount",
     description: "Manually apply discount to sale by flat dollar amount or by a certain percent",
-    icon: <Monitor size={20} />,
+    icon: <Tag size={20} />,
     position: { top: '74%', left: '96%' }
   },
   {
     id: 13,
     title: "Line Item",
     description: "Product Number and Description",
-    icon: <Monitor size={20} />,
+    icon: <Book size={20} />,
     position: { top: '41%', left: '5%' }
   },  
   {
     id: 14,
     title: "Retail Price",
     description: "Unit Retail Price",
-    icon: <Monitor size={20} />,
+    icon: <DollarSign size={20} />,
     position: { top: '41%', left: '25%' }
   },
   
@@ -202,8 +206,8 @@ function POSDiagramPage({ onNavigateBack }) {
     id: 15,
     title: "Quantity",
     description: "Click + or - to adjust quantity, auto adjusts with scan",
-    icon: <Monitor size={20} />,
-    position: { top: '41%', left: '37%' }
+    icon: <BookPlus size={20} />,
+    position: { top: '41%', left: '36%' }
   },
  
   {
@@ -211,7 +215,7 @@ function POSDiagramPage({ onNavigateBack }) {
     title: "Total",
     description: "Item Total (Retail x Quantity",
     icon: <Calculator size={20} />,
-    position: { top: '41%', left: '50%' }
+    position: { top: '41%', left: '52%' }
   },
   
   {
@@ -219,7 +223,7 @@ function POSDiagramPage({ onNavigateBack }) {
     title: "Delete",
     description: "Remove item from sale",
     icon: <Trash2 size={20} />,
-    position: { top: '41%', left: '63%' }
+    position: { top: '41%', left: '64%' }
   },
   
     ],
