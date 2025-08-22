@@ -45,13 +45,6 @@ const Button = ({ children, className = '', variant = 'primary', ...props }) => 
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#f08e80]/10 to-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-           Choose your platform
-          </h1>
     <button
       className={`${baseClasses} ${variants[variant]} ${className}`}
       {...props}
