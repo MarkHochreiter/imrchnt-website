@@ -1,7 +1,7 @@
 import { Monitor, Users, BarChart3, Package, ChevronRight, Zap, Settings, Database, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 
-function SystemPage(onNavigate) {
+function SystemPage({ onSignupClick, onNavigate }) {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -15,11 +15,10 @@ function SystemPage(onNavigate) {
               Complete control over your business operations with our integrated system management tools.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-[#f08e80] hover:bg-[#e07d70] text-white text-lg px-8 py-4">
-                Get Started
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black text-lg px-8 py-4">
-                Learn More
+              <Button 
+                size="lg" className="bg-[#f08e80] hover:bg-[#e07d70] text-white text-lg px-8 py-4"
+                onClick={onSignupClick}>
+                Request Access
               </Button>
             </div>
           </div>
