@@ -517,19 +517,7 @@ function POSDiagramPage({ onNavigateBack }) {
   const currentFeatures = deviceFeatures[selectedDeviceType] || [];
 
   return (
-    <div className="min-h-screen bg-white font-sans animate-fade-in">
-      {/* Sub-header with back navigation */}
-      <header className="border-b border-gray-200 bg-white sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Button onClick={onNavigateBack} variant="ghost">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to System Solutions
-            </Button>
-          </div>
-        </div>
-      </header>
-
+    
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         
