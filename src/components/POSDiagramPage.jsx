@@ -378,7 +378,9 @@ function POSDiagramPage({ onNavigateBack }) {
                 <img 
                   src={currentDevice?.imageSrc}
                   alt={`${currentDevice?.name} POS System`}
-                  className="max-w-full h-auto max-h-[500px] object-contain"
+                  className={`max-w-full h-auto object-contain ${
+                    currentDevice?.id === 'desktop' ? 'max-h-[700px]' : 'max-h-[500px]'
+                  }`}
                 />
               </div>
 
