@@ -59,6 +59,7 @@ function POSDiagramPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
   const [selectedDeviceType, setSelectedDeviceType] = useState('all-in-one');
 
+  // ... (deviceTypes and deviceFeatures data remains the same)
   // Device type configurations
   const deviceTypes = [
     {
@@ -532,6 +533,15 @@ function POSDiagramPage({ onNavigateBack }) {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         
+        {/* MOVED: Hero Section */}
+        <section className="bg-gradient-to-br from-[#f08e80]/10 to-white py-12 mb-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
+             Choose your platform
+            </h1>
+          </div>
+        </section>
+
         {/* Device Type Selection Buttons */}
         <div className="flex justify-center mb-12">
           <div className="inline-flex rounded-xl border border-gray-200 bg-gray-50 p-2">
@@ -552,6 +562,7 @@ function POSDiagramPage({ onNavigateBack }) {
           </div>
         </div>
 
+        {/* The rest of your component... */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
             {currentDevice?.title}
