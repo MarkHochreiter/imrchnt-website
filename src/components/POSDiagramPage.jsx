@@ -1,4 +1,4 @@
-import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer, Trash2, PlusCircle, Search, Grid, Home, DollarSign, Monitor, Tablet, Layers, Battery, Cloud, Users, BarChart3, Package, Lampdesk, Percent } from 'lucide-react';
+import { ArrowLeft, Wifi, CreditCard, Smartphone, Zap, Shield, Printer, Trash2, PlusCircle, Search, Grid, Home, DollarSign, Monitor, Tablet, Layers, Battery, Cloud, Users, BarChart3, Package, Percent } from 'lucide-react';
 import { useState } from 'react';
 import s1f2POS from '../assets/s1f2_pos.png';
 import scanSampleVideo from '../assets/scan_sample.mp4';
@@ -85,7 +85,7 @@ function POSDiagramPage({ onNavigateBack }) {
     id: 2,
     title: "Store - Cashier",
     description: "Displays store you're selling from and cashier making the sale",
-    icon: <Lampdesk size={20} />,
+    icon: <zap size={20} />,
     position: { top: '12%', left: '67%' }
   },
   {
