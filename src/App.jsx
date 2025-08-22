@@ -216,7 +216,7 @@ function App() {
                   <div>
                     <img src={logo} alt="Implus Offsite POS Logo" className="h-8" />
                     <p className="text-gray-400">
-                      The commerce platform trusted by millions of businesses worldwide.
+                      Designed by Computac LLC in Hanover, NH <br/> Developed by Codemask in Gorlice, Poland.
                     </p>
                   </div>
                   <div>
@@ -248,7 +248,7 @@ function App() {
                   </div>
                 </div>
                 <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                  <p>&copy; 2024 Commerce Platform. All rights reserved.</p>
+                  <p>&copy; 2025 Computac LLC. All rights reserved.</p>
                 </div>
               </div>
             </footer>
