@@ -39,7 +39,7 @@ function POSDiagramPage({ onNavigateBack }) {
       title: 'Desktop POS System',
       subtitle: 'Full-featured desktop solution for comprehensive retail management',
       description: 'Our desktop POS system provides the most comprehensive feature set with large display support, advanced reporting capabilities, and seamless integration with all your business peripherals.',
-      imageSrc: desktopPOS 
+      imageSrc: desktopPOS
     },
     {
       id: 'tablet',
@@ -369,17 +369,17 @@ function POSDiagramPage({ onNavigateBack }) {
         </div>
 
         {/* Diagram Section */}
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="space-y-16">
           
-          {/* Left side: Interactive Device Image */}
-          <div className="relative flex justify-center items-center">
-            <div className="relative">
+          {/* Centered Interactive Device Image */}
+          <div className="flex justify-center">
+            <div className="relative max-w-4xl">
               <div className="bg-gray-50 p-8 rounded-2xl shadow-sm">
                 <img 
                   src={currentDevice?.imageSrc}
                   alt={`${currentDevice?.name} POS System`}
-                  className={`max-w-full h-auto object-contain ${
-                    currentDevice?.id === 'desktop' ? 'max-h-[1000px]' : 'max-h-[500px]'
+                  className={`w-full h-auto object-contain mx-auto ${
+                    currentDevice?.id === 'desktop' ? 'max-h-[800px]' : 'max-h-[600px]'
                   }`}
                 />
               </div>
@@ -453,31 +453,34 @@ function POSDiagramPage({ onNavigateBack }) {
             </div>
           </div>
 
-          {/* Right side: Feature List */}
-          <div className="space-y-6">
-            <div className="flex items-start">
-              <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-[#f08e80]/10 text-[#f08e80] rounded-lg mr-4 mt-1">
-                {currentDevice?.icon}
-              </div>
-              <div>
-                <h2 className="text-3xl font-bold text-gray-800">Core Features</h2>
-                <p className="text-gray-500 mt-1">{currentDevice?.subtitle}</p>
+          {/* Core Features Below Image */}
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center mb-6">
+                <div className="flex-shrink-0 w-16 h-16 flex items-center justify-center bg-[#f08e80]/10 text-[#f08e80] rounded-xl mr-4">
+                  {currentDevice?.icon}
+                </div>
+                <div>
+                  <h2 className="text-4xl font-bold text-gray-800">Core Features</h2>
+                  <p className="text-gray-500 mt-2 text-lg">{currentDevice?.subtitle}</p>
+                </div>
               </div>
             </div>
-            <div className="border-t border-gray-200 pt-6">
-              <ul className="space-y-5">
-                {currentFeatures.map((feature) => (
-                  <li key={feature.id} className="flex items-start">
-                    <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-[#f08e80]/10 text-[#f08e80] rounded-lg">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {currentFeatures.map((feature) => (
+                <div key={feature.id} className="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-[#f08e80]/10 text-[#f08e80] rounded-lg">
                       {feature.icon}
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-semibold text-gray-800">{feature.title}</h3>
+                      <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
                       <div className="text-gray-600">
                         {Array.isArray(feature.description) ? (
                           <>
                             <p>{feature.description[0]}</p>
-                            <ul className="list-disc list-inside mt-1 pl-2 text-sm">
+                            <ul className="list-disc list-inside mt-2 pl-2 text-sm">
                               {feature.description.slice(1).map((item, index) => (
                                 <li key={index}>{item}</li>
                               ))}
@@ -488,9 +491,9 @@ function POSDiagramPage({ onNavigateBack }) {
                         )}
                       </div>
                     </div>
-                  </li>
-                ))}
-              </ul>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
