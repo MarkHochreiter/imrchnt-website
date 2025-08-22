@@ -74,7 +74,7 @@ function POSDiagramPage({ onNavigateBack }) {
   const deviceFeatures = {
     'desktop': [
   {
-    id: 1,
+    id: 1, // DONE
     title: "Search",
     description: "Either scan item into sale with Bluetooth connected Scanner or use our blazing fast search to manually find and add item into sale",
     icon: <Search size={20} />,
@@ -86,24 +86,24 @@ function POSDiagramPage({ onNavigateBack }) {
     title: "Store - Cashier",
     description: "Displays store you're selling from and cashier making the sale",
     icon: <zap size={20} />,
-    position: { top: '12%', left: '67%' }
+    position: { top: '13%', left: '67%' }
   },
   {
     id: 3,
     title: "POS drawer",
     description: "Navigate to Transactions, Close Day, Assign Card Reader, Attach Bluetooth scanner",
     icon: <Monitor size={20} />,
-    position: { top: '12%', left: '84%' }
+    position: { top: '13%', left: '83%' }
   },
   {
     id: 4,
     title: "Home",
     description: "Navigate back to Home to access other app modules",
     icon: <Monitor size={20} />,
-    position: { top: '12%', left: '89%' }
+    position: { top: '13%', left: '90%' }
   },
   {
-    id: 5,
+    id: 5, // DONE
     title: "Add Customer",
     description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
     icon: <Monitor size={20} />,
@@ -142,68 +142,59 @@ function POSDiagramPage({ onNavigateBack }) {
     title: "Clear order",
     description: "removes everything from sale",
     icon: <Monitor size={20} />,
-    position: { top: '74%', left: '79%' }
+    position: { top: '74%', left: '81%' }
   },
   {
-    id: 12,
+    id: 12, // DONE
     title: "Payment",
     description: "Click on Payment to Tender and complete sale",
     icon: <Monitor size={20} />,
     position: { top: '85%', left: '96%' }
   },
   {
-    id: 11,
+    id: 11, // DONE
     title: "Discount",
     description: "Manually apply discount to sale by flat dollar amount or by a certain percent",
     icon: <Monitor size={20} />,
     position: { top: '74%', left: '96%' }
   },
   {
-    id: 170,
-    title: "top 40 left 5",
-    description: "Position marker at 40% top, 5% left",
+    id: 12,
+    title: "Line Item",
+    description: "Product Number and Description",
     icon: <Monitor size={20} />,
-    position: { top: '40%', left: '5%' }
+    position: { top: '41%', left: '5%' }
+  },  
+  {
+    id: 13,
+    title: "Retail Price",
+    description: "Unit Retail Price",
+    icon: <Monitor size={20} />,
+    position: { top: '41%', left: '25%' }
+  },
+  
+  {
+    id: 14,
+    title: "Quantity",
+    description: "Click + or - to adjust quantity, auto adjusts with scan",
+    icon: <Monitor size={20} />,
+    position: { top: '41%', left: '37%' }
   },
  
   {
-    id: 172,
-    title: "top 40 left 15",
-    description: "Position marker at 40% top, 15% left",
+    id: 15,
+    title: "Total",
+    description: "Item Total (Retail x Quantity",
     icon: <Monitor size={20} />,
-    position: { top: '40%', left: '15%' }
+    position: { top: '41%', left: '50%' }
   },
   
   {
-    id: 174,
-    title: "top 40 left 25",
-    description: "Position marker at 40% top, 25% left",
+    id: 16,
+    title: "Delete",
+    description: "Remove item from sale",
     icon: <Monitor size={20} />,
-    position: { top: '40%', left: '25%' }
-  },
-  
-  {
-    id: 176,
-    title: "top 40 left 35",
-    description: "Position marker at 40% top, 35% left",
-    icon: <Monitor size={20} />,
-    position: { top: '40%', left: '35%' }
-  },
- 
-  {
-    id: 178,
-    title: "top 40 left 45",
-    description: "Position marker at 40% top, 45% left",
-    icon: <Monitor size={20} />,
-    position: { top: '40%', left: '45%' }
-  },
-  
-  {
-    id: 180,
-    title: "top 40 left 55",
-    description: "Position marker at 40% top, 55% left",
-    icon: <Monitor size={20} />,
-    position: { top: '40%', left: '55%' }
+    position: { top: '41%', left: '63%' }
   },
   
     ],
