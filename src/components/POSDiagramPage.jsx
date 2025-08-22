@@ -152,7 +152,7 @@ function POSDiagramPage({ onNavigateBack }) {
           <div className="flex justify-between items-center h-16">
             <Button onClick={onNavigateBack} variant="ghost">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to InStore Solutions
+              Back to System Solutions
             </Button>
           </div>
         </div>
