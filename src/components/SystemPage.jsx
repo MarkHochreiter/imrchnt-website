@@ -60,6 +60,7 @@ function SystemPage() {
                 </div>
               </div>
               <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
+                 onClick={() => onNavigate('pos-diagram')}
                 Explore POS System
               </Button>
             </div>
