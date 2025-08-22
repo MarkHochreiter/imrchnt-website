@@ -45,7 +45,6 @@ const Button = ({ children, className = '', variant = 'primary', ...props }) => 
   };
 
   return (
-        return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-[#f08e80]/10 to-white py-20">
