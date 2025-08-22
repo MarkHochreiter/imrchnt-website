@@ -534,10 +534,10 @@ function POSDiagramPage({ onNavigateBack }) {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         
         {/* MOVED: Hero Section */}
-        <section className="bg-gradient-to-br from-[#f08e80]/10 to-white py-12 mb-12">
+        <section>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-             Choose your platform
+             Choose your POS platform
             </h1>
           </div>
         </section>
