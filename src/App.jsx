@@ -79,7 +79,7 @@ function App() {
             <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 lg:py-32">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-4xl">
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka leading-tight mb-6">
                     Seamless POS. Intuitive Design.
                   </h1>
                   <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
