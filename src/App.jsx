@@ -265,7 +265,7 @@ function App() {
       case 'credit-cards':
         return <CreditCardProcessingPage />;
       case 'pos-diagram':
-        return <POSDiagramPage onNavigateBack={() => navigateTo('instore')} />;
+        return <POSDiagramPage onNavigateBack={() => navigateTo('system')} />;
       case 's1f2':
         return <S1f2Page onNavigateBack={() => navigateTo('home')} />;
       case 'ams1':
