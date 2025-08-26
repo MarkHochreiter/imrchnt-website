@@ -286,7 +286,7 @@ function App() {
             {/* Logo */}
             <div className="flex items-center">
               <button onClick={() => setCurrentPage('home')}>
-                <img src={logo} alt="Implus Offsite POS Logo" className="h-12" />
+                <img src={logo} alt="Implus Offsite POS Logo" className="h-16" />
               </button>
             </div>
 
