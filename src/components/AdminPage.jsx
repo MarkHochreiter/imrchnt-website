@@ -29,9 +29,9 @@ import {
   Tag,
   Book} from 'lucide-react';
 import { useState } from 'react';
-import s1f2POS from '../assets/s1f2_pos.png';
-import scanSampleVideo from '../assets/scan_sample.mp4';
-import paymentSampleVideo from '../assets/payment_sample.mp4';
+import cards from '../assets/cards.png';
+import settings from '../assets/settings.png';
+import stores from '../assets/stores.png';
 import users from '../assets/users.png';
 
 // A reusable Button component, matching the new aesthetic.
@@ -72,31 +72,31 @@ function POSDiagramPage({ onNavigateBack }) {
       imageSrc: desktopPOS
     },
     {
-      id: 'tablet',
-      name: 'Tablet',
+      id: 'stores',
+      name: 'Stores',
       icon: <Tablet className="h-5 w-5" />,
-      title: 'Run on Tablet',
+      title: 'Manage Multiple Stores',
       subtitle: 'Portable and flexible point-of-sale for modern retail environments',
       description: 'Perfect for retailers that need mobility without sacrificing functionality. Our tablet POS solution offers touch-optimized interface, minimal device footprint. Pair with the S1F2 or AMS1 for ultimate flexibility.',
       imageSrc: desktopPOS 
     },
     {
-      id: 'phone',
-      name: 'Phone',
+      id: 'cards',
+      name: 'Card Processing',
       icon: <Smartphone className="h-5 w-5" />,
-      title: 'Run on Smartphone',
-      subtitle: 'Pocket-sized point-of-sale for ultimate mobility and convenience',
-      description: 'Transform any smartphone into a powerful POS system. Perfect for pop-ups, events, and offsite. Turn your smartphone into a Card Reader with our Tap to Pay functionality or pair with an S1F2 or AMS1 for full card reader capabilities to process any type of payment anywhere.',
-      imageSrc: s1f2POS // You can replace with phone-specific image
+      title: 'In App access to Card Processing tools',
+      subtitle: 'Unparalleled in app access to the back end of card processing',
+      description: 'Manage Payout automation or transfer money instantly. View Payout history. Manage card readers. Add bank accounts. Export in depth payout reports. Challenge Chargeback disputes ',
+      imageSrc: cards 
     },
     {
-      id: 'all-in-one',
-      name: 'All-in-one',
+      id: 'settings',
+      name: 'Settings',
       icon: <Layers className="h-5 w-5" />,
-      title: 'Run on Card Reader',
-      subtitle: 'Everything you need all in one unit',
-      description: 'Bring one piece of hardware to your next offsite.',
-      imageSrc: s1f2POS // Current s1f2POS image
+      title: 'Manage Settings',
+      subtitle: 'Manage Registers and Simple Tenders',
+      description: 'Add / Update / Delete registers and simple tenders.',
+      imageSrc: settings
     }
   ];
 
