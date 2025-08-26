@@ -32,7 +32,7 @@ import { useState } from 'react';
 import s1f2POS from '../assets/s1f2_pos.png';
 import scanSampleVideo from '../assets/scan_sample.mp4';
 import paymentSampleVideo from '../assets/payment_sample.mp4';
-import desktopPOS from '../assets/desktop_sample.png';
+import users from '../assets/users.png';
 
 // A reusable Button component, matching the new aesthetic.
 const Button = ({ children, className = '', variant = 'primary', ...props }) => {
@@ -63,12 +63,12 @@ function POSDiagramPage({ onNavigateBack }) {
   // Device type configurations
   const deviceTypes = [
     {
-      id: 'desktop',
-      name: 'Desktop',
+      id: 'users',
+      name: 'Users',
       icon: <Monitor className="h-5 w-5" />,
-      title: 'Run on Desktop',
-      subtitle: 'Full-featured desktop solution for comprehensive retail management',
-      description: 'Our application on desktop provides the most comprehensive feature set with large display support, seamlessly integrate with all your business peripherals, pair with a touchscreen monitor for even greater ease of use.',
+      title: 'Manage Users',
+      subtitle: 'Full user management console ',
+      description: 'Add / Update / Delete Users. Manage Store assignments and Security Roles. Implement Two Factor Authentication (2FA) for Admin and Manager accounts',
       imageSrc: desktopPOS
     },
     {
