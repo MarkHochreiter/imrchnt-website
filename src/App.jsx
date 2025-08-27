@@ -13,8 +13,8 @@ import Ams1Page from './components/Ams1Page.jsx'
 import Sfo1Page from './components/Sfo1Page.jsx'
 import SignupModal from './components/SignupModal.jsx'
 import POSDiagramPage from './components/POSDiagramPage.jsx'
-import SystemPage from './components/SystemPage.jsx' // Import the new SystemPage
-import AdminPage from './components/AdminPage.jsx' // Import Admin Page
+import SystemPage from './components/SystemPage.jsx'
+import AdminPage from './components/AdminPage.jsx'
 import './App.css'
 
 // Button component
@@ -258,9 +258,9 @@ function App() {
       case 'pricing':
         return <PricingPage />;
       case 'system':
-        return <SystemPage onNavigate={navigateTo} />;
+        return <SystemPage onNavigate={navigateTo} handleSignupClick={handleSignupClick} />;
       case 'admin':
-        return <AdminPage onNavigateBack={() => navigateTo('system')} />; // Added route
+        return <AdminPage onNavigateBack={() => navigateTo('system')} />;
       case 'instore':
         return <InStorePage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       case 'offsite':
@@ -376,16 +376,40 @@ function App() {
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white">
-            <div className="px-4 py-2 space-y-2">
-              <a href="#" className="block py-2 text-gray-700">Solutions</a>
-              <a href="#" className="block py-2 text-gray-700">Pricing</a>
-              <a href="#" className="block py-2 text-gray-700">Hardware</a>
-              <a href="#" className="block py-2 text-gray-700">Support</a>
-              <a href="#" className="block py-2 text-gray-700">Log in</a>
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+              <button 
+                onClick={() => {
+                  setCurrentPage('home')
+                  setMobileMenuOpen(false)
+                }}
+                className="block px-3 py-2 text-gray-700 hover:text-gray-900"
+              >
+                Home
+              </button>
+              <button 
+                onClick={() => {
+                  setCurrentPage('pricing')
+                  setMobileMenuOpen(false)
+                }}
+                className="block px-3 py-2 text-gray-700 hover:text-gray-900"
+              >
+                Pricing
+              </button>
+              <a 
+                href="https://pos.imrchnt.com/auth/sign-in"
+                className="block px-3 py-2 text-gray-700 hover:text-gray-900"
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Log in
+              </a>
               <Button 
-                className="w-full bg-[#f08e80] hover:bg-green-700 text-white mt-2"
-                onClick={handleSignupClick}
+                className="bg-[#f08e80] hover:bg-violet-400 text-white ml-3 mt-2"
+                onClick={() => {
+                  handleSignupClick()
+                  setMobileMenuOpen(false)
+                }}
               >
                 Request Access
               </Button>
@@ -398,10 +422,12 @@ function App() {
       {renderContent()}
 
       {/* Signup Modal */}
-      <SignupModal 
-        isOpen={signupModalOpen}
-        onClose={() => setSignupModalOpen(false)}
-      />
+      {signupModalOpen && (
+        <SignupModal 
+          isOpen={signupModalOpen}
+          onClose={() => setSignupModalOpen(false)}
+        />
+      )}
     </div>
   )
 }
