@@ -1,4 +1,4 @@
-topimport { 
+import { 
   ArrowLeft,
   Wifi, 
   CreditCard, 
@@ -54,39 +54,38 @@ const Button = ({ children, className = '', variant = 'primary', ...props }) => 
   );
 };
 
-// Main component for the POS Diagram Page
-function POSDiagramPage({ onNavigateBack }) {
+// Main component for the Admin Page
+function AdminPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
-  const [selectedDeviceType, setSelectedDeviceType] = useState('desktop');
+  const [selectedDeviceType, setSelectedDeviceType] = useState('users');
 
-  // ... (deviceTypes and deviceFeatures data remains the same)
-  // Device type configurations
+  // Device type configurations for Admin sections
   const deviceTypes = [
     {
       id: 'users',
       name: 'Users',
-      icon: <Monitor className="h-5 w-5" />,
+      icon: <Users className="h-5 w-5" />,
       title: 'Manage Users',
-      subtitle: 'Full user management console ',
+      subtitle: 'Full user management console',
       description: 'Add / Update / Delete Users. Manage Store assignments and Security Roles. Implement Two Factor Authentication (2FA) for Admin and Manager accounts',
-      imageSrc: desktopPOS
+      imageSrc: users
     },
     {
       id: 'stores',
       name: 'Stores',
-      icon: <Tablet className="h-5 w-5" />,
+      icon: <Monitor className="h-5 w-5" />,
       title: 'Manage Multiple Stores',
-      subtitle: 'Portable and flexible point-of-sale for modern retail environments',
-      description: 'Perfect for retailers that need mobility without sacrificing functionality. Our tablet POS solution offers touch-optimized interface, minimal device footprint. Pair with the S1F2 or AMS1 for ultimate flexibility.',
-      imageSrc: desktopPOS 
+      subtitle: 'Centralized store management system',
+      description: 'Configure multiple store locations with centralized control. Manage store-specific settings, permissions, and performance tracking across all your retail locations.',
+      imageSrc: stores 
     },
     {
       id: 'cards',
       name: 'Card Processing',
-      icon: <Smartphone className="h-5 w-5" />,
+      icon: <CreditCard className="h-5 w-5" />,
       title: 'In App access to Card Processing tools',
       subtitle: 'Unparalleled in app access to the back end of card processing',
-      description: 'Manage Payout automation or transfer money instantly. View Payout history. Manage card readers. Add bank accounts. Export in depth payout reports. Challenge Chargeback disputes ',
+      description: 'Manage Payout automation or transfer money instantly. View Payout history. Manage card readers. Add bank accounts. Export in depth payout reports. Challenge Chargeback disputes',
       imageSrc: cards 
     },
     {
@@ -95,420 +94,187 @@ function POSDiagramPage({ onNavigateBack }) {
       icon: <Layers className="h-5 w-5" />,
       title: 'Manage Settings',
       subtitle: 'Manage Registers and Simple Tenders',
-      description: 'Add / Update / Delete registers and simple tenders.',
+      description: 'Add / Update / Delete registers and simple tenders. Configure system-wide settings and preferences.',
       imageSrc: settings
     }
   ];
 
-  // Features for different device types
+  // Features for different admin sections
   const deviceFeatures = {
-    'desktop': [
-  {
-    id: 1, // DONE
-    title: "Search",
-    description: "Either scan item into sale with Bluetooth connected Scanner or use our blazing fast search to manually find and add item into sale",
-    icon: <Search size={20} />,
-    position: { top: '27%', left: '5%' }
-  },
-
-  {
-    id: 2, // DONE
-    title: "Store - Cashier",
-    description: "Displays store you're selling from and cashier making the sale",
-    icon: <Zap size={20} />,
-    position: { top: '13%', left: '67%' }
-  },
-  {
-    id: 3, // DONE
-    title: "POS drawer",
-    description: "Navigate to Transactions, Close Day, Assign Card Reader, Attach Bluetooth scanner",
-    icon: <Flag size={20} />,
-    position: { top: '13%', left: '83%' }
-  },
-  {
-    id: 4, // DONE
-    title: "Home",
-    description: "Navigate back to Home to access other app modules",
-    icon: <Home size={20} />,
-    position: { top: '13%', left: '96%' }
-  },
-  {
-    id: 5, // DONE 
-    title: "Add Customer",
-    description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
-    icon: <Users size={20} />,
-    position: { top: '34%', left: '96%' }
-  },
-  {
-    id: 6,
-    title: "Subtotal",
-    description: "sale subtotal",
-    icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '96%' }
-  },
-  {
-    id: 7,
-    title: "Discount",
-    description: "Discount amount applied to sale",
-    icon: <Tag size={20} />,
-    position: { top: '47%', left: '96%' }
-  },
-  {
-    id: 8, // DONE
-    title: "Tax",
-    description: "Tax amount applied to sale",
-    icon: <Percent size={20} />,
-    position: { top: '53%', left: '96%' }
-  },
-  {
-    id: 9,
-    title: "Sale Total",
-    description: "Total amount to be charged in sale",
-    icon: <Calculator size={20} />,
-    position: { top: '59%', left: '96%' }
-  },
-  {
-    id: 10, // DONE 
-    title: "Clear order",
-    description: "removes everything from sale",
-    icon: <Shredder size={20} />,
-    position: { top: '74%', left: '81%' }
-  },
-  {
-    id: 12, // DONE
-    title: "Payment",
-    description: "Click on Payment to Tender and complete sale",
-    icon: <Wallet size={20} />,
-    position: { top: '85%', left: '96%' }
-  },
-  {
-    id: 11, // DONE
-    title: "Discount",
-    description: "Manually apply discount to sale by flat dollar amount or by a certain percent",
-    icon: <Tag size={20} />,
-    position: { top: '74%', left: '96%' }
-  },
-  {
-    id: 13,
-    title: "Line Item",
-    description: "Product Number and Description",
-    icon: <Book size={20} />,
-    position: { top: '41%', left: '5%' }
-  },  
-  {
-    id: 14,
-    title: "Retail Price",
-    description: "Unit Retail Price",
-    icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '25%' }
-  },
-  
-  {
-    id: 15,
-    title: "Quantity",
-    description: "Click + or - to adjust quantity, auto adjusts with scan",
-    icon: <BookPlus size={20} />,
-    position: { top: '41%', left: '36%' }
-  },
- 
-  {
-    id: 16,
-    title: "Total",
-    description: "Item Total (Retail x Quantity",
-    icon: <Calculator size={20} />,
-    position: { top: '41%', left: '52%' }
-  },
-  
-  {
-    id: 17,
-    title: "Delete",
-    description: "Remove item from sale",
-    icon: <Trash2 size={20} />,
-    position: { top: '41%', left: '64%' }
-  },
-  
-    ],
-    'tablet': [
-  {
-    id: 1, // DONE
-    title: "Search",
-    description: "Either scan item into sale with Bluetooth connected Scanner or use our blazing fast search to manually find and add item into sale",
-    icon: <Search size={20} />,
-    position: { top: '27%', left: '5%' }
-  },
-
-  {
-    id: 2, // DONE
-    title: "Store - Cashier",
-    description: "Displays store you're selling from and cashier making the sale",
-    icon: <Zap size={20} />,
-    position: { top: '13%', left: '67%' }
-  },
-  {
-    id: 3, // DONE
-    title: "POS drawer",
-    description: "Navigate to Transactions, Close Day, Assign Card Reader, Attach Bluetooth scanner",
-    icon: <Flag size={20} />,
-    position: { top: '13%', left: '83%' }
-  },
-  {
-    id: 4, // DONE
-    title: "Home",
-    description: "Navigate back to Home to access other app modules",
-    icon: <Home size={20} />,
-    position: { top: '13%', left: '96%' }
-  },
-  {
-    id: 5, // DONE 
-    title: "Add Customer",
-    description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
-    icon: <Users size={20} />,
-    position: { top: '34%', left: '96%' }
-  },
-  {
-    id: 6,
-    title: "Subtotal",
-    description: "sale subtotal",
-    icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '96%' }
-  },
-  {
-    id: 7,
-    title: "Discount",
-    description: "Discount amount applied to sale",
-    icon: <Tag size={20} />,
-    position: { top: '47%', left: '96%' }
-  },
-  {
-    id: 8, // DONE
-    title: "Tax",
-    description: "Tax amount applied to sale",
-    icon: <Percent size={20} />,
-    position: { top: '53%', left: '96%' }
-  },
-  {
-    id: 9,
-    title: "Sale Total",
-    description: "Total amount to be charged in sale",
-    icon: <Calculator size={20} />,
-    position: { top: '59%', left: '96%' }
-  },
-  {
-    id: 10, // DONE 
-    title: "Clear order",
-    description: "removes everything from sale",
-    icon: <Shredder size={20} />,
-    position: { top: '74%', left: '81%' }
-  },
-  {
-    id: 12, // DONE
-    title: "Payment",
-    description: "Click on Payment to Tender and complete sale",
-    icon: <Wallet size={20} />,
-    position: { top: '85%', left: '96%' }
-  },
-  {
-    id: 11, // DONE
-    title: "Discount",
-    description: "Manually apply discount to sale by flat dollar amount or by a certain percent",
-    icon: <Tag size={20} />,
-    position: { top: '74%', left: '96%' }
-  },
-  {
-    id: 13,
-    title: "Line Item",
-    description: "Product Number and Description",
-    icon: <Book size={20} />,
-    position: { top: '41%', left: '5%' }
-  },  
-  {
-    id: 14,
-    title: "Retail Price",
-    description: "Unit Retail Price",
-    icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '25%' }
-  },
-  
-  {
-    id: 15,
-    title: "Quantity",
-    description: "Click + or - to adjust quantity, auto adjusts with scan",
-    icon: <BookPlus size={20} />,
-    position: { top: '41%', left: '36%' }
-  },
- 
-  {
-    id: 16,
-    title: "Total",
-    description: "Item Total (Retail x Quantity",
-    icon: <Calculator size={20} />,
-    position: { top: '41%', left: '52%' }
-  },
-  
-  {
-    id: 17,
-    title: "Delete",
-    description: "Remove item from sale",
-    icon: <Trash2 size={20} />,
-    position: { top: '41%', left: '64%' }
-  },
-  
-    ],
-    'phone': [
+    'users': [
       {
         id: 1,
-        title: "Pocket-Sized Solution",
-        description: "Complete POS functionality in a device that fits in your pocket.",
-        icon: <Smartphone size={20} />,
-        position: { top: '30%', left: '50%' }
+        title: "Add New Users",
+        description: "Create new user accounts with appropriate permissions and store assignments",
+        icon: <Users size={20} />,
+        position: { top: '20%', left: '10%' }
       },
       {
         id: 2,
-        title: "Quick Payments",
-        description: "Fast payment processing with tap, chip, and contactless options.",
-        icon: <Zap size={20} />,
-        position: { top: '50%', left: '30%' }
+        title: "Update User Info",
+        description: "Modify existing user details, contact information, and profile settings",
+        icon: <Search size={20} />,
+        position: { top: '30%', left: '30%' }
       },
       {
         id: 3,
-        title: "Customer Engagement",
-        description: "Built-in camera for loyalty programs and customer interaction.",
-        icon: <Users size={20} />,
-        position: { top: '70%', left: '70%' }
+        title: "Delete Users",
+        description: "Remove user accounts and revoke system access when needed",
+        icon: <Trash2 size={20} />,
+        position: { top: '40%', left: '50%' }
       },
       {
         id: 4,
-        title: "Real-Time Sync",
-        description: "Instant synchronization with your main POS system and inventory.",
-        icon: <Cloud size={20} />,
-        position: { top: '90%', left: '50%' }
+        title: "Store Assignments",
+        description: "Assign users to specific store locations and manage multi-store access",
+        icon: <Monitor size={20} />,
+        position: { top: '50%', left: '70%' }
       },
       {
         id: 5,
-        title: "Mobile Receipts",
-        description: "Send digital receipts via SMS or email directly from the device.",
-        icon: <Printer size={20} />,
-        position: { top: '40%', left: '80%' }
+        title: "Security Roles",
+        description: "Configure user permissions and access levels based on job responsibilities",
+        icon: <Shield size={20} />,
+        position: { top: '60%', left: '20%' }
       },
       {
         id: 6,
-        title: "Offline Mode",
-        description: "Continue processing sales even without internet connectivity.",
-        icon: <Shield size={20} />,
-        position: { top: '80%', left: '20%' }
+        title: "Two Factor Authentication",
+        description: "Enable 2FA for Admin and Manager accounts for enhanced security",
+        icon: <Smartphone size={20} />,
+        position: { top: '70%', left: '60%' }
       }
     ],
-    'all-in-one': [
+    'stores': [
       {
         id: 1,
-        title: "Contactless Reader",
-        description: "Accepts NFC cards and mobile payments like Apple Pay & Google Pay.",
-        icon: <Wifi size={20} />,
-        position: { top: '15%', left: '49%' }
+        title: "Multi-Location Setup",
+        description: "Configure and manage multiple store locations from one dashboard",
+        icon: <Monitor size={20} />,
+        position: { top: '25%', left: '15%' }
       },
       {
         id: 2,
-        title: "5.5\" HD Touchscreen",
-        description: "Intuitive interface for you and your customers.",
-        icon: <Smartphone size={20} />,
-        position: { top: '70%', left: '49%' }
+        title: "Store Configuration",
+        description: "Set up store-specific settings, tax rates, and operational parameters",
+        icon: <Layers size={20} />,
+        position: { top: '35%', left: '35%' }
       },
       {
         id: 3,
-        title: "Chip Card Slot",
-        description: "Securely processes EMV chip cards.",
-        icon: <CreditCard size={20} />,
-        position: { top: '94%', left: '49%' }
-      },
-      {
-        id: 13,
-        title: "Built-in Printer",
-        description: "Fast thermal receipt printing for customer convenience.",
-        icon: <Printer size={20} />,
-        position: { top: '29%', left: '78%' }
-      },
-      {
-        id: 5,
-        title: "Item Details",
-        description: "Description, Product Number, Unit Price of item in Cart.",
+        title: "Location Permissions",
+        description: "Manage user access and permissions on a per-location basis",
         icon: <Shield size={20} />,
-        position: { top: '53%', left: '18%' }
-      },
-      {
-        id: 6,
-        title: "Barcode Scanner",
-        hasVideo: true,
-        videoSrc: scanSampleVideo,
-        description: "Scans product barcodes with device camera.",
-        icon: <Zap size={20} />,
-        position: { top: '45%', left: '78%' }
-      },
-      {
-        id: 7,
-        title: "Delete Item",
-        description: "Remove an item from the current order.",
-        icon: <Trash2 size={20} />,
-        position: { top: '51%', left: '80%' }
-      },
-      {
-        id: 8,
-        title: "Adjust Quantity",
-        description: "Increase or decrease the quantity of the selected item.",
-        icon: <PlusCircle size={20} />,
-        position: { top: '57%', left: '80%' }
-      },
-      {
-        id: 9,
-        title: "Search Products",
-        description: "Quickly find a product or item in your inventory.",
-        icon: <Search size={20} />,
-        position: { top: '45%', left: '51%' }
-      },
-      {
-        id: 10,
-        title: "POS Drawer",
-        description: [
-          "Access POS functions:",
-          "Clear cart",
-          "Close Day",
-          "Transactions"
-        ],
-        icon: <Grid size={20} />,
-        position: { top: '38%', left: '80%' }
-      },
-      {
-        id: 11,
-        title: "Home Screen",
-        description: [
-          "Access Home dashboard functions:",
-          "Continue sale",
-          "Manage offline settings",
-          "Sign out"
-        ],
-        icon: <Home size={20} />,
-        position: { top: '38%', left: '18%' }
-      },
-      {
-        id: 12,
-        title: "Sale Total",
-        description: "",
-        icon: <DollarSign size={20} />,
-        position: { top: '45%', left: '18%' }
+        position: { top: '45%', left: '55%' }
       },
       {
         id: 4,
-        title: "Payment",
-        hasVideo: true,
-        videoSrc: paymentSampleVideo,
-        description: [
-          "Tender Sale with:",
-          "Credit/Debit",
-          "Cash",
-          "Gift Card (COMING SOON)",
-          "Simple Tender"
-        ],
+        title: "Performance Tracking",
+        description: "Monitor store performance metrics and sales analytics",
+        icon: <BarChart3 size={20} />,
+        position: { top: '55%', left: '75%' }
+      },
+      {
+        id: 5,
+        title: "Regional Management",
+        description: "Organize stores by regions and manage hierarchical structures",
+        icon: <Grid size={20} />,
+        position: { top: '65%', left: '25%' }
+      },
+      {
+        id: 6,
+        title: "Store Hierarchy",
+        description: "Configure organizational structure and reporting relationships",
+        icon: <Layers size={20} />,
+        position: { top: '75%', left: '65%' }
+      }
+    ],
+    'cards': [
+      {
+        id: 1,
+        title: "Payout Automation",
+        description: "Set up automated payout schedules and manage transfer preferences",
+        icon: <Zap size={20} />,
+        position: { top: '20%', left: '20%' }
+      },
+      {
+        id: 2,
+        title: "Instant Transfers",
+        description: "Transfer money instantly to your bank accounts with real-time processing",
+        icon: <Wallet size={20} />,
+        position: { top: '30%', left: '40%' }
+      },
+      {
+        id: 3,
+        title: "Payout History",
+        description: "View comprehensive history of all payouts and transaction details",
+        icon: <BarChart3 size={20} />,
+        position: { top: '40%', left: '60%' }
+      },
+      {
+        id: 4,
+        title: "Card Reader Management",
+        description: "Manage and configure card readers across all store locations",
+        icon: <CreditCard size={20} />,
+        position: { top: '50%', left: '80%' }
+      },
+      {
+        id: 5,
+        title: "Bank Account Setup",
+        description: "Add and manage bank accounts for payout destinations",
         icon: <DollarSign size={20} />,
-        position: { top: '80%', left: '18%' }
+        position: { top: '60%', left: '30%' }
+      },
+      {
+        id: 6,
+        title: "Chargeback Disputes",
+        description: "Challenge chargeback disputes and manage dispute resolution process",
+        icon: <Shield size={20} />,
+        position: { top: '70%', left: '70%' }
+      }
+    ],
+    'settings': [
+      {
+        id: 1,
+        title: "Register Management",
+        description: "Add, update, and delete POS registers across your store locations",
+        icon: <Monitor size={20} />,
+        position: { top: '25%', left: '20%' }
+      },
+      {
+        id: 2,
+        title: "Simple Tenders",
+        description: "Configure payment methods and tender types for your POS system",
+        icon: <DollarSign size={20} />,
+        position: { top: '35%', left: '40%' }
+      },
+      {
+        id: 3,
+        title: "System Preferences",
+        description: "Set global system preferences and default configurations",
+        icon: <Layers size={20} />,
+        position: { top: '45%', left: '60%' }
+      },
+      {
+        id: 4,
+        title: "Security Settings",
+        description: "Configure security policies, password requirements, and access controls",
+        icon: <Shield size={20} />,
+        position: { top: '55%', left: '80%' }
+      },
+      {
+        id: 5,
+        title: "Backup Configuration",
+        description: "Set up automated backups and data retention policies",
+        icon: <Cloud size={20} />,
+        position: { top: '65%', left: '30%' }
+      },
+      {
+        id: 6,
+        title: "Integration Settings",
+        description: "Configure third-party integrations and API connections",
+        icon: <Grid size={20} />,
+        position: { top: '75%', left: '70%' }
       }
     ]
   };
@@ -517,20 +283,42 @@ function POSDiagramPage({ onNavigateBack }) {
   const currentFeatures = deviceFeatures[selectedDeviceType] || [];
 
   return (
-    <div>
+    <div className="min-h-screen bg-white">
+      {/* Header with Back Button */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <Button
+                variant="ghost"
+                onClick={onNavigateBack}
+                className="mr-4"
+              >
+                <ArrowLeft className="h-5 w-5 mr-2" />
+                Back to System
+              </Button>
+              <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+            </div>
+          </div>
+        </div>
+      </header>
+
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         
-        {/* MOVED: Hero Section */}
+        {/* Hero Section */}
         <section className="py-10 mb-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-             Choose your POS platform
+              Admin Control Center
             </h1>
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+              Comprehensive administrative tools to manage users, stores, payments, and system settings from one centralized dashboard.
+            </p>
           </div>
         </section>
 
-        {/* Device Type Selection Buttons */}
+        {/* Admin Section Selection Buttons */}
         <div className="flex justify-center mb-12">
           <div className="inline-flex rounded-xl border border-gray-200 bg-gray-50 p-2">
             {deviceTypes.map((device) => (
@@ -550,164 +338,112 @@ function POSDiagramPage({ onNavigateBack }) {
           </div>
         </div>
 
-        {/* The rest of your component... */}
+        {/* Current Section Details */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {currentDevice?.title}
-          </h1>
-          <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+          </h2>
+          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
             {currentDevice?.description}
           </p>
         </div>
 
-        {/* Diagram Section */}
-        <div className="space-y-16">
-          
-          {/* Centered Interactive Device Image */}
-          <div className="flex justify-center">
-            <div className="relative max-w-4xl">
-              <div className="bg-gray-50 p-8 rounded-2xl shadow-sm">
-                <img 
-                  src={currentDevice?.imageSrc}
-                  alt={`${currentDevice?.name} POS System`}
-                  className={`w-full h-auto object-contain mx-auto ${
-                    currentDevice?.id === 'desktop' ? 'max-h-[800px]' : 'max-h-[600px]'
-                  }`}
-                />
-              </div>
-
-              {/* Interactive Feature Points */}
-              {currentFeatures.map((feature) => (
-                <div
-                  key={feature.id}
-                  className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group ${
-                    hoveredFeature === feature.id ? 'z-30' : 'z-10'
-                  }`}
-                  style={{ top: feature.position.top, left: feature.position.left }}
-                  onMouseEnter={() => setHoveredFeature(feature.id)}
-                  onMouseLeave={() => setHoveredFeature(null)}
-                >
-                  <div className="w-4 h-4 bg-[#f08e80] rounded-full transition-transform duration-300 group-hover:scale-150" />
-                  <div className="absolute w-8 h-8 bg-[#f08e80]/20 rounded-full -top-2 -left-2 animate-ping-slow group-hover:animate-none" />
+        {/* Interactive Feature Display */}
+        <div className="relative bg-gray-50 rounded-2xl p-8 mb-16">
+          <div className="flex justify-center mb-8">
+            <div className="relative w-full max-w-4xl">
+              {/* Admin Interface Mockup */}
+              <div className="bg-white rounded-lg shadow-2xl overflow-hidden">
+                <div className="bg-gray-800 px-6 py-4 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                  <div className="text-white text-sm font-medium">
+                    Admin Dashboard - {currentDevice?.title}
+                  </div>
+                  <div className="w-16"></div>
+                </div>
+                
+                {/* Admin Interface Content */}
+                <div className="relative h-96 bg-gradient-to-br from-gray-50 to-white">
+                  {/* Display current section image if available */}
+                  {currentDevice?.imageSrc && (
+                    <img 
+                      src={currentDevice.imageSrc} 
+                      alt={currentDevice.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
                   
-                  {/* Tooltip */}
-                  {hoveredFeature === feature.id && (
-                    <div 
-                      className={`absolute z-10 bg-gray-900 text-white p-3 rounded-lg shadow-xl ${
-                        feature.hasVideo ? 'w-80' : 'w-64'
-                      }`}
+                  {/* Interactive Feature Points */}
+                  {currentFeatures.map((feature) => (
+                    <div
+                      key={feature.id}
+                      className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
                       style={{
-                        bottom: '150%', 
-                        left: '50%',
-                        transform: 'translateX(-50%)',
+                        top: feature.position.top,
+                        left: feature.position.left,
                       }}
+                      onMouseEnter={() => setHoveredFeature(feature.id)}
+                      onMouseLeave={() => setHoveredFeature(null)}
                     >
-                      <div className="flex items-center mb-2">
-                        <div className="text-[#f08e80] mr-2">{feature.icon}</div>
-                        <h4 className="font-bold">{feature.title}</h4>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
+                        hoveredFeature === feature.id 
+                          ? 'bg-[#f08e80] text-white scale-125 shadow-lg' 
+                          : 'bg-white text-[#f08e80] border-2 border-[#f08e80] hover:bg-[#f08e80] hover:text-white'
+                      }`}>
+                        {feature.icon}
                       </div>
                       
-                      {/* Video for features that have it */}
-                      {feature.hasVideo && feature.videoSrc && (
-                        <div className="mb-3">
-                          <video 
-                            className="w-full h-full object-cover rounded-md"
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                          >
-                            <source src={feature.videoSrc} type="video/mp4" />
-                            Your browser does not support the video tag.
-                          </video>
+                      {/* Feature Tooltip */}
+                      {hoveredFeature === feature.id && (
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-sm rounded-lg p-3 shadow-xl z-10">
+                          <div className="font-semibold mb-1">{feature.title}</div>
+                          <div className="text-gray-300">{feature.description}</div>
+                          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
                         </div>
                       )}
-                      
-                      <div className="text-sm text-gray-300">
-                        {Array.isArray(feature.description) ? (
-                          <>
-                            <p>{feature.description[0]}</p>
-                            <ul className="list-disc list-inside mt-2 pl-2 space-y-1">
-                              {feature.description.slice(1).map((item, index) => (
-                                <li key={index}>{item}</li>
-                              ))}
-                            </ul>
-                          </>
-                        ) : (
-                          <p>{feature.description}</p>
-                        )}
-                      </div>
-                      <div className="absolute w-4 h-4 bg-gray-900 transform rotate-45 -bottom-2 left-1/2 -translate-x-1/2" />
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Core Features Below Image */}
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center mb-6">
-                <div className="flex-shrink-0 w-16 h-16 flex items-center justify-center bg-[#f08e80]/10 text-[#f08e80] rounded-xl mr-4">
-                  {currentDevice?.icon}
-                </div>
-                <div>
-                  <h2 className="text-4xl font-bold text-gray-800">Core Features</h2>
-                  <p className="text-gray-500 mt-2 text-lg">{currentDevice?.subtitle}</p>
+                  ))}
                 </div>
               </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentFeatures.map((feature) => (
-                <div key={feature.id} className="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow duration-200">
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-[#f08e80]/10 text-[#f08e80] rounded-lg">
-                      {feature.icon}
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
-                      <div className="text-gray-600">
-                        {Array.isArray(feature.description) ? (
-                          <>
-                            <p>{feature.description[0]}</p>
-                            <ul className="list-disc list-inside mt-2 pl-2 text-sm">
-                              {feature.description.slice(1).map((item, index) => (
-                                <li key={index}>{item}</li>
-                              ))}
-                            </ul>
-                          </>
-                        ) : (
-                          <p>{feature.description}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
 
-        {/* Call to Action Section */}
-        <div className="mt-20 text-center">
-          <div className="bg-gray-50 rounded-2xl p-8 md:p-12">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              Ready to Get Started with {currentDevice?.name} POS?
-            </h3>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Experience the power of our {selectedDeviceType.replace('-', ' ')} solution. 
-              Contact us today to learn more about pricing and implementation.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="px-8 py-3 text-base">
-                Start Free Trial
-              </Button>
-              <Button variant="secondary" className="px-8 py-3 text-base">
-                Schedule Demo
-              </Button>
+        {/* Feature List */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {currentFeatures.map((feature) => (
+            <div 
+              key={feature.id}
+              className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow cursor-pointer"
+              onMouseEnter={() => setHoveredFeature(feature.id)}
+              onMouseLeave={() => setHoveredFeature(null)}
+            >
+              <div className="flex items-center mb-4">
+                <div className="bg-[#f08e80]/10 p-2 rounded-lg mr-3">
+                  <div className="text-[#f08e80]">
+                    {feature.icon}
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900">{feature.title}</h3>
+              </div>
+              <p className="text-gray-600">{feature.description}</p>
             </div>
+          ))}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="text-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white px-8 py-3">
+              Access {currentDevice?.name} Management
+            </Button>
+            <Button variant="secondary" className="px-8 py-3">
+              View Documentation
+            </Button>
           </div>
         </div>
       </main>
@@ -716,3 +452,4 @@ function POSDiagramPage({ onNavigateBack }) {
 }
 
 export default AdminPage;
+
