@@ -1,5 +1,22 @@
 import { Monitor, Users, BarChart3, Package, ChevronRight, Zap, Settings, Database, Shield } from 'lucide-react'
-import { Button } from '@/components/ui/button.jsx'
+
+// Button component
+const Button = ({ children, className = '', size = 'default', onClick, ...props }) => {
+  const sizeClasses = {
+    default: 'px-4 py-2',
+    lg: 'px-6 py-3 text-lg'
+  }
+  
+  return (
+    <button
+      className={`inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${sizeClasses[size]} ${className}`}
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </button>
+  )
+}
 
 function SystemPage({ handleSignupClick, onNavigate }) {
   return (
@@ -114,9 +131,10 @@ function SystemPage({ handleSignupClick, onNavigate }) {
                   <span>Backup and restore</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                onClick={() => onNavigate('admin')} // Navigates to AdminPage
-                >
+              <Button 
+                className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={() => onNavigate('admin')}
+              >
                 Access Admin Panel
               </Button>
             </div>
