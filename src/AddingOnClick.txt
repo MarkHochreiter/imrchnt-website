@@ -1,0 +1,16 @@
+When adding a connection from a button to a new page you have to update the App.jsx in the following locations:
+
+import AdminPage from './components/AdminPage.jsx' // Imports the new page to the site
+
+case 'admin':
+  return <AdminPage onNavigateBack={() => navigateTo('system')} />; // points the button to correct page and sends you back to the system page if you maintain the upper left button which I have deactivated.
+
+
+  On the page with the button, in this case the Systems page you have to update the button to point to the 'admin'
+
+  <Button 
+  className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
+  onClick={() => onNavigate('admin')} // Updated to navigate to admin
+>
+  Access Admin Panel
+</Button>
