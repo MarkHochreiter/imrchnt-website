@@ -14,6 +14,7 @@ import Sfo1Page from './components/Sfo1Page.jsx'
 import SignupModal from './components/SignupModal.jsx'
 import POSDiagramPage from './components/POSDiagramPage.jsx'
 import SystemPage from './components/SystemPage.jsx' // Import the new SystemPage
+import AdminPage from './components/AdminPage.jsx' // Import Admin Page
 import './App.css'
 
 // Button component
@@ -258,6 +259,8 @@ function App() {
         return <PricingPage />;
       case 'system':
         return <SystemPage onNavigate={navigateTo} />;
+      case 'admin':
+        return <AdminPage onNavigateBack={() => navigateTo('system')} />; // Added route
       case 'instore':
         return <InStorePage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       case 'offsite':
