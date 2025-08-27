@@ -114,7 +114,8 @@ function SystemPage({ handleSignupClick, onNavigate }) {
                   <span>Backup and restore</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
+              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={() => onNavigate('admin')} // Navigates to AdminPage>
                 Access Admin Panel
               </Button>
             </div>
