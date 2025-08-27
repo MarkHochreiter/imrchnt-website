@@ -1,4 +1,4 @@
-import { ChevronDown, Menu, X, ArrowRight, Check, Star, Globe, Smartphone, ShoppingCart, BarChart3, Users, Zap } from 'lucide-react'
+import { ChevronDown, Menu, X, ArrowRight, Check, Star, Globe, Smartphone, ShoppingCart, BarChart3, Users, Zap, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 import logo from './assets/logo.png'
 import PricingPage from './components/PricingPage.jsx'
@@ -42,15 +42,22 @@ function App() {
   const [hardwareMegaMenuVisible, setHardwareMegaMenuVisible] = useState(false)
   const [supportMegaMenuVisible, setSupportMegaMenuVisible] = useState(false)
   const [signupModalOpen, setSignupModalOpen] = useState(false)
+  
+  // Mobile menu states
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
+  const [mobileHardwareOpen, setMobileHardwareOpen] = useState(false)
+  const [mobileSupportOpen, setMobileSupportOpen] = useState(false)
 
   const handleHardwareNavigation = (page) => {
     setCurrentPage(page)
     setHardwareMegaMenuVisible(false)
+    setMobileMenuOpen(false)
   }
 
   const handleNavigation = (page, section = null) => {
     setCurrentPage(page)
     setMegaMenuVisible(false)
+    setMobileMenuOpen(false)
     // Scroll to section after page loads
     if (section) {
       setTimeout(() => {
@@ -70,6 +77,61 @@ function App() {
   const navigateTo = (page) => {
     setCurrentPage(page);
   };
+
+  // Mobile menu data
+  const mobileSolutionsData = [
+    {
+      title: "System",
+      items: [
+        { name: "POS", page: "system", section: "pos" },
+        { name: "Admin", page: "system", section: "admin" },
+        { name: "Reports", page: "system", section: "reports" },
+        { name: "Products", page: "system", section: "products" },
+        { name: "Customers", page: "system", section: "customers" }
+      ]
+    },
+    {
+      title: "InStore",
+      items: [
+        { name: "POS", page: "instore", section: "pos" },
+        { name: "Clienteling", page: "instore", section: "clienteling" },
+        { name: "On Floor Assistance", page: "instore", section: "on-floor-assistance" }
+      ]
+    },
+    {
+      title: "Offsite",
+      items: [
+        { name: "Single Device", page: "offsite", section: "single-device" },
+        { name: "Import Items", page: "offsite", section: "import-items" },
+        { name: "Add Items", page: "offsite", section: "add-items" },
+        { name: "Export Sales", page: "offsite", section: "export-sales" }
+      ]
+    },
+    {
+      title: "Credit Cards",
+      items: [
+        { name: "Payouts", page: "credit-cards", section: "payouts" },
+        { name: "Terminals", page: "credit-cards", section: "terminals" },
+        { name: "Chargebacks", page: "credit-cards", section: "chargebacks" },
+        { name: "Flat Fee", page: "credit-cards", section: "flat-fee" }
+      ]
+    }
+  ];
+
+  const mobileHardwareData = [
+    { name: "S1f2", page: "s1f2" },
+    { name: "AMS1", page: "ams1" },
+    { name: "SFO1", page: "sfo1" }
+  ];
+
+  const mobileSupportData = [
+    { name: "Help Center", href: "#" },
+    { name: "Documentation", href: "#" },
+    { name: "API Reference", href: "#" },
+    { name: "Community", href: "#" },
+    { name: "Contact Support", href: "#" },
+    { name: "System Status", href: "#" }
+  ];
 
   const renderContent = () => {
     switch (currentPage) {
@@ -374,45 +436,140 @@ function App() {
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Enhanced Mobile menu */}
         {mobileMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200 max-h-screen overflow-y-auto">
+              
+              {/* Home */}
               <button 
                 onClick={() => {
                   setCurrentPage('home')
                   setMobileMenuOpen(false)
                 }}
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900"
+                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
               >
                 Home
               </button>
+
+              {/* Solutions Dropdown */}
+              <div className="space-y-1">
+                <button
+                  onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
+                  className="flex items-center justify-between w-full px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                >
+                  <span>Solutions</span>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {mobileSolutionsOpen && (
+                  <div className="pl-4 space-y-1">
+                    {mobileSolutionsData.map((section) => (
+                      <div key={section.title} className="py-2">
+                        <div className="text-sm font-semibold text-[#f08e80] px-3 py-1">
+                          {section.title}
+                        </div>
+                        {section.items.map((item) => (
+                          <button
+                            key={item.name}
+                            onClick={() => handleNavigation(item.page, item.section)}
+                            className="block w-full text-left px-6 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                          >
+                            {item.name}
+                          </button>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Pricing */}
               <button 
                 onClick={() => {
                   setCurrentPage('pricing')
                   setMobileMenuOpen(false)
                 }}
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900"
+                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
               >
                 Pricing
               </button>
+
+              {/* Hardware Dropdown */}
+              <div className="space-y-1">
+                <button
+                  onClick={() => setMobileHardwareOpen(!mobileHardwareOpen)}
+                  className="flex items-center justify-between w-full px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                >
+                  <span>Hardware</span>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileHardwareOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {mobileHardwareOpen && (
+                  <div className="pl-4 space-y-1">
+                    {mobileHardwareData.map((item) => (
+                      <button
+                        key={item.name}
+                        onClick={() => handleHardwareNavigation(item.page)}
+                        className="block w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                      >
+                        {item.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Support Dropdown */}
+              <div className="space-y-1">
+                <button
+                  onClick={() => setMobileSupportOpen(!mobileSupportOpen)}
+                  className="flex items-center justify-between w-full px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                >
+                  <span>Support</span>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileSupportOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {mobileSupportOpen && (
+                  <div className="pl-4 space-y-1">
+                    {mobileSupportData.map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        className="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Divider */}
+              <div className="border-t border-gray-200 my-2"></div>
+
+              {/* Login */}
               <a 
                 href="https://pos.imrchnt.com/auth/sign-in"
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900"
+                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
                 target="_blank" 
                 rel="noopener noreferrer"
               >
                 Log in
               </a>
-              <Button 
-                className="bg-[#f08e80] hover:bg-violet-400 text-white ml-3 mt-2"
-                onClick={() => {
-                  handleSignupClick()
-                  setMobileMenuOpen(false)
-                }}
-              >
-                Request Access
-              </Button>
+
+              {/* Request Access Button */}
+              <div className="px-3 py-2">
+                <Button 
+                  className="w-full bg-[#f08e80] hover:bg-violet-400 text-white"
+                  onClick={() => {
+                    handleSignupClick()
+                    setMobileMenuOpen(false)
+                  }}
+                >
+                  Request Access
+                </Button>
+              </div>
             </div>
           </div>
         )}
