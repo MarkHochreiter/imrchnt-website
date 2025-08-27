@@ -1,4 +1,4 @@
-import { 
+topimport { 
   ArrowLeft,
   Wifi, 
   CreditCard, 
@@ -57,7 +57,7 @@ const Button = ({ children, className = '', variant = 'primary', ...props }) => 
 // Main component for the POS Diagram Page
 function POSDiagramPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
-  const [selectedDeviceType, setSelectedDeviceType] = useState('all-in-one');
+  const [selectedDeviceType, setSelectedDeviceType] = useState('desktop');
 
   // ... (deviceTypes and deviceFeatures data remains the same)
   // Device type configurations
