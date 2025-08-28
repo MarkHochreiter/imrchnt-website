@@ -154,42 +154,42 @@ function AdminPage({ onNavigateBack }) {
         title: "Multi-Location Setup",
         description: "Configure and manage multiple store locations from one dashboard",
         icon: <Monitor size={20} />,
-        position: { top: '25%', left: '15%' }
+         position: { top: '20%', left: '85%' }
       },
       {
         id: 2,
         title: "Store Configuration",
         description: "Set up store-specific settings, tax rates, and operational parameters",
         icon: <Layers size={20} />,
-        position: { top: '35%', left: '35%' }
+       position: { top: '41%', left: '30%' }
       },
       {
         id: 3,
         title: "Location Permissions",
         description: "Manage user access and permissions on a per-location basis",
         icon: <Shield size={20} />,
-        position: { top: '45%', left: '55%' }
+       position: { top: '95%', left: '50%' }
       },
       {
         id: 4,
         title: "Performance Tracking",
         description: "Monitor store performance metrics and sales analytics",
         icon: <BarChart3 size={20} />,
-        position: { top: '55%', left: '75%' }
+       position: { top: '41%', left: '75%' }
       },
       {
         id: 5,
         title: "Regional Management",
         description: "Organize stores by regions and manage hierarchical structures",
         icon: <Grid size={20} />,
-        position: { top: '65%', left: '25%' }
+        position: { top: '60%', left: '38%' }
       },
       {
         id: 6,
         title: "Store Hierarchy",
         description: "Configure organizational structure and reporting relationships",
         icon: <Layers size={20} />,
-        position: { top: '75%', left: '65%' }
+        position: { top: '95%', left: '70%' }
       }
     ],
     'cards': [
@@ -198,42 +198,42 @@ function AdminPage({ onNavigateBack }) {
         title: "Payout Automation",
         description: "Set up automated payout schedules and manage transfer preferences",
         icon: <Zap size={20} />,
-        position: { top: '20%', left: '20%' }
+         position: { top: '20%', left: '85%' }
       },
       {
         id: 2,
         title: "Instant Transfers",
         description: "Transfer money instantly to your bank accounts with real-time processing",
         icon: <Wallet size={20} />,
-        position: { top: '30%', left: '40%' }
+        position: { top: '41%', left: '30%' }
       },
       {
         id: 3,
         title: "Payout History",
         description: "View comprehensive history of all payouts and transaction details",
         icon: <BarChart3 size={20} />,
-        position: { top: '40%', left: '60%' }
+        position: { top: '95%', left: '50%' }
       },
       {
         id: 4,
         title: "Card Reader Management",
         description: "Manage and configure card readers across all store locations",
         icon: <CreditCard size={20} />,
-        position: { top: '50%', left: '80%' }
+        position: { top: '41%', left: '75%' }
       },
       {
         id: 5,
         title: "Bank Account Setup",
         description: "Add and manage bank accounts for payout destinations",
         icon: <DollarSign size={20} />,
-        position: { top: '60%', left: '30%' }
+         position: { top: '60%', left: '38%' }
       },
       {
         id: 6,
         title: "Chargeback Disputes",
         description: "Challenge chargeback disputes and manage dispute resolution process",
         icon: <Shield size={20} />,
-        position: { top: '70%', left: '70%' }
+         position: { top: '95%', left: '70%' }
       }
     ],
     'settings': [
@@ -242,42 +242,42 @@ function AdminPage({ onNavigateBack }) {
         title: "Register Management",
         description: "Add, update, and delete POS registers across your store locations",
         icon: <Monitor size={20} />,
-        position: { top: '25%', left: '20%' }
+        position: { top: '20%', left: '85%' }
       },
       {
         id: 2,
         title: "Simple Tenders",
         description: "Configure payment methods and tender types for your POS system",
         icon: <DollarSign size={20} />,
-        position: { top: '35%', left: '40%' }
+       position: { top: '41%', left: '30%' }
       },
       {
         id: 3,
         title: "System Preferences",
         description: "Set global system preferences and default configurations",
         icon: <Layers size={20} />,
-        position: { top: '45%', left: '60%' }
+       position: { top: '95%', left: '50%' }
       },
       {
         id: 4,
         title: "Security Settings",
         description: "Configure security policies, password requirements, and access controls",
         icon: <Shield size={20} />,
-        position: { top: '55%', left: '80%' }
+       position: { top: '41%', left: '75%' }
       },
       {
         id: 5,
         title: "Backup Configuration",
         description: "Set up automated backups and data retention policies",
         icon: <Cloud size={20} />,
-        position: { top: '65%', left: '30%' }
+         position: { top: '60%', left: '38%' }
       },
       {
         id: 6,
         title: "Integration Settings",
         description: "Configure third-party integrations and API connections",
         icon: <Grid size={20} />,
-        position: { top: '75%', left: '70%' }
+        position: { top: '95%', left: '70%' }
       }
     ]
   };
