@@ -185,42 +185,42 @@ function AdminPage({ onNavigateBack }) {
         title: "Payout Automation",
         description: "Set up your automated payout schedule.",
         icon: <Zap size={20} />,
-         position: { top: '39%', left: '25%' }
+         position: { top: '38%', left: '25%' }
       },
       {
         id: 2,
         title: "Instant Transfers",
         description: "Transfer money instantly to your bank accounts with real-time processing",
         icon: <Wallet size={20} />,
-        position: { top: '39%', left: '85%' }
+        position: { top: '38%', left: '88%' }
       },
       {
         id: 3,
         title: "Terminals",
         description: "Manage Card Readers, activate and customize tips on individual units",
         icon: <BarChart3 size={20} />,
-        position: { top: '17%', left: '41%' }
+        position: { top: '15%', left: '42%' }
       },
       {
         id: 4,
         title: "Reporting",
         description: "Export Payout Details Reports to reconcile Payouts to Payments",
         icon: <CreditCard size={20} />,
-        position: { top: '17%', left: '75%' }
+        position: { top: '15%', left: '75%' }
       },
       {
         id: 5,
         title: "Bank Account Setup",
         description: "Add and manage bank accounts for payout destinations",
         icon: <DollarSign size={20} />,
-         position: { top: '17%', left: '65%' }
+         position: { top: '15%', left: '52%' }
       },
       {
         id: 6,
         title: "Chargeback Disputes",
         description: "Challenge chargeback disputes and manage dispute resolution process",
         icon: <Shield size={20} />,
-         position: { top: '95%', left: '70%' }
+         position: { top: '15%', left: '95%' }
       }
     ],
     'settings': [
