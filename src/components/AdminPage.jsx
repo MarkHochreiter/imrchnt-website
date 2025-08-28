@@ -445,6 +445,8 @@ function AdminPage({ onNavigateBack }) {
     </Button>
   </div>
 </div>
+            </main> {/* ✅ this was missing */}
+  </div>
   );
 }
 
