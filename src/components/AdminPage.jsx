@@ -1,7 +1,8 @@
 import { 
   ArrowLeft,
   Wifi, 
-  CreditCard, 
+  CreditCard,
+  Plus,
   Smartphone, 
   Zap, 
   Shield, 
@@ -151,45 +152,31 @@ function AdminPage({ onNavigateBack }) {
     'stores': [
       {
         id: 1,
-        title: "Multi-Location Setup",
+        title: "Add Stores",
         description: "Configure and manage multiple store locations from one dashboard",
-        icon: <Monitor size={20} />,
+        icon: <Plus size={20} />,
          position: { top: '20%', left: '85%' }
       },
       {
         id: 2,
         title: "Store Configuration",
         description: "Set up store-specific settings, tax rates, and operational parameters",
-        icon: <Layers size={20} />,
+        icon: <Store size={20} />,
        position: { top: '41%', left: '30%' }
       },
       {
         id: 3,
-        title: "Location Permissions",
-        description: "Manage user access and permissions on a per-location basis",
+        title: "Inventory",
+        description: "Manage Inventory by Store",
         icon: <Shield size={20} />,
-       position: { top: '95%', left: '50%' }
+       position: { top: '41%', left: '95%' }
       },
       {
         id: 4,
-        title: "Performance Tracking",
-        description: "Monitor store performance metrics and sales analytics",
-        icon: <BarChart3 size={20} />,
-       position: { top: '41%', left: '75%' }
-      },
-      {
-        id: 5,
-        title: "Regional Management",
-        description: "Organize stores by regions and manage hierarchical structures",
-        icon: <Grid size={20} />,
-        position: { top: '60%', left: '38%' }
-      },
-      {
-        id: 6,
-        title: "Store Hierarchy",
-        description: "Configure organizational structure and reporting relationships",
-        icon: <Layers size={20} />,
-        position: { top: '95%', left: '70%' }
+        title: "Users",
+        description: "Assign users to one or many stores",
+        icon: <Users size={20} />,
+       position: { top: '41%', left: '65%' }
       }
     ],
     'cards': [
