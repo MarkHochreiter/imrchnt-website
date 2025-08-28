@@ -27,7 +27,9 @@ import {
   Flag,
   Wallet,
   Tag,
-  Book} from 'lucide-react';
+  Book,
+  Pencil,
+  Lock} from 'lucide-react';
 import { useState } from 'react';
 import cards from '../assets/cards.png';
 import settings from '../assets/settings.png';
@@ -107,42 +109,42 @@ function AdminPage({ onNavigateBack }) {
         title: "Add New Users",
         description: "Create new user accounts with appropriate permissions and store assignments",
         icon: <Users size={20} />,
-        position: { top: '20%', left: '75%' }
+        position: { top: '20%', left: '85%' }
       },
       {
         id: 2,
         title: "Update User Info",
         description: "Modify existing user details, contact information, and profile settings",
-        icon: <Search size={20} />,
-        position: { top: '40%', left: '30%' }
+        icon: <pencil size={20} />,
+        position: { top: '41%', left: '30%' }
       },
       {
         id: 3,
         title: "Delete Users",
         description: "Remove user accounts and revoke system access when needed",
         icon: <Trash2 size={20} />,
-        position: { top: '85%', left: '50%' }
+        position: { top: '95%', left: '50%' }
       },
       {
         id: 4,
         title: "Store Assignments",
         description: "Assign users to specific store locations and manage multi-store access",
         icon: <Monitor size={20} />,
-        position: { top: '40%', left: '75%' }
+        position: { top: '41%', left: '75%' }
       },
       {
         id: 5,
         title: "Security Roles",
         description: "Configure user permissions and access levels based on job responsibilities",
-        icon: <Shield size={20} />,
-        position: { top: '60%', left: '20%' }
+        icon: <Lock size={20} />,
+        position: { top: '60%', left: '40%' }
       },
       {
         id: 6,
         title: "Two Factor Authentication",
         description: "Enable 2FA for Admin and Manager accounts for enhanced security",
         icon: <Smartphone size={20} />,
-        position: { top: '85%', left: '60%' }
+        position: { top: '95%', left: '70%' }
       }
     ],
     'stores': [
