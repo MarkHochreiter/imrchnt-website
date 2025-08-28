@@ -30,6 +30,7 @@ import {
   Wallet,
   Tag,
   Book,
+  Eye,
   Pencil,
   Lock,
   Store} from 'lucide-react';
@@ -227,45 +228,17 @@ function AdminPage({ onNavigateBack }) {
     'settings': [
       {
         id: 1,
-        title: "Register Management",
-        description: "Add, update, and delete POS registers across your store locations",
-        icon: <Monitor size={20} />,
-        position: { top: '20%', left: '85%' }
+        title: "Simple Tenders",
+        description: "Create Simple Tenders for sales made outside of the platform",
+        icon: <DollarSign size={20} />,
+        position: { top: '15%', left: '75%' }
       },
       {
         id: 2,
-        title: "Simple Tenders",
-        description: "Configure payment methods and tender types for your POS system",
-        icon: <DollarSign size={20} />,
-       position: { top: '41%', left: '30%' }
-      },
-      {
-        id: 3,
-        title: "System Preferences",
-        description: "Set global system preferences and default configurations",
-        icon: <Layers size={20} />,
-       position: { top: '95%', left: '50%' }
-      },
-      {
-        id: 4,
-        title: "Security Settings",
-        description: "Configure security policies, password requirements, and access controls",
-        icon: <Shield size={20} />,
-       position: { top: '41%', left: '75%' }
-      },
-      {
-        id: 5,
-        title: "Backup Configuration",
-        description: "Set up automated backups and data retention policies",
-        icon: <Cloud size={20} />,
-         position: { top: '60%', left: '38%' }
-      },
-      {
-        id: 6,
-        title: "Integration Settings",
-        description: "Configure third-party integrations and API connections",
-        icon: <Grid size={20} />,
-        position: { top: '95%', left: '70%' }
+        title: "Registers",
+        description: "Manage/Track Registers",
+        icon: <Eye size={20} />,
+       position: { top: '15%', left: '30%' }
       }
     ]
   };
