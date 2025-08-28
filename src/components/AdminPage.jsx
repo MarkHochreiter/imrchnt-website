@@ -351,13 +351,13 @@ return (
         <div className="flex justify-center mb-8">
           <div className="relative w-full max-w-4xl">
             {/* Admin Interface Content */}
-            <div className="relative h-96 bg-gradient-to-br from-gray-50 to-white">
+            <div className="relative h-screen bg-gradient-to-br from-gray-50 to-white">
               {/* Display current section image if available */}
               {currentDevice?.imageSrc && (
                 <img 
                   src={currentDevice.imageSrc} 
                   alt={currentDevice.title}
-                  className="w-full h-full object-cover"
+                  className="w-full object-cover"
                 />
               )}
               
