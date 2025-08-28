@@ -282,172 +282,157 @@ function AdminPage({ onNavigateBack }) {
   const currentDevice = deviceTypes.find(device => device.id === selectedDeviceType);
   const currentFeatures = deviceFeatures[selectedDeviceType] || [];
 
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Header with Back Button */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <Button
-                variant="ghost"
-                onClick={onNavigateBack}
-                className="mr-4"
-              >
-                <ArrowLeft className="h-5 w-5 mr-2" />
-                Back to System
-              </Button>
-              <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-        
-        {/* Hero Section */}
-        <section className="py-10 mb-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-              Admin Control Center
-            </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Comprehensive administrative tools to manage users, stores, payments, and system settings from one centralized dashboard.
-            </p>
-          </div>
-        </section>
-
-        {/* Admin Section Selection Buttons */}
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex rounded-xl border border-gray-200 bg-gray-50 p-2">
-            {deviceTypes.map((device) => (
-              <button
-                key={device.id}
-                onClick={() => setSelectedDeviceType(device.id)}
-                className={`inline-flex items-center px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 min-w-[180px] justify-center ${
-                  selectedDeviceType === device.id
-                    ? 'bg-[#f08e80] text-white shadow-lg transform scale-105'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-white hover:shadow-md'
-                }`}
-              >
-                <span className="mr-3 text-xl">{device.icon}</span>
-                {device.name}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Current Section Details */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            {currentDevice?.title}
-          </h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            {currentDevice?.description}
-          </p>
-        </div>
-{/* Interactive Feature Display */}
-<div className="relative bg-gray-50 rounded-2xl p-8 mb-16">
-  <div className="flex justify-center mb-8">
-    <div className="relative w-full max-w-4xl">
-      {/* Admin Interface Mockup */}
-      <div className="bg-white rounded-lg shadow-2xl overflow-hidden">
-        <div className="bg-gray-800 px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-          </div>
-          <div className="text-white text-sm font-medium">
-            Admin Dashboard - {currentDevice?.title}
-          </div>
-          <div className="w-16"></div>
-        </div>
-        
-        {/* Admin Interface Content */}
-        <div className="relative h-96 bg-gradient-to-br from-gray-50 to-white">
-          {/* Display current section image if available */}
-          {currentDevice?.imageSrc && (
-            <img 
-              src={currentDevice.imageSrc} 
-              alt={currentDevice.title}
-              className="w-full h-full object-cover"
-            />
-          )}
-          
-          {/* Interactive Feature Points */}
-          {currentFeatures.map((feature) => (
-            <div
-              key={feature.id}
-              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-              style={{
-                top: feature.position.top,
-                left: feature.position.left,
-              }}
-              onMouseEnter={() => setHoveredFeature(feature.id)}
-              onMouseLeave={() => setHoveredFeature(null)}
+return (
+  <div className="min-h-screen bg-white">
+    {/* Header with Back Button */}
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <Button
+              variant="ghost"
+              onClick={onNavigateBack}
+              className="mr-4"
             >
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
-                hoveredFeature === feature.id 
-                  ? 'bg-[#f08e80] text-white scale-125 shadow-lg' 
-                  : 'bg-white text-[#f08e80] border-2 border-[#f08e80] hover:bg-[#f08e80] hover:text-white'
-              }`}>
-                {feature.icon}
-              </div>
-              
-              {/* Feature Tooltip */}
-              {hoveredFeature === feature.id && (
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-sm rounded-lg p-3 shadow-xl z-10">
-                  <div className="font-semibold mb-1">{feature.title}</div>
-                  <div className="text-gray-300">{feature.description}</div>
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-                </div>
-              )}
-            </div>
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to System
+            </Button>
+            <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* Main Content */}
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+      
+      {/* Hero Section */}
+      <section className="py-10 mb-12 text-center">
+        <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
+          Admin Control Center
+        </h1>
+        <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          Comprehensive administrative tools to manage users, stores, payments, and system settings from one centralized dashboard.
+        </p>
+      </section>
+
+      {/* Admin Section Selection Buttons */}
+      <div className="flex justify-center mb-12">
+        <div className="inline-flex rounded-xl border border-gray-200 bg-gray-50 p-2">
+          {deviceTypes.map((device) => (
+            <button
+              key={device.id}
+              onClick={() => setSelectedDeviceType(device.id)}
+              className={`inline-flex items-center px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 min-w-[180px] justify-center ${
+                selectedDeviceType === device.id
+                  ? 'bg-[#f08e80] text-white shadow-lg transform scale-105'
+                  : 'text-gray-700 hover:text-gray-900 hover:bg-white hover:shadow-md'
+              }`}
+            >
+              <span className="mr-3 text-xl">{device.icon}</span>
+              {device.name}
+            </button>
           ))}
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
-{/* Feature List */}
-<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-  {currentFeatures.map((feature) => (
-    <div 
-      key={feature.id}
-      className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow cursor-pointer"
-      onMouseEnter={() => setHoveredFeature(feature.id)}
-      onMouseLeave={() => setHoveredFeature(null)}
-    >
-      <div className="flex items-center mb-4">
-        <div className="bg-[#f08e80]/10 p-2 rounded-lg mr-3">
-          <div className="text-[#f08e80]">
-            {feature.icon}
+      {/* Current Section Details */}
+      <div className="text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          {currentDevice?.title}
+        </h2>
+        <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          {currentDevice?.description}
+        </p>
+      </div>
+
+      {/* Interactive Feature Display */}
+      <div className="relative bg-gray-50 rounded-2xl p-8 mb-16">
+        <div className="flex justify-center mb-8">
+          <div className="relative w-full max-w-4xl">
+            {/* Admin Interface Content */}
+            <div className="relative h-96 bg-gradient-to-br from-gray-50 to-white">
+              {/* Display current section image if available */}
+              {currentDevice?.imageSrc && (
+                <img 
+                  src={currentDevice.imageSrc} 
+                  alt={currentDevice.title}
+                  className="w-full h-full object-cover"
+                />
+              )}
+              
+              {/* Interactive Feature Points */}
+              {currentFeatures.map((feature) => (
+                <div
+                  key={feature.id}
+                  className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                  style={{
+                    top: feature.position.top,
+                    left: feature.position.left,
+                  }}
+                  onMouseEnter={() => setHoveredFeature(feature.id)}
+                  onMouseLeave={() => setHoveredFeature(null)}
+                >
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
+                    hoveredFeature === feature.id 
+                      ? 'bg-[#f08e80] text-white scale-125 shadow-lg' 
+                      : 'bg-white text-[#f08e80] border-2 border-[#f08e80] hover:bg-[#f08e80] hover:text-white'
+                  }`}>
+                    {feature.icon}
+                  </div>
+                  
+                  {/* Feature Tooltip */}
+                  {hoveredFeature === feature.id && (
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-sm rounded-lg p-3 shadow-xl z-10">
+                      <div className="font-semibold mb-1">{feature.title}</div>
+                      <div className="text-gray-300">{feature.description}</div>
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <h3 className="text-lg font-semibold text-gray-900">{feature.title}</h3>
       </div>
-      <p className="text-gray-600">{feature.description}</p>
-    </div>
-  ))}
-</div>
 
-{/* Action Buttons */}
-<div className="text-center">
-  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-    <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white px-8 py-3">
-      Access {currentDevice?.name} Management
-    </Button>
-    <Button variant="secondary" className="px-8 py-3">
-      View Documentation
-    </Button>
+      {/* Feature List */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        {currentFeatures.map((feature) => (
+          <div 
+            key={feature.id}
+            className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow cursor-pointer"
+            onMouseEnter={() => setHoveredFeature(feature.id)}
+            onMouseLeave={() => setHoveredFeature(null)}
+          >
+            <div className="flex items-center mb-4">
+              <div className="bg-[#f08e80]/10 p-2 rounded-lg mr-3">
+                <div className="text-[#f08e80]">
+                  {feature.icon}
+                </div>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">{feature.title}</h3>
+            </div>
+            <p className="text-gray-600">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Action Buttons */}
+      <div className="text-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white px-8 py-3">
+            Access {currentDevice?.name} Management
+          </Button>
+          <Button variant="secondary" className="px-8 py-3">
+            View Documentation
+          </Button>
+        </div>
+      </div>
+    </main>
   </div>
-</div>
-            </main> {/* ✅ this was missing */}
-  </div>
-  );
+);
+
 }
 
 export default AdminPage;
