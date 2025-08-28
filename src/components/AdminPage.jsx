@@ -106,37 +106,43 @@ function AdminPage({ onNavigateBack }) {
         id: 1,
         title: "Add New Users",
         description: "Create new user accounts with appropriate permissions and store assignments",
-        icon: <Users size={20} />
+        icon: <Users size={20} />,
+        position: { top: '20%', left: '10%' }
       },
       {
         id: 2,
         title: "Update User Info",
         description: "Modify existing user details, contact information, and profile settings",
-        icon: <Search size={20} />
+        icon: <Search size={20} />,
+        position: { top: '30%', left: '30%' }
       },
       {
         id: 3,
         title: "Delete Users",
         description: "Remove user accounts and revoke system access when needed",
-        icon: <Trash2 size={20} />
+        icon: <Trash2 size={20} />,
+        position: { top: '40%', left: '50%' }
       },
       {
         id: 4,
         title: "Store Assignments",
         description: "Assign users to specific store locations and manage multi-store access",
-        icon: <Monitor size={20} />
+        icon: <Monitor size={20} />,
+        position: { top: '50%', left: '70%' }
       },
       {
         id: 5,
         title: "Security Roles",
         description: "Configure user permissions and access levels based on job responsibilities",
-        icon: <Shield size={20} />
+        icon: <Shield size={20} />,
+        position: { top: '60%', left: '20%' }
       },
       {
         id: 6,
         title: "Two Factor Authentication",
         description: "Enable 2FA for Admin and Manager accounts for enhanced security",
-        icon: <Smartphone size={20} />
+        icon: <Smartphone size={20} />,
+        position: { top: '70%', left: '60%' }
       }
     ],
     'stores': [
@@ -144,37 +150,43 @@ function AdminPage({ onNavigateBack }) {
         id: 1,
         title: "Multi-Location Setup",
         description: "Configure and manage multiple store locations from one dashboard",
-        icon: <Monitor size={20} />
+        icon: <Monitor size={20} />,
+        position: { top: '25%', left: '15%' }
       },
       {
         id: 2,
         title: "Store Configuration",
         description: "Set up store-specific settings, tax rates, and operational parameters",
-        icon: <Layers size={20} />
+        icon: <Layers size={20} />,
+        position: { top: '35%', left: '35%' }
       },
       {
         id: 3,
         title: "Location Permissions",
         description: "Manage user access and permissions on a per-location basis",
-        icon: <Shield size={20} />
+        icon: <Shield size={20} />,
+        position: { top: '45%', left: '55%' }
       },
       {
         id: 4,
         title: "Performance Tracking",
         description: "Monitor store performance metrics and sales analytics",
-        icon: <BarChart3 size={20} />
+        icon: <BarChart3 size={20} />,
+        position: { top: '55%', left: '75%' }
       },
       {
         id: 5,
         title: "Regional Management",
         description: "Organize stores by regions and manage hierarchical structures",
-        icon: <Grid size={20} />
+        icon: <Grid size={20} />,
+        position: { top: '65%', left: '25%' }
       },
       {
         id: 6,
         title: "Store Hierarchy",
         description: "Configure organizational structure and reporting relationships",
-        icon: <Layers size={20} />
+        icon: <Layers size={20} />,
+        position: { top: '75%', left: '65%' }
       }
     ],
     'cards': [
@@ -182,37 +194,43 @@ function AdminPage({ onNavigateBack }) {
         id: 1,
         title: "Payout Automation",
         description: "Set up automated payout schedules and manage transfer preferences",
-        icon: <Zap size={20} />
+        icon: <Zap size={20} />,
+        position: { top: '20%', left: '20%' }
       },
       {
         id: 2,
         title: "Instant Transfers",
         description: "Transfer money instantly to your bank accounts with real-time processing",
-        icon: <Wallet size={20} />
+        icon: <Wallet size={20} />,
+        position: { top: '30%', left: '40%' }
       },
       {
         id: 3,
         title: "Payout History",
         description: "View comprehensive history of all payouts and transaction details",
-        icon: <BarChart3 size={20} />
+        icon: <BarChart3 size={20} />,
+        position: { top: '40%', left: '60%' }
       },
       {
         id: 4,
         title: "Card Reader Management",
         description: "Manage and configure card readers across all store locations",
-        icon: <CreditCard size={20} />
+        icon: <CreditCard size={20} />,
+        position: { top: '50%', left: '80%' }
       },
       {
         id: 5,
         title: "Bank Account Setup",
         description: "Add and manage bank accounts for payout destinations",
-        icon: <DollarSign size={20} />
+        icon: <DollarSign size={20} />,
+        position: { top: '60%', left: '30%' }
       },
       {
         id: 6,
         title: "Chargeback Disputes",
         description: "Challenge chargeback disputes and manage dispute resolution process",
-        icon: <Shield size={20} />
+        icon: <Shield size={20} />,
+        position: { top: '70%', left: '70%' }
       }
     ],
     'settings': [
@@ -220,37 +238,43 @@ function AdminPage({ onNavigateBack }) {
         id: 1,
         title: "Register Management",
         description: "Add, update, and delete POS registers across your store locations",
-        icon: <Monitor size={20} />
+        icon: <Monitor size={20} />,
+        position: { top: '25%', left: '20%' }
       },
       {
         id: 2,
         title: "Simple Tenders",
         description: "Configure payment methods and tender types for your POS system",
-        icon: <DollarSign size={20} />
+        icon: <DollarSign size={20} />,
+        position: { top: '35%', left: '40%' }
       },
       {
         id: 3,
         title: "System Preferences",
         description: "Set global system preferences and default configurations",
-        icon: <Layers size={20} />
+        icon: <Layers size={20} />,
+        position: { top: '45%', left: '60%' }
       },
       {
         id: 4,
         title: "Security Settings",
         description: "Configure security policies, password requirements, and access controls",
-        icon: <Shield size={20} />
+        icon: <Shield size={20} />,
+        position: { top: '55%', left: '80%' }
       },
       {
         id: 5,
         title: "Backup Configuration",
         description: "Set up automated backups and data retention policies",
-        icon: <Cloud size={20} />
+        icon: <Cloud size={20} />,
+        position: { top: '65%', left: '30%' }
       },
       {
         id: 6,
         title: "Integration Settings",
         description: "Configure third-party integrations and API connections",
-        icon: <Grid size={20} />
+        icon: <Grid size={20} />,
+        position: { top: '75%', left: '70%' }
       }
     ]
   };
@@ -324,6 +348,58 @@ function AdminPage({ onNavigateBack }) {
           </p>
         </div>
 
+        {/* Interactive Feature Display */}
+        <div className="relative bg-gray-50 rounded-2xl p-8 mb-16">
+          <div className="flex justify-center mb-8">
+            <div className="relative w-full max-w-4xl">
+                
+                {/* Admin Interface Content */}
+                <div className="relative h-96 bg-gradient-to-br from-gray-50 to-white">
+                  {/* Display current section image if available */}
+                  {currentDevice?.imageSrc && (
+                    <img 
+                      src={currentDevice.imageSrc} 
+                      alt={currentDevice.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                  
+                  {/* Interactive Feature Points */}
+                  {currentFeatures.map((feature) => (
+                    <div
+                      key={feature.id}
+                      className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                      style={{
+                        top: feature.position.top,
+                        left: feature.position.left,
+                      }}
+                      onMouseEnter={() => setHoveredFeature(feature.id)}
+                      onMouseLeave={() => setHoveredFeature(null)}
+                    >
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
+                        hoveredFeature === feature.id 
+                          ? 'bg-[#f08e80] text-white scale-125 shadow-lg' 
+                          : 'bg-white text-[#f08e80] border-2 border-[#f08e80] hover:bg-[#f08e80] hover:text-white'
+                      }`}>
+                        {feature.icon}
+                      </div>
+                      
+                      {/* Feature Tooltip */}
+                      {hoveredFeature === feature.id && (
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-sm rounded-lg p-3 shadow-xl z-10">
+                          <div className="font-semibold mb-1">{feature.title}</div>
+                          <div className="text-gray-300">{feature.description}</div>
+                          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Feature List */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {currentFeatures.map((feature) => (
@@ -363,4 +439,3 @@ function AdminPage({ onNavigateBack }) {
 }
 
 export default AdminPage;
-
