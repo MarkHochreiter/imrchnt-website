@@ -183,37 +183,37 @@ function AdminPage({ onNavigateBack }) {
       {
         id: 1,
         title: "Payout Automation",
-        description: "Set up automated payout schedules and manage transfer preferences",
+        description: "Set up your automated payout schedule.",
         icon: <Zap size={20} />,
-         position: { top: '20%', left: '85%' }
+         position: { top: '39%', left: '25%' }
       },
       {
         id: 2,
         title: "Instant Transfers",
         description: "Transfer money instantly to your bank accounts with real-time processing",
         icon: <Wallet size={20} />,
-        position: { top: '41%', left: '30%' }
+        position: { top: '39%', left: '85%' }
       },
       {
         id: 3,
-        title: "Payout History",
-        description: "View comprehensive history of all payouts and transaction details",
+        title: "Terminals",
+        description: "Manage Card Readers, activate and customize tips on individual units",
         icon: <BarChart3 size={20} />,
-        position: { top: '95%', left: '50%' }
+        position: { top: '17%', left: '41%' }
       },
       {
         id: 4,
-        title: "Card Reader Management",
-        description: "Manage and configure card readers across all store locations",
+        title: "Reporting",
+        description: "Export Payout Details Reports to reconcile Payouts to Payments",
         icon: <CreditCard size={20} />,
-        position: { top: '41%', left: '75%' }
+        position: { top: '17%', left: '75%' }
       },
       {
         id: 5,
         title: "Bank Account Setup",
         description: "Add and manage bank accounts for payout destinations",
         icon: <DollarSign size={20} />,
-         position: { top: '60%', left: '38%' }
+         position: { top: '17%', left: '65%' }
       },
       {
         id: 6,
