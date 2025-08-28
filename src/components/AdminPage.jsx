@@ -29,7 +29,8 @@ import {
   Tag,
   Book,
   Pencil,
-  Lock} from 'lucide-react';
+  Lock,
+  Store} from 'lucide-react';
 import { useState } from 'react';
 import cards from '../assets/cards.png';
 import settings from '../assets/settings.png';
@@ -115,7 +116,7 @@ function AdminPage({ onNavigateBack }) {
         id: 2,
         title: "Update User Info",
         description: "Modify existing user details, contact information, and profile settings",
-        icon: <pencil size={20} />,
+        icon: <Pencil size={20} />,
         position: { top: '41%', left: '30%' }
       },
       {
@@ -129,7 +130,7 @@ function AdminPage({ onNavigateBack }) {
         id: 4,
         title: "Store Assignments",
         description: "Assign users to specific store locations and manage multi-store access",
-        icon: <Monitor size={20} />,
+        icon: <Store size={20} />,
         position: { top: '41%', left: '75%' }
       },
       {
@@ -137,13 +138,13 @@ function AdminPage({ onNavigateBack }) {
         title: "Security Roles",
         description: "Configure user permissions and access levels based on job responsibilities",
         icon: <Lock size={20} />,
-        position: { top: '60%', left: '40%' }
+        position: { top: '60%', left: '38%' }
       },
       {
         id: 6,
         title: "Two Factor Authentication",
         description: "Enable 2FA for Admin and Manager accounts for enhanced security",
-        icon: <Smartphone size={20} />,
+        icon: <Shield size={20} />,
         position: { top: '95%', left: '70%' }
       }
     ],
