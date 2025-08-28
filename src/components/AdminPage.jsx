@@ -168,7 +168,7 @@ function AdminPage({ onNavigateBack }) {
         id: 3,
         title: "Inventory",
         description: "Manage Inventory by Store",
-        icon: <Shield size={20} />,
+        icon: <Book size={20} />,
        position: { top: '41%', left: '95%' }
       },
       {
@@ -176,7 +176,7 @@ function AdminPage({ onNavigateBack }) {
         title: "Users",
         description: "Assign users to one or many stores",
         icon: <Users size={20} />,
-       position: { top: '41%', left: '65%' }
+       position: { top: '41%', left: '69%' }
       }
     ],
     'cards': [
