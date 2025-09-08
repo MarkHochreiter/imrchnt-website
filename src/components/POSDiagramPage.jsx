@@ -33,6 +33,7 @@ import s1f2POS from '../assets/s1f2_pos.png';
 import scanSampleVideo from '../assets/scan_sample.mp4';
 import paymentSampleVideo from '../assets/payment_sample.mp4';
 import desktopPOS from '../assets/desktop_sample.png';
+import iphone from '../assets/iphone.png';
 import search from '../assets/search.mp4';
 
 // A reusable Button component, matching the new aesthetic.
@@ -88,7 +89,7 @@ function POSDiagramPage({ onNavigateBack }) {
       title: 'Run on Smartphone',
       subtitle: 'Pocket-sized point-of-sale for ultimate mobility and convenience',
       description: 'Transform any smartphone into a powerful POS system. Perfect for pop-ups, events, and offsite. Turn your smartphone into a Card Reader with our Tap to Pay functionality or pair with an S1F2 or AMS1 for full card reader capabilities to process any type of payment anywhere.',
-      imageSrc: s1f2POS // You can replace with phone-specific image
+      imageSrc: iphone
     },
     {
       id: 'all-in-one',
