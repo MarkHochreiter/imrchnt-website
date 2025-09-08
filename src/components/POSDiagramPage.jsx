@@ -364,28 +364,28 @@ function POSDiagramPage({ onNavigateBack }) {
         title: "Pocket-Sized Solution",
         description: "Complete POS functionality in a device that fits in your pocket.",
         icon: <Smartphone size={20} />,
-        position: { top: '75%', left: '50%' }
+        position: { top: '55%', left: '50%' }
       },
       {
         id: 2,
-        title: "Quick Payments",
-        description: "Fast payment processing with tap, chip, and contactless options.",
+        title: "Simplified Interface",
+        description: "Intuitive design with in flow navigation.",
         icon: <Zap size={20} />,
-        position: { top: '80%', left: '34%' }
+        position: { top: '40%', left: '34%' }
       },
       {
         id: 3,
         title: "Camera Scanner ",
         description: "Scan barcodes with the built in camera.",
         icon: <Users size={20} />,
-        position: { top: '34%', left: '70%' }
+        position: { top: '37%', left: '68%' }
       },
       {
         id: 4,
         title: "Tap to Pay Capable",
         description: "Take contactless payments right to your phone using Tap to Pay.",
         icon: <Cloud size={20} />,
-        position: { top: '70%', left: '50%' }
+        position: { top: '65%', left: '50%' }
       },
       {
         id: 5,
@@ -399,7 +399,7 @@ function POSDiagramPage({ onNavigateBack }) {
         title: "Offline Mode",
         description: "Continue processing sales even without internet connectivity.",
         icon: <Shield size={20} />,
-        position: { top: '80%', left: '20%' }
+        position: { top: '60%', left: '34%' }
       }
     ],
     'all-in-one': [
