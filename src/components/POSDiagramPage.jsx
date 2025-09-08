@@ -34,6 +34,7 @@ import scanSampleVideo from '../assets/scan_sample.mp4';
 import paymentSampleVideo from '../assets/payment_sample.mp4';
 import desktopPOS from '../assets/desktop_sample.png';
 import iphone from '../assets/iphone.png';
+import apple from '../assets/apple.png';
 import search from '../assets/search.mp4';
 
 // A reusable Button component, matching the new aesthetic.
