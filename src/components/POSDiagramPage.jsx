@@ -57,7 +57,7 @@ const Button = ({ children, className = '', variant = 'primary', ...props }) => 
 // Main component for the POS Diagram Page
 function POSDiagramPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
-  const [selectedDeviceType, setSelectedDeviceType] = useState('all-in-one');
+  const [selectedDeviceType, setSelectedDeviceType] = useState('desktop');
 
   // ... (deviceTypes and deviceFeatures data remains the same)
   // Device type configurations
@@ -142,7 +142,7 @@ function POSDiagramPage({ onNavigateBack }) {
   {
     id: 6,
     title: "Subtotal",
-    description: "sale subtotal",
+    description: "Sale subtotal",
     icon: <DollarSign size={20} />,
     position: { top: '41%', left: '96%' }
   },
@@ -170,7 +170,7 @@ function POSDiagramPage({ onNavigateBack }) {
   {
     id: 10, // DONE 
     title: "Clear order",
-    description: "removes everything from sale",
+    description: "Removes everything from sale",
     icon: <Shredder size={20} />,
     position: { top: '74%', left: '81%' }
   },
@@ -268,7 +268,7 @@ function POSDiagramPage({ onNavigateBack }) {
   {
     id: 6,
     title: "Subtotal",
-    description: "sale subtotal",
+    description: "Sale subtotal",
     icon: <DollarSign size={20} />,
     position: { top: '41%', left: '96%' }
   },
@@ -296,7 +296,7 @@ function POSDiagramPage({ onNavigateBack }) {
   {
     id: 10, // DONE 
     title: "Clear order",
-    description: "removes everything from sale",
+    description: "Removes everything from sale",
     icon: <Shredder size={20} />,
     position: { top: '74%', left: '81%' }
   },
