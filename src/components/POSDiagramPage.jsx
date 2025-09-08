@@ -33,6 +33,7 @@ import s1f2POS from '../assets/s1f2_pos.png';
 import scanSampleVideo from '../assets/scan_sample.mp4';
 import paymentSampleVideo from '../assets/payment_sample.mp4';
 import desktopPOS from '../assets/desktop_sample.png';
+import search from '../assets/search.mp4';
 
 // A reusable Button component, matching the new aesthetic.
 const Button = ({ children, className = '', variant = 'primary', ...props }) => {
@@ -106,6 +107,8 @@ function POSDiagramPage({ onNavigateBack }) {
   {
     id: 1, // DONE
     title: "Search",
+            hasVideo: true,
+        videoSrc: search,
     description: "Either scan item into sale with Bluetooth connected Scanner or use our blazing fast search to manually find and add item into sale",
     icon: <Search size={20} />,
     position: { top: '27%', left: '5%' }
