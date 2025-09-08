@@ -364,28 +364,28 @@ function POSDiagramPage({ onNavigateBack }) {
         title: "Pocket-Sized Solution",
         description: "Complete POS functionality in a device that fits in your pocket.",
         icon: <Smartphone size={20} />,
-        position: { top: '30%', left: '50%' }
+        position: { top: '75%', left: '50%' }
       },
       {
         id: 2,
         title: "Quick Payments",
         description: "Fast payment processing with tap, chip, and contactless options.",
         icon: <Zap size={20} />,
-        position: { top: '50%', left: '30%' }
+        position: { top: '80%', left: '34%' }
       },
       {
         id: 3,
-        title: "Customer Engagement",
-        description: "Built-in camera for loyalty programs and customer interaction.",
+        title: "Camera Scanner ",
+        description: "Scan barcodes with the built in camera.",
         icon: <Users size={20} />,
-        position: { top: '70%', left: '70%' }
+        position: { top: '34%', left: '70%' }
       },
       {
         id: 4,
-        title: "Real-Time Sync",
-        description: "Instant synchronization with your main POS system and inventory.",
+        title: "Tap to Pay Capable",
+        description: "Take contactless payments right to your phone using Tap to Pay.",
         icon: <Cloud size={20} />,
-        position: { top: '90%', left: '50%' }
+        position: { top: '70%', left: '50%' }
       },
       {
         id: 5,
