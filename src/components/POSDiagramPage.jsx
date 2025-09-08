@@ -365,7 +365,7 @@ function POSDiagramPage({ onNavigateBack }) {
         title: "Pocket-Sized Solution",
         description: "Complete POS functionality in a device that fits in your pocket.",
         icon: <Smartphone size={20} />,
-        position: { top: '55%', left: '50%' }
+        position: { top: '55%', left: '66%' }
       },
       {
         id: 2,
@@ -388,7 +388,7 @@ function POSDiagramPage({ onNavigateBack }) {
         imageSrc: apple,
         description: "Take contactless payments right to your phone using Tap to Pay.",
         icon: <Cloud size={20} />,
-        position: { top: '65%', left: '66%' }
+        position: { top: '65%', left: '50%' }
       },
       {
         id: 5,
