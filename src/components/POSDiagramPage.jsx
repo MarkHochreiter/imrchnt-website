@@ -384,6 +384,7 @@ function POSDiagramPage({ onNavigateBack }) {
       {
         id: 4,
         title: "Tap to Pay Capable",
+        hasImage: true
         imageSrc: apple,
         description: "Take contactless payments right to your phone using Tap to Pay.",
         icon: <Cloud size={20} />,
@@ -628,6 +629,17 @@ function POSDiagramPage({ onNavigateBack }) {
                           </video>
                         </div>
                       )}
+
+                      {/* Image for features that have it */}
+{feature.hasImage && feature.imageSrc && (
+  <div className="mb-3">
+    <img 
+      className="w-full h-full object-cover rounded-md"
+      src={feature.imageSrc} 
+      alt={feature.imageAlt || "Feature image"} 
+    />
+  </div>
+)}
                       
                       <div className="text-sm text-gray-300">
                         {Array.isArray(feature.description) ? (
