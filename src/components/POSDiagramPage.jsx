@@ -379,7 +379,7 @@ function POSDiagramPage({ onNavigateBack }) {
         title: "Camera Scanner ",
         description: "Scan barcodes with the built in camera.",
         icon: <Users size={20} />,
-        position: { top: '37%', left: '68%' }
+        position: { top: '36%', left: '66%' }
       },
       {
         id: 4,
@@ -388,17 +388,10 @@ function POSDiagramPage({ onNavigateBack }) {
         imageSrc: apple,
         description: "Take contactless payments right to your phone using Tap to Pay.",
         icon: <Cloud size={20} />,
-        position: { top: '65%', left: '50%' }
+        position: { top: '65%', left: '66%' }
       },
       {
         id: 5,
-        title: "Mobile Receipts",
-        description: "Send digital receipts via SMS or email directly from the device.",
-        icon: <Printer size={20} />,
-        position: { top: '40%', left: '80%' }
-      },
-      {
-        id: 6,
         title: "Offline Mode",
         description: "Continue processing sales even without internet connectivity.",
         icon: <Shield size={20} />,
