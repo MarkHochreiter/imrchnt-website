@@ -383,6 +383,7 @@ function POSDiagramPage({ onNavigateBack }) {
       {
         id: 4,
         title: "Tap to Pay Capable",
+        imageSrc: apple
         description: "Take contactless payments right to your phone using Tap to Pay.",
         icon: <Cloud size={20} />,
         position: { top: '65%', left: '50%' }
