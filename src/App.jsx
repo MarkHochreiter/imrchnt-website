@@ -17,6 +17,7 @@ import SystemPage from './components/SystemPage.jsx'
 import AdminPage from './components/AdminPage.jsx'
 import ReportsPage from './components/Reports.jsx'
 import InventoryPage from './components/inventory.jsx'
+import CustomerPage from './components/customers.jsx'
 import './App.css'
 
 // Button component
@@ -329,6 +330,8 @@ function App() {
         return <ReportsPage onNavigateBack={() => navigateTo('system')} />;
       case 'inventory':
         return <InventoryPage onNavigateBack={() => navigateTo('system')} />;
+      case 'customer':
+        return <CustomerPage onNavigateBack={() => navigateTo('instore')} />;
       case 'instore':
         return <InStorePage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       case 'offsite':
