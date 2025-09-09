@@ -93,49 +93,47 @@ function InStorePage({ onSignupClick, onNavigate }) {
         </div>
       </section>
 
-      {/* CLIENTELING Section */}
-      <section id="clienteling" className="py-20 bg-gray-50">
+            {/* Customers Section */}
+      <section id="customers" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1">
-              <div className="bg-white p-8 rounded-lg shadow-lg">
-                <div className="aspect-video bg-gray-50 rounded-lg flex items-center justify-center">
-                  <Users className="h-24 w-24 text-[#f08e80]" />
-                </div>
-              </div>
-            </div>
-            <div className="order-1 lg:order-2">
+            <div>
               <div className="flex items-center mb-6">
                 <Users className="h-12 w-12 text-[#f08e80] mr-4" />
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                  Clienteling - Coming Soon
+                  Customer Management
                 </h2>
               </div>
               <p className="text-lg text-gray-600 mb-8">
-                Quickly upload your entire inventory with our bulk import tools. 
-                Migration made seamless with column mapping on any .CSV file.
+                Optimize the customer experience with comprehensive customer relationship management. 
+                Build lasting relationships and drive repeat business.
               </p>
               <div className="space-y-4 mb-8">
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>CSV supported</span>
+                  <span>Customer profiles and history</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Import New</span>
+                  <span>Loyalty program integration</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Update existing</span>
+                  <span>Marketing automation</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Item variants</span>
+                  <span>Customer insights and analytics</span>
                 </div>
               </div>
               <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Explore Clienteling
+                Manage Customers
               </Button>
+            </div>
+            <div className="bg-gray-50 p-8 rounded-lg">
+              <div className="aspect-video bg-white rounded-lg shadow-lg flex items-center justify-center">
+                <Users className="h-24 w-24 text-[#f08e80]" />
+              </div>
             </div>
           </div>
         </div>
