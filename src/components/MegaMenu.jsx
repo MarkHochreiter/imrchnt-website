@@ -98,7 +98,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
       items: [
         {
           title: "Payouts",
-          subtitle: "Manually manage or automate payouts",
+          subtitle: "Manual or automated payouts",
           icon: <DollarSign className="h-5 w-5" />
         },
         {
