@@ -56,10 +56,11 @@ function OffsitePage() {
                   <span>Offline mode capability</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                  onClick={() => onNavigate('single')}
+               <Button 
+                className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={() => onNavigate('single')}
                 >
-                Learn More About Single Device
+                See it in action
               </Button>
             </div>
             <div className="bg-gray-50 p-8 rounded-lg">
