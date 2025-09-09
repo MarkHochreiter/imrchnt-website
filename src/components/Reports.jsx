@@ -30,8 +30,8 @@ import {
   Book} from 'lucide-react';
 import { useState } from 'react';
 import cards from '../assets/cards.png';
-import settings from '../assets/analytics.png';
-import stores from '../assets/transactions.png';
+import analytics from '../assets/analytics.png';
+import transactions from '../assets/transactions.png';
 
 
 // A reusable Button component, matching the new aesthetic.
@@ -78,13 +78,136 @@ function POSDiagramPage({ onNavigateBack }) {
       title: 'Transaction History',
       subtitle: 'Simple transaction lookup',
       description: 'Simplified transaction lookup using barcode or qr code form receipt or by a series of other available filters. Issue refunds, research payment methods, find items, discounts, taxes or tips applied to sales.
-      imageSrc: desktopPOS 
+      imageSrc: transactions 
     }
   ];
+    'analytics': [
+  {
+    id: 1, // DONE
+    title: "Search",
+    description: "Either scan item into sale with Bluetooth connected Scanner or use our blazing fast search to manually find and add item into sale",
+    icon: <Search size={20} />,
+    position: { top: '27%', left: '5%' }
+  },
 
-  // Features for different device types
-  const deviceFeatures = {
-    'desktop': [
+  {
+    id: 2, // DONE
+    title: "Store - Cashier",
+    description: "Displays store you're selling from and cashier making the sale",
+    icon: <Zap size={20} />,
+    position: { top: '13%', left: '67%' }
+  },
+  {
+    id: 3, // DONE
+    title: "POS drawer",
+    description: "Navigate to Transactions, Close Day, Assign Card Reader, Attach Bluetooth scanner",
+    icon: <Flag size={20} />,
+    position: { top: '13%', left: '83%' }
+  },
+  {
+    id: 4, // DONE
+    title: "Home",
+    description: "Navigate back to Home to access other app modules",
+    icon: <Home size={20} />,
+    position: { top: '13%', left: '96%' }
+  },
+  {
+    id: 5, // DONE 
+    title: "Add Customer",
+    description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
+    icon: <Users size={20} />,
+    position: { top: '34%', left: '96%' }
+  },
+  {
+    id: 6,
+    title: "Subtotal",
+    description: "sale subtotal",
+    icon: <DollarSign size={20} />,
+    position: { top: '41%', left: '96%' }
+  },
+  {
+    id: 7,
+    title: "Discount",
+    description: "Discount amount applied to sale",
+    icon: <Tag size={20} />,
+    position: { top: '47%', left: '96%' }
+  },
+  {
+    id: 8, // DONE
+    title: "Tax",
+    description: "Tax amount applied to sale",
+    icon: <Percent size={20} />,
+    position: { top: '53%', left: '96%' }
+  },
+  {
+    id: 9,
+    title: "Sale Total",
+    description: "Total amount to be charged in sale",
+    icon: <Calculator size={20} />,
+    position: { top: '59%', left: '96%' }
+  },
+  {
+    id: 10, // DONE 
+    title: "Clear order",
+    description: "removes everything from sale",
+    icon: <Shredder size={20} />,
+    position: { top: '74%', left: '81%' }
+  },
+  {
+    id: 12, // DONE
+    title: "Payment",
+    description: "Click on Payment to Tender and complete sale",
+    icon: <Wallet size={20} />,
+    position: { top: '85%', left: '96%' }
+  },
+  {
+    id: 11, // DONE
+    title: "Discount",
+    description: "Manually apply discount to sale by flat dollar amount or by a certain percent",
+    icon: <Tag size={20} />,
+    position: { top: '74%', left: '96%' }
+  },
+  {
+    id: 13,
+    title: "Line Item",
+    description: "Product Number and Description",
+    icon: <Book size={20} />,
+    position: { top: '41%', left: '5%' }
+  },  
+  {
+    id: 14,
+    title: "Retail Price",
+    description: "Unit Retail Price",
+    icon: <DollarSign size={20} />,
+    position: { top: '41%', left: '25%' }
+  },
+  
+  {
+    id: 15,
+    title: "Quantity",
+    description: "Click + or - to adjust quantity, auto adjusts with scan",
+    icon: <BookPlus size={20} />,
+    position: { top: '41%', left: '36%' }
+  },
+ 
+  {
+    id: 16,
+    title: "Total",
+    description: "Item Total (Retail x Quantity",
+    icon: <Calculator size={20} />,
+    position: { top: '41%', left: '52%' }
+  },
+  
+  {
+    id: 17,
+    title: "Delete",
+    description: "Remove item from sale",
+    icon: <Trash2 size={20} />,
+    position: { top: '41%', left: '64%' }
+  }
+  
+    ] ,
+    'transactions': [
   {
     id: 1, // DONE
     title: "Search",
@@ -209,290 +332,7 @@ function POSDiagramPage({ onNavigateBack }) {
     position: { top: '41%', left: '64%' }
   },
   
-    ],
-    'tablet': [
-  {
-    id: 1, // DONE
-    title: "Search",
-    description: "Either scan item into sale with Bluetooth connected Scanner or use our blazing fast search to manually find and add item into sale",
-    icon: <Search size={20} />,
-    position: { top: '27%', left: '5%' }
-  },
-
-  {
-    id: 2, // DONE
-    title: "Store - Cashier",
-    description: "Displays store you're selling from and cashier making the sale",
-    icon: <Zap size={20} />,
-    position: { top: '13%', left: '67%' }
-  },
-  {
-    id: 3, // DONE
-    title: "POS drawer",
-    description: "Navigate to Transactions, Close Day, Assign Card Reader, Attach Bluetooth scanner",
-    icon: <Flag size={20} />,
-    position: { top: '13%', left: '83%' }
-  },
-  {
-    id: 4, // DONE
-    title: "Home",
-    description: "Navigate back to Home to access other app modules",
-    icon: <Home size={20} />,
-    position: { top: '13%', left: '96%' }
-  },
-  {
-    id: 5, // DONE 
-    title: "Add Customer",
-    description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
-    icon: <Users size={20} />,
-    position: { top: '34%', left: '96%' }
-  },
-  {
-    id: 6,
-    title: "Subtotal",
-    description: "sale subtotal",
-    icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '96%' }
-  },
-  {
-    id: 7,
-    title: "Discount",
-    description: "Discount amount applied to sale",
-    icon: <Tag size={20} />,
-    position: { top: '47%', left: '96%' }
-  },
-  {
-    id: 8, // DONE
-    title: "Tax",
-    description: "Tax amount applied to sale",
-    icon: <Percent size={20} />,
-    position: { top: '53%', left: '96%' }
-  },
-  {
-    id: 9,
-    title: "Sale Total",
-    description: "Total amount to be charged in sale",
-    icon: <Calculator size={20} />,
-    position: { top: '59%', left: '96%' }
-  },
-  {
-    id: 10, // DONE 
-    title: "Clear order",
-    description: "removes everything from sale",
-    icon: <Shredder size={20} />,
-    position: { top: '74%', left: '81%' }
-  },
-  {
-    id: 12, // DONE
-    title: "Payment",
-    description: "Click on Payment to Tender and complete sale",
-    icon: <Wallet size={20} />,
-    position: { top: '85%', left: '96%' }
-  },
-  {
-    id: 11, // DONE
-    title: "Discount",
-    description: "Manually apply discount to sale by flat dollar amount or by a certain percent",
-    icon: <Tag size={20} />,
-    position: { top: '74%', left: '96%' }
-  },
-  {
-    id: 13,
-    title: "Line Item",
-    description: "Product Number and Description",
-    icon: <Book size={20} />,
-    position: { top: '41%', left: '5%' }
-  },  
-  {
-    id: 14,
-    title: "Retail Price",
-    description: "Unit Retail Price",
-    icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '25%' }
-  },
-  
-  {
-    id: 15,
-    title: "Quantity",
-    description: "Click + or - to adjust quantity, auto adjusts with scan",
-    icon: <BookPlus size={20} />,
-    position: { top: '41%', left: '36%' }
-  },
- 
-  {
-    id: 16,
-    title: "Total",
-    description: "Item Total (Retail x Quantity",
-    icon: <Calculator size={20} />,
-    position: { top: '41%', left: '52%' }
-  },
-  
-  {
-    id: 17,
-    title: "Delete",
-    description: "Remove item from sale",
-    icon: <Trash2 size={20} />,
-    position: { top: '41%', left: '64%' }
-  },
-  
-    ],
-    'phone': [
-      {
-        id: 1,
-        title: "Pocket-Sized Solution",
-        description: "Complete POS functionality in a device that fits in your pocket.",
-        icon: <Smartphone size={20} />,
-        position: { top: '30%', left: '50%' }
-      },
-      {
-        id: 2,
-        title: "Quick Payments",
-        description: "Fast payment processing with tap, chip, and contactless options.",
-        icon: <Zap size={20} />,
-        position: { top: '50%', left: '30%' }
-      },
-      {
-        id: 3,
-        title: "Customer Engagement",
-        description: "Built-in camera for loyalty programs and customer interaction.",
-        icon: <Users size={20} />,
-        position: { top: '70%', left: '70%' }
-      },
-      {
-        id: 4,
-        title: "Real-Time Sync",
-        description: "Instant synchronization with your main POS system and inventory.",
-        icon: <Cloud size={20} />,
-        position: { top: '90%', left: '50%' }
-      },
-      {
-        id: 5,
-        title: "Mobile Receipts",
-        description: "Send digital receipts via SMS or email directly from the device.",
-        icon: <Printer size={20} />,
-        position: { top: '40%', left: '80%' }
-      },
-      {
-        id: 6,
-        title: "Offline Mode",
-        description: "Continue processing sales even without internet connectivity.",
-        icon: <Shield size={20} />,
-        position: { top: '80%', left: '20%' }
-      }
-    ],
-    'all-in-one': [
-      {
-        id: 1,
-        title: "Contactless Reader",
-        description: "Accepts NFC cards and mobile payments like Apple Pay & Google Pay.",
-        icon: <Wifi size={20} />,
-        position: { top: '15%', left: '49%' }
-      },
-      {
-        id: 2,
-        title: "5.5\" HD Touchscreen",
-        description: "Intuitive interface for you and your customers.",
-        icon: <Smartphone size={20} />,
-        position: { top: '70%', left: '49%' }
-      },
-      {
-        id: 3,
-        title: "Chip Card Slot",
-        description: "Securely processes EMV chip cards.",
-        icon: <CreditCard size={20} />,
-        position: { top: '94%', left: '49%' }
-      },
-      {
-        id: 13,
-        title: "Built-in Printer",
-        description: "Fast thermal receipt printing for customer convenience.",
-        icon: <Printer size={20} />,
-        position: { top: '29%', left: '78%' }
-      },
-      {
-        id: 5,
-        title: "Item Details",
-        description: "Description, Product Number, Unit Price of item in Cart.",
-        icon: <Shield size={20} />,
-        position: { top: '53%', left: '18%' }
-      },
-      {
-        id: 6,
-        title: "Barcode Scanner",
-        hasVideo: true,
-        videoSrc: scanSampleVideo,
-        description: "Scans product barcodes with device camera.",
-        icon: <Zap size={20} />,
-        position: { top: '45%', left: '78%' }
-      },
-      {
-        id: 7,
-        title: "Delete Item",
-        description: "Remove an item from the current order.",
-        icon: <Trash2 size={20} />,
-        position: { top: '51%', left: '80%' }
-      },
-      {
-        id: 8,
-        title: "Adjust Quantity",
-        description: "Increase or decrease the quantity of the selected item.",
-        icon: <PlusCircle size={20} />,
-        position: { top: '57%', left: '80%' }
-      },
-      {
-        id: 9,
-        title: "Search Products",
-        description: "Quickly find a product or item in your inventory.",
-        icon: <Search size={20} />,
-        position: { top: '45%', left: '51%' }
-      },
-      {
-        id: 10,
-        title: "POS Drawer",
-        description: [
-          "Access POS functions:",
-          "Clear cart",
-          "Close Day",
-          "Transactions"
-        ],
-        icon: <Grid size={20} />,
-        position: { top: '38%', left: '80%' }
-      },
-      {
-        id: 11,
-        title: "Home Screen",
-        description: [
-          "Access Home dashboard functions:",
-          "Continue sale",
-          "Manage offline settings",
-          "Sign out"
-        ],
-        icon: <Home size={20} />,
-        position: { top: '38%', left: '18%' }
-      },
-      {
-        id: 12,
-        title: "Sale Total",
-        description: "",
-        icon: <DollarSign size={20} />,
-        position: { top: '45%', left: '18%' }
-      },
-      {
-        id: 4,
-        title: "Payment",
-        hasVideo: true,
-        videoSrc: paymentSampleVideo,
-        description: [
-          "Tender Sale with:",
-          "Credit/Debit",
-          "Cash",
-          "Gift Card (COMING SOON)",
-          "Simple Tender"
-        ],
-        icon: <DollarSign size={20} />,
-        position: { top: '80%', left: '18%' }
-      }
-    ]
+    ]    
   };
 
   const currentDevice = deviceTypes.find(device => device.id === selectedDeviceType);
