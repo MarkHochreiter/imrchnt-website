@@ -1,6 +1,19 @@
 import { Smartphone, Layers, Package, BarChart3, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 
+  return (
+    <button
+      className={`${baseClasses} ${variants[variant]} ${className}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
+// Main component for the Reports Page
+function OffsitePage({ onNavigateBack }) 
+
 function OffsitePage() {
   return (
     <div className="min-h-screen bg-white">
