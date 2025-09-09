@@ -332,9 +332,8 @@ function POSDiagramPage({ onNavigateBack }) {
     description: "Remove item from sale",
     icon: <Trash2 size={20} />,
     position: { top: '41%', left: '64%' }
-  },
-  
-    ]    
+      }
+    ]
   };
 
   const currentDevice = deviceTypes.find(device => device.id === selectedDeviceType);
