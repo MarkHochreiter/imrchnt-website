@@ -126,7 +126,9 @@ function SystemPage({ handleSignupClick, onNavigate }) {
                   <span>Export and scheduling</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
+              <Button  className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={() => onNavigate('reports')}
+                >
                 View Reports
               </Button>
             </div>
