@@ -17,7 +17,7 @@ import SystemPage from './components/SystemPage.jsx'
 import AdminPage from './components/AdminPage.jsx'
 import ReportsPage from './components/Reports.jsx'
 import InventoryPage from './components/inventory.jsx'
-import CustomerPage from './components/customers.jsx'
+import CustomerPage from './components/Customers.jsx'
 import './App.css'
 
 // Button component
