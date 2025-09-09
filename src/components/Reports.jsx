@@ -336,7 +336,7 @@ function POSDiagramPage({ onNavigateBack }) {
     ]
   };
 
-  const currentDevice = deviceTypes.find(device => device.id === selectedDeviceType);
+const currentDevice = deviceTypes.find(device => device.id === selectedDeviceType);
   const currentFeatures = deviceFeatures[selectedDeviceType] || [];
 
   return (
@@ -445,6 +445,17 @@ function POSDiagramPage({ onNavigateBack }) {
                           </video>
                         </div>
                       )}
+
+                      {/* Image for features that have it */}
+{feature.hasImage && feature.imageSrc && (
+  <div className="mb-3">
+    <img 
+      className="w-full h-full object-cover rounded-md"
+      src={feature.imageSrc} 
+      alt={feature.imageAlt || "Feature image"} 
+    />
+  </div>
+)}
                       
                       <div className="text-sm text-gray-300">
                         {Array.isArray(feature.description) ? (
@@ -537,5 +548,6 @@ function POSDiagramPage({ onNavigateBack }) {
     </div>
   );
 }
+
 
 export default ReportsPage;
