@@ -338,9 +338,9 @@ function App() {
       case 'instore':
         return <InStorePage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       case 'offsite':
-        return <OffsitePage />;
+        return <OffsitePage onNavigate={navigateTo} handleSignupClick={handleSignupClick} />;
       case 'credit-cards':
-        return <CreditCardProcessingPage />;
+        return <CreditCardProcessingPage onNavigate={navigateTo} handleSignupClick={handleSignupClick} />;
       case 'pos-diagram':
         return <POSDiagramPage onNavigateBack={() => navigateTo('system')} />;
       case 's1f2':
