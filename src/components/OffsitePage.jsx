@@ -32,7 +32,9 @@ function OffsitePage({ handleSignupClick, onNavigate }) {
               Flexible retail solutions that work anywhere, anytime. Perfect for pop-ups, events, and mobile retail.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-[#f08e80] hover:bg-[#e07d70] text-white text-lg px-8 py-4">
+              <Button size="lg" className="bg-[#f08e80] hover:bg-[#e07d70] text-white text-lg px-8 py-4"
+                 onClick={handleSignupClick}
+                >
                 Request Access
               </Button>
             </div>
