@@ -30,14 +30,9 @@ import {
 function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
   const menuData = [
     {
-      title: "System",
+      title: "Back Office",
       icon: <Settings className="h-8 w-8 text-[#f08e80]" />,
       items: [
-        {
-          title: "POS",
-          subtitle: "Cross platform Point of Sale",
-          icon: <Monitor className="h-5 w-5" />
-        },
         {
           title: "Admin",
           subtitle: "Manage with ease",
@@ -49,19 +44,14 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
           icon: <BarChart3 className="h-5 w-5" />
         },
         {
-          title: "Products",
+          title: "Inventory",
           subtitle: "Simplified inventory management",
           icon: <Package className="h-5 w-5" />
         },
-        {
-          title: "Customers",
-          subtitle: "Optimize the customer experience",
-          icon: <Users className="h-5 w-5" />
-        }
       ]
     },
     {
-      title: "InStore",
+      title: "Sales Floor",
       icon: <Store className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
@@ -70,8 +60,8 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
           icon: <Monitor className="h-5 w-5" />
         },
         {
-          title: "Clienteling (COMING SOON)",
-          subtitle: "Make each customers experience unique ",
+          title: "Customers",
+          subtitle: "Optimize the customer experience",
           icon: <Users className="h-5 w-5" />
         },
         {
@@ -94,11 +84,6 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
           title: "Import Items",
           subtitle: "Upload thousands of items in seconds",
           icon: <Layers className="h-5 w-5" />
-        },
-        {
-          title: "Add Items",
-          subtitle: "Manually add items mid sale",
-          icon: <Package className="h-5 w-5" />
         },
         {
           title: "Export Sales",
@@ -125,11 +110,6 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
           title: "Chargebacks",
           subtitle: "Handle chargeback disputes",
           icon: <MessageCircle className="h-5 w-5" />
-        },
-        {
-          title: "Flat Fee",
-          subtitle: "Transparent pricing structure",
-          icon: <CreditCard className="h-5 w-5" />
         }
       ]
     }
