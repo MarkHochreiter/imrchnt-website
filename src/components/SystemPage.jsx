@@ -26,10 +26,10 @@ function SystemPage({ handleSignupClick, onNavigate }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-              System Management
+              Back Office Management
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-              Complete control over your business operations with our integrated system management tools.
+              Complete control over your business operations with our back office management tools.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
@@ -37,55 +37,6 @@ function SystemPage({ handleSignupClick, onNavigate }) {
                 onClick={handleSignupClick}>
                 Request Access
               </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* POS Section */}
-      <section id="pos" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="flex items-center mb-6">
-                <Monitor className="h-12 w-12 text-[#f08e80] mr-4" />
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                  Point of Sale (POS)
-                </h2>
-              </div>
-              <p className="text-lg text-gray-600 mb-8">
-                Cross-platform POS system that works seamlessly across all devices and operating systems. 
-                From desktop to mobile, manage your sales with one unified interface.
-              </p>
-              <div className="space-y-4 mb-8">
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Web, Client, PC, Mac, Android, iOS</span>
-                </div>
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Real-time synchronization</span>
-                </div>
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Offline mode capability</span>
-                </div>
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Multi-location support</span>
-                </div>
-              </div>
-              <Button 
-                className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                 onClick={() => onNavigate('pos-diagram')}
-                >
-                Explore POS System
-              </Button>
-            </div>
-            <div className="bg-gray-50 p-8 rounded-lg">
-              <div className="aspect-video bg-white rounded-lg shadow-lg flex items-center justify-center">
-                <Monitor className="h-24 w-24 text-[#f08e80]" />
-              </div>
             </div>
           </div>
         </div>
@@ -203,7 +154,7 @@ function SystemPage({ handleSignupClick, onNavigate }) {
               <div className="flex items-center mb-6">
                 <Package className="h-12 w-12 text-[#f08e80] mr-4" />
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                  Product Management
+                  Inventory Management
                 </h2>
               </div>
               <p className="text-lg text-gray-600 mb-8">
@@ -217,7 +168,7 @@ function SystemPage({ handleSignupClick, onNavigate }) {
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Variant and option management</span>
+                  <span>Variant management</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
@@ -229,54 +180,8 @@ function SystemPage({ handleSignupClick, onNavigate }) {
                 </div>
               </div>
               <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Manage Products
+                Manage Inventory
               </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Customers Section */}
-      <section id="customers" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="flex items-center mb-6">
-                <Users className="h-12 w-12 text-[#f08e80] mr-4" />
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                  Customer Management
-                </h2>
-              </div>
-              <p className="text-lg text-gray-600 mb-8">
-                Optimize the customer experience with comprehensive customer relationship management. 
-                Build lasting relationships and drive repeat business.
-              </p>
-              <div className="space-y-4 mb-8">
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Customer profiles and history</span>
-                </div>
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Loyalty program integration</span>
-                </div>
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Marketing automation</span>
-                </div>
-                <div className="flex items-center">
-                  <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Customer insights and analytics</span>
-                </div>
-              </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Manage Customers
-              </Button>
-            </div>
-            <div className="bg-gray-50 p-8 rounded-lg">
-              <div className="aspect-video bg-white rounded-lg shadow-lg flex items-center justify-center">
-                <Users className="h-24 w-24 text-[#f08e80]" />
-              </div>
             </div>
           </div>
         </div>
