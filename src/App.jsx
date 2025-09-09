@@ -15,6 +15,7 @@ import SignupModal from './components/SignupModal.jsx'
 import POSDiagramPage from './components/POSDiagramPage.jsx'
 import SystemPage from './components/SystemPage.jsx'
 import AdminPage from './components/AdminPage.jsx'
+import ReportsPage from './components/Reports.jsx'
 import './App.css'
 
 // Button component
@@ -323,6 +324,8 @@ function App() {
         return <SystemPage onNavigate={navigateTo} handleSignupClick={handleSignupClick} />;
       case 'admin':
         return <AdminPage onNavigateBack={() => navigateTo('system')} />;
+      case 'reports':
+        return <ReportPage onNavigateBack={() => navigateTo('system')} />;
       case 'instore':
         return <InStorePage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       case 'offsite':
