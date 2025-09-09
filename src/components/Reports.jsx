@@ -29,7 +29,6 @@ import {
   Tag,
   Book} from 'lucide-react';
 import { useState } from 'react';
-import cards from '../assets/cards.png';
 import analytics from '../assets/analytics.png';
 import transactions from '../assets/transactions.png';
 
