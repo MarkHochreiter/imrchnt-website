@@ -53,10 +53,10 @@ const Button = ({ children, className = '', variant = 'primary', ...props }) => 
   );
 };
 
-// Main component for the POS Diagram Page
-function POSDiagramPage({ onNavigateBack }) {
+// Main component for the Reports Page
+function ReportsPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
-  const [selectedDeviceType, setSelectedDeviceType] = useState('all-in-one');
+  const [selectedDeviceType, setSelectedDeviceType] = useState('analytics');
 
   // ... (deviceTypes and deviceFeatures data remains the same)
   // Device type configurations
