@@ -325,7 +325,7 @@ function App() {
       case 'admin':
         return <AdminPage onNavigateBack={() => navigateTo('system')} />;
       case 'reports':
-        return <ReportPage onNavigateBack={() => navigateTo('system')} />;
+        return <ReportsPage onNavigateBack={() => navigateTo('system')} />;
       case 'instore':
         return <InStorePage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       case 'offsite':
