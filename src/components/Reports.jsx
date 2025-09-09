@@ -538,4 +538,4 @@ function POSDiagramPage({ onNavigateBack }) {
   );
 }
 
-export default ReportPage;
+export default ReportsPage;
