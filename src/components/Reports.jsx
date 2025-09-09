@@ -80,6 +80,9 @@ function POSDiagramPage({ onNavigateBack }) {
       imageSrc: transactions 
     }
   ];
+
+  // Features for different device types
+  const deviceFeatures = {
     'analytics': [
   {
     id: 1, // DONE
