@@ -144,8 +144,8 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                   onClick={(e) => {
                     e.preventDefault()
                     const pageMap = {
-                      'System': 'system',
-                      'InStore': 'instore',
+                      'Back Office': 'system',
+                      'Sales Floor': 'instore',
                       'Offsite': 'offsite', 
                       'Credit Cards': 'credit-cards'
                     }
@@ -153,18 +153,15 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                       'POS': 'pos',
                       'Admin': 'admin',
                       'Reports': 'reports',
-                      'Products': 'products',
+                      'Inventory': 'products',
                       'Customers': 'customers',
-                      'Clienteling': 'clienteling',
                       'On Floor Assistance': 'on-floor-assistance',
                       'Single Device': 'single-device',
                       'Import Items': 'import-items',
-                      'Add Items': 'add-items',
                       'Export Sales': 'export-sales',
                       'Payouts': 'payouts',
                       'Terminals': 'terminals',
                       'Chargebacks': 'chargebacks',
-                      'Flat Fee': 'flat-fee'
                     }
                     const page = pageMap[column.title]
                     const section = sectionMap[item.title]
