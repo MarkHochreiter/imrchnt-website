@@ -76,7 +76,7 @@ function POSDiagramPage({ onNavigateBack }) {
       icon: <Tablet className="h-5 w-5" />,
       title: 'Transaction History',
       subtitle: 'Simple transaction lookup',
-      description: 'Simplified transaction lookup using barcode or qr code form receipt or by a series of other available filters. Issue refunds, research payment methods, find items, discounts, taxes or tips applied to sales.
+      description: 'Simplified transaction lookup using barcode or qr code form receipt or by a series of other available filters. Issue refunds, research payment methods, find items, discounts, taxes or tips applied to sales.',
       imageSrc: transactions 
     }
   ];
