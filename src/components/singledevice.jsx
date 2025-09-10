@@ -80,7 +80,7 @@ function SingleDevicePage({ onNavigateBack }) {
       icon: <Layers className="h-5 w-5" />,
       title: 'Run on Card Reader',
       subtitle: 'Everything you need all in one unit',
-      description: 'Bring one piece of hardware to your next pop up , event, or offsite.',
+      description: 'Do it all from one unit. Scan, sell, process, print, refund',
       imageSrc: s1f2POS // Current s1f2POS image
     }
   ];
