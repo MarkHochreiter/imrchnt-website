@@ -131,15 +131,12 @@ function OffsitePage({ handleSignupClick, onNavigate }) {
                   <span>Item variants</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Explore Import Tools
-              </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Add Items Section */}
+      {/*  
       <section id="add-items" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -172,9 +169,6 @@ function OffsitePage({ handleSignupClick, onNavigate }) {
                   <span>Category organization</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Start Adding Items
-              </Button>
             </div>
             <div className="bg-gray-50 p-8 rounded-lg">
               <div className="aspect-video bg-white rounded-lg shadow-lg flex items-center justify-center">
@@ -184,7 +178,7 @@ function OffsitePage({ handleSignupClick, onNavigate }) {
           </div>
         </div>
       </section>
-
+*/}
       {/* Export Sales Section */}
       <section id="export-sales" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
