@@ -31,6 +31,7 @@ import {
 import { useState } from 'react';
 import products from '../assets/products.png';
 import details from '../assets/details.png';
+import filter from '../assets/filters.png';
 import search from '../assets/prod_search.mp4';
 
 
@@ -93,21 +94,23 @@ function InventoryPage({ onNavigateBack }) {
         videoSrc: search,
     description: "Blazing fast lookup",
     icon: <Search size={20} />,
-    position: { top: '20%', left: '20%' }
+    position: { top: '22%', left: '18%' }
   },
   {
     id: 2, 
     title: "Add Product",
     description: "Add Products manually or with an import",
     icon: <Flag size={20} />,
-    position: { top: '20%', left: '81%' }
+    position: { top: '22%', left: '81%' }
   },
   {
     id: 3, 
     title: "Filters",
+    hasImage: true,
+        imageSrc: filter,
     description: "Filter your lookup to find that needle in the haystack",
     icon: <Users size={20} />,
-    position: { top: '20%', left: '52%' }
+    position: { top: '22%', left: '54%' }
   },
   {
     id: 4,
