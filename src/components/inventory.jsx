@@ -31,6 +31,7 @@ import {
 import { useState } from 'react';
 import products from '../assets/products.png';
 import details from '../assets/details.png';
+import search from '../assets/prod_search.mp4';
 
 
 
@@ -88,6 +89,8 @@ function InventoryPage({ onNavigateBack }) {
   {
     id: 1, 
     title: "Search",
+            hasVideo: true,
+        videoSrc: search,
     description: "Blazing fast lookup",
     icon: <Search size={20} />,
     position: { top: '20%', left: '20%' }
