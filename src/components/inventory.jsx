@@ -90,49 +90,49 @@ function InventoryPage({ onNavigateBack }) {
     title: "Search",
     description: "Blazing fast lookup",
     icon: <Search size={20} />,
-    position: { top: '17%', left: '20%' }
+    position: { top: '20%', left: '20%' }
   },
   {
     id: 2, 
     title: "Add Product",
     description: "Add Products manually or with an import",
     icon: <Flag size={20} />,
-    position: { top: '17%', left: '81%' }
+    position: { top: '20%', left: '81%' }
   },
   {
     id: 3, 
     title: "Filters",
     description: "Filter your lookup to find that needle in the haystack",
     icon: <Users size={20} />,
-    position: { top: '17%', left: '52%' }
+    position: { top: '20%', left: '52%' }
   },
   {
     id: 4,
     title: "Product code",
     description: "ISBN / UPC parent level product number",
     icon: <Calculator size={20} />,
-    position: { top: '50%', left: '52%' }
+    position: { top: '60%', left: '52%' }
   },
   {
     id: 5,
     title: "SKU",
     description: "Stock keeping unit - makes a variant of an item unique",
     icon: <BookPlus size={20} />,
-    position: { top: '50%', left: '43%' }
+    position: { top: '60%', left: '43%' }
   },
   {
     id: 6,
     title: "Product Name",
     description: "",
     icon: <DollarSign size={20} />,
-    position: { top: '50%', left: '30%' }
+    position: { top: '60%', left: '30%' }
   },
   {
     id: 7,
     title: "Total Qunatity",
     description: "Stock level of the item across your organization",
     icon: <Trash2 size={20} />,
-    position: { top: '50%', left: '66%' }
+    position: { top: '60%', left: '66%' }
   }
   
     ] ,
