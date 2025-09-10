@@ -30,6 +30,7 @@ import {
   Book} from 'lucide-react';
 import { useState } from 'react';
 import products from '../assets/products.png';
+import details from '../assets/details.png';
 
 
 
@@ -68,7 +69,7 @@ function InventoryPage({ onNavigateBack }) {
       title: 'Inventory',
       subtitle: 'A new perspective on data',
       description: 'Visualize your data and track Key performance indicators (KPI) from any device',
-      imageSrc: analytics
+      imageSrc: products
     },
     {
       id: 'details',
@@ -77,7 +78,7 @@ function InventoryPage({ onNavigateBack }) {
       title: 'Item Details',
       subtitle: 'Simple transaction lookup',
       description: 'Simplified transaction lookup using barcode or qr code form receipt or by a series of other available filters. Issue refunds, research payment methods, find items, discounts, taxes or tips applied to sales.',
-      imageSrc: transactions 
+      imageSrc: details 
     }
   ];
 
@@ -446,16 +447,16 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
                         </div>
                       )}
 
-                      {/* Image for features that have it */}
-{feature.hasImage && feature.imageSrc && (
-  <div className="mb-3">
-    <img 
-      className="w-full h-full object-cover rounded-md"
-      src={feature.imageSrc} 
-      alt={feature.imageAlt || "Feature image"} 
-    />
-  </div>
-)}
+                    {/* Image for features that have it */}
+                    {feature.hasImage && feature.imageSrc && (
+                      <div className="mb-3">
+                        <img 
+                          className="w-full h-full object-cover rounded-md"
+                          src={feature.imageSrc} 
+                          alt={feature.imageAlt || "Feature image"} 
+                          />
+                        </div>
+                      )}
                       
                       <div className="text-sm text-gray-300">
                         {Array.isArray(feature.description) ? (
