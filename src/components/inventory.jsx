@@ -31,7 +31,7 @@ import {
 import { useState } from 'react';
 import products from '../assets/products.png';
 import details from '../assets/details.png';
-import filter from '../assets/filters.png';
+import filter from '../assets/filter.png';
 import search from '../assets/prod_search.mp4';
 
 
