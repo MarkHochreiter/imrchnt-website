@@ -219,9 +219,6 @@ function OffsitePage({ handleSignupClick, onNavigate }) {
                   <span>Automated reports</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Access Export Tools
-              </Button>
             </div>
           </div>
         </div>
