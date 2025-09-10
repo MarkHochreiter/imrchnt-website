@@ -67,8 +67,8 @@ function InventoryPage({ onNavigateBack }) {
       name: 'Products',
       icon: <Monitor className="h-5 w-5" />,
       title: 'Inventory',
-      subtitle: 'A new perspective on data',
-      description: 'Visualize your data and track Key performance indicators (KPI) from any device',
+      subtitle: 'Quickly find any item across your organizations inventories.',
+      description: 'Find a needle in a haystack in milliseconds',
       imageSrc: products
     },
     {
@@ -76,8 +76,8 @@ function InventoryPage({ onNavigateBack }) {
       name: 'Details',
       icon: <Tablet className="h-5 w-5" />,
       title: 'Item Details',
-      subtitle: 'Simple transaction lookup',
-      description: 'Simplified transaction lookup using barcode or qr code form receipt or by a series of other available filters. Issue refunds, research payment methods, find items, discounts, taxes or tips applied to sales.',
+      subtitle: 'Complete product insights, all in one place.',
+      description: 'See all variants, assign categories and attributes for simpler lookup and instore navigation',
       imageSrc: details 
     }
   ];
