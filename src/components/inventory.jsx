@@ -29,8 +29,8 @@ import {
   Tag,
   Book} from 'lucide-react';
 import { useState } from 'react';
-import analytics from '../assets/analytics.png';
-import transactions from '../assets/transactions.png';
+import products from '../assets/products.png';
+
 
 
 // A reusable Button component, matching the new aesthetic.
@@ -56,25 +56,25 @@ const Button = ({ children, className = '', variant = 'primary', ...props }) => 
 // Main component for the Reports Page
 function InventoryPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
-  const [selectedDeviceType, setSelectedDeviceType] = useState('analytics');
+  const [selectedDeviceType, setSelectedDeviceType] = useState('products');
 
   // ... (deviceTypes and deviceFeatures data remains the same)
   // Device type configurations
   const deviceTypes = [
     {
-      id: 'analytics',
-      name: 'Analytics',
+      id: 'products',
+      name: 'Products',
       icon: <Monitor className="h-5 w-5" />,
-      title: 'Data Visualization',
+      title: 'Inventory',
       subtitle: 'A new perspective on data',
       description: 'Visualize your data and track Key performance indicators (KPI) from any device',
       imageSrc: analytics
     },
     {
-      id: 'transactions',
-      name: 'Transactions',
+      id: 'details',
+      name: 'Details',
       icon: <Tablet className="h-5 w-5" />,
-      title: 'Transaction History',
+      title: 'Item Details',
       subtitle: 'Simple transaction lookup',
       description: 'Simplified transaction lookup using barcode or qr code form receipt or by a series of other available filters. Issue refunds, research payment methods, find items, discounts, taxes or tips applied to sales.',
       imageSrc: transactions 
@@ -83,7 +83,7 @@ function InventoryPage({ onNavigateBack }) {
 
   // Features for different device types
   const deviceFeatures = {
-    'analytics': [
+    'products': [
   {
     id: 1, // DONE
     title: "Search",
@@ -209,7 +209,7 @@ function InventoryPage({ onNavigateBack }) {
   }
   
     ] ,
-    'transactions': [
+    'details': [
   {
     id: 1, // DONE
     title: "Search",
