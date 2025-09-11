@@ -43,6 +43,7 @@ import categories from '../assets/categories.png';
 import category_detail from '../assets/category_details.png';
 import attributes from '../assets/attributes.png';
 import add_attribute from '../assets/add_attribute.png';
+import attribute_detail from '../assets/attribute_detail.png';
 
 
 
@@ -210,16 +211,16 @@ function InventoryPage({ onNavigateBack }) {
   'categories': [
   {
     id: 1, 
-    title: "TreeView",
-    description: "View Categories and their Parent/Child relationship using tree view",
+    title: "Tree View",
+    description: "Enable Tree View to view the Parent/Child relationship of your categories and sub categories.",
     icon: <Search size={20} />,
     position: { top: '21%', left: '19%' }
   },
   {
     id: 2, 
     title: "Add Category",
-    description: "Add custom categories to assign to groups of products",
-    icon: <Flag size={20} />,
+    description: "Add custom categories to assign to groups of products.",
+    icon: <PlusCircle size={20} />,
     position: { top: '21%', left: '81%' }
   },
   {
@@ -227,8 +228,8 @@ function InventoryPage({ onNavigateBack }) {
     title: "Customize Categories",
     hasImage: true,
         imageSrc: category_detail,
-    description: "Assign SubCategories and Attributes to Parent Categories",
-    icon: <PlusCircle size={20} />,
+    description: "Assign sub categories and attributes to parent categories.",
+    icon: <Flag size={20} />,
     position: { top: '40%', left: '50%' }
   }
     ] ,
@@ -236,55 +237,34 @@ function InventoryPage({ onNavigateBack }) {
   {
     id: 1, 
     title: "Search",
-            hasVideo: true,
-        videoSrc: search,
-    description: "Blazing fast lookup",
+    description: "Find attributes quickly",
     icon: <Search size={20} />,
     position: { top: '21%', left: '19%' }
   },
   {
     id: 2, 
-    title: "Add Product",
-    description: "Add Products manually or with an import",
-    icon: <Flag size={20} />,
+    title: "Add attribute",
+        hasImage: true,
+        imageSrc: add_attribute,
+    description: "Add attributes manually, choose attribute type",
+    icon: <PlusCircle size={20} />,
     position: { top: '21%', left: '81%' }
   },
   {
-    id: 3, 
-    title: "Filters",
-    hasImage: true,
-        imageSrc: filter,
-    description: "Filter your lookup to find that needle in the haystack",
-    icon: <Users size={20} />,
-    position: { top: '21%', left: '53%' }
+    id: 3,
+    title: "Product Name",
+    description: "",
+    icon: <BookMark size={20} />,
+    position: { top: '59%', left: '32%' }
   },
   {
     id: 4,
-    title: "Product code",
-    description: "ISBN / UPC parent level product number",
-    icon: <Calculator size={20} />,
-    position: { top: '60%', left: '53%' }
-  },
-  {
-    id: 5,
-    title: "SKU",
-    description: "Stock keeping unit - makes a variant of an item unique",
-    icon: <BookPlus size={20} />,
-    position: { top: '60%', left: '43%' }
-  },
-  {
-    id: 6,
-    title: "Product Name",
-    description: "",
-    icon: <DollarSign size={20} />,
-    position: { top: '60%', left: '28%' }
-  },
-  {
-    id: 7,
-    title: "Total Quantity",
-    description: "Stock level of the item across your organization",
-    icon: <Trash2 size={20} />,
-    position: { top: '60%', left: '66%' }
+    title: "Attribute Options",
+        hasImage: true,
+        imageSrc:attribute_detail
+    description: "Build out attribute options",
+    icon: <Layers size={20} />,
+    position: { top: '59%', left: '80%' }
   }
   
     ] 
