@@ -171,20 +171,20 @@ function InventoryPage({ onNavigateBack }) {
     title: "Edit / Delete",
     description: "Anywhere you see these icons you can edit or delete that item",
     icon: <Users size={20} />,
-    position: { top: '18%', left: '96%' }
+    position: { top: '20%', left: '96%' }
   },
   {
     id: 2,
     title: "Attributes",
     description: "Assign unique attributes to the item",
-    icon: <Calculator size={20} />,
+    icon: <List size={20} />,
     position: { top: '55%', left: '96%' }
   },
   {
     id: 3,
     title: "Product arrangement",
     description: "View where the variants of the item are located across your organization",
-    icon: <Wallet size={20} />,
+    icon: <Tag size={20} />,
     position: { top: '83%', left: '96%' }
   },
   {
@@ -192,7 +192,14 @@ function InventoryPage({ onNavigateBack }) {
     title: "General information",
     description: "Product level information",
     icon: <DollarSign size={20} />,
-    position: { top: '18%', left: '36%' }
+    position: { top: '20%', left: '36%' }
+  },
+        {
+    id: 5,
+    title: "Product Categories",
+    description: "Tag products into groups",
+    icon: <Tag size={20} />,
+    position: { top: '45%', left: '36%' }
   }
     ],
   'categories': [
