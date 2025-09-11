@@ -261,7 +261,7 @@ function InventoryPage({ onNavigateBack }) {
     id: 4,
     title: "Attribute Options",
         hasImage: true,
-        imageSrc:attribute_detail
+        imageSrc:attribute_detail,
     description: "Build out attribute options",
     icon: <Layers size={20} />,
     position: { top: '59%', left: '80%' }
