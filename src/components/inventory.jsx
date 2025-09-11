@@ -85,7 +85,7 @@ function InventoryPage({ onNavigateBack }) {
       subtitle: 'Complete product insights, all in one place.',
       description: 'See all variants, assign categories and attributes for simpler lookup and instore navigation',
       imageSrc: details 
-    }
+    },
         {
       id: 'categories',
       name: 'Categories',
@@ -94,7 +94,7 @@ function InventoryPage({ onNavigateBack }) {
       subtitle: 'Tag items.',
       description: 'Enhance your data by categorizing products with tags, enabling powerful filtering for analytics, precise marketing campaigns, and improved in-store performance.',
       imageSrc: categories 
-    }
+    },
           {
       id: 'attributes',
       name: 'Attributes',
