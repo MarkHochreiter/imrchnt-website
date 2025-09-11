@@ -3,6 +3,7 @@ import {
   Wifi, 
   CreditCard, 
   Smartphone, 
+  List,
   Zap, 
   Shield, 
   Printer, 
@@ -71,7 +72,7 @@ function InventoryPage({ onNavigateBack }) {
     {
       id: 'products',
       name: 'Inventory',
-      icon: <Monitor className="h-5 w-5" />,
+      icon: <BookPlus className="h-5 w-5" />,
       title: 'Fastest search in the industry',
       subtitle: 'Quickly find any item across your organizations inventories.',
       description: 'Find a needle in a haystack in milliseconds',
@@ -80,7 +81,7 @@ function InventoryPage({ onNavigateBack }) {
     {
       id: 'details',
       name: 'Details',
-      icon: <Tablet className="h-5 w-5" />,
+      icon: <List className="h-5 w-5" />,
       title: 'Item Details',
       subtitle: 'Complete product insights, all in one place.',
       description: 'See all variants, assign categories and attributes for simpler lookup and instore navigation',
@@ -89,7 +90,7 @@ function InventoryPage({ onNavigateBack }) {
         {
       id: 'categories',
       name: 'Categories',
-      icon: <Tablet className="h-5 w-5" />,
+      icon: <Tag className="h-5 w-5" />,
       title: 'Organize your inventory like never before',
       subtitle: 'Tag items.',
       description: 'Enhance your data by categorizing products with tags, enabling powerful filtering for analytics, precise marketing campaigns, and improved in-store performance.',
@@ -98,7 +99,7 @@ function InventoryPage({ onNavigateBack }) {
           {
       id: 'attributes',
       name: 'Attributes',
-      icon: <Tablet className="h-5 w-5" />,
+      icon: <Layers className="h-5 w-5" />,
       title: 'Industry specific and customizable item attributes',
       subtitle: 'Add detail.',
       description: 'Uncover the full story behind an item',
