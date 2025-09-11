@@ -210,58 +210,27 @@ function InventoryPage({ onNavigateBack }) {
   'categories': [
   {
     id: 1, 
-    title: "Search",
-            hasVideo: true,
-        videoSrc: search,
-    description: "Blazing fast lookup",
+    title: "TreeView",
+    description: "View Categories and their Parent/Child relationship using tree view",
     icon: <Search size={20} />,
     position: { top: '21%', left: '19%' }
   },
   {
     id: 2, 
-    title: "Add Product",
-    description: "Add Products manually or with an import",
+    title: "Add Category",
+    description: "Add custom categories to assign to groups of products",
     icon: <Flag size={20} />,
     position: { top: '21%', left: '81%' }
   },
   {
     id: 3, 
-    title: "Filters",
+    title: "Customize Categories",
     hasImage: true,
-        imageSrc: filter,
-    description: "Filter your lookup to find that needle in the haystack",
-    icon: <Users size={20} />,
-    position: { top: '21%', left: '53%' }
-  },
-  {
-    id: 4,
-    title: "Product code",
-    description: "ISBN / UPC parent level product number",
-    icon: <Calculator size={20} />,
-    position: { top: '60%', left: '53%' }
-  },
-  {
-    id: 5,
-    title: "SKU",
-    description: "Stock keeping unit - makes a variant of an item unique",
-    icon: <BookPlus size={20} />,
-    position: { top: '60%', left: '43%' }
-  },
-  {
-    id: 6,
-    title: "Product Name",
-    description: "",
-    icon: <DollarSign size={20} />,
-    position: { top: '60%', left: '28%' }
-  },
-  {
-    id: 7,
-    title: "Total Quantity",
-    description: "Stock level of the item across your organization",
-    icon: <Trash2 size={20} />,
-    position: { top: '60%', left: '66%' }
+        imageSrc: category_detail,
+    description: "Assign SubCategories and Attributes to Parent Categories",
+    icon: <PlusCircle size={20} />,
+    position: { top: '40%', left: '50%' }
   }
-  
     ] ,
 'attributes': [
   {
