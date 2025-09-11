@@ -66,9 +66,9 @@ function InventoryPage({ onNavigateBack }) {
   const deviceTypes = [
     {
       id: 'products',
-      name: 'Products',
+      name: 'Inventory',
       icon: <Monitor className="h-5 w-5" />,
-      title: 'Inventory',
+      title: 'Fastest search in the industry',
       subtitle: 'Quickly find any item across your organizations inventories.',
       description: 'Find a needle in a haystack in milliseconds',
       imageSrc: products
@@ -281,7 +281,7 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
         <section className="py-10 mb-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-             Choose your POS platform
+             Iventory control center
             </h1>
           </div>
         </section>
