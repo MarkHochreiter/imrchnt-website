@@ -33,6 +33,10 @@ import products from '../assets/products.png';
 import details from '../assets/details.png';
 import filter from '../assets/filter.png';
 import search from '../assets/prod_search.mp4';
+import categories from '../assets/categories.png';
+import category_detail from '../assets/category_details.png';
+import attributes from '../assets/attributes.png';
+import add_attribute from '../assets/add_attribute.png';
 
 
 
@@ -81,6 +85,24 @@ function InventoryPage({ onNavigateBack }) {
       subtitle: 'Complete product insights, all in one place.',
       description: 'See all variants, assign categories and attributes for simpler lookup and instore navigation',
       imageSrc: details 
+    }
+        {
+      id: 'categories',
+      name: 'Categories',
+      icon: <Tablet className="h-5 w-5" />,
+      title: 'Organize your inventory like never before',
+      subtitle: 'Tag items.',
+      description: 'Enhance your data by categorizing products with tags, enabling powerful filtering for analytics, precise marketing campaigns, and improved in-store performance.',
+      imageSrc: categories 
+    }
+          {
+      id: 'attributes',
+      name: 'Attributes',
+      icon: <Tablet className="h-5 w-5" />,
+      title: 'Industry specific and customizable item attributes',
+      subtitle: 'Add detail.',
+      description: 'Uncover the full story behind an item',
+      imageSrc: attributes 
     }
   ];
 
@@ -266,7 +288,119 @@ function InventoryPage({ onNavigateBack }) {
     icon: <Trash2 size={20} />,
     position: { top: '41%', left: '64%' }
       }
-    ]
+    ],
+  'categories': [
+  {
+    id: 1, 
+    title: "Search",
+            hasVideo: true,
+        videoSrc: search,
+    description: "Blazing fast lookup",
+    icon: <Search size={20} />,
+    position: { top: '21%', left: '19%' }
+  },
+  {
+    id: 2, 
+    title: "Add Product",
+    description: "Add Products manually or with an import",
+    icon: <Flag size={20} />,
+    position: { top: '21%', left: '81%' }
+  },
+  {
+    id: 3, 
+    title: "Filters",
+    hasImage: true,
+        imageSrc: filter,
+    description: "Filter your lookup to find that needle in the haystack",
+    icon: <Users size={20} />,
+    position: { top: '21%', left: '53%' }
+  },
+  {
+    id: 4,
+    title: "Product code",
+    description: "ISBN / UPC parent level product number",
+    icon: <Calculator size={20} />,
+    position: { top: '60%', left: '53%' }
+  },
+  {
+    id: 5,
+    title: "SKU",
+    description: "Stock keeping unit - makes a variant of an item unique",
+    icon: <BookPlus size={20} />,
+    position: { top: '60%', left: '43%' }
+  },
+  {
+    id: 6,
+    title: "Product Name",
+    description: "",
+    icon: <DollarSign size={20} />,
+    position: { top: '60%', left: '28%' }
+  },
+  {
+    id: 7,
+    title: "Total Quantity",
+    description: "Stock level of the item across your organization",
+    icon: <Trash2 size={20} />,
+    position: { top: '60%', left: '66%' }
+  }
+  
+    ] ,
+'attributes': [
+  {
+    id: 1, 
+    title: "Search",
+            hasVideo: true,
+        videoSrc: search,
+    description: "Blazing fast lookup",
+    icon: <Search size={20} />,
+    position: { top: '21%', left: '19%' }
+  },
+  {
+    id: 2, 
+    title: "Add Product",
+    description: "Add Products manually or with an import",
+    icon: <Flag size={20} />,
+    position: { top: '21%', left: '81%' }
+  },
+  {
+    id: 3, 
+    title: "Filters",
+    hasImage: true,
+        imageSrc: filter,
+    description: "Filter your lookup to find that needle in the haystack",
+    icon: <Users size={20} />,
+    position: { top: '21%', left: '53%' }
+  },
+  {
+    id: 4,
+    title: "Product code",
+    description: "ISBN / UPC parent level product number",
+    icon: <Calculator size={20} />,
+    position: { top: '60%', left: '53%' }
+  },
+  {
+    id: 5,
+    title: "SKU",
+    description: "Stock keeping unit - makes a variant of an item unique",
+    icon: <BookPlus size={20} />,
+    position: { top: '60%', left: '43%' }
+  },
+  {
+    id: 6,
+    title: "Product Name",
+    description: "",
+    icon: <DollarSign size={20} />,
+    position: { top: '60%', left: '28%' }
+  },
+  {
+    id: 7,
+    title: "Total Quantity",
+    description: "Stock level of the item across your organization",
+    icon: <Trash2 size={20} />,
+    position: { top: '60%', left: '66%' }
+  }
+  
+    ] 
   };
 
 const currentDevice = deviceTypes.find(device => device.id === selectedDeviceType);
