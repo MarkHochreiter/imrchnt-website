@@ -254,7 +254,7 @@ function InventoryPage({ onNavigateBack }) {
     id: 3,
     title: "Product Name",
     description: "",
-    icon: <BookMark size={20} />,
+    icon: <Bookmark size={20} />,
     position: { top: '59%', left: '32%' }
   },
   {
@@ -282,7 +282,7 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
         <section className="py-10 mb-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-             Iventory control center
+             Inventory control center
             </h1>
           </div>
         </section>
