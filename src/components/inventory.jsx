@@ -27,6 +27,7 @@ import {
   BookPlus,
   Flag,
   Wallet,
+  Eraser,
   Tag,
   Book} from 'lucide-react';
 import { useState } from 'react';
@@ -170,7 +171,7 @@ function InventoryPage({ onNavigateBack }) {
     id: 1,  
     title: "Edit / Delete",
     description: "Anywhere you see these icons you can edit or delete that item",
-    icon: <Users size={20} />,
+    icon: <Eraser size={20} />,
     position: { top: '20%', left: '96%' }
   },
   {
@@ -184,14 +185,14 @@ function InventoryPage({ onNavigateBack }) {
     id: 3,
     title: "Product arrangement",
     description: "View where the variants of the item are located across your organization",
-    icon: <Tag size={20} />,
+    icon: <Home size={20} />,
     position: { top: '83%', left: '96%' }
   },
   {
     id: 4,
     title: "General information",
     description: "Product level information",
-    icon: <DollarSign size={20} />,
+    icon: <Search size={20} />,
     position: { top: '20%', left: '36%' }
   },
         {
