@@ -111,42 +111,42 @@ function AdminPage({ onNavigateBack }) {
       {
         id: 1,
         title: "Add New Users",
-        description: "Create new user accounts with appropriate permissions and store assignments",
+        description: "Create new user accounts with appropriate permissions and store assignments. Set up user profiles with contact information, role assignments, and access levels tailored to their responsibilities.",
         icon: <Users size={20} />,
         position: { top: '20%', left: '85%' }
       },
       {
         id: 2,
         title: "Update User Info",
-        description: "Modify existing user details, contact information, and profile settings",
+        description: "Modify existing user details, contact information, and profile settings. Update user permissions, change store assignments, and manage account status with full audit trail.",
         icon: <Pencil size={20} />,
         position: { top: '41%', left: '30%' }
       },
       {
         id: 3,
         title: "Delete Users",
-        description: "Remove user accounts and revoke system access when needed",
+        description: "Remove user accounts and revoke system access when needed. Safely deactivate accounts while preserving transaction history and maintaining data integrity for compliance.",
         icon: <Trash2 size={20} />,
         position: { top: '95%', left: '50%' }
       },
       {
         id: 4,
         title: "Store Assignments",
-        description: "Assign users to specific store locations and manage multi-store access",
+        description: "Assign users to specific store locations and manage multi-store access. Configure which stores each user can access and set location-specific permissions and responsibilities.",
         icon: <Store size={20} />,
         position: { top: '41%', left: '75%' }
       },
       {
         id: 5,
         title: "Security Roles",
-        description: "Configure user permissions and access levels based on job responsibilities",
+        description: "Configure user permissions and access levels based on job responsibilities. Create custom roles with granular permissions for different functions like sales, inventory, reporting, and administration.",
         icon: <Lock size={20} />,
         position: { top: '60%', left: '38%' }
       },
       {
         id: 6,
         title: "Two Factor Authentication",
-        description: "Enable 2FA for Admin and Manager accounts for enhanced security",
+        description: "Enable 2FA for Admin and Manager accounts for enhanced security. Implement SMS, email, or authenticator app-based two-factor authentication to protect sensitive administrative functions.",
         icon: <Shield size={20} />,
         position: { top: '95%', left: '70%' }
       }
@@ -155,28 +155,28 @@ function AdminPage({ onNavigateBack }) {
       {
         id: 1,
         title: "Add Stores",
-        description: "Configure and manage multiple store locations from one dashboard",
+        description: "Configure and manage multiple store locations from one dashboard. Set up new locations with unique settings, tax configurations, and operational parameters tailored to each store's needs.",
         icon: <Plus size={20} />,
          position: { top: '20%', left: '85%' }
       },
       {
         id: 2,
         title: "Store Configuration",
-        description: "Set up store-specific settings, tax rates, and operational parameters",
+        description: "Set up store-specific settings, tax rates, and operational parameters. Configure payment methods, receipt templates, and business rules that apply to each individual location.",
         icon: <Store size={20} />,
        position: { top: '41%', left: '30%' }
       },
       {
         id: 3,
         title: "Inventory",
-        description: "Manage Inventory by Store",
+        description: "Manage Inventory by Store with location-specific stock levels and transfer capabilities. Track inventory movement between locations and set up automated reordering rules per store.",
         icon: <Book size={20} />,
        position: { top: '41%', left: '95%' }
       },
       {
         id: 4,
         title: "Users",
-        description: "Assign users to one or many stores",
+        description: "Assign users to one or many stores with flexible access controls. Manage which employees can work at which locations and set up cross-store permissions for managers and administrators.",
         icon: <Users size={20} />,
        position: { top: '41%', left: '69%' }
       }
@@ -185,42 +185,42 @@ function AdminPage({ onNavigateBack }) {
       {
         id: 1,
         title: "Payout Automation",
-        description: "Set up your automated payout schedule.",
+        description: "Set up your automated payout schedule with flexible timing options. Configure daily, weekly, or custom payout schedules to automatically transfer funds to your bank accounts.",
         icon: <Zap size={20} />,
          position: { top: '37%', left: '25%' }
       },
       {
         id: 2,
         title: "Instant Transfers",
-        description: "Transfer money instantly to your bank accounts with real-time processing",
+        description: "Transfer money instantly to your bank accounts with real-time processing. Access your funds immediately with instant transfer capabilities for improved cash flow management.",
         icon: <Wallet size={20} />,
         position: { top: '37%', left: '88%' }
       },
       {
         id: 3,
         title: "Terminals",
-        description: "Manage Card Readers, activate and customize tips on individual units",
+        description: "Manage Card Readers, activate and customize tips on individual units. Configure terminal settings, update software, and customize tip prompts for each payment device.",
         icon: <BarChart3 size={20} />,
         position: { top: '13%', left: '43%' }
       },
       {
         id: 4,
         title: "Reporting",
-        description: "Export Payout Details Reports to reconcile Payouts to Payments",
+        description: "Export Payout Details Reports to reconcile Payouts to Payments. Generate comprehensive reports for accounting, tax preparation, and financial analysis with detailed transaction data.",
         icon: <CreditCard size={20} />,
         position: { top: '13%', left: '75%' }
       },
       {
         id: 5,
         title: "Bank Account Setup",
-        description: "Add and manage bank accounts for payout destinations",
+        description: "Add and manage bank accounts for payout destinations. Securely store multiple bank account details and set up routing preferences for different types of transactions.",
         icon: <DollarSign size={20} />,
          position: { top: '13%', left: '58%' }
       },
       {
         id: 6,
         title: "Chargeback Disputes",
-        description: "Challenge chargeback disputes and manage dispute resolution process",
+        description: "Challenge chargeback disputes and manage dispute resolution process. Upload evidence, track dispute status, and manage the entire chargeback lifecycle with integrated tools.",
         icon: <Undo size={20} />,
          position: { top: '13%', left: '91%' }
       }
@@ -229,14 +229,14 @@ function AdminPage({ onNavigateBack }) {
       {
         id: 1,
         title: "Simple Tenders",
-        description: "Create Simple Tenders for sales made outside of the platform",
+        description: "Create Simple Tenders for sales made outside of the platform. Set up cash, check, and other payment methods for transactions that don't go through the integrated payment system.",
         icon: <DollarSign size={20} />,
         position: { top: '15%', left: '75%' }
       },
       {
         id: 2,
         title: "Registers",
-        description: "Manage/Track Registers",
+        description: "Manage and track Registers across all locations. Configure register settings, monitor performance, and manage cash drawer operations with comprehensive tracking and reporting.",
         icon: <Eye size={20} />,
        position: { top: '15%', left: '30%' }
       }
@@ -245,6 +245,12 @@ function AdminPage({ onNavigateBack }) {
 
   const currentDevice = deviceTypes.find(device => device.id === selectedDeviceType);
   const currentFeatures = deviceFeatures[selectedDeviceType] || [];
+
+  // Function to get appropriate tooltip width based on content
+  const getTooltipWidth = (feature) => {
+    // For admin features, use consistent medium sizing since they're mostly text
+    return 'w-72 sm:w-80 md:w-96';
+  };
 
 return (
   <div className="min-h-screen bg-white">
@@ -293,48 +299,81 @@ return (
       </div>
 
       {/* Interactive Feature Display */}
-      <div className="relative bg-gray-50 rounded-2xl p-8 mb-16">
-        <div className="flex justify-center mb-8">
-          <div className="relative w-full max-w-4xl">
-            {/* Admin Interface Content */}
-            <div className="relative h-auto bg-gradient-to-br from-gray-50 to-white">
-              {/* Display current section image if available */}
-              {currentDevice?.imageSrc && (
-                <img 
-                  src={currentDevice.imageSrc} 
-                  alt={currentDevice.title}
-                  className="w-full object-cover"
-                />
-              )}
-              
-              {/* Interactive Feature Points */}
-              {currentFeatures.map((feature) => (
-                <div
-                  key={feature.id}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-                  style={{
-                    top: feature.position.top,
-                    left: feature.position.left,
+      <div className="space-y-16">
+        <div className="flex justify-center relative max-w-4xl mx-auto">
+          <div className="bg-gray-50 p-8 rounded-2xl shadow-sm w-full">
+            {/* Display current section image if available */}
+            {currentDevice?.imageSrc && (
+              <img 
+                src={currentDevice.imageSrc} 
+                alt={currentDevice.title}
+                className="w-full h-auto object-contain mx-auto max-h-[600px]"
+              />
+            )}
+          </div>
+          
+          {/* Interactive Feature Points - Using same style as inventory page */}
+          {currentFeatures.map((feature) => (
+            <div
+              key={feature.id}
+              className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group ${hoveredFeature === feature.id ? 'z-30' : 'z-10'}`}
+              style={{ top: feature.position.top, left: feature.position.left }}
+              onMouseEnter={() => setHoveredFeature(feature.id)}
+              onMouseLeave={() => setHoveredFeature(null)}
+            >
+              <div className="w-4 h-4 bg-[#f08e80] rounded-full transition-transform duration-300 group-hover:scale-150" />
+              <div className="absolute w-8 h-8 bg-[#f08e80]/20 rounded-full -top-2 -left-2 animate-ping-slow group-hover:animate-none" />
+
+              {/* Tooltip - Auto-sizing with stable positioning */}
+              {hoveredFeature === feature.id && (
+                <div 
+                  className={`absolute z-50 bg-gray-900 text-white p-4 rounded-lg shadow-xl ${getTooltipWidth(feature)} max-w-[90vw]`} 
+                  style={{ 
+                    bottom: '150%', 
+                    left: '50%', 
+                    transform: 'translateX(-50%)'
                   }}
-                  onMouseEnter={() => setHoveredFeature(feature.id)}
-                  onMouseLeave={() => setHoveredFeature(null)}
                 >
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
-                    hoveredFeature === feature.id 
-                      ? 'bg-[#f08e80] text-white scale-125 shadow-lg' 
-                      : 'bg-white text-[#f08e80] border-2 border-[#f08e80] hover:bg-[#f08e80] hover:text-white'
-                  }`}>
-                    {feature.icon}
+                  <div className="flex items-center mb-3">
+                    <div className="text-[#f08e80] mr-2 flex-shrink-0">{feature.icon}</div>
+                    <h4 className="font-bold text-sm sm:text-base">{feature.title}</h4>
                   </div>
                   
-                  {/* Feature Tooltip */}
-                  {hoveredFeature === feature.id && (
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-sm rounded-lg p-3 shadow-xl z-10">
-                      <div className="font-semibold mb-1">{feature.title}</div>
-                      <div className="text-gray-300">{feature.description}</div>
-                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-                    </div>
+                  {feature.description && (
+                    <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                      {feature.description}
+                    </p>
                   )}
+                  
+                  {/* Tooltip arrow */}
+                  <div className="absolute w-3 h-3 bg-gray-900 transform rotate-45 -bottom-1.5 left-1/2 -translate-x-1/2" />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Core Features Section */}
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center mb-6">
+              <div className="flex-shrink-0 w-16 h-16 flex items-center justify-center bg-[#f08e80]/10 text-[#f08e80] rounded-xl mr-4">{currentDevice?.icon}</div>
+              <div>
+                <h2 className="text-4xl font-bold text-gray-800">Core Features</h2>
+                <p className="text-gray-500 mt-2 text-lg">{currentDevice?.subtitle}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {currentFeatures.map(feature => (
+                <div key={feature.id} className="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-[#f08e80]/10 text-[#f08e80] rounded-lg">{feature.icon}</div>
+                    <div className="ml-4">
+                      <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
+                      <p className="text-gray-600">{feature.description}</p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -342,37 +381,15 @@ return (
         </div>
       </div>
 
-      {/* Feature List */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-        {currentFeatures.map((feature) => (
-          <div 
-            key={feature.id}
-            className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow cursor-pointer"
-            onMouseEnter={() => setHoveredFeature(feature.id)}
-            onMouseLeave={() => setHoveredFeature(null)}
-          >
-            <div className="flex items-center mb-4">
-              <div className="bg-[#f08e80]/10 p-2 rounded-lg mr-3">
-                <div className="text-[#f08e80]">
-                  {feature.icon}
-                </div>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900">{feature.title}</h3>
-            </div>
-            <p className="text-gray-600">{feature.description}</p>
-          </div>
-        ))}
-      </div>
-
       {/* Action Buttons */}
-      <div className="text-center">
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white px-8 py-3">
-            Access {currentDevice?.name} Management
-          </Button>
-          <Button variant="secondary" className="px-8 py-3">
-            View Documentation
-          </Button>
+      <div className="mt-20 text-center">
+        <div className="bg-gray-50 rounded-2xl p-8 md:p-12">
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Ready to Get Started with {currentDevice?.name}?</h3>
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">Experience the power of our administrative tools. Access comprehensive management features designed for efficiency and control.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button className="px-8 py-3 text-base">Access {currentDevice?.name} Management</Button>
+            <Button variant="secondary" className="px-8 py-3 text-base">View Documentation</Button>
+          </div>
         </div>
       </div>
     </main>
@@ -382,4 +399,3 @@ return (
 }
 
 export default AdminPage;
-
