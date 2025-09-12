@@ -345,7 +345,6 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
     onMouseEnter={() => setHoveredFeature(feature.id)}
     onMouseLeave={() => setHoveredFeature(null)}
   >
-    {/* Point */}
     <div className="w-4 h-4 bg-[#f08e80] rounded-full transition-transform duration-300 group-hover:scale-150" />
     <div className="absolute w-8 h-8 bg-[#f08e80]/20 rounded-full -top-2 -left-2 animate-ping-slow group-hover:animate-none" />
 
@@ -361,7 +360,7 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
           transform: 'translateX(-50%)',
         }}
       >
-        {/* Title + Icon */}
+        {/* Title and Icon */}
         <div className="flex items-center mb-2">
           <div className="text-[#f08e80] mr-2">{feature.icon}</div>
           <h4 className="font-bold">{feature.title}</h4>
@@ -415,6 +414,7 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
     )}
   </div>
 ))}
+
 
           {/* Core Features Below Image */}
           <div className="max-w-6xl mx-auto">
