@@ -108,7 +108,7 @@ function InventoryPage({ onNavigateBack }) {
       icon: <Layers className="h-5 w-5" />,
       title: 'Industry specific and customizable item attributes',
       subtitle: 'Add detail.',
-      description: 'Uncover the full story behind an item',
+      description: 'Gain insight into what makes every individual item unique.',
       imageSrc: attributes 
     }
   ];
@@ -244,7 +244,7 @@ function InventoryPage({ onNavigateBack }) {
   {
     id: 2, 
     title: "Add attribute",
-        hasImage: true,
+        hasImage1: true,
         imageSrc: add_attribute,
     description: "Add attributes manually, choose attribute type",
     icon: <PlusCircle size={20} />,
@@ -260,7 +260,7 @@ function InventoryPage({ onNavigateBack }) {
   {
     id: 4,
     title: "Attribute Options",
-        hasImage: true,
+        hasImage1: true,
         imageSrc:attribute_detail,
     description: "Build out attribute options",
     icon: <Layers size={20} />,
@@ -382,7 +382,18 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
 
                     {/* Image for features that have it */}
                     {feature.hasImage && feature.imageSrc && (
-                      <div className="mb-3">
+                      <div className="mb-3>>
+                        <img 
+                          className="w-full h-full object-cover rounded-md"
+                          src={feature.imageSrc} 
+                          alt={feature.imageAlt || "Feature image"} 
+                          />
+                        </div>
+                      )}
+
+                    {/* Image for features that have it */}
+                    {feature.hasImage1 && feature.imageSrc && (
+                      <div className="mb-3 w-80 h-60">>
                         <img 
                           className="w-full h-full object-cover rounded-md"
                           src={feature.imageSrc} 
