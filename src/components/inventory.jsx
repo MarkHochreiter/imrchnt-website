@@ -4,7 +4,7 @@ import {
     Percent, PlusCircle, Printer, Scan, Search, Shield, Shredder, Smartphone, Tablet, Tag,
     Trash2, Users, Wallet, Wifi, Zap
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import products from '../assets/products.png';
 import details from '../assets/details.png';
 import filter from '../assets/filter.png';
@@ -30,6 +30,127 @@ const Button = ({ children, className = '', variant = 'primary', ...props }) => 
   );
 };
 
+// Custom hook for tooltip positioning and sizing
+const useTooltipDimensions = (isVisible, hasMedia) => {
+  const tooltipRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (isVisible && tooltipRef.current) {
+      const tooltip = tooltipRef.current;
+      const rect = tooltip.getBoundingClientRect();
+      
+      // Get the actual content dimensions
+      setDimensions({
+        width: rect.width,
+        height: rect.height
+      });
+
+      // Calculate optimal position to keep tooltip in viewport
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      
+      let x = -rect.width / 2; // Center by default
+      let y = -rect.height - 20; // Above the point by default
+
+      // Adjust horizontal position if tooltip would go off-screen
+      const tooltipLeft = rect.left + x;
+      const tooltipRight = tooltipLeft + rect.width;
+      
+      if (tooltipLeft < 10) {
+        x = -rect.left + 10; // Align to left edge with padding
+      } else if (tooltipRight > viewportWidth - 10) {
+        x = viewportWidth - rect.left - rect.width - 10; // Align to right edge with padding
+      }
+
+      // Adjust vertical position if tooltip would go off-screen
+      if (rect.top + y < 10) {
+        y = 30; // Show below the point instead
+      }
+
+      setPosition({ x, y });
+    }
+  }, [isVisible, hasMedia]);
+
+  return { tooltipRef, dimensions, position };
+};
+
+// Enhanced Tooltip component with auto-sizing
+const EnhancedTooltip = ({ feature, isVisible, children }) => {
+  const hasMedia = feature.hasImage || feature.hasVideo;
+  const { tooltipRef, position } = useTooltipDimensions(isVisible, hasMedia);
+
+  if (!isVisible) return null;
+
+  // Determine tooltip width based on content
+  const getTooltipWidth = () => {
+    if (feature.hasImage || feature.hasVideo) {
+      // For media content, use responsive sizing
+      return 'w-72 sm:w-80 md:w-96 lg:w-[400px] xl:w-[500px]';
+    }
+    // For text-only tooltips, use a reasonable fixed width
+    return 'w-64 sm:w-72';
+  };
+
+  const getMediaHeight = () => {
+    if (feature.hasImage || feature.hasVideo) {
+      return 'h-48 sm:h-52 md:h-60 lg:h-72 xl:h-80';
+    }
+    return '';
+  };
+
+  return (
+    <div 
+      ref={tooltipRef}
+      className={`absolute z-50 bg-gray-900 text-white p-4 rounded-lg shadow-xl ${getTooltipWidth()} max-w-[90vw]`}
+      style={{ 
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        bottom: '150%', 
+        left: '50%'
+      }}
+    >
+      <div className="flex items-center mb-3">
+        <div className="text-[#f08e80] mr-2 flex-shrink-0">{feature.icon}</div>
+        <h4 className="font-bold text-sm sm:text-base">{feature.title}</h4>
+      </div>
+      
+      {feature.hasVideo && feature.videoSrc && (
+        <div className={`${getMediaHeight()} mb-3 rounded-md overflow-hidden`}>
+          <video 
+            className="w-full h-full object-cover" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+          >
+            <source src={feature.videoSrc} type="video/mp4" />
+          </video>
+        </div>
+      )}
+      
+      {feature.hasImage && feature.imageSrc && (
+        <div className={`${getMediaHeight()} mb-3 rounded-md overflow-hidden`}>
+          <img 
+            src={feature.imageSrc} 
+            alt={feature.title} 
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+      
+      {feature.description && (
+        <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+          {feature.description}
+        </p>
+      )}
+      
+      {/* Tooltip arrow */}
+      <div className="absolute w-3 h-3 bg-gray-900 transform rotate-45 -bottom-1.5 left-1/2 -translate-x-1/2" />
+    </div>
+  );
+};
+
 // Main Inventory Page
 function InventoryPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
@@ -44,31 +165,31 @@ function InventoryPage({ onNavigateBack }) {
 
   const deviceFeatures = {
     products: [
-      { id: 1, title: "Search", hasVideo: true, videoSrc: search, description: "Blazing fast lookup", icon: <Search size={20} />, position: { top: '21%', left: '19%' } },
-      { id: 2, title: "Add Product", description: "Add Products manually or with an import", icon: <BookPlus size={20} />, position: { top: '21%', left: '81%' } },
-      { id: 3, title: "Filters", hasImage: true, imageSrc: filter, description: "Filter your lookup to find that needle in the haystack", icon: <Layers size={20} />, position: { top: '21%', left: '53%' } },
-      { id: 4, title: "Product code", description: "ISBN / UPC parent level product number", icon: <Barcode size={20} />, position: { top: '60%', left: '53%' } },
-      { id: 5, title: "SKU", description: "Stock keeping unit - makes a variant of an item unique", icon: <Scan size={20} />, position: { top: '60%', left: '43%' } },
-      { id: 6, title: "Product Name", description: "", icon: <Bookmark size={20} />, position: { top: '60%', left: '28%' } },
-      { id: 7, title: "Total Quantity", description: "Stock level of the item across your organization", icon: <Calculator size={20} />, position: { top: '60%', left: '66%' } }
+      { id: 1, title: "Search", hasVideo: true, videoSrc: search, description: "Blazing fast lookup with intelligent search algorithms that can find products by name, SKU, barcode, or any attribute in milliseconds.", icon: <Search size={20} />, position: { top: '21%', left: '19%' } },
+      { id: 2, title: "Add Product", description: "Add Products manually through our intuitive interface or bulk import using CSV/Excel files with data validation and error checking.", icon: <BookPlus size={20} />, position: { top: '21%', left: '81%' } },
+      { id: 3, title: "Filters", hasImage: true, imageSrc: filter, description: "Advanced filtering system with multiple criteria including categories, attributes, stock levels, and custom fields to find exactly what you need.", icon: <Layers size={20} />, position: { top: '21%', left: '53%' } },
+      { id: 4, title: "Product code", description: "ISBN / UPC parent level product number for universal product identification and inventory tracking across multiple systems.", icon: <Barcode size={20} />, position: { top: '60%', left: '53%' } },
+      { id: 5, title: "SKU", description: "Stock keeping unit - makes a variant of an item unique with customizable formatting and automatic generation options.", icon: <Scan size={20} />, position: { top: '60%', left: '43%' } },
+      { id: 6, title: "Product Name", description: "Descriptive product names with support for multiple languages and automatic translation capabilities.", icon: <Bookmark size={20} />, position: { top: '60%', left: '28%' } },
+      { id: 7, title: "Total Quantity", description: "Real-time stock level tracking across all locations with automatic updates and low-stock alerts.", icon: <Calculator size={20} />, position: { top: '60%', left: '66%' } }
     ],
     details: [
-      { id: 1, title: "Edit / Delete", description: "Anywhere you see these icons you can edit or delete that item", icon: <Eraser size={20} />, position: { top: '20%', left: '96%' } },
-      { id: 2, title: "Attributes", description: "Assign unique attributes to the item", icon: <List size={20} />, position: { top: '55%', left: '96%' } },
-      { id: 3, title: "Product arrangement", description: "View where the variants of the item are located across your organization", icon: <Home size={20} />, position: { top: '83%', left: '96%' } },
-      { id: 4, title: "General information", description: "Product level information", icon: <Search size={20} />, position: { top: '20%', left: '36%' } },
-      { id: 5, title: "Product Categories", description: "Tag products into groups", icon: <Tag size={20} />, position: { top: '45%', left: '36%' } }
+      { id: 1, title: "Edit / Delete", description: "Anywhere you see these icons you can edit or delete that item with full audit trail and permission controls.", icon: <Eraser size={20} />, position: { top: '20%', left: '96%' } },
+      { id: 2, title: "Attributes", description: "Assign unique attributes to items including size, color, material, and custom fields specific to your industry.", icon: <List size={20} />, position: { top: '55%', left: '96%' } },
+      { id: 3, title: "Product arrangement", description: "View where the variants of the item are located across your organization with real-time location tracking.", icon: <Home size={20} />, position: { top: '83%', left: '96%' } },
+      { id: 4, title: "General information", description: "Comprehensive product level information including descriptions, specifications, and metadata.", icon: <Search size={20} />, position: { top: '20%', left: '36%' } },
+      { id: 5, title: "Product Categories", description: "Organize products into hierarchical categories with unlimited nesting and cross-category assignments.", icon: <Tag size={20} />, position: { top: '45%', left: '36%' } }
     ],
     categories: [
-      { id: 1, title: "Tree View", description: "Enable Tree View to view the Parent/Child relationship of your categories and sub categories.", icon: <Search size={20} />, position: { top: '21%', left: '19%' } },
-      { id: 2, title: "Add Category", description: "Add custom categories to assign to groups of products.", icon: <PlusCircle size={20} />, position: { top: '21%', left: '81%' } },
-      { id: 3, title: "Customize Categories", hasImage: true, imageSrc: category_detail, description: "Assign sub categories and attributes to parent categories.", icon: <Flag size={20} />, position: { top: '40%', left: '50%' } }
+      { id: 1, title: "Tree View", description: "Enable Tree View to view the Parent/Child relationship of your categories and sub categories with drag-and-drop reorganization.", icon: <Search size={20} />, position: { top: '21%', left: '19%' } },
+      { id: 2, title: "Add Category", description: "Add custom categories to assign to groups of products with automatic attribute inheritance and bulk assignment tools.", icon: <PlusCircle size={20} />, position: { top: '21%', left: '81%' } },
+      { id: 3, title: "Customize Categories", hasImage: true, imageSrc: category_detail, description: "Assign sub categories and attributes to parent categories with flexible inheritance rules and custom validation.", icon: <Flag size={20} />, position: { top: '40%', left: '50%' } }
     ],
     attributes: [
-      { id: 1, title: "Search", description: "Find attributes quickly", icon: <Search size={20} />, position: { top: '21%', left: '19%' } },
-      { id: 2, title: "Add attribute", hasImage: true, imageSrc: add_attribute, description: "Add attributes manually, choose attribute type", icon: <PlusCircle size={20} />, position: { top: '21%', left: '81%' } },
-      { id: 3, title: "Product Name", description: "", icon: <Bookmark size={20} />, position: { top: '59%', left: '32%' } },
-      { id: 4, title: "Attribute Options", hasImage: true, imageSrc: attribute_detail, imageClassName: "w-72 h-52 sm:w-80 sm:h-60 md:w-96 md:h-80 xl:w-[500px] xl:h-[400px]", description: "Build out attribute options", icon: <Layers size={20} />, position: { top: '59%', left: '80%' } }
+      { id: 1, title: "Search", description: "Find attributes quickly using our powerful search with filters for attribute type, usage, and custom criteria.", icon: <Search size={20} />, position: { top: '21%', left: '19%' } },
+      { id: 2, title: "Add attribute", hasImage: true, imageSrc: add_attribute, description: "Add attributes manually with support for text, number, date, boolean, and custom data types with validation rules.", icon: <PlusCircle size={20} />, position: { top: '21%', left: '81%' } },
+      { id: 3, title: "Attribute Name", description: "Descriptive attribute names with support for localization and automatic suggestion based on industry standards.", icon: <Bookmark size={20} />, position: { top: '59%', left: '32%' } },
+      { id: 4, title: "Attribute Options", hasImage: true, imageSrc: attribute_detail, description: "Build out comprehensive attribute options with conditional logic, dependencies, and bulk management tools.", icon: <Layers size={20} />, position: { top: '59%', left: '80%' } }
     ]
   };
 
@@ -125,23 +246,11 @@ function InventoryPage({ onNavigateBack }) {
                 <div className="w-4 h-4 bg-[#f08e80] rounded-full transition-transform duration-300 group-hover:scale-150" />
                 <div className="absolute w-8 h-8 bg-[#f08e80]/20 rounded-full -top-2 -left-2 animate-ping-slow group-hover:animate-none" />
 
-                {/* Tooltip */}
-                {hoveredFeature === feature.id && (
-                  <div className={`absolute z-10 bg-gray-900 text-white p-3 rounded-lg shadow-xl ${feature.hasImage || feature.hasVideo ? feature.imageClassName : 'w-64'}`} style={{ bottom: '150%', left: '50%', transform: 'translateX(-50%)' }}>
-                    <div className="flex items-center mb-2">
-                      <div className="text-[#f08e80] mr-2">{feature.icon}</div>
-                      <h4 className="font-bold">{feature.title}</h4>
-                    </div>
-                    {feature.hasVideo && feature.videoSrc && (
-                      <video className="w-full h-full object-cover rounded-md mb-3" autoPlay loop muted playsInline>
-                        <source src={feature.videoSrc} type="video/mp4" />
-                      </video>
-                    )}
-                    {feature.hasImage && feature.imageSrc && <img src={feature.imageSrc} alt={feature.title} className="w-full h-full object-cover rounded-md mb-3" />}
-                    <p className="text-sm text-gray-300">{feature.description}</p>
-                    <div className="absolute w-4 h-4 bg-gray-900 transform rotate-45 -bottom-2 left-1/2 -translate-x-1/2" />
-                  </div>
-                )}
+                {/* Enhanced Tooltip */}
+                <EnhancedTooltip 
+                  feature={feature} 
+                  isVisible={hoveredFeature === feature.id}
+                />
               </div>
             ))}
           </div>
