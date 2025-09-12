@@ -352,7 +352,7 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
                   {hoveredFeature === feature.id && (
                     <div 
                       className={`absolute z-10 bg-gray-900 text-white p-3 rounded-lg shadow-xl ${
-                        feature.hasVideo ? 'w-80' : 'w-64'
+                        feature.hasImage || feature.hasVideo ? feature.imageClassName : 'w-64'
                       }`}
                       style={{
                         bottom: '150%', 
