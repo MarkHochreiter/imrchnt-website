@@ -62,6 +62,7 @@ function POSDiagramPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
   const [selectedDeviceType, setSelectedDeviceType] = useState('desktop');
 
+  // ... (deviceTypes and deviceFeatures data remains the same)
   // Device type configurations
   const deviceTypes = [
     {
@@ -515,16 +516,6 @@ function POSDiagramPage({ onNavigateBack }) {
   const currentDevice = deviceTypes.find(device => device.id === selectedDeviceType);
   const currentFeatures = deviceFeatures[selectedDeviceType] || [];
 
-  // Function to get appropriate tooltip width based on content
-  const getTooltipWidth = (feature) => {
-    if (feature.hasImage || feature.hasVideo) {
-      // For media content, use larger responsive sizing
-      return 'w-80 sm:w-96 md:w-[400px] lg:w-[450px] xl:w-[500px]';
-    }
-    // For text-only tooltips, use medium width
-    return 'w-72 sm:w-80 md:w-96';
-  };
-
   return (
     <div>
       {/* Main Content */}
@@ -573,75 +564,77 @@ function POSDiagramPage({ onNavigateBack }) {
         <div className="space-y-16">
           
           {/* Centered Interactive Device Image */}
-          <div className="flex justify-center relative max-w-4xl mx-auto">
-            <div className="bg-gray-50 p-8 rounded-2xl shadow-sm w-full">
-              <img 
-                src={currentDevice?.imageSrc}
-                alt={`${currentDevice?.name} POS System`}
-                className={`w-full h-auto object-contain mx-auto ${
-                  currentDevice?.id === 'desktop' ? 'max-h-[800px]' : 'max-h-[600px]'
-                }`}
-              />
-            </div>
+          <div className="flex justify-center">
+            <div className="relative max-w-4xl">
+              <div className="bg-gray-50 p-8 rounded-2xl shadow-sm">
+                <img 
+                  src={currentDevice?.imageSrc}
+                  alt={`${currentDevice?.name} POS System`}
+                  className={`w-full h-auto object-contain mx-auto ${
+                    currentDevice?.id === 'desktop' ? 'max-h-[800px]' : 'max-h-[600px]'
+                  }`}
+                />
+              </div>
 
-            {/* Interactive Feature Points - Using same style as inventory page */}
-            {currentFeatures.map((feature) => (
-              <div
-                key={feature.id}
-                className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group ${
-                  hoveredFeature === feature.id ? 'z-30' : 'z-10'
-                }`}
-                style={{ top: feature.position.top, left: feature.position.left }}
-                onMouseEnter={() => setHoveredFeature(feature.id)}
-                onMouseLeave={() => setHoveredFeature(null)}
-              >
-                <div className="w-4 h-4 bg-[#f08e80] rounded-full transition-transform duration-300 group-hover:scale-150" />
-                <div className="absolute w-8 h-8 bg-[#f08e80]/20 rounded-full -top-2 -left-2 animate-ping-slow group-hover:animate-none" />
-                
-                {/* Tooltip - Auto-sizing with stable positioning */}
-                {hoveredFeature === feature.id && (
-                  <div 
-                    className={`absolute z-50 bg-gray-900 text-white p-4 rounded-lg shadow-xl ${getTooltipWidth(feature)} max-w-[90vw]`}
-                    style={{
-                      bottom: '150%', 
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                    }}
-                  >
-                    <div className="flex items-center mb-3">
-                      <div className="text-[#f08e80] mr-2 flex-shrink-0">{feature.icon}</div>
-                      <h4 className="font-bold text-sm sm:text-base">{feature.title}</h4>
-                    </div>
-                    
-                    {/* Video for features that have it */}
-                    {feature.hasVideo && feature.videoSrc && (
-                      <div className="h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 mb-3 rounded-md overflow-hidden">
-                        <video 
-                          className="w-full h-full object-cover"
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                        >
-                          <source src={feature.videoSrc} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
+              {/* Interactive Feature Points */}
+              {currentFeatures.map((feature) => (
+                <div
+                  key={feature.id}
+                  className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group ${
+                    hoveredFeature === feature.id ? 'z-30' : 'z-10'
+                  }`}
+                  style={{ top: feature.position.top, left: feature.position.left }}
+                  onMouseEnter={() => setHoveredFeature(feature.id)}
+                  onMouseLeave={() => setHoveredFeature(null)}
+                >
+                  <div className="w-4 h-4 bg-[#f08e80] rounded-full transition-transform duration-300 group-hover:scale-150" />
+                  <div className="absolute w-8 h-8 bg-[#f08e80]/20 rounded-full -top-2 -left-2 animate-ping-slow group-hover:animate-none" />
+                  
+                  {/* Tooltip */}
+                  {hoveredFeature === feature.id && (
+                    <div 
+                      className={`absolute z-10 bg-gray-900 text-white p-3 rounded-lg shadow-xl ${
+                        feature.hasVideo ? 'w-80' : 'w-64'
+                      }`}
+                      style={{
+                        bottom: '150%', 
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                      }}
+                    >
+                      <div className="flex items-center mb-2">
+                        <div className="text-[#f08e80] mr-2">{feature.icon}</div>
+                        <h4 className="font-bold">{feature.title}</h4>
                       </div>
-                    )}
+                      
+                      {/* Video for features that have it */}
+                      {feature.hasVideo && feature.videoSrc && (
+                        <div className="mb-3">
+                          <video 
+                            className="w-full h-full object-cover rounded-md"
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                          >
+                            <source src={feature.videoSrc} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                      )}
 
-                    {/* Image for features that have it */}
-                    {feature.hasImage && feature.imageSrc && (
-                      <div className="h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 mb-3 rounded-md overflow-hidden">
-                        <img 
-                          className="w-full h-full object-cover"
-                          src={feature.imageSrc} 
-                          alt={feature.imageAlt || "Feature image"} 
-                        />
-                      </div>
-                    )}
-                    
-                    {feature.description && (
-                      <div className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                      {/* Image for features that have it */}
+{feature.hasImage && feature.imageSrc && (
+  <div className="mb-3">
+    <img 
+      className="w-full h-full object-cover rounded-md"
+      src={feature.imageSrc} 
+      alt={feature.imageAlt || "Feature image"} 
+    />
+  </div>
+)}
+                      
+                      <div className="text-sm text-gray-300">
                         {Array.isArray(feature.description) ? (
                           <>
                             <p>{feature.description[0]}</p>
@@ -655,14 +648,12 @@ function POSDiagramPage({ onNavigateBack }) {
                           <p>{feature.description}</p>
                         )}
                       </div>
-                    )}
-                    
-                    {/* Tooltip arrow */}
-                    <div className="absolute w-3 h-3 bg-gray-900 transform rotate-45 -bottom-1.5 left-1/2 -translate-x-1/2" />
-                  </div>
-                )}
-              </div>
-            ))}
+                      <div className="absolute w-4 h-4 bg-gray-900 transform rotate-45 -bottom-2 left-1/2 -translate-x-1/2" />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Core Features Below Image */}
