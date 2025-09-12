@@ -262,7 +262,7 @@ function InventoryPage({ onNavigateBack }) {
     title: "Attribute Options",
         hasImage: true,
         imageSrc:attribute_detail,
-        imageClassName: "w-[500px] h-[400px]"
+        imageClassName: "w-[500px] h-[400px]",
     description: "Build out attribute options",
     icon: <Layers size={20} />,
     position: { top: '59%', left: '80%' }
