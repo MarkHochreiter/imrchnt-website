@@ -262,7 +262,7 @@ function InventoryPage({ onNavigateBack }) {
     title: "Attribute Options",
         hasImage: true,
         imageSrc:attribute_detail,
-        imageClassName: "w-[500px] h-[400px]",
+        imageClassName: "w-72 h-52 sm:w-80 sm:h-60 md:w-96 md:h-80 xl:w-[500px] xl:h-[400px]"
     description: "Build out attribute options",
     icon: <Layers size={20} />,
     position: { top: '59%', left: '80%' }
@@ -381,22 +381,24 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
                         </div>
                       )}
 
-                    {/* Image for features that have it */}
-                    {feature.hasImage && feature.imageSrc && (
-                      <div
-                        className={`mb-3 ${
-                        feature.imageSize === "small" ? "w-48 h-32" :
-                        feature.imageSize === "medium" ? "w-80 h-60" :
-                        feature.imageSize === "large" ? "w-[500px] h-[400px]" : ""
-                    }`}
-                      >
-                    <img
-                      className="w-full h-full object-cover rounded-md"
-                      src={feature.imageSrc}
-                      alt={feature.imageAlt || feature.title}
-                    />
-                    </div>
-                    )}
+{/* Image for features that have it */}
+{feature.hasImage && feature.imageSrc && (
+<div className={`mb-3 ${feature.imageClassName}`}>
+    {/*     feature.imageSize === "small"
+        ? "w-40 h-28 sm:w-48 sm:h-32 md:w-56 md:h-40 xl:w-64 xl:h-48"
+        : feature.imageSize === "medium"
+        ? "w-60 h-44 sm:w-72 sm:h-52 md:w-80 md:h-60 xl:w-96 xl:h-72"
+        : feature.imageSize === "large"
+        ? "w-72 h-52 sm:w-80 sm:h-60 md:w-96 md:h-80 xl:w-[500px] xl:h-[400px]"
+        : ""
+    */}
+    <img
+      className="w-full h-full object-cover rounded-md"
+      src={feature.imageSrc}
+      alt={feature.imageAlt || feature.title}
+    />
+  </div>
+)}
 
                       
                       <div className="text-sm text-gray-300">
