@@ -244,7 +244,7 @@ function InventoryPage({ onNavigateBack }) {
   {
     id: 2, 
     title: "Add attribute",
-        hasImage1: true,
+        hasImage: true,
         imageSrc: add_attribute,
     description: "Add attributes manually, choose attribute type",
     icon: <PlusCircle size={20} />,
@@ -260,8 +260,9 @@ function InventoryPage({ onNavigateBack }) {
   {
     id: 4,
     title: "Attribute Options",
-        hasImage1: true,
+        hasImage: true,
         imageSrc:attribute_detail,
+        imageClassName: "w-[500px] h-[400px]"
     description: "Build out attribute options",
     icon: <Layers size={20} />,
     position: { top: '59%', left: '80%' }
@@ -382,25 +383,21 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
 
                     {/* Image for features that have it */}
                     {feature.hasImage && feature.imageSrc && (
-                      <div className="mb-3>>
-                        <img 
-                          className="w-full h-full object-cover rounded-md"
-                          src={feature.imageSrc} 
-                          alt={feature.imageAlt || "Feature image"} 
-                          />
-                        </div>
-                      )}
+                      <div
+                        className={`mb-3 ${
+                        feature.imageSize === "small" ? "w-48 h-32" :
+                        feature.imageSize === "medium" ? "w-80 h-60" :
+                        feature.imageSize === "large" ? "w-[500px] h-[400px]" : ""
+                    }`}
+                      >
+                    <img
+                      className="w-full h-full object-cover rounded-md"
+                      src={feature.imageSrc}
+                      alt={feature.imageAlt || feature.title}
+                    />
+                    </div>
+                    )}
 
-                    {/* Image for features that have it */}
-                    {feature.hasImage1 && feature.imageSrc && (
-                      <div className="mb-3 w-80 h-60">>
-                        <img 
-                          className="w-full h-full object-cover rounded-md"
-                          src={feature.imageSrc} 
-                          alt={feature.imageAlt || "Feature image"} 
-                          />
-                        </div>
-                      )}
                       
                       <div className="text-sm text-gray-300">
                         {Array.isArray(feature.description) ? (
