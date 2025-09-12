@@ -334,114 +334,87 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
                 />
               </div>
 
-              {/* Interactive Feature Points */}
-              {currentFeatures.map((feature) => (
-                <div
-                  key={feature.id}
-                  className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group ${
-                    hoveredFeature === feature.id ? 'z-30' : 'z-10'
-                  }`}
-                  style={{ top: feature.position.top, left: feature.position.left }}
-                  onMouseEnter={() => setHoveredFeature(feature.id)}
-                  onMouseLeave={() => setHoveredFeature(null)}
-                >
-                  <div className="w-4 h-4 bg-[#f08e80] rounded-full transition-transform duration-300 group-hover:scale-150" />
-                  <div className="absolute w-8 h-8 bg-[#f08e80]/20 rounded-full -top-2 -left-2 animate-ping-slow group-hover:animate-none" />
-
-                    {/* Tooltip */}
-{hoveredFeature === feature.id && (
+{/* Interactive Feature Points */}
+{currentFeatures.map((feature) => (
   <div
-    className={`absolute z-10 bg-gray-900 text-white p-3 rounded-lg shadow-xl ${
-      feature.hasImage || feature.hasVideo ? feature.imageClassName : 'w-64'
+    key={feature.id}
+    className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group ${
+      hoveredFeature === feature.id ? 'z-30' : 'z-10'
     }`}
-    style={{
-      bottom: '150%',
-      left: '50%',
-      transform: 'translateX(-50%)',
-    }}
+    style={{ top: feature.position.top, left: feature.position.left }}
+    onMouseEnter={() => setHoveredFeature(feature.id)}
+    onMouseLeave={() => setHoveredFeature(null)}
   >
-    {/* Title and Icon */}
-    <div className="flex items-center mb-2">
-      <div className="text-[#f08e80] mr-2">{feature.icon}</div>
-      <h4 className="font-bold">{feature.title}</h4>
-    </div>
+    {/* Point */}
+    <div className="w-4 h-4 bg-[#f08e80] rounded-full transition-transform duration-300 group-hover:scale-150" />
+    <div className="absolute w-8 h-8 bg-[#f08e80]/20 rounded-full -top-2 -left-2 animate-ping-slow group-hover:animate-none" />
 
-    {/* Video */}
-    {feature.hasVideo && feature.videoSrc && (
-      <div className="mb-3 w-full h-full">
-        <video
-          className="w-full h-full object-cover rounded-md"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src={feature.videoSrc} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    )}
+    {/* Tooltip */}
+    {hoveredFeature === feature.id && (
+      <div
+        className={`absolute z-10 bg-gray-900 text-white p-3 rounded-lg shadow-xl ${
+          feature.hasImage || feature.hasVideo ? feature.imageClassName : 'w-64'
+        }`}
+        style={{
+          bottom: '150%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        {/* Title + Icon */}
+        <div className="flex items-center mb-2">
+          <div className="text-[#f08e80] mr-2">{feature.icon}</div>
+          <h4 className="font-bold">{feature.title}</h4>
+        </div>
 
-    {/* Image */}
-    {feature.hasImage && feature.imageSrc && (
-      <div className="mb-3 w-full h-full">
-        {/*     feature.imageSize === "small"
-        ? "w-40 h-28 sm:w-48 sm:h-32 md:w-56 md:h-40 xl:w-64 xl:h-48"
-        : feature.imageSize === "medium"
-        ? "w-60 h-44 sm:w-72 sm:h-52 md:w-80 md:h-60 xl:w-96 xl:h-72"
-        : feature.imageSize === "large"
-        ? "w-72 h-52 sm:w-80 sm:h-60 md:w-96 md:h-80 xl:w-[500px] xl:h-[400px]"
-        : ""
-        */}
-          <img
-          className="w-full h-full object-cover rounded-md"
-          src={feature.imageSrc}
-          alt={feature.imageAlt || feature.title}
-        />
-      </div>
-    )}
-
-    {/* Description */}
-    <div className="text-sm text-gray-300">
-      {Array.isArray(feature.description) ? (
-        <>
-          <p>{feature.description[0]}</p>
-          <ul className="list-disc list-inside mt-2 pl-2 space-y-1">
-            {feature.description.slice(1).map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </>
-      ) : (
-        <p>{feature.description}</p>
-      )}
-    </div>
-
-    {/* Tooltip Arrow */}
-    <div className="absolute w-4 h-4 bg-gray-900 transform rotate-45 -bottom-2 left-1/2 -translate-x-1/2" />
-  </div>
-)}                      
-                      <div className="text-sm text-gray-300">
-                        {Array.isArray(feature.description) ? (
-                          <>
-                            <p>{feature.description[0]}</p>
-                            <ul className="list-disc list-inside mt-2 pl-2 space-y-1">
-                              {feature.description.slice(1).map((item, index) => (
-                                <li key={index}>{item}</li>
-                              ))}
-                            </ul>
-                          </>
-                        ) : (
-                          <p>{feature.description}</p>
-                        )}
-                      </div>
-                      <div className="absolute w-4 h-4 bg-gray-900 transform rotate-45 -bottom-2 left-1/2 -translate-x-1/2" />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+        {/* Video */}
+        {feature.hasVideo && feature.videoSrc && (
+          <div className="mb-3 w-full h-full">
+            <video
+              className="w-full h-full object-cover rounded-md"
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              <source src={feature.videoSrc} type="video/mp4" />
+            </video>
           </div>
+        )}
+
+        {/* Image */}
+        {feature.hasImage && feature.imageSrc && (
+          <div className="mb-3 w-full h-full">
+            <img
+              className="w-full h-full object-cover rounded-md"
+              src={feature.imageSrc}
+              alt={feature.imageAlt || feature.title}
+            />
+          </div>
+        )}
+
+        {/* Description */}
+        <div className="text-sm text-gray-300">
+          {Array.isArray(feature.description) ? (
+            <>
+              <p>{feature.description[0]}</p>
+              <ul className="list-disc list-inside mt-2 pl-2 space-y-1">
+                {feature.description.slice(1).map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <p>{feature.description}</p>
+          )}
+        </div>
+
+        {/* Tooltip Arrow */}
+        <div className="absolute w-4 h-4 bg-gray-900 transform rotate-45 -bottom-2 left-1/2 -translate-x-1/2" />
+      </div>
+    )}
+  </div>
+))}
 
           {/* Core Features Below Image */}
           <div className="max-w-6xl mx-auto">
