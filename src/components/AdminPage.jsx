@@ -111,42 +111,42 @@ function AdminPage({ onNavigateBack }) {
       {
         id: 1,
         title: "Add New Users",
-        description: "Create new user accounts with appropriate permissions and store assignments. Set up user profiles with contact information, role assignments, and access levels tailored to their responsibilities.",
+        description: "Create new user accounts with appropriate permissions and store assignments.",
         icon: <Users size={20} />,
         position: { top: '20%', left: '85%' }
       },
       {
         id: 2,
         title: "Update User Info",
-        description: "Modify existing user details, contact information, and profile settings. Update user permissions, change store assignments, and manage account status with full audit trail.",
+        description: "Modify existing user details, contact information, and profile settings.",
         icon: <Pencil size={20} />,
         position: { top: '41%', left: '30%' }
       },
       {
         id: 3,
         title: "Delete Users",
-        description: "Remove user accounts and revoke system access when needed. Safely deactivate accounts while preserving transaction history and maintaining data integrity for compliance.",
+        description: "Remove user accounts and revoke system access when needed.",
         icon: <Trash2 size={20} />,
         position: { top: '95%', left: '50%' }
       },
       {
         id: 4,
         title: "Store Assignments",
-        description: "Assign users to specific store locations and manage multi-store access. Configure which stores each user can access and set location-specific permissions and responsibilities.",
+        description: "Assign users to specific store locations and manage multi-store access.",
         icon: <Store size={20} />,
         position: { top: '41%', left: '75%' }
       },
       {
         id: 5,
         title: "Security Roles",
-        description: "Configure user permissions and access levels based on job responsibilities. Create custom roles with granular permissions for different functions like sales, inventory, reporting, and administration.",
+        description: "Configure user permissions and access levels based on job responsibilities.",
         icon: <Lock size={20} />,
         position: { top: '60%', left: '38%' }
       },
       {
         id: 6,
         title: "Two Factor Authentication",
-        description: "Enable 2FA for Admin and Manager accounts for enhanced security. Implement SMS, email, or authenticator app-based two-factor authentication to protect sensitive administrative functions.",
+        description: "Enable 2FA for Admin and Manager accounts for enhanced security.",
         icon: <Shield size={20} />,
         position: { top: '95%', left: '70%' }
       }
@@ -155,28 +155,28 @@ function AdminPage({ onNavigateBack }) {
       {
         id: 1,
         title: "Add Stores",
-        description: "Configure and manage multiple store locations from one dashboard. Set up new locations with unique settings, tax configurations, and operational parameters tailored to each store's needs.",
+        description: "Configure and manage multiple store locations from one dashboard.",
         icon: <Plus size={20} />,
          position: { top: '20%', left: '85%' }
       },
       {
         id: 2,
         title: "Store Configuration",
-        description: "Set up store-specific settings, tax rates, and operational parameters. Configure payment methods, receipt templates, and business rules that apply to each individual location.",
+        description: "Set up store-specific settings, tax rates, and operational parameters.",
         icon: <Store size={20} />,
        position: { top: '41%', left: '30%' }
       },
       {
         id: 3,
         title: "Inventory",
-        description: "Manage Inventory by Store with location-specific stock levels and transfer capabilities. Track inventory movement between locations and set up automated reordering rules per store.",
+        description: "Manage Inventory by Store with location-specific stock levels.",
         icon: <Book size={20} />,
        position: { top: '41%', left: '95%' }
       },
       {
         id: 4,
         title: "Users",
-        description: "Assign users to one or many stores with flexible access controls. Manage which employees can work at which locations and set up cross-store permissions for managers and administrators.",
+        description: "Manage which employees can work at which locations and set up cross-store permissions for managers and administrators.",
         icon: <Users size={20} />,
        position: { top: '41%', left: '69%' }
       }
@@ -185,42 +185,42 @@ function AdminPage({ onNavigateBack }) {
       {
         id: 1,
         title: "Payout Automation",
-        description: "Set up your automated payout schedule with flexible timing options. Configure daily, weekly, or custom payout schedules to automatically transfer funds to your bank accounts.",
+        description: "Configure daily, weekly, or custom payout schedules to automatically transfer funds to your bank accounts.",
         icon: <Zap size={20} />,
          position: { top: '37%', left: '25%' }
       },
       {
         id: 2,
         title: "Instant Transfers",
-        description: "Transfer money instantly to your bank accounts with real-time processing. Access your funds immediately with instant transfer capabilities for improved cash flow management.",
+        description: "Access your funds same day with instant transfer capabilities for improved cash flow management.",
         icon: <Wallet size={20} />,
         position: { top: '37%', left: '88%' }
       },
       {
         id: 3,
         title: "Terminals",
-        description: "Manage Card Readers, activate and customize tips on individual units. Configure terminal settings, update software, and customize tip prompts for each payment device.",
+        description: "Manage Card Readers, activate and customize tips on individual units.",
         icon: <BarChart3 size={20} />,
         position: { top: '13%', left: '43%' }
       },
       {
         id: 4,
         title: "Reporting",
-        description: "Export Payout Details Reports to reconcile Payouts to Payments. Generate comprehensive reports for accounting, tax preparation, and financial analysis with detailed transaction data.",
+        description: "Export Payout Details Reports to reconcile Payouts to Payments.",
         icon: <CreditCard size={20} />,
         position: { top: '13%', left: '75%' }
       },
       {
         id: 5,
         title: "Bank Account Setup",
-        description: "Add and manage bank accounts for payout destinations. Securely store multiple bank account details and set up routing preferences for different types of transactions.",
+        description: "Add and manage bank accounts for payout destinations. Secured by 2FA.",
         icon: <DollarSign size={20} />,
          position: { top: '13%', left: '58%' }
       },
       {
         id: 6,
         title: "Chargeback Disputes",
-        description: "Challenge chargeback disputes and manage dispute resolution process. Upload evidence, track dispute status, and manage the entire chargeback lifecycle with integrated tools.",
+        description: "Challenge chargeback disputes and manage dispute resolution process. Upload evidence, track dispute status.",
         icon: <Undo size={20} />,
          position: { top: '13%', left: '91%' }
       }
@@ -229,14 +229,14 @@ function AdminPage({ onNavigateBack }) {
       {
         id: 1,
         title: "Simple Tenders",
-        description: "Create Simple Tenders for sales made outside of the platform. Set up cash, check, and other payment methods for transactions that don't go through the integrated payment system.",
+        description: "Create Simple Tenders for sales made outside of the platform.",
         icon: <DollarSign size={20} />,
         position: { top: '15%', left: '75%' }
       },
       {
         id: 2,
         title: "Registers",
-        description: "Manage and track Registers across all locations. Configure register settings, monitor performance, and manage cash drawer operations with comprehensive tracking and reporting.",
+        description: "Manage and track Registers across all locations.",
         icon: <Eye size={20} />,
        position: { top: '15%', left: '30%' }
       }
