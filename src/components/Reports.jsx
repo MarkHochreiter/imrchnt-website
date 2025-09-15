@@ -1,5 +1,6 @@
 import { 
   ArrowLeft,
+  ArrowRight,
   Wifi, 
   ChartLine,
   CreditCard, 
@@ -18,7 +19,8 @@ import {
   Layers, 
   Battery, 
   Cloud, 
-  Users, 
+  Users,
+  Send,
   BarChart3, 
   Package, 
   Percent, 
@@ -89,7 +91,7 @@ function ReportsPage({ onNavigateBack }) {
     id: 1, 
     title: "Filter Reporting",
     description: "Filter Reporting by Date Range and Store",
-    icon: <Users size={20} />,
+    icon: <Layers size={20} />,
     position: { top: '26%', left: '96%' }
   },
 
@@ -97,7 +99,7 @@ function ReportsPage({ onNavigateBack }) {
     id: 2,
     title: "Sales By:",
     description: "Filter sales by Hour / Day / Week / Month",
-    icon: <Calculator size={20} />,
+    icon: <Layers size={20} />,
     position: { top: '45%', left: '96%' }
   },
   {
@@ -120,7 +122,7 @@ function ReportsPage({ onNavigateBack }) {
     id: 1,
     title: "Filters",
     description: "Total amount to be charged in sale",
-    icon: <Calculator size={20} />,
+    icon: <Layers size={20} />,
     position: { top: '30%', left: '60%' }
   },
   {
@@ -141,14 +143,14 @@ function ReportsPage({ onNavigateBack }) {
     id: 4,
     title: "Order Status",
     description: "",
-    icon: <Shredder size={20} />,
+    icon: <Zap size={20} />,
     position: { top: '73%', left: '82%' }
   },
   {
     id: 5, 
     title: "Export",
     description: "Export Sales in order to import into Accounting package or Legacy system",
-    icon: <Wallet size={20} />,
+    icon: <ArrowRight size={20} />,
     position: { top: '87%', left: '40%' }
   },
  
@@ -156,7 +158,7 @@ function ReportsPage({ onNavigateBack }) {
     id: 6,
     title: "Order ID",
     description: "",
-    icon: <DollarSign size={20} />,
+    icon: <Flag size={20} />,
     position: { top: '39%', left: '21%' }
   },
   
@@ -164,7 +166,7 @@ function ReportsPage({ onNavigateBack }) {
     id: 7,
     title: "Net Price",
     description: "Click + or - to adjust quantity, auto adjusts with scan",
-    icon: <BookPlus size={20} />,
+    icon: <DollarSign size={20} />,
     position: { top: '39%', left: '36%' }
   },
  
@@ -172,21 +174,21 @@ function ReportsPage({ onNavigateBack }) {
     id: 8,
     title: "Tip Amount",
     description: "Enable tips by Card Reader and track tips within Transactions.",
-    icon: <Calculator size={20} />,
+    icon: <DollarSign size={20} />,
     position: { top: '39%', left: '52%' }
   },
   {
     id: 9,
     title: "Cashier",
     description: "ID the Cashier who processed the sale.",
-    icon: <Calculator size={20} />,
+    icon: <Users size={20} />,
     position: { top: '39%', left: '69%' }
   },  
   {
     id: 10,
     title: "Customer Email",
     description: "Track customer email by transaction",
-    icon: <Trash2 size={20} />,
+    icon: <Send size={20} />,
     position: { top: '39%', left: '64%' }
       }
     ]
