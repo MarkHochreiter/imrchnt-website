@@ -90,7 +90,7 @@ function ReportsPage({ onNavigateBack }) {
     title: "Filter Reporting",
     description: "Filter Reporting by Date Range and Store",
     icon: <Users size={20} />,
-    position: { top: '30%', left: '96%' }
+    position: { top: '27%', left: '96%' }
   },
 
   {
@@ -98,7 +98,7 @@ function ReportsPage({ onNavigateBack }) {
     title: "Sales By:",
     description: "Filter sales by Hour / Day / Week / Month",
     icon: <Calculator size={20} />,
-    position: { top: '44%', left: '96%' }
+    position: { top: '45%', left: '96%' }
   },
   {
     id: 3,
