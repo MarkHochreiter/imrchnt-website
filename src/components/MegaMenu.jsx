@@ -155,7 +155,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                       'Reports': 'reports',
                       'Inventory': 'products',
                       'Customers': 'customers',
-                      'On Floor Assistance': 'on-floor-assistance',
+                      'On Floor Assistant': 'on-floor-assistance',
                       'Single Device': 'single-device',
                       'Import Items': 'import-items',
                       'Export Sales': 'export-sales',
