@@ -152,8 +152,8 @@ function InStorePage({ onSignupClick, onNavigate }) {
                 </h2>
               </div>
               <p className="text-lg text-gray-600 mb-8">
-                Eliminate checkout queues and optimize customer experience. 
-                Lookup inventory in real-time on the floor.
+                Optimize the customer experience where you meet them.  
+                Lookup inventory in real-time on the floor. Process the sale right there with Tap to Pay on iphone and Android smartphones.
               </p>
               <div className="space-y-4 mb-8">
                 <div className="flex items-center">
