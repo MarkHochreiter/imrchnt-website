@@ -201,28 +201,28 @@ function AdminPage({ onNavigateBack }) {
         title: "Terminals",
         description: "Manage Card Readers, activate and customize tips on individual units.",
         icon: <BarChart3 size={20} />,
-        position: { top: '13%', left: '43%' }
+        position: { top: '17%', left: '43%' }
       },
       {
         id: 4,
         title: "Reporting",
         description: "Export Payout Details Reports to reconcile Payouts to Payments.",
         icon: <CreditCard size={20} />,
-        position: { top: '13%', left: '75%' }
+        position: { top: '17%', left: '75%' }
       },
       {
         id: 5,
         title: "Bank Account Setup",
         description: "Add and manage bank accounts for payout destinations. Secured by 2FA.",
         icon: <DollarSign size={20} />,
-         position: { top: '13%', left: '58%' }
+         position: { top: '17%', left: '58%' }
       },
       {
         id: 6,
         title: "Chargeback Disputes",
         description: "Challenge chargeback disputes and manage dispute resolution process. Upload evidence, track dispute status.",
         icon: <Undo size={20} />,
-         position: { top: '13%', left: '91%' }
+         position: { top: '17%', left: '91%' }
       }
     ],
     'settings': [
@@ -231,14 +231,14 @@ function AdminPage({ onNavigateBack }) {
         title: "Simple Tenders",
         description: "Create Simple Tenders for sales made outside of the platform.",
         icon: <DollarSign size={20} />,
-        position: { top: '15%', left: '75%' }
+        position: { top: '18%', left: '75%' }
       },
       {
         id: 2,
         title: "Registers",
         description: "Manage and track Registers across all locations.",
         icon: <Eye size={20} />,
-       position: { top: '15%', left: '30%' }
+       position: { top: '18%', left: '30%' }
       }
     ]
   };
