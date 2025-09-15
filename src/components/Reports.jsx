@@ -135,7 +135,7 @@ function ReportsPage({ onNavigateBack }) {
   {
     id: 3,
     title: "Sale Date / Time",
-    description: ",
+    description: "",
     icon: <DollarSign size={20} />,
     position: { top: '41%', left: '96%' }
   },
