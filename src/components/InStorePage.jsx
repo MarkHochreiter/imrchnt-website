@@ -173,9 +173,6 @@ function InStorePage({ onSignupClick, onNavigate }) {
                   <span>Blazing fast inventory lookup</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Discover On Floor Assistance
-              </Button>
             </div>
             <div className="bg-gray-50 p-8 rounded-lg">
               <div className="aspect-video bg-white rounded-lg shadow-lg flex items-center justify-center">
