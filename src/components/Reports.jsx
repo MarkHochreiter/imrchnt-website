@@ -87,10 +87,10 @@ function ReportsPage({ onNavigateBack }) {
     'analytics': [
   {
     id: 1, 
-    title: "Add Customer",
-    description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
+    title: "Filter Reporting",
+    description: "Filter Reporting by Date Range and Store",
     icon: <Users size={20} />,
-    position: { top: '34%', left: '96%' }
+    position: { top: '30%', left: '96%' }
   },
 
   {
@@ -98,30 +98,22 @@ function ReportsPage({ onNavigateBack }) {
     title: "Sales By:",
     description: "Filter sales by Hour / Day / Week / Month",
     icon: <Calculator size={20} />,
-    position: { top: '45%', left: '96%' }
+    position: { top: '46%', left: '96%' }
   },
   {
     id: 3,
     title: "Visual Toggle",
     description: "Toggle between Bar Chart or Scatter Plot",
     icon: <ChartLine size={20} />,
-    position: { top: '54%', left: '75%' }
+    position: { top: '53%', left: '76%' }
   },
   {
     id: 4,
     title: "Simple KPI",
     description: "Quick view KPI's, see the data points that matter in our simple KPI dashboard",
     icon: <DollarSign size={20} />,
-    position: { top: '50%', left: '25%' }
-  },  
-  {
-    id: 5,
-    title: "Filter Reporting",
-    description: "Filter Reporting by Date Range and Store",
-    icon: <Layers size={20} />,
-    position: { top: '41%', left: '64%' }
+    position: { top: '41%', left: '50%' }
   }
-  
     ] ,
     'transactions': [
   {
