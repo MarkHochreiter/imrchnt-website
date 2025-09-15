@@ -364,21 +364,21 @@ function POSDiagramPage({ onNavigateBack }) {
         title: "Pocket-Sized Solution",
         description: "Complete POS functionality in a device that fits in your pocket.",
         icon: <Smartphone size={20} />,
-        position: { top: '55%', left: '66%' }
+        position: { top: '55%', left: '56%' }
       },
       {
         id: 2,
         title: "Simplified Interface",
         description: "Intuitive design with in flow navigation.",
         icon: <Zap size={20} />,
-        position: { top: '40%', left: '34%' }
+        position: { top: '40%', left: '44%' }
       },
       {
         id: 3,
         title: "Camera Scanner ",
         description: "Scan barcodes with the built in camera.",
         icon: <Users size={20} />,
-        position: { top: '36%', left: '66%' }
+        position: { top: '36%', left: '56%' }
       },
       {
         id: 4,
@@ -394,7 +394,7 @@ function POSDiagramPage({ onNavigateBack }) {
         title: "Offline Mode",
         description: "Continue processing sales even without internet connectivity.",
         icon: <Shield size={20} />,
-        position: { top: '60%', left: '34%' }
+        position: { top: '60%', left: '44%' }
       }
     ],
     'all-in-one': [
@@ -424,14 +424,14 @@ function POSDiagramPage({ onNavigateBack }) {
         title: "Built-in Printer",
         description: "Fast thermal receipt printing for customer convenience.",
         icon: <Printer size={20} />,
-        position: { top: '29%', left: '78%' }
+        position: { top: '29%', left: '60%' }
       },
       {
         id: 5,
         title: "Item Details",
         description: "Description, Product Number, Unit Price of item in Cart.",
         icon: <Shield size={20} />,
-        position: { top: '53%', left: '18%' }
+        position: { top: '53%', left: '38%' }
       },
       {
         id: 6,
@@ -440,21 +440,21 @@ function POSDiagramPage({ onNavigateBack }) {
         videoSrc: scanSampleVideo,
         description: "Scans product barcodes with device camera.",
         icon: <Zap size={20} />,
-        position: { top: '45%', left: '78%' }
+        position: { top: '45%', left: '58%' }
       },
       {
         id: 7,
         title: "Delete Item",
         description: "Remove an item from the current order.",
         icon: <Trash2 size={20} />,
-        position: { top: '51%', left: '80%' }
+        position: { top: '51%', left: '60%' }
       },
       {
         id: 8,
         title: "Adjust Quantity",
         description: "Increase or decrease the quantity of the selected item.",
         icon: <PlusCircle size={20} />,
-        position: { top: '57%', left: '80%' }
+        position: { top: '57%', left: '60%' }
       },
       {
         id: 9,
@@ -473,7 +473,7 @@ function POSDiagramPage({ onNavigateBack }) {
           "Transactions"
         ],
         icon: <Grid size={20} />,
-        position: { top: '38%', left: '80%' }
+        position: { top: '38%', left: '60%' }
       },
       {
         id: 11,
@@ -485,14 +485,14 @@ function POSDiagramPage({ onNavigateBack }) {
           "Sign out"
         ],
         icon: <Home size={20} />,
-        position: { top: '38%', left: '18%' }
+        position: { top: '38%', left: '38%' }
       },
       {
         id: 12,
         title: "Sale Total",
         description: "",
         icon: <DollarSign size={20} />,
-        position: { top: '45%', left: '18%' }
+        position: { top: '45%', left: '38%' }
       },
       {
         id: 4,
@@ -507,7 +507,7 @@ function POSDiagramPage({ onNavigateBack }) {
           "Simple Tender"
         ],
         icon: <DollarSign size={20} />,
-        position: { top: '80%', left: '18%' }
+        position: { top: '80%', left: '38%' }
       }
     ]
   };
