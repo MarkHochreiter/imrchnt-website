@@ -24,6 +24,7 @@ import {
   Shredder, 
   Calculator,
   BookPlus,
+  Scan,
   Flag,
   Wallet,
   Tag,
@@ -377,7 +378,7 @@ function POSDiagramPage({ onNavigateBack }) {
         id: 3,
         title: "Camera Scanner ",
         description: "Scan barcodes with the built in camera.",
-        icon: <Users size={20} />,
+        icon: <Scan size={20} />,
         position: { top: '36%', left: '60%' }
       },
       {
@@ -386,7 +387,7 @@ function POSDiagramPage({ onNavigateBack }) {
         hasImage: true,
         imageSrc: apple,
         description: "Take contactless payments right to your phone using Tap to Pay.",
-        icon: <Cloud size={20} />,
+        icon: <CreditCard size={20} />,
         position: { top: '65%', left: '50%' }
       },
       {
@@ -430,7 +431,7 @@ function POSDiagramPage({ onNavigateBack }) {
         id: 5,
         title: "Item Details",
         description: "Description, Product Number, Unit Price of item in Cart.",
-        icon: <Shield size={20} />,
+        icon: <Layers size={20} />,
         position: { top: '53%', left: '36%' }
       },
       {
@@ -439,7 +440,7 @@ function POSDiagramPage({ onNavigateBack }) {
         hasVideo: true,
         videoSrc: scanSampleVideo,
         description: "Scans product barcodes with device camera.",
-        icon: <Zap size={20} />,
+        icon: <Scan size={20} />,
         position: { top: '45%', left: '61%' }
       },
       {
