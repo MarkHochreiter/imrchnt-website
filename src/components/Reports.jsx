@@ -90,7 +90,7 @@ function ReportsPage({ onNavigateBack }) {
     title: "Filter Reporting",
     description: "Filter Reporting by Date Range and Store",
     icon: <Users size={20} />,
-    position: { top: '27%', left: '96%' }
+    position: { top: '26%', left: '96%' }
   },
 
   {
@@ -117,127 +117,77 @@ function ReportsPage({ onNavigateBack }) {
     ] ,
     'transactions': [
   {
-    id: 1, // DONE
+    id: 1,
+    title: "Filters",
+    description: "Total amount to be charged in sale",
+    icon: <Calculator size={20} />,
+    position: { top: '30%', left: '60%' }
+  },
+  {
+    id: 2, 
     title: "Search",
-    description: "Either scan item into sale with Bluetooth connected Scanner or use our blazing fast search to manually find and add item into sale",
+    description: "Either scan receipt to find sale, look up by sale id or use filters to pinpoint a sale or group sales.",
     icon: <Search size={20} />,
-    position: { top: '27%', left: '5%' }
-  },
-
-  {
-    id: 2, // DONE
-    title: "Store - Cashier",
-    description: "Displays store you're selling from and cashier making the sale",
-    icon: <Zap size={20} />,
-    position: { top: '13%', left: '67%' }
+    position: { top: '26%', left: '25%' }
   },
   {
-    id: 3, // DONE
-    title: "POS drawer",
-    description: "Navigate to Transactions, Close Day, Assign Card Reader, Attach Bluetooth scanner",
-    icon: <Flag size={20} />,
-    position: { top: '13%', left: '83%' }
-  },
-  {
-    id: 4, // DONE
-    title: "Home",
-    description: "Navigate back to Home to access other app modules",
-    icon: <Home size={20} />,
-    position: { top: '13%', left: '96%' }
-  },
-  {
-    id: 5, // DONE 
-    title: "Add Customer",
-    description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
-    icon: <Users size={20} />,
-    position: { top: '34%', left: '96%' }
-  },
-  {
-    id: 6,
-    title: "Subtotal",
+    id: 3,
+    title: "Sale Date / Time",
     description: "sale subtotal",
     icon: <DollarSign size={20} />,
     position: { top: '41%', left: '96%' }
   },
   {
-    id: 7,
-    title: "Discount",
-    description: "Discount amount applied to sale",
-    icon: <Tag size={20} />,
-    position: { top: '47%', left: '96%' }
-  },
-  {
-    id: 8, // DONE
-    title: "Tax",
-    description: "Tax amount applied to sale",
-    icon: <Percent size={20} />,
-    position: { top: '53%', left: '96%' }
-  },
-  {
-    id: 9,
-    title: "Sale Total",
-    description: "Total amount to be charged in sale",
-    icon: <Calculator size={20} />,
-    position: { top: '59%', left: '96%' }
-  },
-  {
-    id: 10, // DONE 
-    title: "Clear order",
-    description: "removes everything from sale",
+    id: 4,
+    title: "Order Status",
+    description: "",
     icon: <Shredder size={20} />,
-    position: { top: '74%', left: '81%' }
+    position: { top: '73%', left: '82%' }
   },
   {
-    id: 12, // DONE
-    title: "Payment",
-    description: "Click on Payment to Tender and complete sale",
+    id: 5, 
+    title: "Export",
+    description: "Export Sales in order to import into Accounting package or Legacy system",
     icon: <Wallet size={20} />,
-    position: { top: '85%', left: '96%' }
-  },
-  {
-    id: 11, // DONE
-    title: "Discount",
-    description: "Manually apply discount to sale by flat dollar amount or by a certain percent",
-    icon: <Tag size={20} />,
-    position: { top: '74%', left: '96%' }
-  },
-  {
-    id: 13,
-    title: "Line Item",
-    description: "Product Number and Description",
-    icon: <Book size={20} />,
-    position: { top: '41%', left: '5%' }
-  },  
-  {
-    id: 14,
-    title: "Retail Price",
-    description: "Unit Retail Price",
-    icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '25%' }
-  },
-  
-  {
-    id: 15,
-    title: "Quantity",
-    description: "Click + or - to adjust quantity, auto adjusts with scan",
-    icon: <BookPlus size={20} />,
-    position: { top: '41%', left: '36%' }
+    position: { top: '87%', left: '40%' }
   },
  
   {
-    id: 16,
-    title: "Total",
-    description: "Item Total (Retail x Quantity",
-    icon: <Calculator size={20} />,
-    position: { top: '41%', left: '52%' }
+    id: 6,
+    title: "Order ID",
+    description: "",
+    icon: <DollarSign size={20} />,
+    position: { top: '39%', left: '21%' }
   },
   
   {
-    id: 17,
-    title: "Delete",
-    description: "Remove item from sale",
+    id: 7,
+    title: "Net Price",
+    description: "Click + or - to adjust quantity, auto adjusts with scan",
+    icon: <BookPlus size={20} />,
+    position: { top: '39%', left: '36%' }
+  },
+ 
+  {
+    id: 8,
+    title: "Tip Amount",
+    description: "Enable tips by Card Reader and track tips within Transactions.",
+    icon: <Calculator size={20} />,
+    position: { top: '39%', left: '52%' }
+  },
+  {
+    id: 9,
+    title: "Cashier",
+    description: "ID the Cashier who processed the sale.",
+    icon: <Calculator size={20} />,
+    position: { top: '39%', left: '69%' }
+  },  
+  {
+    id: 10,
+    title: "Customer Email",
+    description: "Track customer email by transaction",
     icon: <Trash2 size={20} />,
-    position: { top: '41%', left: '64%' }
+    position: { top: '39%', left: '64%' }
       }
     ]
   };
