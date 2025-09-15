@@ -1,6 +1,7 @@
 import { 
   ArrowLeft,
   Wifi, 
+  ChartLine,
   CreditCard, 
   Smartphone, 
   Zap, 
@@ -85,126 +86,39 @@ function ReportsPage({ onNavigateBack }) {
   const deviceFeatures = {
     'analytics': [
   {
-    id: 1, // DONE
-    title: "Search",
-    description: "Either scan item into sale with Bluetooth connected Scanner or use our blazing fast search to manually find and add item into sale",
-    icon: <Search size={20} />,
-    position: { top: '27%', left: '5%' }
-  },
-
-  {
-    id: 2, // DONE
-    title: "Store - Cashier",
-    description: "Displays store you're selling from and cashier making the sale",
-    icon: <Zap size={20} />,
-    position: { top: '13%', left: '67%' }
-  },
-  {
-    id: 3, // DONE
-    title: "POS drawer",
-    description: "Navigate to Transactions, Close Day, Assign Card Reader, Attach Bluetooth scanner",
-    icon: <Flag size={20} />,
-    position: { top: '13%', left: '83%' }
-  },
-  {
-    id: 4, // DONE
-    title: "Home",
-    description: "Navigate back to Home to access other app modules",
-    icon: <Home size={20} />,
-    position: { top: '13%', left: '96%' }
-  },
-  {
-    id: 5, // DONE 
+    id: 1, 
     title: "Add Customer",
     description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
     icon: <Users size={20} />,
     position: { top: '34%', left: '96%' }
   },
+
   {
-    id: 6,
-    title: "Subtotal",
-    description: "sale subtotal",
-    icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '96%' }
-  },
-  {
-    id: 7,
-    title: "Discount",
-    description: "Discount amount applied to sale",
-    icon: <Tag size={20} />,
-    position: { top: '47%', left: '96%' }
-  },
-  {
-    id: 8, // DONE
-    title: "Tax",
-    description: "Tax amount applied to sale",
-    icon: <Percent size={20} />,
-    position: { top: '53%', left: '96%' }
-  },
-  {
-    id: 9,
-    title: "Sale Total",
-    description: "Total amount to be charged in sale",
+    id: 2,
+    title: "Sales By:",
+    description: "Filter sales by Hour / Day / Week / Month",
     icon: <Calculator size={20} />,
-    position: { top: '59%', left: '96%' }
+    position: { top: '45%', left: '96%' }
   },
   {
-    id: 10, // DONE 
-    title: "Clear order",
-    description: "removes everything from sale",
-    icon: <Shredder size={20} />,
-    position: { top: '74%', left: '81%' }
+    id: 3,
+    title: "Visual Toggle",
+    description: "Toggle between Bar Chart or Scatter Plot",
+    icon: <ChartLine size={20} />,
+    position: { top: '54%', left: '75%' }
   },
   {
-    id: 12, // DONE
-    title: "Payment",
-    description: "Click on Payment to Tender and complete sale",
-    icon: <Wallet size={20} />,
-    position: { top: '85%', left: '96%' }
-  },
-  {
-    id: 11, // DONE
-    title: "Discount",
-    description: "Manually apply discount to sale by flat dollar amount or by a certain percent",
-    icon: <Tag size={20} />,
-    position: { top: '74%', left: '96%' }
-  },
-  {
-    id: 13,
-    title: "Line Item",
-    description: "Product Number and Description",
-    icon: <Book size={20} />,
-    position: { top: '41%', left: '5%' }
+    id: 4,
+    title: "Simple KPI",
+    description: "Quick view KPI's, see the data points that matter in our simple KPI dashboard",
+    icon: <DollarSign size={20} />,
+    position: { top: '50%', left: '25%' }
   },  
   {
-    id: 14,
-    title: "Retail Price",
-    description: "Unit Retail Price",
-    icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '25%' }
-  },
-  
-  {
-    id: 15,
-    title: "Quantity",
-    description: "Click + or - to adjust quantity, auto adjusts with scan",
-    icon: <BookPlus size={20} />,
-    position: { top: '41%', left: '36%' }
-  },
- 
-  {
-    id: 16,
-    title: "Total",
-    description: "Item Total (Retail x Quantity",
-    icon: <Calculator size={20} />,
-    position: { top: '41%', left: '52%' }
-  },
-  
-  {
-    id: 17,
-    title: "Delete",
-    description: "Remove item from sale",
-    icon: <Trash2 size={20} />,
+    id: 5,
+    title: "Filter Reporting",
+    description: "Filter Reporting by Date Range and Store",
+    icon: <Layers size={20} />,
     position: { top: '41%', left: '64%' }
   }
   
