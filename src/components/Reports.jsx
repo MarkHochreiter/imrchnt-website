@@ -123,19 +123,19 @@ function ReportsPage({ onNavigateBack }) {
     title: "Filters",
     description: "Total amount to be charged in sale",
     icon: <Layers size={20} />,
-    position: { top: '30%', left: '60%' }
+    position: { top: '25%', left: '56%' }
   },
   {
     id: 2, 
     title: "Search",
     description: "Either scan receipt to find sale, look up by sale id or use filters to pinpoint a sale or group sales.",
     icon: <Search size={20} />,
-    position: { top: '26%', left: '25%' }
+    position: { top: '26%', left: '20%' }
   },
   {
     id: 3,
     title: "Sale Date / Time",
-    description: "sale subtotal",
+    description: ",
     icon: <DollarSign size={20} />,
     position: { top: '41%', left: '96%' }
   },
@@ -144,14 +144,14 @@ function ReportsPage({ onNavigateBack }) {
     title: "Order Status",
     description: "",
     icon: <Zap size={20} />,
-    position: { top: '73%', left: '82%' }
+    position: { top: '39%', left: '82%' }
   },
   {
     id: 5, 
     title: "Export",
     description: "Export Sales in order to import into Accounting package or Legacy system",
     icon: <ArrowRight size={20} />,
-    position: { top: '87%', left: '40%' }
+    position: { top: '87%', left: '41%' }
   },
  
   {
@@ -165,7 +165,7 @@ function ReportsPage({ onNavigateBack }) {
   {
     id: 7,
     title: "Net Price",
-    description: "Click + or - to adjust quantity, auto adjusts with scan",
+    description: "",
     icon: <DollarSign size={20} />,
     position: { top: '39%', left: '36%' }
   },
@@ -175,21 +175,21 @@ function ReportsPage({ onNavigateBack }) {
     title: "Tip Amount",
     description: "Enable tips by Card Reader and track tips within Transactions.",
     icon: <DollarSign size={20} />,
-    position: { top: '39%', left: '52%' }
+    position: { top: '39%', left: '51%' }
   },
   {
     id: 9,
     title: "Cashier",
     description: "ID the Cashier who processed the sale.",
     icon: <Users size={20} />,
-    position: { top: '39%', left: '69%' }
+    position: { top: '39%', left: '71%' }
   },  
   {
     id: 10,
     title: "Customer Email",
     description: "Track customer email by transaction",
     icon: <Send size={20} />,
-    position: { top: '39%', left: '64%' }
+    position: { top: '39%', left: '63%' }
       }
     ]
   };
