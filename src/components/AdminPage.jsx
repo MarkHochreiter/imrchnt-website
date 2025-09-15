@@ -79,7 +79,7 @@ function AdminPage({ onNavigateBack }) {
     {
       id: 'stores',
       name: 'Stores',
-      icon: <Monitor className="h-5 w-5" />,
+      icon: <Store className="h-5 w-5" />,
       title: 'Manage Multiple Stores',
       subtitle: 'Centralized store management system',
       description: 'Configure multiple store locations with centralized control. Manage store-specific settings, permissions, and performance tracking across all your retail locations.',
@@ -200,14 +200,14 @@ function AdminPage({ onNavigateBack }) {
         id: 3,
         title: "Terminals",
         description: "Manage Card Readers, activate and customize tips on individual units.",
-        icon: <BarChart3 size={20} />,
+        icon: <Smartphone size={20} />,
         position: { top: '17%', left: '43%' }
       },
       {
         id: 4,
         title: "Reporting",
         description: "Export Payout Details Reports to reconcile Payouts to Payments.",
-        icon: <CreditCard size={20} />,
+        icon: <BarChart3 size={20} />,
         position: { top: '17%', left: '75%' }
       },
       {
@@ -237,7 +237,7 @@ function AdminPage({ onNavigateBack }) {
         id: 2,
         title: "Registers",
         description: "Manage and track Registers across all locations.",
-        icon: <Eye size={20} />,
+        icon: <Calculator size={20} />,
        position: { top: '18%', left: '30%' }
       }
     ]
