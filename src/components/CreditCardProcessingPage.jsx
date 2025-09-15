@@ -48,7 +48,7 @@ function CreditCardProcessingPage() {
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Real-time balance tracking</span>
+                  <span>Instant Transfer for same day cash optional</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
@@ -59,9 +59,6 @@ function CreditCardProcessingPage() {
                   <span>Multiple bank account support</span>
                 </div>
               </div>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Manage Payouts
-              </Button>
             </div>
             <div className="bg-gray-50 p-8 rounded-lg">
               <div className="aspect-video bg-white rounded-lg shadow-lg flex items-center justify-center">
@@ -92,7 +89,6 @@ function CreditCardProcessingPage() {
               </div>
               <p className="text-lg text-gray-600 mb-8">
                 Manage your payment terminals with our comprehensive terminal management system. 
-                Monitor status, update software, and troubleshoot issues remotely.
               </p>
               <div className="space-y-4 mb-8">
                 <div className="flex items-center">
@@ -105,7 +101,7 @@ function CreditCardProcessingPage() {
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Real-time status monitoring</span>
+                  <span>Customize tip options</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
@@ -133,24 +129,23 @@ function CreditCardProcessingPage() {
               </div>
               <p className="text-lg text-gray-600 mb-8">
                 Protect your business from chargebacks with our comprehensive dispute management system. 
-                Get alerts, manage responses, and track resolution progress.
               </p>
               <div className="space-y-4 mb-8">
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Instant chargeback alerts</span>
+                  <span>Chargeback alerts</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Automated evidence collection</span>
+                  <span>Provide evidence simply</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Expert dispute assistance</span>
+                  <span>Manage responses</span>
                 </div>
                 <div className="flex items-center">
                   <ChevronRight className="h-5 w-5 text-[#f08e80] mr-3" />
-                  <span>Chargeback prevention tools</span>
+                  <span>Track resolutions</span>
                 </div>
               </div>
               <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
