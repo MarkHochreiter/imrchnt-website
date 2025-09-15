@@ -98,7 +98,7 @@ function ReportsPage({ onNavigateBack }) {
     title: "Sales By:",
     description: "Filter sales by Hour / Day / Week / Month",
     icon: <Calculator size={20} />,
-    position: { top: '46%', left: '96%' }
+    position: { top: '44%', left: '96%' }
   },
   {
     id: 3,
@@ -112,7 +112,7 @@ function ReportsPage({ onNavigateBack }) {
     title: "Simple KPI",
     description: "Quick view KPI's, see the data points that matter in our simple KPI dashboard",
     icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '50%' }
+    position: { top: '41%', left: '45%' }
   }
     ] ,
     'transactions': [
