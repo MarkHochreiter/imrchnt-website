@@ -6,7 +6,9 @@ import {
   Mail,
   Clock,
   Users,
-  BookOpen
+  BookOpen,
+  Monitor,
+  Map
 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 
@@ -23,14 +25,8 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave }) {
           description: "Submit a support request and get help from our team"
         },
         {
-          title: "Live Chat",
-          subtitle: "Chat with our support team",
-          icon: <MessageSquare className="h-5 w-5" />,
-          description: "Get instant help during business hours"
-        },
-        {
           title: "Phone Support",
-          subtitle: "Call our support line",
+          subtitle: "(603)-298-5721",
           icon: <Phone className="h-5 w-5" />,
           description: "Speak directly with a support specialist"
         }
@@ -41,21 +37,15 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave }) {
       icon: <FileText className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
-          title: "User Guides",
+          title: "User Guides", // LINK TO HAPPY FOX
           subtitle: "Step-by-step instructions",
           icon: <BookOpen className="h-5 w-5" />,
           description: "Comprehensive guides for all features"
         },
         {
-          title: "API Documentation",
-          subtitle: "Developer resources",
-          icon: <FileText className="h-5 w-5" />,
-          description: "Technical documentation for developers"
-        },
-        {
-          title: "Video Tutorials",
+          title: "Video Tutorials", // LINK TO YOUTUBE OR NEW PAGE WITH VIDEOS
           subtitle: "Visual learning resources",
-          icon: <FileText className="h-5 w-5" />,
+          icon: <Monitor className="h-5 w-5" />,
           description: "Watch and learn at your own pace"
         }
       ]
@@ -75,12 +65,6 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave }) {
           subtitle: "Suggest improvements",
           icon: <HelpCircle className="h-5 w-5" />,
           description: "Help us improve our platform"
-        },
-        {
-          title: "User Groups",
-          subtitle: "Local meetups and events",
-          icon: <Users className="h-5 w-5" />,
-          description: "Connect with users in your area"
         }
       ]
     },
@@ -88,24 +72,18 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave }) {
       title: "Resources",
       icon: <Clock className="h-8 w-8 text-[#f08e80]" />,
       items: [
-        {
-          title: "System Status",
-          subtitle: "Check service availability",
-          icon: <Clock className="h-5 w-5" />,
-          description: "Real-time status of our services"
-        },
-        {
+                {
           title: "Release Notes",
           subtitle: "Latest updates and features",
           icon: <FileText className="h-5 w-5" />,
           description: "Stay informed about new releases"
         },
         {
-          title: "Training",
-          subtitle: "Professional training programs",
-          icon: <BookOpen className="h-5 w-5" />,
-          description: "Enhance your skills with our training"
-        }
+          title: "Road Map",
+          subtitle: "Future development plans",
+          icon: <Map className="h-5 w-5" />,
+          description: "Real-time status of our services"
+        },
       ]
     }
   ]
