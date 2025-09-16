@@ -42,7 +42,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave }) {
           subtitle: "Step-by-step instructions",
           icon: <BookOpen className="h-5 w-5" />,
           description: "Comprehensive guides for all features",
-          onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im, '_blank')
+          onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im', '_blank')
         },
         {
           title: "Video Tutorials", // LINK TO YOUTUBE OR NEW PAGE WITH VIDEOS
