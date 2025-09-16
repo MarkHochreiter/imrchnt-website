@@ -40,7 +40,8 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave }) {
           title: "User Guides", // LINK TO HAPPY FOX https://imerchant.happyfox.com/tickets
           subtitle: "Step-by-step instructions",
           icon: <BookOpen className="h-5 w-5" />,
-          description: "Comprehensive guides for all features"
+          description: "Comprehensive guides for all features",
+          onClick: () => window.open('https://imerchant.happyfox.com/tickets', '_blank')
         },
         {
           title: "Video Tutorials", // LINK TO YOUTUBE OR NEW PAGE WITH VIDEOS
@@ -114,7 +115,13 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave }) {
                   <a
                     key={itemIndex}
                     href="#"
-                    className="group block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      if (item.onClick) {
+                        item.onClick()
+                      }
+                    }}
+                    className="group block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
                   >
                     <div className="flex items-start space-x-3">
                       <div className="text-gray-400 group-hover:text-[#f08e80] transition-colors duration-200 mt-1">
