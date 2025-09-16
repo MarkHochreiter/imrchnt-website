@@ -37,7 +37,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave }) {
       icon: <FileText className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
-          title: "User Guides", // LINK TO HAPPY FOX
+          title: "User Guides", // LINK TO HAPPY FOX https://imerchant.happyfox.com/tickets
           subtitle: "Step-by-step instructions",
           icon: <BookOpen className="h-5 w-5" />,
           description: "Comprehensive guides for all features"
