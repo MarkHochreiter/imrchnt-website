@@ -19,6 +19,7 @@ import ReportsPage from './components/Reports.jsx'
 import InventoryPage from './components/inventory.jsx'
 import CustomerPage from './components/Customers.jsx'
 import SingleDevicePage from './components/singledevice.jsx'
+import RoadMapPage from './components/roadmappage.jsx'
 import './App.css'
 
 // Button component
@@ -132,6 +133,7 @@ function App() {
     { name: "Help Center", href: "#" },
     { name: "Documentation", href: "#" },
     { name: "API Reference", href: "#" },
+    { name: "Road Map", href: "#" },
     { name: "Community", href: "#" },
     { name: "Contact Support", href: "#" },
     { name: "System Status", href: "#" }
@@ -329,6 +331,8 @@ function App() {
         return <AdminPage onNavigateBack={() => navigateTo('system')} />;
       case 'reports':
         return <ReportsPage onNavigateBack={() => navigateTo('system')} />;
+      case 'roadmap':
+        return <RoadMapPage onNavigateBack={() => navigateTo('home')} />;
       case 'inventory':
         return <InventoryPage onNavigateBack={() => navigateTo('system')} />;
       case 'customer':
