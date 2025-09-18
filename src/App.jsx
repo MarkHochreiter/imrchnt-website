@@ -418,6 +418,7 @@ function App() {
                   isVisible={supportMegaMenuVisible}
                   onMouseEnter={() => setSupportMegaMenuVisible(true)}
                   onMouseLeave={() => setSupportMegaMenuVisible(false)}
+                  onNavigate={navigateTo}
                 />
               </div>
             </nav>
