@@ -12,7 +12,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 
-function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
+function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, onClose }) {
   const supportData = [
     {
       title: "Get Help",
@@ -121,6 +121,9 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) 
                       e.preventDefault()
                       if (item.onClick) {
                         item.onClick()
+                      }
+                      if (onClose) {
+                        onClose() 
                       }
                     }}
                     className="group block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
