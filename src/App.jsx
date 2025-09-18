@@ -19,7 +19,7 @@ import ReportsPage from './components/Reports.jsx'
 import InventoryPage from './components/inventory.jsx'
 import CustomerPage from './components/Customers.jsx'
 import SingleDevicePage from './components/singledevice.jsx'
-import RoadMapPage from './components/roadmappage.jsx'
+import RoadMapPage from './components/RoadmapPage.jsx'
 import './App.css'
 
 // Button component
