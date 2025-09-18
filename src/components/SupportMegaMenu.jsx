@@ -12,7 +12,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 
-function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave }) {
+function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
   const supportData = [
     {
       title: "Get Help",
