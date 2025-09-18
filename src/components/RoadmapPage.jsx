@@ -54,9 +54,9 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
   const roadmapData = [
     {
       id: 1,
-      date: "May 14, 2024",
+      date: "May 14, 2025",
       title: "First Live Transaction on im+",
-      description: "Historic milestone: Our first successful live transaction processed through the im+ platform, marking the beginning of our journey in revolutionizing retail payments.",
+      description: "Historic milestone: Our first successful live transaction processed through the im+ platform.",
       status: "completed",
       icon: <Star className="h-6 w-6" />,
       category: "Launch",
@@ -68,16 +68,16 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
     },
     {
       id: 2,
-      date: "June 2024",
-      title: "Beta Testing Program Launch",
-      description: "Expanded our platform to select beta partners, gathering crucial feedback and refining our core features based on real-world usage.",
+      date: "July 7, 2025",
+      title: "First Beta Test Event",
+      description: "Still North Books and Bar holds their first event using im+ to process sales.",
       status: "completed",
       icon: <Users className="h-6 w-6" />,
       category: "Testing",
       details: [
-        "Onboarded 25 beta testing partners",
-        "Processed over 1,000 test transactions",
-        "Implemented 15 critical feature improvements"
+        "First Book = Blood Wolf Moon: Poems",
+        "First Author = Elise Paschen",
+        "First User = H Rooker"
       ]
     },
     {
