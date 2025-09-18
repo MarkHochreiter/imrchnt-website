@@ -297,11 +297,10 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-              Our Journey Forward
+              The Future is Bright!
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-              From our first live transaction to the future of retail technology. 
-              Discover the milestones that define our innovation roadmap.
+              Someone has to start saying it. We are so excited for all of the development potential ahead of us that will differentiate the independent retail experience from the behemoths.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
@@ -320,10 +319,10 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Innovation Timeline
+              Road Map Timeline
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Track our progress from breakthrough moments to future innovations that will reshape retail technology.
+              Travel along with us as we celebrate our milestones and highlight our future direction and goals.
             </p>
           </div>
 
