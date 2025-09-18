@@ -84,7 +84,8 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave }) {
           title: "Road Map",
           subtitle: "Future development plans",
           icon: <Map className="h-5 w-5" />,
-          description: "Real-time status of our services"
+          description: "Real-time status of our services",
+          onClick={() => onNavigate('roadmap')}
         },
       ]
     }
