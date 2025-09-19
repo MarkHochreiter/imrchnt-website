@@ -19,7 +19,7 @@ import ReportsPage from './components/Reports.jsx'
 import InventoryPage from './components/inventory.jsx'
 import CustomerPage from './components/Customers.jsx'
 import SingleDevicePage from './components/singledevice.jsx'
-import InterconnectedEcosystemHero from './components/InterconnectedEcosystemHero.jsx'
+import RoadMapPage from './components/RoadmapPage.jsx'
 import './App.css'
 
 // Button component
@@ -99,7 +99,7 @@ function App() {
       title: "InStore",
       items: [
         { name: "POS", page: "instore", section: "pos" },
-        { name: "Customers", page: "instore", section: "customers" },
+        { name: "Clienteling", page: "instore", section: "clienteling" },
         { name: "On Floor Assistance", page: "instore", section: "on-floor-assistance" }
       ]
     },
@@ -107,22 +107,35 @@ function App() {
       title: "Offsite",
       items: [
         { name: "Single Device", page: "offsite", section: "single-device" },
-        { name: "Multi Device", page: "offsite", section: "multi-device" },
-        { name: "Credit Card Processing", page: "offsite", section: "credit-card-processing" }
+        { name: "Import Items", page: "offsite", section: "import-items" },
+        { name: "Add Items", page: "offsite", section: "add-items" },
+        { name: "Export Sales", page: "offsite", section: "export-sales" }
+      ]
+    },
+    {
+      title: "Credit Cards",
+      items: [
+        { name: "Payouts", page: "credit-cards", section: "payouts" },
+        { name: "Terminals", page: "credit-cards", section: "terminals" },
+        { name: "Chargebacks", page: "credit-cards", section: "chargebacks" },
+        { name: "Flat Fee", page: "credit-cards", section: "flat-fee" }
       ]
     }
   ];
 
   const mobileHardwareData = [
-    { name: "S1F2", page: "s1f2" },
+    { name: "S1f2", page: "s1f2" },
     { name: "AMS1", page: "ams1" },
     { name: "SFO1", page: "sfo1" }
   ];
 
   const mobileSupportData = [
     { name: "Help Center", href: "#" },
+    { name: "Documentation", href: "#" },
+    { name: "API Reference", href: "#" },
+    { name: "Road Map", href: "#" },
+    { name: "Community", href: "#" },
     { name: "Contact Support", href: "#" },
-    { name: "API Documentation", href: "#" },
     { name: "System Status", href: "#" }
   ];
 
@@ -131,8 +144,37 @@ function App() {
       case 'home':
         return (
           <>
-            {/* Interconnected Ecosystem Hero Section */}
-            <InterconnectedEcosystemHero onSignupClick={handleSignupClick} onNavigate={navigateTo} />
+            {/* Hero Section */}
+            <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 lg:py-32">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-4xl">
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-6">
+                    Seamless POS. Intuitive Design.
+                  </h1>
+                  <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
+                    In store, Pop up, Off site. Network connection or not.  
+ Sell anywhere, anytime.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button 
+                      size="lg" 
+                      className="bg-[#f08e80] hover:bg-violet-400 text-white text-lg px-8 py-4"
+                      onClick={handleSignupClick}
+                    >
+                      Request access
+                    </Button>
+                    <p className="text-base md:text-right text-gray-300 font-houschka-medium mb-8 max-w-2xl ml-auto">
+                   "I've never had such a smooth time at a large offsite and I can't tell you how excited I am about it!"
+                    </p>
+                  </div>
+                  <p className="text-base md:text-right text-gray-300 font-houschka-medium mb-8 max-w-2xl ml-auto">
+                    H - Bookstore Manager  
+
+                    Still North Books & Bar Hanover, NH
+                  </p>
+                </div>
+              </div>
+            </section>
 
             {/* Platform Overview */}
             <section className="py-20 bg-white">
@@ -289,6 +331,8 @@ function App() {
         return <AdminPage onNavigateBack={() => navigateTo('system')} />;
       case 'reports':
         return <ReportsPage onNavigateBack={() => navigateTo('system')} />;
+      case 'roadmap':
+        return <RoadMapPage onNavigateBack={() => navigateTo('home')} />;
       case 'inventory':
         return <InventoryPage onNavigateBack={() => navigateTo('system')} />;
       case 'customer':
@@ -374,9 +418,10 @@ function App() {
                   isVisible={supportMegaMenuVisible}
                   onMouseEnter={() => setSupportMegaMenuVisible(true)}
                   onMouseLeave={() => setSupportMegaMenuVisible(false)}
+                  onNavigate={navigateTo}
+                  onClose={() => setSupportMegaMenuVisible(false)}
                 />
               </div>
-
             </nav>
 
             {/* Right side buttons */}
@@ -518,8 +563,6 @@ function App() {
                 )}
               </div>
 
-
-
               {/* Divider */}
               <div className="border-t border-gray-200 my-2"></div>
 
@@ -565,3 +608,4 @@ function App() {
 }
 
 export default App
+
