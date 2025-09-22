@@ -326,7 +326,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       title: "POS Quick Buttons",
       description: "Assign items to a grid of Buttons at POS to simply add items into sale.",
       status: "planned",
-      icon: <Target className="h-6 w-6" />,
+      icon: <CheckCircle className="h-6 w-6" />,
       category: "Product",
       details: [
         "Add items with one touch",
