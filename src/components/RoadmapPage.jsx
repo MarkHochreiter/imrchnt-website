@@ -151,9 +151,9 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       icon: <DollarSign className="h-6 w-6" />,
       category: "Credit Cards",
       details: [
-        "Biometric authentication",
-        "Advanced fraud detection",
-        "End-to-end encryption upgrades"
+        "Customize options as $ or %",
+        "Enable by Card Reader",
+        "Customer input option"
       ]
     },
     {
@@ -189,7 +189,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       date: "August 21, 2025",
       title: "Move to Postgres",
       description: "As we increased the size of db's to be cabale of housing over 1 million items per store we decided that MariaDB was no longer the best soltution.",
-      status: "planned",
+      status: "completed",
       icon: <Database className="h-6 w-6" />,
       category: "Database",
       details: [
@@ -203,7 +203,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       date: "September 12, 2025",
       title: "App on GooglePlay Store",
       description: "Our app was officially made available on the Google Play store.",
-      status: "planned",
+      status: "completed",
       icon: <Star className="h-6 w-6" />,
       category: "Launch",
       details: [
@@ -211,36 +211,34 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
     },
     {
       id: 12,
-      date: "Q3 2026",
-      title: "Augmented Reality Shopping",
-      description: "Implementing AR technology for immersive shopping experiences, virtual product try-ons, and enhanced in-store navigation and product discovery.",
-      status: "planned",
-      icon: <Layers className="h-6 w-6" />,
-      category: "AR/VR",
+      date: "Q4 2025",
+      title: "In store assistant",
+      description: "Use our smartphone app in store to assist customers. Meet the customers where they are in the store, answer inventory questions, reduce POS lines by processing the sale right there with Tap to Pay.",
+      status: "in-progress",
+      icon: <Rocket className="h-6 w-6" />,
+      category: "In store Experience",
       details: [
-        "Virtual product try-ons",
-        "AR-powered navigation",
-        "Immersive shopping experiences"
+        "Industry First"
       ]
     },
     {
       id: 13,
-      date: "Q4 2026",
-      title: "Blockchain Payment Infrastructure",
-      description: "Integrating blockchain technology for enhanced transaction transparency, reduced fees, and support for cryptocurrency payments and smart contracts.",
+      date: "Q4 2025",
+      title: "Meta Data Integrations",
+      description: "Industry specific integrations for richer item meta data from Industry vendors and publishers.",
       status: "planned",
       icon: <TrendingUp className="h-6 w-6" />,
-      category: "Blockchain",
+      category: "Integrations",
       details: [
-        "Cryptocurrency support",
-        "Smart contract integration",
-        "Enhanced transparency"
+        "API's", 
+        "File feeds", 
+        "ONYX XML files"
       ]
     },
     {
       id: 14,
-      date: "Q1 2027",
-      title: "Autonomous Store Technology",
+      date: "Q1 2026",
+      title: "Customer Orders",
       description: "Launching fully autonomous store capabilities with AI-powered checkout, automated inventory management, and seamless customer experiences.",
       status: "planned",
       icon: <Rocket className="h-6 w-6" />,
@@ -253,8 +251,64 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
     },
     {
       id: 15,
-      date: "Q2 2027",
-      title: "Global Platform Expansion",
+      date: "Q2 2026",
+      title: "Automated Legacy POS Integration",
+      description: "Achieving worldwide platform availability with localized features, regional partnerships, and comprehensive support for diverse global markets.",
+      status: "planned",
+      icon: <Target className="h-6 w-6" />,
+      category: "Global",
+      details: [
+        "Worldwide availability",
+        "Localized features",
+        "Regional partnerships"
+      ]
+    },
+    {
+      id: 16,
+      date: "Q2 2026",
+      title: "Ordering Decision Tree",
+      description: "Preset what path an order takes based on a set of rules. Send orders through Ingram DTH instantly on items ordered where inventory isn't in stock",
+      status: "planned",
+      icon: <Target className="h-6 w-6" />,
+      category: "Global",
+      details: [
+        "Worldwide availability",
+        "Localized features",
+        "Regional partnerships"
+      ]
+    },
+    {
+      id: 17,
+      date: "Q1 2026",
+      title: "Gift Cards",
+      description: "Achieving worldwide platform availability with localized features, regional partnerships, and comprehensive support for diverse global markets.",
+      status: "planned",
+      icon: <Target className="h-6 w-6" />,
+      category: "Global",
+      details: [
+        "Worldwide availability",
+        "Localized features",
+        "Regional partnerships"
+      ]
+    },
+    {
+      id: 18,
+      date: "Q2 2026",
+      title: "Customer Rewards",
+      description: "Achieving worldwide platform availability with localized features, regional partnerships, and comprehensive support for diverse global markets.",
+      status: "planned",
+      icon: <Target className="h-6 w-6" />,
+      category: "Global",
+      details: [
+        "Worldwide availability",
+        "Localized features",
+        "Regional partnerships"
+      ]
+    },
+    {
+      id: 19,
+      date: "Q2 2026",
+      title: "Target Marketing",
       description: "Achieving worldwide platform availability with localized features, regional partnerships, and comprehensive support for diverse global markets.",
       status: "planned",
       icon: <Target className="h-6 w-6" />,
