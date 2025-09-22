@@ -5,6 +5,7 @@ import {
   Clock, 
   Star, 
   Zap, 
+  Book,
   Users, 
   CreditCard, 
   Smartphone, 
@@ -18,7 +19,11 @@ import {
   Target,
   TrendingUp,
   Award,
-  Sparkles
+  Sparkles,
+  Lock, 
+  DollarSign,
+  WifiOff,
+  Receipt
 } from 'lucide-react';
 
 // Button component matching the styling from attached pages
@@ -51,6 +56,8 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
     return () => clearInterval(interval);
   }, []);
 
+  // Statuses = planned, completed, in-progress
+  
   const roadmapData = [
     {
       id: 1,
@@ -66,84 +73,82 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
         "Confirmed system reliability and security"
       ]
     },
-    {
+        {
       id: 2,
+      date: "June 4, 2025",
+      title: "Tap to Pay on Smartphones",
+      description: "No need for a Card Reader. Process contactless payments anywhere with your smartphone.",
+      status: "completed",
+      icon: <Smartphone className="h-6 w-6" />,
+      category: "Credit Cards",
+      details: [
+        "iOS and Android Smartphones with NFC capability"
+      ]
+    },
+    
+    {
+      id: 3,
+      date: "June 17, 2025",
+      title: "Offline Mode",
+      description: "Take payments with or without a network connection. Download DB to device and sell offline. Store and Foreward credit card transactions.",
+      status: "completed",
+      icon: <WifiOff className="h-6 w-6" />,
+      category: "Product",
+      details: [
+        "Triple Redundancy",
+        "Sales in any environment"
+      ]
+    },
+    {
+      id: 4,
+      date: "June 25, 2025",
+      title: "Custom Receipts",
+      description: "Design custom receipts with Header logo and custom copy on header and footer.",
+      status: "completed",
+      icon: <Receipt className="h-6 w-6" />,
+      category: "Transactions",
+      details: [
+        "Print to S1F2",
+        "Reprint from Transactions",
+        "Email / SMS / Print"
+      ]
+    },
+    {
+      id: 5,
       date: "July 7, 2025",
       title: "First Beta Test Event",
       description: "Still North Books and Bar holds their first event using im+ to process sales.",
       status: "completed",
-      icon: <Users className="h-6 w-6" />,
-      category: "Testing",
+      icon: <Star className="h-6 w-6" />,
+      category: "Launch",
       details: [
         "First Book = Blood Wolf Moon: Poems",
         "First Author = Elise Paschen",
         "First User = H Rooker"
       ]
     },
-    {
-      id: 3,
-      date: "August 2024",
-      title: "Mobile POS Integration",
-      description: "Launched comprehensive mobile point-of-sale capabilities, enabling businesses to process payments anywhere with smartphone and tablet support.",
-      status: "completed",
-      icon: <Smartphone className="h-6 w-6" />,
-      category: "Product",
-      details: [
-        "iOS and Android app releases",
-        "Tap-to-Pay functionality",
-        "Offline transaction capabilities"
-      ]
-    },
-    {
-      id: 4,
-      date: "October 2024",
-      title: "Advanced Analytics Dashboard",
-      description: "Released powerful analytics and reporting tools, providing businesses with deep insights into sales patterns, customer behavior, and performance metrics.",
-      status: "completed",
-      icon: <BarChart3 className="h-6 w-6" />,
-      category: "Analytics",
-      details: [
-        "Real-time sales reporting",
-        "Customer behavior analytics",
-        "Predictive sales forecasting"
-      ]
-    },
-    {
-      id: 5,
-      date: "December 2024",
-      title: "Multi-Store Management",
-      description: "Introduced centralized management for multi-location businesses, enabling seamless operations across multiple stores from a single dashboard.",
-      status: "completed",
-      icon: <Monitor className="h-6 w-6" />,
-      category: "Enterprise",
-      details: [
-        "Centralized inventory management",
-        "Cross-location reporting",
-        "Unified customer database"
-      ]
-    },
+
+
     {
       id: 6,
-      date: "Q1 2025",
-      title: "AI-Powered Inventory Optimization",
-      description: "Implementing machine learning algorithms to predict inventory needs, optimize stock levels, and reduce waste through intelligent demand forecasting.",
-      status: "in-progress",
+      date: "July 15, 2025",
+      title: "In App Chargeback management",
+      description: "Get notified, dispute, submit evidence, and track each individual Chargeback from within the application.",
+      status: "completed",
       icon: <Zap className="h-6 w-6" />,
-      category: "AI/ML",
+      category: "Credit Cards",
       details: [
-        "Predictive inventory management",
-        "Automated reorder suggestions",
-        "Demand pattern recognition"
+        "Industry First"
       ]
     },
     {
       id: 7,
-      date: "Q2 2025",
-      title: "Enhanced Security Framework",
-      description: "Rolling out advanced security features including biometric authentication, enhanced encryption, and fraud detection to ensure maximum transaction safety.",
-      status: "planned",
-      icon: <Shield className="h-6 w-6" />,
-      category: "Security",
+      date: "July 22, 2025",
+      title: "Tips",
+      description: "For stores that combine a cafe or bar into their model we have provided the option to enable tips on individual card readers.",
+      status: "completed",
+      icon: <DollarSign className="h-6 w-6" />,
+      category: "Credit Cards",
       details: [
         "Biometric authentication",
         "Advanced fraud detection",
@@ -152,58 +157,55 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
     },
     {
       id: 8,
-      date: "Q3 2025",
-      title: "Global Payment Gateway",
-      description: "Expanding international capabilities with multi-currency support, regional payment methods, and compliance with global financial regulations.",
-      status: "planned",
-      icon: <Globe className="h-6 w-6" />,
-      category: "Global",
+      date: "July 30, 2025",
+      title: "Two Factor Authentication",
+      description: "2FA Security for Admin an Manager security roles.",
+      status: "completed",
+      icon: <Lock className="h-6 w-6" />,
+      category: "Security",
       details: [
-        "Multi-currency processing",
-        "Regional payment methods",
-        "International compliance"
+        "Secures Admin / Manager Log In",
+        "Secures Bank Account Add / Delete",
+        "Secures Payouts"
       ]
     },
     {
       id: 9,
-      date: "Q4 2025",
-      title: "Marketplace Integration",
-      description: "Launching integrated marketplace functionality, allowing businesses to sell across multiple channels while maintaining unified inventory and order management.",
-      status: "planned",
-      icon: <Package className="h-6 w-6" />,
-      category: "Marketplace",
+      date: "August 13, 2025",
+      title: "Item Meta Data",
+      description: "Enriching item meta data, making products easier to find in app and in store with the addition of customizable data.",
+      status: "completed",
+      icon: <Book className="h-6 w-6" />,
+      category: "Products",
       details: [
-        "Multi-channel selling",
-        "Unified order management",
-        "Automated inventory sync"
+        "Attributes",
+        "Categories",
+        "Variants"
       ]
     },
     {
       id: 10,
-      date: "Q1 2026",
-      title: "Advanced Customer Loyalty Platform",
-      description: "Introducing sophisticated loyalty programs with personalized rewards, gamification elements, and AI-driven customer engagement strategies.",
+      date: "August 21, 2025",
+      title: "Move to Postgres",
+      description: "As we increased the size of db's to be cabale of housing over 1 million items per store we decided that MariaDB was no longer the best soltution.",
       status: "planned",
-      icon: <Award className="h-6 w-6" />,
-      category: "Loyalty",
+      icon: <Database className="h-6 w-6" />,
+      category: "Database",
       details: [
-        "Personalized reward systems",
-        "Gamification features",
-        "AI-driven engagement"
+        "Search Results in Milliseconds",
+        "Enables Vector search",
+        "Open Source"
       ]
     },
     {
       id: 11,
-      date: "Q2 2026",
-      title: "Voice Commerce Integration",
-      description: "Pioneering voice-activated commerce capabilities, enabling hands-free transactions and voice-controlled inventory management for enhanced accessibility.",
+      date: "September 12, 2025",
+      title: "App on GooglePlay Store",
+      description: "Our app was officially made available on the Google Play store.",
       status: "planned",
-      icon: <Sparkles className="h-6 w-6" />,
-      category: "Innovation",
+      icon: <Star className="h-6 w-6" />,
+      category: "Launch",
       details: [
-        "Voice-activated transactions",
-        "Hands-free inventory control",
-        "Accessibility enhancements"
       ]
     },
     {
