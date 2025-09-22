@@ -25,7 +25,10 @@ import {
   WifiOff,
   Receipt,
   Database,
-  Network
+  Network,
+  Map,
+  Percent,
+  List
 } from 'lucide-react';
 
 // Button component matching the styling from attached pages
@@ -252,7 +255,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
     },
     {
       id: 15,
-      date: "Q2 2026",
+      date: "Q1 2026",
       title: "Automated Legacy POS Integration",
       description: "Move POS operations to a new application while maintaining other business operations on your legacy system .",
       status: "planned",
@@ -268,7 +271,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       id: 16,
       date: "Q2 2026",
       title: "Ordering Decision Tree",
-      description: "Preset what path a customer order takes based on a set of rules. Send orders through Ingram DTH instantly on items ordered where inventory isn't in stock",
+      description: "Preset what path a customer order takes based on a set of rules. Send orders to stores closest to delivery or send to 3PL vendors instantly on items ordered where inventory isn't in store",
       status: "planned",
       icon: <Network className="h-6 w-6" />,
       category: "Buying",
@@ -280,30 +283,27 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
     },
     {
       id: 17,
-      date: "Q1 2026",
+      date: "Q2 2026",
       title: "Gift Cards",
-      description: "Achieving worldwide platform availability with localized features, regional partnerships, and comprehensive support for diverse global markets.",
+      description: "Sell and redeem store gift cards at POS.",
       status: "planned",
       icon: <CreditCard className="h-6 w-6" />,
       category: "Integrations",
       details: [
-        "Worldwide availability",
-        "Localized features",
-        "Regional partnerships"
+        "Legacy Integration",
+        "Givex",
+        "Net New Gift Cards"
       ]
     },
     {
       id: 18,
       date: "Q2 2026",
       title: "Customer Rewards",
-      description: "Achieving worldwide platform availability with localized features, regional partnerships, and comprehensive support for diverse global markets.",
+      description: "Track customer sales, create rewards program rules, issue customer rewards as balance cards or coupons.",
       status: "planned",
       icon: <Award className="h-6 w-6" />,
       category: "In Store Experience",
       details: [
-        "Worldwide availability",
-        "Localized features",
-        "Regional partnerships"
       ]
     },
     {
@@ -319,7 +319,75 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
         "Add to Sale through Card Reader",
         "Highly targeted email campaigns"
       ]
-    }
+    },
+    {
+      id: 20,
+      date: "Q2 2026",
+      title: "POS Quick Buttons",
+      description: "Assign items to a grid of Buttons at POS to simply add items into sale.",
+      status: "planned",
+      icon: <Target className="h-6 w-6" />,
+      category: "Product",
+      details: [
+        "Add items with one touch",
+        "Simplified POS"
+      ]
+    },
+    {
+      id: 21,
+      date: "Q2 2026",
+      title: "MapBox Integration",
+      description: "Validate address, auto-fill, movement data, indoor maps.",
+      status: "planned",
+      icon: <Map className="h-6 w-6" />,
+      category: "Integrations",
+      details: [
+      ]
+    },
+    {
+      id: 22,
+      date: "Q2 2026",
+      title: "Tax Integration",
+      description: "automatically apply tax rates at pos based on event address, ship to address, or individual item type.",
+      status: "planned",
+      icon: <Percent className="h-6 w-6" />,
+      category: "Integrations",
+      details: [
+      ]
+    },
+    {
+      id: 23,
+      date: "Q3 2026",
+      title: "Buying",
+      description: "",
+      status: "planned",
+      icon: <Layers className="h-6 w-6" />,
+      category: "Product",
+      details: [
+      ]
+    },
+    {
+      id: 24,
+      date: "Q3 2026",
+      title: "Receiving",
+      description: "",
+      status: "planned",
+      icon: <Package className="h-6 w-6" />,
+      category: "Product",
+      details: [
+      ]
+    },
+    {
+      id: 25,
+      date: "Q4 2026",
+      title: "Picking",
+      description: "",
+      status: "planned",
+      icon: <List className="h-6 w-6" />,
+      category: "Integrations",
+      details: [
+      ]
+    }   
   ];
 
   const getStatusColor = (status) => {
