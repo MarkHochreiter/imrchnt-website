@@ -23,7 +23,8 @@ import {
   Lock, 
   DollarSign,
   WifiOff,
-  Receipt
+  Receipt,
+  Database
 } from 'lucide-react';
 
 // Button component matching the styling from attached pages
