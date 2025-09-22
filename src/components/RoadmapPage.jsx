@@ -24,7 +24,8 @@ import {
   DollarSign,
   WifiOff,
   Receipt,
-  Database
+  Database,
+  Network
 } from 'lucide-react';
 
 // Button component matching the styling from attached pages
@@ -216,7 +217,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       description: "Use our smartphone app in store to assist customers. Meet the customers where they are in the store, answer inventory questions, reduce POS lines by processing the sale right there with Tap to Pay.",
       status: "in-progress",
       icon: <Rocket className="h-6 w-6" />,
-      category: "In store Experience",
+      category: "In Store Experience",
       details: [
         "Industry First"
       ]
@@ -239,40 +240,40 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       id: 14,
       date: "Q1 2026",
       title: "Customer Orders",
-      description: "Launching fully autonomous store capabilities with AI-powered checkout, automated inventory management, and seamless customer experiences.",
+      description: "Produce customer orders from the same screen as a regular transaction.",
       status: "planned",
-      icon: <Rocket className="h-6 w-6" />,
-      category: "Autonomous",
+      icon: <Users className="h-6 w-6" />,
+      category: "In Store Experience",
       details: [
-        "AI-powered checkout",
-        "Automated inventory",
-        "Seamless customer flow"
+        "Credit Card Pre Authorization",
+        "Bill the customer when the order ships",
+        "Automate customer order buying"
       ]
     },
     {
       id: 15,
       date: "Q2 2026",
       title: "Automated Legacy POS Integration",
-      description: "Achieving worldwide platform availability with localized features, regional partnerships, and comprehensive support for diverse global markets.",
+      description: "Move POS operations to a new application while maintaining other business operations on your legacy system .",
       status: "planned",
-      icon: <Target className="h-6 w-6" />,
-      category: "Global",
+      icon: <Zap className="h-6 w-6" />,
+      category: "Integrations",
       details: [
-        "Worldwide availability",
-        "Localized features",
-        "Regional partnerships"
+        "Inventory imports",
+        "Sales exports",
+        "Customer Order exports"
       ]
     },
     {
       id: 16,
       date: "Q2 2026",
       title: "Ordering Decision Tree",
-      description: "Preset what path an order takes based on a set of rules. Send orders through Ingram DTH instantly on items ordered where inventory isn't in stock",
+      description: "Preset what path a customer order takes based on a set of rules. Send orders through Ingram DTH instantly on items ordered where inventory isn't in stock",
       status: "planned",
-      icon: <Target className="h-6 w-6" />,
-      category: "Global",
+      icon: <Network className="h-6 w-6" />,
+      category: "Buying",
       details: [
-        "Worldwide availability",
+        "Automate customer order buying",
         "Localized features",
         "Regional partnerships"
       ]
@@ -283,8 +284,8 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       title: "Gift Cards",
       description: "Achieving worldwide platform availability with localized features, regional partnerships, and comprehensive support for diverse global markets.",
       status: "planned",
-      icon: <Target className="h-6 w-6" />,
-      category: "Global",
+      icon: <CreditCard className="h-6 w-6" />,
+      category: "Integrations",
       details: [
         "Worldwide availability",
         "Localized features",
@@ -297,8 +298,8 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       title: "Customer Rewards",
       description: "Achieving worldwide platform availability with localized features, regional partnerships, and comprehensive support for diverse global markets.",
       status: "planned",
-      icon: <Target className="h-6 w-6" />,
-      category: "Global",
+      icon: <Award className="h-6 w-6" />,
+      category: "In Store Experience",
       details: [
         "Worldwide availability",
         "Localized features",
@@ -309,14 +310,14 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       id: 19,
       date: "Q2 2026",
       title: "Target Marketing",
-      description: "Achieving worldwide platform availability with localized features, regional partnerships, and comprehensive support for diverse global markets.",
+      description: "Individualized marketing to customers in and out of the store.",
       status: "planned",
       icon: <Target className="h-6 w-6" />,
-      category: "Global",
+      category: "In Store Experience",
       details: [
-        "Worldwide availability",
-        "Localized features",
-        "Regional partnerships"
+        "One Click buy through Text",
+        "Add to Sale through Card Reader",
+        "Highly targeted email campaigns"
       ]
     }
   ];
