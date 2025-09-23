@@ -219,7 +219,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       date: "Q4 2025",
       title: "App on Apple App Store",
       description: "App to be available on Apple App store by the end of the year.",
-      status: "planned",
+      status: "in-progress",
       icon: <Apple className="h-6 w-6" />,
       category: "Integrations",
       details: [
@@ -282,7 +282,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       id: 17,
       date: "Q1 2026",
       title: "Automated Legacy POS Integration",
-      description: "Move POS operations to a new application while maintaining other business operations on your legacy system .",
+      description: "Move POS operations to imrchnt while maintaining other business operations on your legacy system .",
       status: "planned",
       icon: <Zap className="h-6 w-6" />,
       category: "Integrations",
