@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button.jsx'
 import { CreditCard, Smartphone, Printer, Wifi, Battery, Monitor, ShoppingCart, ArrowLeft } from 'lucide-react'
 import s1f2Image from '../assets/s1f2_image.png'
 
-function S1f2Page({ onNavigateBack }) {
+function S1f2Page({ onNavigateBack, onContactSales }) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
