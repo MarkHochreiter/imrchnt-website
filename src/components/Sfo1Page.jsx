@@ -29,7 +29,7 @@ function Sfo1Page({ onNavigateBack }) {
                   onClick={onContactSales}
                 >
                   Generate Quote
-                </Button
+                </Button>
               </div>
             </div>
             <div className="bg-gray-100 rounded-lg p-8 flex items-center justify-center">
@@ -167,7 +167,7 @@ function Sfo1Page({ onNavigateBack }) {
                   onClick={onContactSales}
                 >
                   Generate Quote
-                </Button
+                </Button>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm border-2 border-[#f08e80]">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Purchase</h3>
@@ -194,7 +194,7 @@ function Sfo1Page({ onNavigateBack }) {
                   onClick={onContactSales}
                 >
                   Generate Quote
-                </Button
+                </Button>
             </div>
           </div>
         </div>
@@ -219,7 +219,7 @@ function Sfo1Page({ onNavigateBack }) {
                   onClick={onContactSales}
                 >
                   Generate Quote
-                </Button
+                </Button>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
               <div className="text-center mb-4">
@@ -235,7 +235,7 @@ function Sfo1Page({ onNavigateBack }) {
                   onClick={onContactSales}
                 >
                   Generate Quote
-                </Button
+                </Button>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
               <div className="text-center mb-4">
@@ -251,7 +251,7 @@ function Sfo1Page({ onNavigateBack }) {
                   onClick={onContactSales}
                 >
                   Generate Quote
-                </Button
+                </Button>
             </div>
           </div>
         </div>
@@ -296,7 +296,7 @@ function Sfo1Page({ onNavigateBack }) {
                   onClick={onContactSales}
                 >
                   Generate Quote
-                </Button
+                </Button>
           </div>
         </div>
       </section>
