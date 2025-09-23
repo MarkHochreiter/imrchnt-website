@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button.jsx'
 import { CreditCard, Monitor, Wifi, Shield, ShoppingCart, ArrowLeft, Smartphone, Users } from 'lucide-react'
 import sfo1Image from '../assets/sfo1_image.png'
 
-function Sfo1Page({ onNavigateBack }) {
+function Sfo1Page({ onNavigateBack, onContactSales }) {
   return (
     <div className="min-h-screen bg-gray-50">
      
