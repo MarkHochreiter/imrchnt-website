@@ -1,10 +1,44 @@
-import { Button } from '@/components/ui/button.jsx'
 import { CreditCard, Smartphone, Wifi, Battery, Monitor, ShoppingCart, ArrowLeft, Shield } from 'lucide-react'
 import ams1Image from '../assets/ams1_image.png'
 
-function Ams1Page({ onNavigateBack }) {
+// Button component to match your design system
+const Button = ({ children, className = '', size = 'default', variant = 'default', onClick, ...props }) => {
+  const sizeClasses = {
+    default: 'px-4 py-2',
+    lg: 'px-6 py-3 text-lg'
+  }
+  
+  const variantClasses = {
+    default: 'bg-[#f08e80] hover:bg-[#e07d70] text-white',
+    outline: 'border border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white bg-transparent'
+  }
+  
+  return (
+    <button
+      className={`inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${sizeClasses[size]} ${variantClasses[variant]} ${className}`}
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </button>
+  )
+}
+
+function Ams1Page({ onNavigateBack, onContactSales }) {
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Back Button */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <button
+            onClick={onNavigateBack}
+            className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Back to Hardware
+          </button>
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section className="bg-white py-16">
@@ -22,7 +56,12 @@ function Ams1Page({ onNavigateBack }) {
                 An all-in-one terminal with an Android operating system that businesses can use to accept payments as well as run their business. It is a compact, mobile payment terminal designed for on-the-go payments.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" variant="outline" className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  onClick={onContactSales}
+                >
                   Contact Sales
                 </Button>
               </div>
@@ -98,109 +137,53 @@ function Ams1Page({ onNavigateBack }) {
                   <span className="text-gray-900">122 x 67 x 18 mm</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-200">
+                  <span className="text-gray-600">Weight</span>
+                  <span className="text-gray-900">180g</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200">
                   <span className="text-gray-600">Display</span>
-                  <span className="text-gray-900">4" Color Touchscreen</span>
+                  <span className="text-gray-900">4" color touchscreen, 480 x 800 pixels</span>
                 </div>
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">Connectivity & Features</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">Connectivity & Security</h3>
               <div className="space-y-4">
                 <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Connectivity</span>
-                  <span className="text-gray-900">Wi-Fi, 4g LTE Cellular</span>
+                  <span className="text-gray-600">Wireless</span>
+                  <span className="text-gray-900">Wi-Fi 802.11 b/g/n, Bluetooth 4.0</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Failover</span>
-                  <span className="text-gray-900">Offline capable</span>
+                  <span className="text-gray-600">Cellular</span>
+                  <span className="text-gray-900">4G LTE with automatic failover</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Payment Methods</span>
-                  <span className="text-gray-900">Contactless, EMV Chip, Magnetic Stripe</span>
+                  <span className="text-gray-600">Payment Security</span>
+                  <span className="text-gray-900">PCI PTS 5.x certified</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Receipts</span>
-                  <span className="text-gray-900">Email receipts or re-print to companion receipt printer</span>
+                  <span className="text-gray-600">Encryption</span>
+                  <span className="text-gray-900">End-to-end encryption</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-200">
-                  <span className="text-gray-600">Battery Life</span>
-                  <span className="text-gray-900">Designed to last the businessday</span>
+                  <span className="text-gray-600">Operating System</span>
+                  <span className="text-gray-900">Android 10</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200">
+                  <span className="text-gray-600">Charging</span>
+                  <span className="text-gray-900">USB-C, 5V/2A</span>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Pricing Options</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-sm border-2 border-gray-200">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Rental</h3>
-              <div className="text-4xl font-bold text-[#f08e80] mb-2">$14.55</div>
-              <div className="text-gray-600 mb-6">per month</div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center text-gray-600">
-                  <div className="w-2 h-2 bg-[#f08e80] rounded-full mr-3"></div>
-                  No upfront costs
-                </li>
-                <li className="flex items-center text-gray-600">
-                  <div className="w-2 h-2 bg-[#f08e80] rounded-full mr-3"></div>
-                  Includes support and maintenance
-                </li>
-                <li className="flex items-center text-gray-600">
-                  <div className="w-2 h-2 bg-[#f08e80] rounded-full mr-3"></div>
-                  Flexible terms
-                </li>
-              </ul>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Quote // Build out a Quote cart somehow
-              </Button>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm border-2 border-[#f08e80]">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Purchase</h3>
-              <div className="text-4xl font-bold text-[#f08e80] mb-2">$298.8</div>
-              <div className="text-gray-600 mb-6">one-time payment</div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center text-gray-600">
-                  <div className="w-2 h-2 bg-[#f08e80] rounded-full mr-3"></div>
-                  Own the device outright
-                </li>
-                <li className="flex items-center text-gray-600">
-                  <div className="w-2 h-2 bg-[#f08e80] rounded-full mr-3"></div>
-                  Replaceable battery included
-                </li>
-                <li className="flex items-center text-gray-600">
-                  <div className="w-2 h-2 bg-[#f08e80] rounded-full mr-3"></div>
-                  Best long-term value
-                </li>
-              </ul>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Quote // Build out a Quote cart somehow
-              </Button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Accessories */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Accessories</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="text-center mb-4">
-                <Shield className="h-12 w-12 text-[#f08e80] mx-auto" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">Protective Case</h3>
-              <p className="text-gray-600 text-center mb-4">Durable case for device protection</p>
-              <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$24</div>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Quote // Build out a Quote cart somehow
-              </Button>
-            </div>
+          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Available Accessories</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg">
               <div className="text-center mb-4">
                 <Battery className="h-12 w-12 text-[#f08e80] mx-auto" />
@@ -208,8 +191,11 @@ function Ams1Page({ onNavigateBack }) {
               <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">Charging Dock</h3>
               <p className="text-gray-600 text-center mb-4">Desktop charging station</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$28.8</div>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Quote // Build out a Quote cart somehow
+              <Button 
+                className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={onContactSales}
+              >
+                Add to Quote
               </Button>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
@@ -219,8 +205,11 @@ function Ams1Page({ onNavigateBack }) {
               <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">4 Bay Charging Station</h3>
               <p className="text-gray-600 text-center mb-4">Charge up to 4 terminals</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$168</div>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Quote // Build out a Quote cart somehow
+              <Button 
+                className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={onContactSales}
+              >
+                Add to Quote
               </Button>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
@@ -230,8 +219,11 @@ function Ams1Page({ onNavigateBack }) {
               <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">Charging Base</h3>
               <p className="text-gray-600 text-center mb-4">Single terminal charging base</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$60</div>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Quote // Build out a Quote cart somehow
+              <Button 
+                className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={onContactSales}
+              >
+                Add to Quote
               </Button>
             </div>
           </div>
@@ -246,8 +238,12 @@ function Ams1Page({ onNavigateBack }) {
             Contact our sales team to learn more about pricing, setup, and integration options.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-[#f08e80] hover:bg-gray-100">
-              Contact Sales // On-Click Contact Sales Modal
+            <Button 
+              size="lg" 
+              className="bg-white text-[#f08e80] hover:bg-gray-100"
+              onClick={onContactSales}
+            >
+              Contact Sales
             </Button>
           </div>
         </div>
@@ -257,4 +253,3 @@ function Ams1Page({ onNavigateBack }) {
 }
 
 export default Ams1Page
-
