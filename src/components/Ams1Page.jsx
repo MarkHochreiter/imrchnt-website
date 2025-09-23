@@ -5,29 +5,6 @@ import ams1Image from '../assets/ams1_image.png'
 function Ams1Page({ onNavigateBack }) {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <button 
-              onClick={onNavigateBack}
-              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Hardware
-            </button>
-            <div className="flex space-x-4">
-              <Button variant="outline" className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white">
-                Contact Sales
-              </Button>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                <ShoppingCart className="h-4 w-4 mr-2" />
-                Add to Cart
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
       <section className="bg-white py-16">
@@ -45,12 +22,8 @@ function Ams1Page({ onNavigateBack }) {
                 An all-in-one terminal with an Android operating system that businesses can use to accept payments as well as run their business. It is a compact, mobile payment terminal designed for on-the-go payments.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  Add to Cart
-                </Button>
                 <Button size="lg" variant="outline" className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white">
-                  Request Demo
+                  Contact Sales
                 </Button>
               </div>
             </div>
@@ -183,7 +156,7 @@ function Ams1Page({ onNavigateBack }) {
                 </li>
               </ul>
               <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Start Rental
+                Add to Quote // Build out a Quote cart somehow
               </Button>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm border-2 border-[#f08e80]">
@@ -205,7 +178,7 @@ function Ams1Page({ onNavigateBack }) {
                 </li>
               </ul>
               <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Purchase Now
+                Add to Quote // Build out a Quote cart somehow
               </Button>
             </div>
           </div>
@@ -225,7 +198,7 @@ function Ams1Page({ onNavigateBack }) {
               <p className="text-gray-600 text-center mb-4">Durable case for device protection</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$24</div>
               <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Cart
+                Add to Quote // Build out a Quote cart somehow
               </Button>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
@@ -236,7 +209,7 @@ function Ams1Page({ onNavigateBack }) {
               <p className="text-gray-600 text-center mb-4">Desktop charging station</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$28.8</div>
               <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Cart
+                Add to Quote // Build out a Quote cart somehow
               </Button>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
@@ -247,7 +220,7 @@ function Ams1Page({ onNavigateBack }) {
               <p className="text-gray-600 text-center mb-4">Charge up to 4 terminals</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$168</div>
               <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Cart
+                Add to Quote // Build out a Quote cart somehow
               </Button>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
@@ -258,7 +231,7 @@ function Ams1Page({ onNavigateBack }) {
               <p className="text-gray-600 text-center mb-4">Single terminal charging base</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$60</div>
               <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Cart
+                Add to Quote // Build out a Quote cart somehow
               </Button>
             </div>
           </div>
@@ -274,10 +247,7 @@ function Ams1Page({ onNavigateBack }) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-white text-[#f08e80] hover:bg-gray-100">
-              Contact Sales
-            </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#f08e80]">
-              Request Demo
+              Contact Sales // On-Click Contact Sales Modal
             </Button>
           </div>
         </div>
