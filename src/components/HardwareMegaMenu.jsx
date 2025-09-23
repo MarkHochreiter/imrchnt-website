@@ -5,7 +5,10 @@ import {
   DollarSign,
   Package,
   Scan,
-  ShoppingCart
+  ShoppingCart,
+  Tag,
+  Receipt,
+  Coins
 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 
@@ -46,14 +49,17 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
           Epson TM-T88V <br /> Industry leading thermal printer
         </>
       ),
-      icon: <Printer className="h-5 w-5" />,
+      icon: <Receipt className="h-5 w-5" />,
       page: "epson-t88"
     },
         {
           title: "Label Printer",
-          subtitle: "Honeywell PC43d - Desktop direct thermal printer",
-          icon: <Package className="h-5 w-5" />,
-          price: "Contact Us",
+          subtitle: (
+             <>
+               Honeywell PC43d <br /> Desktop thermal label printer
+             </>
+            ),
+          icon: <Tag className="h-5 w-5" />,
           page: "honeywell-pc43d"
         }
       ]
@@ -65,8 +71,7 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
         {
           title: "Cash Drawer",
           subtitle: "APG Cash Drawer",
-          icon: <Package className="h-5 w-5" />,
-          price: "Contact Us"
+          icon: <Coins className="h-5 w-5" />
         }
       ]
     },
@@ -77,8 +82,7 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
         {
           title: "Socket Scan",
           subtitle: "Barcode scanning solution",
-          icon: <Scan className="h-5 w-5" />,
-          price: "Contact Us"
+          icon: <Scan className="h-5 w-5" />
         }
       ]
     }
