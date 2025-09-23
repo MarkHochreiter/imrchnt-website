@@ -45,7 +45,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im', '_blank')
         },
         {
-          title: "Video Tutorials", // LINK TO YOUTUBE OR NEW PAGE WITH VIDEOS
+          title: "Video Tutorials - COMING SOON", // LINK TO YOUTUBE OR NEW PAGE WITH VIDEOS
           subtitle: "Visual learning resources",
           icon: <Monitor className="h-5 w-5" />,
           description: "Watch and learn at your own pace"
@@ -57,7 +57,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
       icon: <Users className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
-          title: "Community Forum",
+          title: "Community Forum - COMING SOON",
           subtitle: "Connect with other users",
           icon: <Users className="h-5 w-5" />,
           description: "Ask questions and share experiences"
@@ -67,6 +67,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           subtitle: "Suggest improvements",
           icon: <HelpCircle className="h-5 w-5" />,
           description: "Help us improve our platform"
+          onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im', '_blank')
         }
       ]
     },
@@ -75,7 +76,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
       icon: <Clock className="h-8 w-8 text-[#f08e80]" />,
       items: [
                 {
-          title: "Release Notes",
+          title: "Release Notes - COMING SOON",
           subtitle: "Latest updates and features",
           icon: <FileText className="h-5 w-5" />,
           description: "Stay informed about new releases"
