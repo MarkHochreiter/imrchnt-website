@@ -160,14 +160,13 @@ function Sfo1Page({ onNavigateBack, onContactSales }) {
                   Flexible terms
                 </li>
               </ul>
-                             <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
-                  onClick={onContactSales}
-                >
-                  Generate Quote
-                </Button>
+            <Button 
+              size="lg" 
+              className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+              onClick={onContactSales}
+            >
+              Generate Quote
+            </Button>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm border-2 border-[#f08e80]">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Purchase</h3>
@@ -187,14 +186,13 @@ function Sfo1Page({ onNavigateBack, onContactSales }) {
                   Best long-term value
                 </li>
               </ul>
-                              <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
-                  onClick={onContactSales}
-                >
-                  Generate Quote
-                </Button>
+            <Button 
+              size="lg" 
+              className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+              onClick={onContactSales}
+            >
+              Generate Quote
+            </Button>
             </div>
           </div>
         </div>
@@ -212,14 +210,13 @@ function Sfo1Page({ onNavigateBack, onContactSales }) {
               <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">Countertop Stand</h3>
               <p className="text-gray-600 text-center mb-4">Secure countertop mounting solution</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$26.40</div>
-                             <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
-                  onClick={onContactSales}
-                >
-                  Generate Quote
-                </Button>
+            <Button 
+              size="lg" 
+              className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+              onClick={onContactSales}
+            >
+              Generate Quote
+            </Button>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
               <div className="text-center mb-4">
@@ -228,14 +225,13 @@ function Sfo1Page({ onNavigateBack, onContactSales }) {
               <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">SpacePole Mount</h3>
               <p className="text-gray-600 text-center mb-4">Flexible pole mounting system</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$10.80</div>
-                             <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
-                  onClick={onContactSales}
-                >
-                  Generate Quote
-                </Button>
+            <Button 
+              size="lg" 
+              className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+              onClick={onContactSales}
+            >
+              Generate Quote
+            </Button>>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
               <div className="text-center mb-4">
@@ -244,14 +240,13 @@ function Sfo1Page({ onNavigateBack, onContactSales }) {
               <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">Verso Mount</h3>
               <p className="text-gray-600 text-center mb-4">Versatile mounting solution</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$15.60</div>
-                              <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
-                  onClick={onContactSales}
-                >
-                  Generate Quote
-                </Button>
+            <Button 
+              size="lg" 
+              className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+              onClick={onContactSales}
+            >
+              Generate Quote
+            </Button>>
             </div>
           </div>
         </div>
@@ -289,14 +284,13 @@ function Sfo1Page({ onNavigateBack, onContactSales }) {
             Contact our sales team to learn more about pricing, setup, and customization options.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                           <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
-                  onClick={onContactSales}
-                >
-                  Generate Quote
-                </Button>
+            <Button 
+              size="lg" 
+              className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+              onClick={onContactSales}
+            >
+              Generate Quote
+            </Button>
           </div>
         </div>
       </section>
