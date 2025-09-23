@@ -45,6 +45,8 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
   <>
     Epson TM-T88V <br /> Industry leading thermal printer
   </>
+              }
+      ]
 ),
           icon: <Printer className="h-5 w-5" />,
           page: "epson-t88"
