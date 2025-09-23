@@ -332,7 +332,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       ]
     },
     {
-      id: 21,
+      id: 21, // Includes the addition of Adyen Wallet passes and the creation of a Customer front end that could be treated like an in store or e-commerce cart
       date: "Q3 2026",
       title: "Customer Rewards",
       description: "Track customer sales, create rewards program rules, issue customer rewards as balance cards or coupons.",
@@ -344,57 +344,18 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
     },
     {
       id: 22,
-      date: "Q4 2026",
-      title: "Buying",
-      description: "A new buying experience that provides suggestions based on aggregated industry data and auto replenishes always in stock items",
+      date: "Q3 2026", // Ties in to Customer rewards to make it easier to add customers into the app, also allows for indoor maps within the customer app
+      title: "MapBox Integration",
+      description: "Validate address, auto-fill, movement data, indoor maps.",
       status: "planned",
-      icon: <Layers className="h-6 w-6" />,
-      category: "Product",
-      details: [
-      ]
-    },
-    {
-      id: 23,
-      date: "Q1 2027",
-      title: "Receiving",
-      description: "Single scan receiving",
-      status: "planned",
-      icon: <Package className="h-6 w-6" />,
-      category: "Product",
-      details: [
-        "Order tracking",
-        "Plan staffing levels according to delivery dates",
-        "Simplified Receiving"
-      ]
-    },
-    {
-      id: 24,
-      date: "Q2 2027",
-      title: "Picking",
-      description: "Use a smartphone to pick customer orders, event stock, returns, stocking shelves",
-      status: "planned",
-      icon: <Smartphone className="h-6 w-6" />,
+      icon: <Map className="h-6 w-6" />,
       category: "Integrations",
       details: [
       ]
     },
-        {
-      id: 25,
-      date: "2027",
-      title: "Ordering Decision Tree",
-      description: "Preset what path a customer order takes based on a set of rules. Send orders to stores closest to delivery or send to 3PL vendors instantly on items ordered where inventory isn't in store",
-      status: "planned",
-      icon: <Network className="h-6 w-6" />,
-      category: "Buying",
-      details: [
-        "Automate customer order buying",
-        "Localized features",
-        "Regional partnerships"
-      ]
-    },
-        {
-      id: 26,
-      date: "2027",
+    {
+      id: 23, // Once we have Customer Rewards in the system then we move to target marketing as we will have all customer sales data in order to make these decisions, another layer of target marketing is Pub/Man ad dollars
+      date: "Q4 2026",
       title: "Target Marketing",
       description: "Individualized marketing to customers in and out of the store.", // Preauth all Sales, after sale send customer a text with a targeted add and a simple Yes/No response, if YES then tack on the new item to the sale and then process the card, if NO process the card.
       status: "planned",
@@ -407,12 +368,51 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       ]
     },
     {
-      id: 27,
-      date: "2027",
-      title: "MapBox Integration",
-      description: "Validate address, auto-fill, movement data, indoor maps.",
+      id: 24,
+      date: "Q1 2027",
+      title: "Buying",
+      description: "A new buying experience that provides suggestions based on aggregated industry data and auto replenishes always in stock items",
       status: "planned",
-      icon: <Map className="h-6 w-6" />,
+      icon: <Layers className="h-6 w-6" />,
+      category: "Product",
+      details: [
+      ]
+    },
+    {
+      id: 25,
+      date: "Q1 2027",
+      title: "Ordering Decision Tree",
+      description: "Preset what path a customer order takes based on a set of rules. Send orders to stores closest to delivery or send to 3PL vendors instantly on items ordered where inventory isn't in store",
+      status: "planned",
+      icon: <Network className="h-6 w-6" />,
+      category: "Buying",
+      details: [
+        "Automate customer order buying",
+        "Localized features",
+        "Regional partnerships"
+      ]
+    },
+    {
+      id: 26,
+      date: "Q2 2027",
+      title: "Receiving",
+      description: "Single scan receiving",
+      status: "planned",
+      icon: <Package className="h-6 w-6" />,
+      category: "Product",
+      details: [
+        "Order tracking",
+        "Plan staffing levels according to delivery dates",
+        "Simplified Receiving"
+      ]
+    },
+    {
+      id: 27,
+      date: "Q3 2027",
+      title: "Picking",
+      description: "Use a smartphone to pick customer orders, event stock, returns, stocking shelves",
+      status: "planned",
+      icon: <Smartphone className="h-6 w-6" />,
       category: "Integrations",
       details: [
       ]
