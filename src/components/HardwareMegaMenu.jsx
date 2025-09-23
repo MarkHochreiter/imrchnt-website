@@ -18,17 +18,20 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
         {
           title: "S1f2",
           subtitle: "All-in-one Android device with printing power",
-          icon: <CreditCard className="h-5 w-5" />
+          icon: <CreditCard className="h-5 w-5" />,
+          page: "s1f2"
         },
         {
           title: "Ams1",
           subtitle: "All-in-one terminal running on Android",
-          icon: <CreditCard className="h-5 w-5" />
+          icon: <CreditCard className="h-5 w-5" />,
+          page: "ams1"
         },
         {
           title: "Sfo1",
           subtitle: "Payment, branding, and customer engagement — all in one terminal",
-          icon: <CreditCard className="h-5 w-5" />
+          icon: <CreditCard className="h-5 w-5" />,
+          page: "sfo1"
         }
       ]
     },
@@ -38,9 +41,10 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
       items: [
         {
           title: "Receipt Printer",
-          subtitle: "Epson T88",
+          subtitle: "Epson TM-T88V - Industry leading thermal printer",
           icon: <Printer className="h-5 w-5" />,
-          price: "Contact Us"
+          price: "Contact Us",
+          page: "epson-t88"
         },
         {
           title: "Label Printers",
@@ -103,9 +107,9 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
                     key={itemIndex}
                     className="group block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
                     onClick={() => {
-                      if (item.title === 'S1f2') onNavigate('s1f2')
-                      else if (item.title === 'Ams1') onNavigate('ams1')
-                      else if (item.title === 'Sfo1') onNavigate('sfo1')
+                      if (item.page) {
+                        onNavigate(item.page)
+                      }
                     }}
                   >
                     <div className="flex items-start space-x-3">
@@ -157,4 +161,3 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
 }
 
 export default HardwareMegaMenu
-
