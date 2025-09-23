@@ -12,6 +12,7 @@ import S1f2Page from './components/S1f2Page.jsx'
 import Ams1Page from './components/Ams1Page.jsx'
 import Sfo1Page from './components/Sfo1Page.jsx'
 import EpsonT88Page from './components/EpsonT88Page.jsx'
+import HoneywellPC43dPage from './components/HoneywellPC43dPage.jsx'
 import SignupModal from './components/SignupModal.jsx'
 import FeatureRequestModal from './components/FeatureRequestModal.jsx'
 import HardwareCartModal from './components/HardwareCartModal.jsx'
@@ -142,7 +143,8 @@ function App() {
     { name: "S1F2", page: "s1f2" },
     { name: "AMS1", page: "ams1" },
     { name: "SFO1", page: "sfo1" },
-    { name: "Receipt Printer", page: "epson-t88" }
+    { name: "Receipt Printer", page: "epson-t88" },
+    { name: "Label Printer", page: "honeywell-pc43d" }
   ];
 
   const mobileSupportData = [
@@ -367,6 +369,8 @@ function App() {
         return <Sfo1Page onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'epson-t88':
         return <EpsonT88Page onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
+      case 'honeywell-pc43d':
+        return <HoneywellPC43dPage onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'roadmap':
         return <RoadMapPage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       default:
