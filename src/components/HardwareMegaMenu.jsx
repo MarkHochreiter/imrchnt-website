@@ -49,15 +49,6 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
       icon: <Printer className="h-5 w-5" />,
       page: "epson-t88"
     },
-    {
-      title: "Label Printer",
-      subtitle: "Honeywell PC43d - Desktop direct thermal printer",
-      icon: <Package className="h-5 w-5" />,
-      price: "Contact Us",
-      page: "honeywell-pc43d"
-    }
-  ]
-},
         {
           title: "Label Printer",
           subtitle: "Honeywell PC43d - Desktop direct thermal printer",
