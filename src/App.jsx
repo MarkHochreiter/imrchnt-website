@@ -405,7 +405,9 @@ function App() {
                   onMouseLeave={() => setSupportMegaMenuVisible(false)}
                   onNavigate={handleNavigation}
                   onClose={() => setSupportMegaMenuVisible(false)}
+                  onFeatureRequest={handleFeatureRequestClick}
                 />
+
               </div>
             </nav>
 
