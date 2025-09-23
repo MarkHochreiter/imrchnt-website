@@ -5,30 +5,6 @@ import s1f2Image from '../assets/s1f2_image.png'
 function S1f2Page({ onNavigateBack }) {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <button 
-              onClick={onNavigateBack}
-              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Hardware
-            </button>
-            <div className="flex space-x-4">
-              <Button variant="outline" className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white">
-                Contact Sales
-              </Button>
-              <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                <ShoppingCart className="h-4 w-4 mr-2" />
-                Add to Cart
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,13 +21,14 @@ function S1f2Page({ onNavigateBack }) {
                 A battery-powered Android card reader paired with our app makes this unit all you need to bring to run an Offsite or Pop Up. Featuring a large 5.5" touch display, built-in printer, and camera that acts as a scanner.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  Add to Cart
-                </Button>
-                <Button size="lg" variant="outline" className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white">
-                  Request Demo
-                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  onClick={onContactSales}
+                >
+                  Generate Quote
+                </Button
               </div>
             </div>
             <div className="bg-gray-100 rounded-lg p-8 flex items-center justify-center">
@@ -182,9 +159,14 @@ function S1f2Page({ onNavigateBack }) {
                   Flexible terms
                 </li>
               </ul>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Start Rental
-              </Button>
+                              <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  onClick={onContactSales}
+                >
+                  Generate Quote
+                </Button
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm border-2 border-[#f08e80]">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Purchase</h3>
@@ -204,9 +186,14 @@ function S1f2Page({ onNavigateBack }) {
                   Best long-term value
                 </li>
               </ul>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Purchase Now
-              </Button>
+                              <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  onClick={onContactSales}
+                >
+                  Generate Quote
+                </Button
             </div>
           </div>
         </div>
@@ -224,9 +211,14 @@ function S1f2Page({ onNavigateBack }) {
               <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">Charging Base</h3>
               <p className="text-gray-600 text-center mb-4">Desktop charging station for convenient charging</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$50.4</div>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Cart
-              </Button>
+                              <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  onClick={onContactSales}
+                >
+                  Generate Quote
+                </Button
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
               <div className="text-center mb-4">
@@ -235,9 +227,14 @@ function S1f2Page({ onNavigateBack }) {
               <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">4 Bay Charging Station</h3>
               <p className="text-gray-600 text-center mb-4">Charge up to 4 terminals simultaneously</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$180</div>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Cart
-              </Button>
+                             <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  onClick={onContactSales}
+                >
+                  Generate Quote
+                </Button
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
               <div className="text-center mb-4">
@@ -247,9 +244,14 @@ function S1f2Page({ onNavigateBack }) {
               <p className="text-gray-600 text-center mb-4">40mm thermal paper rolls for printing receipts</p>
               <div className="text-2xl font-bold text-[#f08e80] text-center mb-4">$0.95</div>
               <div className="text-sm text-gray-500 text-center mb-4">per roll</div>
-              <Button className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white">
-                Add to Cart
-              </Button>
+                              <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  onClick={onContactSales}
+                >
+                  Generate Quote
+                </Button
             </div>
           </div>
         </div>
@@ -263,12 +265,14 @@ function S1f2Page({ onNavigateBack }) {
             Contact our sales team to learn more about pricing, setup, and integration options.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-[#f08e80] hover:bg-gray-100">
-              Contact Sales
-            </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#f08e80]">
-              Request Demo
-            </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  onClick={onContactSales}
+                >
+                  Generate Quote
+                </Button
           </div>
         </div>
       </section>
