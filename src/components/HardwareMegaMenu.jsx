@@ -36,23 +36,28 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
       ]
     },
     {
-      title: "Printers & Accessories",
-      icon: <Printer className="h-8 w-8 text-[#f08e80]" />,
-      items: [
-        {
-          title: "Printers & Accessories",
-          icon: <Printer className="h-8 w-8 text-[#f08e80]" />,
-          items: [
-            {
-            title: "Receipt Printer",
-            subtitle: (
-            <>
-              Epson TM-T88V <br /> Industry leading thermal printer
-            </>
-            ),
-          icon: <Printer className="h-5 w-5" />,
-          page: "epson-t88"
-        },
+  title: "Printers & Accessories",
+  icon: <Printer className="h-8 w-8 text-[#f08e80]" />,
+  items: [
+    {
+      title: "Receipt Printer",
+      subtitle: (
+        <>
+          Epson TM-T88V <br /> Industry leading thermal printer
+        </>
+      ),
+      icon: <Printer className="h-5 w-5" />,
+      page: "epson-t88"
+    },
+    {
+      title: "Label Printer",
+      subtitle: "Honeywell PC43d - Desktop direct thermal printer",
+      icon: <Package className="h-5 w-5" />,
+      price: "Contact Us",
+      page: "honeywell-pc43d"
+    }
+  ]
+},
         {
           title: "Label Printer",
           subtitle: "Honeywell PC43d - Desktop direct thermal printer",
