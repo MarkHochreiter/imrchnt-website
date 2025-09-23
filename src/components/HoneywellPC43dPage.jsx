@@ -50,7 +50,7 @@ function HoneywellPC43dPage({ onNavigateBack, onContactSales }) {
                   className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
                   onClick={onContactSales}
                 >
-                  Contact Sales
+                  Generate Quote
                 </Button>
               </div>
             </div>
@@ -257,12 +257,11 @@ function HoneywellPC43dPage({ onNavigateBack, onContactSales }) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-              size="lg" 
-              className="bg-white text-[#f08e80] hover:bg-gray-100"
-              onClick={onContactSales}
-            >
-              Contact Sales
-            </Button>
+                className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={onContactSales}
+              >
+                Generate Quote
+              </Button>
           </div>
         </div>
       </section>
