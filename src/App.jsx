@@ -368,7 +368,7 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hidden form for Netlify Forms detection */}
-      <form name="feature-request" netlify="true" hidden>
+      <form name="feature-request" netlify hidden>
         <input type="text" name="name" />
         <input type="email" name="email" />
         <textarea name="featureRequest"></textarea>
