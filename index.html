@@ -39,6 +39,21 @@
         <textarea name="featureRequest" placeholder="Feature Request Details" required></textarea>
         <input type="hidden" name="timestamp" />
     </form>
+
+    <!-- This form is for Netlify Forms detection Hardware Cart only -->
+    <form name="hardware-quote"  netlify-honeypot="bot-field" hidden>
+        <input type="text" name="firstName" placeholder="First Name" required />
+        <input type="text" name="lastName" placeholder="Last Name" required />
+        <input type="email" name="email" placeholder="Email Address" required />
+        <input type="text" name="company" placeholder="Company Name" />
+        <input type="tel" name="phone" placeholder="Phone Number" />
+        <textarea name="message" placeholder="Additional Message"></textarea>
+        <textarea name="orderSummary" placeholder="Order Summary" required></textarea>
+        <input type="text" name="totalAmount" placeholder="Total Amount" />
+        <input type="number" name="itemCount" placeholder="Item Count" />
+        <input type="hidden" name="timestamp" />
+        <button type="submit">Submit Quote Request</button>
+    </form>
     
     <script type="module" src="/src/main.jsx"></script>
   </body>
