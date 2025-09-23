@@ -1,4 +1,4 @@
-import { Printer, Wifi, Zap, Shield, ArrowLeft, Bluetooth, Usb, Settings, Clock } from 'lucide-react'
+import { Printer, Wifi, Smartphone, Zap, Shield, ArrowLeft, Bluetooth, Usb, Settings, DollarSign } from 'lucide-react'
 import epsonT88Image from '../assets/epsont88.png'
 
 // Button component to match your design system
@@ -26,20 +26,8 @@ const Button = ({ children, className = '', size = 'default', variant = 'default
 
 function EpsonT88Page({ onNavigateBack, onContactSales }) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Back Button */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button
-            onClick={onNavigateBack}
-            className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Hardware
-          </button>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-gray-50">0
+      
       {/* Hero Section */}
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,7 +50,7 @@ function EpsonT88Page({ onNavigateBack, onContactSales }) {
                   className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
                   onClick={onContactSales}
                 >
-                  Contact Sales
+                  Request Quote
                 </Button>
               </div>
             </div>
@@ -102,12 +90,12 @@ function EpsonT88Page({ onNavigateBack, onContactSales }) {
               <p className="text-gray-600">MTBF of 360,000 hours and MCBF of 70,000,000 lines with 4-year limited warranty.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <Bluetooth className="h-8 w-8 text-[#f08e80] mb-4" />
+              <Smartphone className="h-8 w-8 text-[#f08e80] mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Mobile Compatible</h3>
               <p className="text-gray-600">mPOS-friendly printer compatible with iOS, Android and Windows mobile devices.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <Clock className="h-8 w-8 text-[#f08e80] mb-4" />
+              <DollarSign className="h-8 w-8 text-[#f08e80] mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Paper Saving</h3>
               <p className="text-gray-600">Special print options reduce paper usage up to 30% while maintaining print quality.</p>
             </div>
@@ -260,13 +248,14 @@ function EpsonT88Page({ onNavigateBack, onContactSales }) {
             Contact our sales team to learn more about the Epson TM-T88V and get pricing for your business needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-white text-[#f08e80] hover:bg-gray-100"
-              onClick={onContactSales}
-            >
-              Contact Sales
-            </Button>
+           <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  onClick={onContactSales}
+                >
+                  Request Quote
+                </Button>
           </div>
         </div>
       </section>
