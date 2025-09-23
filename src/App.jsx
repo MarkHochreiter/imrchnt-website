@@ -13,6 +13,7 @@ import Ams1Page from './components/Ams1Page.jsx'
 import Sfo1Page from './components/Sfo1Page.jsx'
 import SignupModal from './components/SignupModal.jsx'
 import FeatureRequestModal from './components/FeatureRequestModal.jsx'
+import HardwareCartModal from './components/HardwareCartModal.jsx'
 import POSDiagramPage from './components/POSDiagramPage.jsx'
 import SystemPage from './components/SystemPage.jsx'
 import AdminPage from './components/AdminPage.jsx'
@@ -50,6 +51,7 @@ function App() {
   const [supportMegaMenuVisible, setSupportMegaMenuVisible] = useState(false)
   const [signupModalOpen, setSignupModalOpen] = useState(false)
   const [featureRequestModalOpen, setFeatureRequestModalOpen] = useState(false)
+  const [hardwareCartModalOpen, setHardwareCartModalOpen] = useState(false)
   
   // Mobile menu states
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
@@ -95,6 +97,10 @@ function App() {
 
   const handleFeatureRequestClick = () => {
     setFeatureRequestModalOpen(true)
+  }
+
+  const handleContactSalesClick = () => {
+    setHardwareCartModalOpen(true)
   }
 
   // A generic function to switch between pages
@@ -160,7 +166,7 @@ function App() {
                   </h1>
                   <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
                     In store, Pop up, Off site. Network connection or not.  
- Sell anywhere, anytime.
+                    Sell anywhere, anytime.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button 
@@ -182,7 +188,7 @@ function App() {
                 </div>
               </div>
             </section>
-
+            
             {/* Platform Overview */}
             <section className="py-20 bg-white">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -353,11 +359,11 @@ function App() {
       case 'pos-diagram':
         return <POSDiagramPage onNavigateBack={() => navigateTo('system')} />;
       case 's1f2':
-        return <S1f2Page onNavigateBack={() => navigateTo('home')} />;
+        return <S1f2Page onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'ams1':
-        return <Ams1Page onNavigateBack={() => navigateTo('home')} />;
+        return <Ams1Page onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'sfo1':
-        return <Sfo1Page onNavigateBack={() => navigateTo('home')} />;
+        return <Sfo1Page onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'roadmap':
         return <RoadMapPage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       default:
@@ -367,11 +373,24 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hidden form for Netlify Forms detection */}
-      <form name="feature-request" netlify hidden>
+      {/* Hidden forms for Netlify Forms detection */}
+      <form name="feature-request" netlify="true" hidden>
         <input type="text" name="name" />
         <input type="email" name="email" />
         <textarea name="featureRequest"></textarea>
+      </form>
+      
+      <form name="hardware-quote" netlify="true" hidden>
+        <input type="text" name="firstName" />
+        <input type="text" name="lastName" />
+        <input type="email" name="email" />
+        <input type="text" name="company" />
+        <input type="tel" name="phone" />
+        <textarea name="message"></textarea>
+        <textarea name="orderSummary"></textarea>
+        <input type="text" name="totalAmount" />
+        <input type="number" name="itemCount" />
+        <input type="hidden" name="timestamp" />
       </form>
 
       {/* Header */}
@@ -436,7 +455,6 @@ function App() {
                   onClose={() => setSupportMegaMenuVisible(false)}
                   onFeatureRequest={handleFeatureRequestClick}
                 />
-
               </div>
             </nav>
 
@@ -632,6 +650,14 @@ function App() {
         <FeatureRequestModal 
           isOpen={featureRequestModalOpen}
           onClose={() => setFeatureRequestModalOpen(false)}
+        />
+      )}
+
+      {/* Hardware Cart Modal */}
+      {hardwareCartModalOpen && (
+        <HardwareCartModal 
+          isOpen={hardwareCartModalOpen}
+          onClose={() => setHardwareCartModalOpen(false)}
         />
       )}
     </div>
