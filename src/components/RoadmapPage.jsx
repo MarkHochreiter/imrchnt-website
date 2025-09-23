@@ -455,15 +455,9 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
               The Future is Bright!
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-              Someone has to start saying it. We are so excited for all of the development potential ahead of us that will differentiate the independent retail experience from the behemoths.
+              Some has to start saying it and plan on delivering it. Here's where we've been and where we are going.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                onClick={onSignupClick}
-              >
-                Join Our Journey
-              </Button>
             </div>
           </div>
         </div>
@@ -474,11 +468,8 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Road Map Timeline
+              Celebrate our milestones and see our future goals.
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Travel along with us as we celebrate our milestones and highlight our future direction and goals.
-            </p>
           </div>
 
           {/* Featured Current Milestone */}
