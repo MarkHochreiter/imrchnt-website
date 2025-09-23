@@ -1,5 +1,5 @@
 import { Printer, Wifi, Zap, Shield, ArrowLeft, Bluetooth, Usb, Settings, Clock } from 'lucide-react'
-import epsonT88Image from '../assets/epson_t88_image.png'
+import epsonT88Image from '../assets/epsont88.png'
 
 // Button component to match your design system
 const Button = ({ children, className = '', size = 'default', variant = 'default', onClick, ...props }) => {
