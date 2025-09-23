@@ -173,36 +173,6 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
             </div>
           ))}
         </div>
-        
-        {/* CTA Section */}
-        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            Need immediate assistance?
-          </h3>
-          <p className="text-gray-600 mb-4">
-            Our support team is here to help you succeed with our platform.
-          </p>
-          <div className="flex justify-center space-x-4">
-            <Button 
-              className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-              onClick={() => window.open('https://imerchant.happyfox.com/tickets', '_blank')}
-            >
-              <MessageSquare className="h-4 w-4 mr-2" />
-              Submit Ticket
-            </Button>
-            <Button 
-              variant="outline" 
-              className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
-              onClick={() => {
-                if (onFeatureRequest) onFeatureRequest()
-                if (onClose) onClose()
-              }}
-            >
-              <HelpCircle className="h-4 w-4 mr-2" />
-              Feature Request
-            </Button>
-          </div>
-        </div>
       </div>
     </div>
   )
