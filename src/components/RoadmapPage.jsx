@@ -28,7 +28,9 @@ import {
   Network,
   Map,
   Percent,
-  List
+  List,
+  Handshake,
+  Apple
 } from 'lucide-react';
 
 // Button component matching the styling from attached pages
@@ -191,7 +193,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
     {
       id: 10,
       date: "August 21, 2025",
-      title: "Move to Postgres",
+      title: "Move DB to PostgreSQL",
       description: "As we increased the size of db's to be cabale of housing over 1 million items per store we decided that MariaDB was no longer the best soltution.",
       status: "completed",
       icon: <Database className="h-6 w-6" />,
@@ -231,7 +233,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       title: "Meta Data Integrations",
       description: "Industry specific integrations for richer item meta data from Industry vendors and publishers.",
       status: "planned",
-      icon: <TrendingUp className="h-6 w-6" />,
+      icon: <Handshake className="h-6 w-6" />,
       category: "Integrations",
       details: [
         "API's", 
@@ -239,8 +241,32 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
         "ONYX XML files"
       ]
     },
-    {
+        {
       id: 14,
+      date: "Q4 2025",
+      title: "App on Apple App Store",
+      description: "App to be available on Apple App store by the end of the year.",
+      status: "planned",
+      icon: <Apple className="h-6 w-6" />,
+      category: "Integrations",
+      details: [
+      ]
+    },
+        {
+      id: 15,
+      date: "Q4 2025",
+      title: "POS Quick Buttons",
+      description: "Assign items to a grid of Buttons at POS to simply add items into sale.",
+      status: "planned",
+      icon: <CheckCircle className="h-6 w-6" />,
+      category: "Product",
+      details: [
+        "Add items with one touch",
+        "Simplified POS"
+      ]
+    },
+    {
+      id: 16,
       date: "Q1 2026",
       title: "Customer Orders",
       description: "Produce customer orders from the same screen as a regular transaction.",
@@ -254,7 +280,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       ]
     },
     {
-      id: 15,
+      id: 17,
       date: "Q1 2026",
       title: "Automated Legacy POS Integration",
       description: "Move POS operations to a new application while maintaining other business operations on your legacy system .",
@@ -268,21 +294,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       ]
     },
     {
-      id: 16,
-      date: "Q2 2026",
-      title: "Ordering Decision Tree",
-      description: "Preset what path a customer order takes based on a set of rules. Send orders to stores closest to delivery or send to 3PL vendors instantly on items ordered where inventory isn't in store",
-      status: "planned",
-      icon: <Network className="h-6 w-6" />,
-      category: "Buying",
-      details: [
-        "Automate customer order buying",
-        "Localized features",
-        "Regional partnerships"
-      ]
-    },
-    {
-      id: 17,
+      id: 18,
       date: "Q2 2026",
       title: "Gift Cards",
       description: "Sell and redeem store gift cards at POS.",
@@ -296,56 +308,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       ]
     },
     {
-      id: 18,
-      date: "Q2 2026",
-      title: "Customer Rewards",
-      description: "Track customer sales, create rewards program rules, issue customer rewards as balance cards or coupons.",
-      status: "planned",
-      icon: <Award className="h-6 w-6" />,
-      category: "In Store Experience",
-      details: [
-      ]
-    },
-    {
       id: 19,
-      date: "Q2 2026",
-      title: "Target Marketing",
-      description: "Individualized marketing to customers in and out of the store.",
-      status: "planned",
-      icon: <Target className="h-6 w-6" />,
-      category: "In Store Experience",
-      details: [
-        "One Click buy through Text",
-        "Add to Sale through Card Reader",
-        "Highly targeted email campaigns"
-      ]
-    },
-    {
-      id: 20,
-      date: "Q2 2026",
-      title: "POS Quick Buttons",
-      description: "Assign items to a grid of Buttons at POS to simply add items into sale.",
-      status: "planned",
-      icon: <CheckCircle className="h-6 w-6" />,
-      category: "Product",
-      details: [
-        "Add items with one touch",
-        "Simplified POS"
-      ]
-    },
-    {
-      id: 21,
-      date: "Q2 2026",
-      title: "MapBox Integration",
-      description: "Validate address, auto-fill, movement data, indoor maps.",
-      status: "planned",
-      icon: <Map className="h-6 w-6" />,
-      category: "Integrations",
-      details: [
-      ]
-    },
-    {
-      id: 22,
       date: "Q2 2026",
       title: "Tax Integration",
       description: "automatically apply tax rates at pos based on event address, ship to address, or individual item type.",
@@ -356,10 +319,35 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       ]
     },
     {
-      id: 23,
+      id: 20,
+      date: "Q2 2026",
+      title: "Printing",
+      description: "Enable printing to local printers.",
+      status: "planned",
+      icon: <Award className="h-6 w-6" />,
+      category: "Product",
+      details: [
+        "Receipts and Cash Drawer",
+        "Reports",
+        "Labels"
+      ]
+    },
+    {
+      id: 21,
       date: "Q3 2026",
+      title: "Customer Rewards",
+      description: "Track customer sales, create rewards program rules, issue customer rewards as balance cards or coupons.",
+      status: "planned",
+      icon: <Award className="h-6 w-6" />,
+      category: "In Store Experience",
+      details: [
+      ]
+    },
+    {
+      id: 22,
+      date: "Q4 2026",
       title: "Buying",
-      description: "",
+      description: "A new buying experience that provides suggestions based on aggregated industry data and auto replenishes always in stock items",
       status: "planned",
       icon: <Layers className="h-6 w-6" />,
       category: "Product",
@@ -367,27 +355,69 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       ]
     },
     {
-      id: 24,
-      date: "Q3 2026",
+      id: 23,
+      date: "Q1 2027",
       title: "Receiving",
-      description: "",
+      description: "Single scan receiving",
       status: "planned",
       icon: <Package className="h-6 w-6" />,
       category: "Product",
       details: [
+        "Order tracking",
+        "Plan staffing levels according to delivery dates",
+        "Simplified Receiving"
       ]
     },
     {
-      id: 25,
-      date: "Q4 2026",
+      id: 24,
+      date: "Q2 2027",
       title: "Picking",
-      description: "",
+      description: "Use a smartphone to pick customer orders, event stock, returns, stocking shelves",
       status: "planned",
-      icon: <List className="h-6 w-6" />,
+      icon: <Smartphone className="h-6 w-6" />,
       category: "Integrations",
       details: [
       ]
-    }   
+    },
+        {
+      id: 25,
+      date: "2027",
+      title: "Ordering Decision Tree",
+      description: "Preset what path a customer order takes based on a set of rules. Send orders to stores closest to delivery or send to 3PL vendors instantly on items ordered where inventory isn't in store",
+      status: "planned",
+      icon: <Network className="h-6 w-6" />,
+      category: "Buying",
+      details: [
+        "Automate customer order buying",
+        "Localized features",
+        "Regional partnerships"
+      ]
+    },
+        {
+      id: 26,
+      date: "2027",
+      title: "Target Marketing",
+      description: "Individualized marketing to customers in and out of the store.", // Preauth all Sales, after sale send customer a text with a targeted add and a simple Yes/No response, if YES then tack on the new item to the sale and then process the card, if NO process the card.
+      status: "planned",
+      icon: <Target className="h-6 w-6" />,
+      category: "In Store Experience",
+      details: [
+        "One Click buy through Text",
+        "Add to Sale through Card Reader",
+        "Highly targeted email campaigns"
+      ]
+    },
+    {
+      id: 27,
+      date: "2027",
+      title: "MapBox Integration",
+      description: "Validate address, auto-fill, movement data, indoor maps.",
+      status: "planned",
+      icon: <Map className="h-6 w-6" />,
+      category: "Integrations",
+      details: [
+      ]
+    },
   ];
 
   const getStatusColor = (status) => {
