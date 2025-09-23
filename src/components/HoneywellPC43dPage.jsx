@@ -1,5 +1,5 @@
 import { Printer, Wifi, Zap, Shield, ArrowLeft, Bluetooth, Usb, Settings, Clock, Package, Scan } from 'lucide-react'
-import honeywellPC43dImage from '../assets/honeywell_pc43d_image.png'
+import honeywellPC43dImage from '../assets/43d.png'
 
 // Button component to match your design system
 const Button = ({ children, className = '', size = 'default', variant = 'default', onClick, ...props }) => {
@@ -27,18 +27,6 @@ const Button = ({ children, className = '', size = 'default', variant = 'default
 function HoneywellPC43dPage({ onNavigateBack, onContactSales }) {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Back Button */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button
-            onClick={onNavigateBack}
-            className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Hardware
-          </button>
-        </div>
-      </div>
 
       {/* Hero Section */}
       <section className="bg-white py-16">
