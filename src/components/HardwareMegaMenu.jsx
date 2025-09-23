@@ -35,22 +35,20 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
         }
       ]
     },
+{
+  title: "Printers & Accessories",
+  icon: <Printer className="h-8 w-8 text-[#f08e80]" />,
+  items: [
     {
-      title: "Printers & Accessories",
-      icon: <Printer className="h-8 w-8 text-[#f08e80]" />,
-      items: [
-        {
-          title: "Receipt Printer",
-          subtitle: subtitle: (
-  <>
-    Epson TM-T88V <br /> Industry leading thermal printer
-  </>
-              }
-      ]
-),
-          icon: <Printer className="h-5 w-5" />,
-          page: "epson-t88"
-        },
+      title: "Receipt Printer",
+      subtitle: (
+        <>
+          Epson TM-T88V <br /> Industry leading thermal printer
+        </>
+      ),
+      icon: <Printer className="h-5 w-5" />,
+      page: "epson-t88"
+    },
         {
           title: "Label Printers",
           subtitle: "Professional label printing",
