@@ -41,17 +41,36 @@
     </form>
 
     <!-- This form is for Netlify Forms detection Hardware Cart only -->
-    <form name="hardware-quote"  netlify netlify-honeypot="bot-field" hidden>
-        <input type="text" name="firstName" placeholder="First Name" required />
-        <input type="text" name="lastName" placeholder="Last Name" required />
-        <input type="email" name="email" placeholder="Email Address" required />
-        <input type="text" name="company" placeholder="Company Name" />
-        <input type="tel" name="phone" placeholder="Phone Number" />
-        <textarea name="message" placeholder="Additional Message"></textarea>
-        <textarea name="orderSummary" placeholder="Order Summary" required></textarea>
-        <input type="text" name="totalAmount" placeholder="Total Amount" />
-        <input type="number" name="itemCount" placeholder="Item Count" />
+    <form name="hardware-quote-line-item" netlify>
+        <!-- Quote Identification -->
+        <input type="text" name="quoteId" placeholder="Quote ID" required />
+        <input type="number" name="lineNumber" placeholder="Line Number" required />
+        
+        <!-- Item Details -->
+        <input type="text" name="itemName" placeholder="Item Name" required />
+        <input type="text" name="itemCategory" placeholder="Item Category" required />
+        <input type="text" name="parentTerminal" placeholder="Parent Terminal" />
+        <input type="text" name="purchaseOption" placeholder="Purchase Option (rent/buy)" required />
+        <input type="number" name="quantity" placeholder="Quantity" required />
+        <input type="text" name="unitPrice" placeholder="Unit Price" required />
+        <input type="text" name="lineTotal" placeholder="Line Total" required />
+        
+        <!-- Customer Information -->
+        <input type="text" name="customerFirstName" placeholder="Customer First Name" required />
+        <input type="text" name="customerLastName" placeholder="Customer Last Name" required />
+        <input type="email" name="customerEmail" placeholder="Customer Email" required />
+        <input type="text" name="customerCompany" placeholder="Customer Company" />
+        <input type="tel" name="customerPhone" placeholder="Customer Phone" />
+        <textarea name="customerMessage" placeholder="Customer Message"></textarea>
+        
+        <!-- Quote Totals -->
+        <input type="number" name="quoteTotalItems" placeholder="Quote Total Items" required />
+        <input type="text" name="quoteTotalAmount" placeholder="Quote Total Amount" required />
+        
+        <!-- Metadata -->
         <input type="hidden" name="timestamp" />
+        
+        <button type="submit">Submit Line Item</button>
     </form>
     
     <script type="module" src="/src/main.jsx"></script>
