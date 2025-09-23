@@ -31,6 +31,14 @@
       </select>
       <input type="text" name="timestamp" />
     </form>
+
+    <!-- This form is for Netlify Forms detection only Feature Request -->
+    <form name="feature-request" netlify netlify-honeypot="bot-field" hidden>
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea name="featureRequest" placeholder="Feature Request Details" required></textarea>
+        <input type="hidden" name="timestamp" />
+    </form>
     
     <script type="module" src="/src/main.jsx"></script>
   </body>
