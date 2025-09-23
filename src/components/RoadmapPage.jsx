@@ -30,7 +30,8 @@ import {
   Percent,
   List,
   Handshake,
-  Apple
+  Apple,
+  Printer
 } from 'lucide-react';
 
 // Button component matching the styling from attached pages
@@ -134,8 +135,6 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
         "First User = H Rooker"
       ]
     },
-
-
     {
       id: 6,
       date: "July 15, 2025",
@@ -324,7 +323,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       title: "Printing",
       description: "Enable printing to local printers.",
       status: "planned",
-      icon: <Award className="h-6 w-6" />,
+      icon: <Printer className="h-6 w-6" />,
       category: "Product",
       details: [
         "Receipts and Cash Drawer",
