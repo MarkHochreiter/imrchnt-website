@@ -11,9 +11,27 @@ import {
   Map
 } from 'lucide-react'
 
-import { Button } from '@/components/ui/button.jsx'
+// Button component to match your design system
+const Button = ({ children, className = '', variant = 'default', onClick, ...props }) => {
+  const baseClasses = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 px-4 py-2 text-sm';
+  
+  const variants = {
+    default: 'bg-[#f08e80] hover:bg-[#e07d70] text-white',
+    outline: 'border border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white bg-transparent'
+  };
 
-function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, onClose }) {
+  return (
+    <button
+      className={`${baseClasses} ${variants[variant]} ${className}`}
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
+function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, onClose, onFeatureRequest }) {
   const supportData = [
     {
       title: "Get Help",
@@ -39,14 +57,14 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
       icon: <FileText className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
-          title: "User Guides", // LINK TO HAPPY FOX https://imerchant.happyfox.com/tickets
+          title: "User Guides",
           subtitle: "Step-by-step instructions",
           icon: <BookOpen className="h-5 w-5" />,
           description: "Comprehensive guides for all features",
           onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im', '_blank')
         },
         {
-          title: "Video Tutorials - COMING SOON", // LINK TO YOUTUBE OR NEW PAGE WITH VIDEOS
+          title: "Video Tutorials - COMING SOON",
           subtitle: "Visual learning resources",
           icon: <Monitor className="h-5 w-5" />,
           description: "Watch and learn at your own pace"
@@ -68,7 +86,10 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           subtitle: "Suggest improvements",
           icon: <HelpCircle className="h-5 w-5" />,
           description: "Help us improve our platform",
-          onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im', '_blank')
+          onClick: () => {
+            if (onClose) onClose()
+            if (onFeatureRequest) onFeatureRequest()
+          }
         }
       ]
     },
@@ -76,7 +97,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
       title: "Resources",
       icon: <Clock className="h-8 w-8 text-[#f08e80]" />,
       items: [
-                {
+        {
           title: "Release Notes - COMING SOON",
           subtitle: "Latest updates and features",
           icon: <FileText className="h-5 w-5" />,
@@ -87,7 +108,10 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           subtitle: "Future development plans",
           icon: <Map className="h-5 w-5" />,
           description: "Real-time status of our services",
-          onClick: () => {onNavigate('roadmap')}
+          onClick: () => {
+            if (onNavigate) onNavigate('roadmap')
+            if (onClose) onClose()
+          }
         },
       ]
     }
@@ -124,9 +148,6 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
                       if (item.onClick) {
                         item.onClick()
                       }
-                      if (onClose) {
-                        onClose() 
-                      }
                     }}
                     className="group block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
                   >
@@ -152,10 +173,39 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
             </div>
           ))}
         </div>
+        
+        {/* CTA Section */}
+        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Need immediate assistance?
+          </h3>
+          <p className="text-gray-600 mb-4">
+            Our support team is here to help you succeed with our platform.
+          </p>
+          <div className="flex justify-center space-x-4">
+            <Button 
+              className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
+              onClick={() => window.open('https://imerchant.happyfox.com/tickets', '_blank')}
+            >
+              <MessageSquare className="h-4 w-4 mr-2" />
+              Submit Ticket
+            </Button>
+            <Button 
+              variant="outline" 
+              className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+              onClick={() => {
+                if (onFeatureRequest) onFeatureRequest()
+                if (onClose) onClose()
+              }}
+            >
+              <HelpCircle className="h-4 w-4 mr-2" />
+              Feature Request
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
 export default SupportMegaMenu
-
