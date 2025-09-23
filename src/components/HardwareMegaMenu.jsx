@@ -144,25 +144,6 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
             </div>
           ))}
         </div>
-        
-        {/* CTA Section */}
-        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            Need help choosing the right hardware?
-          </h3>
-          <p className="text-gray-600 mb-4">
-            Our experts can help you find the perfect solution for your business.
-          </p>
-          <div className="flex justify-center space-x-4">
-            <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white">
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              View All Hardware
-            </Button>
-            <Button variant="outline" className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white">
-              Contact Sales
-            </Button>
-          </div>
-        </div>
       </div>
     </div>
   )
