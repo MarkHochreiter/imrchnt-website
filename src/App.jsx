@@ -1,5 +1,5 @@
 import { ChevronDown, Menu, X, ArrowRight, Check, Star, Globe, Smartphone, ShoppingCart, BarChart3, Users, Zap, ChevronRight } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import logo from './assets/logo.png'
 import PricingPage from './components/PricingPage.jsx'
 import MegaMenu from './components/MegaMenu.jsx'
@@ -12,6 +12,7 @@ import S1f2Page from './components/S1f2Page.jsx'
 import Ams1Page from './components/Ams1Page.jsx'
 import Sfo1Page from './components/Sfo1Page.jsx'
 import SignupModal from './components/SignupModal.jsx'
+import FeatureRequestModal from './components/FeatureRequestModal.jsx'
 import POSDiagramPage from './components/POSDiagramPage.jsx'
 import SystemPage from './components/SystemPage.jsx'
 import AdminPage from './components/AdminPage.jsx'
@@ -20,6 +21,7 @@ import InventoryPage from './components/inventory.jsx'
 import CustomerPage from './components/Customers.jsx'
 import SingleDevicePage from './components/singledevice.jsx'
 import RoadMapPage from './components/RoadmapPage.jsx'
+import InterconnectedEcosystemHero from './components/InterconnectedEcosystemHero.jsx'
 import './App.css'
 
 // Button component
@@ -47,11 +49,24 @@ function App() {
   const [hardwareMegaMenuVisible, setHardwareMegaMenuVisible] = useState(false)
   const [supportMegaMenuVisible, setSupportMegaMenuVisible] = useState(false)
   const [signupModalOpen, setSignupModalOpen] = useState(false)
+  const [featureRequestModalOpen, setFeatureRequestModalOpen] = useState(false)
   
   // Mobile menu states
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
   const [mobileHardwareOpen, setMobileHardwareOpen] = useState(false)
   const [mobileSupportOpen, setMobileSupportOpen] = useState(false)
+
+  // Set up global function for opening feature request modal
+  useEffect(() => {
+    window.openFeatureRequestModal = () => {
+      setFeatureRequestModalOpen(true)
+      setSupportMegaMenuVisible(false)
+    }
+    
+    return () => {
+      delete window.openFeatureRequestModal
+    }
+  }, [])
 
   const handleHardwareNavigation = (page) => {
     setCurrentPage(page)
@@ -78,6 +93,10 @@ function App() {
     setSignupModalOpen(true)
   }
 
+  const handleFeatureRequestClick = () => {
+    setFeatureRequestModalOpen(true)
+  }
+
   // A generic function to switch between pages
   const navigateTo = (page) => {
     setCurrentPage(page);
@@ -99,7 +118,7 @@ function App() {
       title: "InStore",
       items: [
         { name: "POS", page: "instore", section: "pos" },
-        { name: "Clienteling", page: "instore", section: "clienteling" },
+        { name: "Customers", page: "instore", section: "customers" },
         { name: "On Floor Assistance", page: "instore", section: "on-floor-assistance" }
       ]
     },
@@ -107,35 +126,23 @@ function App() {
       title: "Offsite",
       items: [
         { name: "Single Device", page: "offsite", section: "single-device" },
-        { name: "Import Items", page: "offsite", section: "import-items" },
-        { name: "Add Items", page: "offsite", section: "add-items" },
-        { name: "Export Sales", page: "offsite", section: "export-sales" }
-      ]
-    },
-    {
-      title: "Credit Cards",
-      items: [
-        { name: "Payouts", page: "credit-cards", section: "payouts" },
-        { name: "Terminals", page: "credit-cards", section: "terminals" },
-        { name: "Chargebacks", page: "credit-cards", section: "chargebacks" },
-        { name: "Flat Fee", page: "credit-cards", section: "flat-fee" }
+        { name: "Multi Device", page: "offsite", section: "multi-device" },
+        { name: "Credit Card Processing", page: "offsite", section: "credit-card-processing" }
       ]
     }
   ];
 
   const mobileHardwareData = [
-    { name: "S1f2", page: "s1f2" },
+    { name: "S1F2", page: "s1f2" },
     { name: "AMS1", page: "ams1" },
     { name: "SFO1", page: "sfo1" }
   ];
 
   const mobileSupportData = [
     { name: "Help Center", href: "#" },
-    { name: "Documentation", href: "#" },
-    { name: "API Reference", href: "#" },
-    { name: "Road Map", href: "#" },
-    { name: "Community", href: "#" },
     { name: "Contact Support", href: "#" },
+    { name: "Feature Requests", onClick: handleFeatureRequestClick },
+    { name: "API Documentation", href: "#" },
     { name: "System Status", href: "#" }
   ];
 
@@ -144,37 +151,8 @@ function App() {
       case 'home':
         return (
           <>
-            {/* Hero Section */}
-            <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 lg:py-32">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-4xl">
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-6">
-                    Seamless POS. Intuitive Design.
-                  </h1>
-                  <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-                    In store, Pop up, Off site. Network connection or not.  
- Sell anywhere, anytime.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button 
-                      size="lg" 
-                      className="bg-[#f08e80] hover:bg-violet-400 text-white text-lg px-8 py-4"
-                      onClick={handleSignupClick}
-                    >
-                      Request access
-                    </Button>
-                    <p className="text-base md:text-right text-gray-300 font-houschka-medium mb-8 max-w-2xl ml-auto">
-                   "I've never had such a smooth time at a large offsite and I can't tell you how excited I am about it!"
-                    </p>
-                  </div>
-                  <p className="text-base md:text-right text-gray-300 font-houschka-medium mb-8 max-w-2xl ml-auto">
-                    H - Bookstore Manager  
-
-                    Still North Books & Bar Hanover, NH
-                  </p>
-                </div>
-              </div>
-            </section>
+            {/* Interconnected Ecosystem Hero Section */}
+            <InterconnectedEcosystemHero onSignupClick={handleSignupClick} onNavigate={navigateTo} />
 
             {/* Platform Overview */}
             <section className="py-20 bg-white">
@@ -331,8 +309,6 @@ function App() {
         return <AdminPage onNavigateBack={() => navigateTo('system')} />;
       case 'reports':
         return <ReportsPage onNavigateBack={() => navigateTo('system')} />;
-      case 'roadmap':
-        return <RoadMapPage onNavigateBack={() => navigateTo('home')} />;
       case 'inventory':
         return <InventoryPage onNavigateBack={() => navigateTo('system')} />;
       case 'customer':
@@ -353,6 +329,8 @@ function App() {
         return <Ams1Page onNavigateBack={() => navigateTo('home')} />;
       case 'sfo1':
         return <Sfo1Page onNavigateBack={() => navigateTo('home')} />;
+      case 'roadmap':
+        return <RoadMapPage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       default:
         return null;
     }
@@ -360,6 +338,13 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Hidden form for Netlify Forms detection */}
+      <form name="feature-request" netlify="true" hidden>
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <textarea name="featureRequest"></textarea>
+      </form>
+
       {/* Header */}
       <header className="border-b border-gray-200 bg-white sticky top-0 z-[1000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -418,7 +403,7 @@ function App() {
                   isVisible={supportMegaMenuVisible}
                   onMouseEnter={() => setSupportMegaMenuVisible(true)}
                   onMouseLeave={() => setSupportMegaMenuVisible(false)}
-                  onNavigate={navigateTo}
+                  onNavigate={handleNavigation}
                   onClose={() => setSupportMegaMenuVisible(false)}
                 />
               </div>
@@ -551,13 +536,20 @@ function App() {
                 {mobileSupportOpen && (
                   <div className="pl-4 space-y-1">
                     {mobileSupportData.map((item) => (
-                      <a
+                      <button
                         key={item.name}
-                        href={item.href}
-                        className="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                        onClick={() => {
+                          if (item.onClick) {
+                            item.onClick()
+                          } else if (item.href && item.href !== '#') {
+                            window.open(item.href, '_blank')
+                          }
+                          setMobileMenuOpen(false)
+                        }}
+                        className="block w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
                       >
                         {item.name}
-                      </a>
+                      </button>
                     ))}
                   </div>
                 )}
@@ -603,9 +595,16 @@ function App() {
           onClose={() => setSignupModalOpen(false)}
         />
       )}
+
+      {/* Feature Request Modal */}
+      {featureRequestModalOpen && (
+        <FeatureRequestModal 
+          isOpen={featureRequestModalOpen}
+          onClose={() => setFeatureRequestModalOpen(false)}
+        />
+      )}
     </div>
   )
 }
 
 export default App
-
