@@ -41,16 +41,15 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
       items: [
         {
           title: "Receipt Printer",
-          subtitle: "Epson TM-T88V - Industry leading thermal printer",
+          subtitle: "Epson TM-T88V <br /> Industry leading thermal printer",
           icon: <Printer className="h-5 w-5" />,
-          price: "Contact Us",
           page: "epson-t88"
         },
         {
           title: "Label Printers",
           subtitle: "Professional label printing",
           icon: <Printer className="h-5 w-5" />,
-          price: "Contact Us"
+          page: " "
         }
       ]
     },
