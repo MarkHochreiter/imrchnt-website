@@ -249,13 +249,11 @@ function EpsonT88Page({ onNavigateBack, onContactSales }) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
            <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
-                  onClick={onContactSales}
-                >
-                  Request Quote
-                </Button>
+                className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
+                onClick={onContactSales}
+              >
+                Generate Quote
+              </Button>
           </div>
         </div>
       </section>
