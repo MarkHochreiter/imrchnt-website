@@ -11,6 +11,7 @@ import CreditCardProcessingPage from './components/CreditCardProcessingPage.jsx'
 import S1f2Page from './components/S1f2Page.jsx'
 import Ams1Page from './components/Ams1Page.jsx'
 import Sfo1Page from './components/Sfo1Page.jsx'
+import EpsonT88Page from './components/EpsonT88Page.jsx'
 import SignupModal from './components/SignupModal.jsx'
 import FeatureRequestModal from './components/FeatureRequestModal.jsx'
 import HardwareCartModal from './components/HardwareCartModal.jsx'
@@ -22,7 +23,6 @@ import InventoryPage from './components/inventory.jsx'
 import CustomerPage from './components/Customers.jsx'
 import SingleDevicePage from './components/singledevice.jsx'
 import RoadMapPage from './components/RoadmapPage.jsx'
-import InterconnectedEcosystemHero from './components/InterconnectedEcosystemHero.jsx'
 import './App.css'
 
 // Button component
@@ -141,7 +141,8 @@ function App() {
   const mobileHardwareData = [
     { name: "S1F2", page: "s1f2" },
     { name: "AMS1", page: "ams1" },
-    { name: "SFO1", page: "sfo1" }
+    { name: "SFO1", page: "sfo1" },
+    { name: "Receipt Printer", page: "epson-t88" }
   ];
 
   const mobileSupportData = [
@@ -364,6 +365,8 @@ function App() {
         return <Ams1Page onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'sfo1':
         return <Sfo1Page onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
+      case 'epson-t88':
+        return <EpsonT88Page onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'roadmap':
         return <RoadMapPage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       default:
@@ -380,16 +383,24 @@ function App() {
         <textarea name="featureRequest"></textarea>
       </form>
       
-      <form name="hardware-quote" netlify="true" hidden>
-        <input type="text" name="firstName" />
-        <input type="text" name="lastName" />
-        <input type="email" name="email" />
-        <input type="text" name="company" />
-        <input type="tel" name="phone" />
-        <textarea name="message"></textarea>
-        <textarea name="orderSummary"></textarea>
-        <input type="text" name="totalAmount" />
-        <input type="number" name="itemCount" />
+      <form name="hardware-quote-line-item" netlify="true" hidden>
+        <input type="text" name="quoteId" />
+        <input type="number" name="lineNumber" />
+        <input type="text" name="itemName" />
+        <input type="text" name="itemCategory" />
+        <input type="text" name="parentTerminal" />
+        <input type="text" name="purchaseOption" />
+        <input type="number" name="quantity" />
+        <input type="text" name="unitPrice" />
+        <input type="text" name="lineTotal" />
+        <input type="text" name="customerFirstName" />
+        <input type="text" name="customerLastName" />
+        <input type="email" name="customerEmail" />
+        <input type="text" name="customerCompany" />
+        <input type="tel" name="customerPhone" />
+        <textarea name="customerMessage"></textarea>
+        <input type="number" name="quoteTotalItems" />
+        <input type="text" name="quoteTotalAmount" />
         <input type="hidden" name="timestamp" />
       </form>
 
