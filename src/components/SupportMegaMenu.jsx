@@ -1,4 +1,4 @@
-submitimport { 
+import { 
   HelpCircle, 
   FileText, 
   MessageSquare, 
@@ -10,6 +10,7 @@ submitimport {
   Monitor,
   Map
 } from 'lucide-react'
+
 import { Button } from '@/components/ui/button.jsx'
 
 function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, onClose }) {
