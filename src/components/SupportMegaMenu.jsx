@@ -66,7 +66,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           title: "Feature Requests",
           subtitle: "Suggest improvements",
           icon: <HelpCircle className="h-5 w-5" />,
-          description: "Help us improve our platform"
+          description: "Help us improve our platform",
           onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im', '_blank')
         }
       ]
