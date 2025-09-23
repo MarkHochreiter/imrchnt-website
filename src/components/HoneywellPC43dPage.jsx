@@ -1,5 +1,5 @@
 import { Printer, Wifi, Zap, Shield, ArrowLeft, Bluetooth, Usb, Settings, Clock, Package, Scan } from 'lucide-react'
-import honeywellPC43dImage from '../assets/43d.png'
+import honeywellPC43d from '../assets/43d.png'
 
 // Button component to match your design system
 const Button = ({ children, className = '', size = 'default', variant = 'default', onClick, ...props }) => {
@@ -56,7 +56,7 @@ function HoneywellPC43dPage({ onNavigateBack, onContactSales }) {
             </div>
             <div className="bg-gray-100 rounded-lg p-8 flex items-center justify-center">
               <div className="w-64 h-64 bg-gray-300 rounded-lg flex items-center justify-center">
-                <Package className="h-32 w-32 text-gray-500" />
+                <img src={honeywellPC43d} alt="HoneyWell 43d" className="max-w-full h-auto" />
                 <span className="sr-only">Honeywell PC43d Label Printer</span>
               </div>
             </div>
