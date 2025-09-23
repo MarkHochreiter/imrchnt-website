@@ -217,8 +217,19 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
     {
       id: 12,
       date: "Q4 2025",
+      title: "App on Apple App Store",
+      description: "App to be available on Apple App store by the end of the year.",
+      status: "planned",
+      icon: <Apple className="h-6 w-6" />,
+      category: "Integrations",
+      details: [
+      ]
+    },
+    {
+      id: 13,
+      date: "Q4 2025",
       title: "In store assistant",
-      description: "Use our smartphone app in store to assist customers. Meet the customers where they are in the store, answer inventory questions, reduce POS lines by processing the sale right there with Tap to Pay.",
+      description: "Use your smartphone in store to assist customers. Meet the customers where they are in the store, answer inventory questions, reduce POS lines by processing the sale right there with Tap to Pay.",
       status: "in-progress",
       icon: <Rocket className="h-6 w-6" />,
       category: "In Store Experience",
@@ -227,7 +238,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       ]
     },
     {
-      id: 13,
+      id: 14,
       date: "Q4 2025",
       title: "Meta Data Integrations",
       description: "Industry specific integrations for richer item meta data from Industry vendors and publishers.",
@@ -240,18 +251,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
         "ONYX XML files"
       ]
     },
-        {
-      id: 14,
-      date: "Q4 2025",
-      title: "App on Apple App Store",
-      description: "App to be available on Apple App store by the end of the year.",
-      status: "planned",
-      icon: <Apple className="h-6 w-6" />,
-      category: "Integrations",
-      details: [
-      ]
-    },
-        {
+    {
       id: 15,
       date: "Q4 2025",
       title: "POS Quick Buttons",
