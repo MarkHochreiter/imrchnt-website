@@ -188,6 +188,13 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     return Object.values(selectedItems).reduce((total, { quantity }) => total + quantity, 0)
   }
 
+  // Generate a unique quote ID
+  const generateQuoteId = () => {
+    const timestamp = Date.now()
+    const random = Math.floor(Math.random() * 1000)
+    return `HW-${timestamp}-${random}`
+  }
+
   const encode = (data) => {
     return Object.keys(data)
       .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
@@ -199,45 +206,75 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     setIsSubmitting(true)
     setSubmitStatus(null)
 
-    // Format selected items for submission
-    const orderSummary = Object.entries(selectedItems).map(([itemKey, itemData]) => {
-      const price = getItemPrice(itemKey, itemData)
-      const totalPrice = price * itemData.quantity
-      
-      if (itemData.type === 'accessory' && itemData.parentTerminal) {
-        return `${itemData.name} (${itemData.quantity}x) for ${itemData.parentTerminal.toUpperCase()} - $${totalPrice.toFixed(2)}`
-      }
-      
-      const item = hardwareItems.find(h => h.id === itemData.itemId)
-      const optionText = item?.type === 'terminal' ? ` (${itemData.option})` : ''
-      return `${item?.name || itemData.name}${optionText} (${itemData.quantity}x) - $${totalPrice.toFixed(2)}`
-    }).join('\n')
-
-    const submissionData = {
-      ...contactInfo,
-      orderSummary,
-      totalAmount: `$${calculateTotal().toFixed(2)}`,
-      itemCount: getSelectedItemsCount(),
-      timestamp: new Date().toISOString()
-    }
+    const quoteId = generateQuoteId()
+    const timestamp = new Date().toISOString()
 
     try {
-      console.log('Submitting hardware quote to Netlify Forms...')
-      console.log('Form data:', submissionData)
-      
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({
-          "form-name": "hardware-quote",
-          ...submissionData
+      // Submit each line item as a separate form submission
+      const lineItems = Object.entries(selectedItems).map(([itemKey, itemData], index) => {
+        const price = getItemPrice(itemKey, itemData)
+        const totalPrice = price * itemData.quantity
+        
+        let itemName = ''
+        let itemCategory = ''
+        let parentTerminal = ''
+        
+        if (itemData.type === 'accessory' && itemData.parentTerminal) {
+          itemName = itemData.name
+          itemCategory = 'Terminal Accessory'
+          parentTerminal = itemData.parentTerminal.toUpperCase()
+        } else {
+          const item = hardwareItems.find(h => h.id === itemData.itemId)
+          itemName = item?.name || itemData.name
+          itemCategory = item?.category || 'Accessory'
+        }
+        
+        return {
+          quoteId,
+          lineNumber: index + 1,
+          itemName,
+          itemCategory,
+          parentTerminal,
+          purchaseOption: itemData.option || 'buy',
+          quantity: itemData.quantity,
+          unitPrice: price.toFixed(2),
+          lineTotal: totalPrice.toFixed(2),
+          // Contact info (repeated for each line item)
+          customerFirstName: contactInfo.firstName,
+          customerLastName: contactInfo.lastName,
+          customerEmail: contactInfo.email,
+          customerCompany: contactInfo.company || '',
+          customerPhone: contactInfo.phone || '',
+          customerMessage: contactInfo.message || '',
+          // Quote totals (repeated for each line item)
+          quoteTotalItems: getSelectedItemsCount(),
+          quoteTotalAmount: calculateTotal().toFixed(2),
+          timestamp
+        }
+      })
+
+      console.log('Submitting line items to Netlify Forms...')
+      console.log('Line items:', lineItems)
+
+      // Submit all line items
+      const submissions = lineItems.map(async (lineItem) => {
+        return fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: encode({
+            "form-name": "hardware-quote-line-item",
+            ...lineItem
+          })
         })
       })
 
-      console.log('Response status:', response.status)
+      const responses = await Promise.all(submissions)
+      
+      // Check if all submissions were successful
+      const allSuccessful = responses.every(response => response.ok)
 
-      if (response.ok) {
-        console.log('✅ Hardware quote submitted successfully to Netlify')
+      if (allSuccessful) {
+        console.log('✅ All line items submitted successfully to Netlify')
         setSubmitStatus('success')
         
         // Reset form
@@ -257,7 +294,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           setSubmitStatus(null)
         }, 3000)
       } else {
-        console.error('❌ Hardware quote submission failed:', response.status)
+        console.error('❌ Some line item submissions failed')
         setSubmitStatus('error')
       }
     } catch (error) {
@@ -300,7 +337,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
 
         <form onSubmit={handleSubmit} className="p-6">
           {/* Hidden field for Netlify Forms */}
-          <input type="hidden" name="form-name" value="hardware-quote" />
+          <input type="hidden" name="form-name" value="hardware-quote-line-item" />
           
           {/* Hardware Selection */}
           <div className="mb-8">
@@ -611,7 +648,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                     value={contactInfo.lastName}
                     onChange={handleContactChange}
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f08e80] focus:border-transparent"
-                    placeholder="Doe"
                   />
                 </div>
               </div>
