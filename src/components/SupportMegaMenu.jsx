@@ -42,7 +42,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           subtitle: "Get personalized support",
           icon: <MessageSquare className="h-5 w-5" />,
           description: "Submit a support request and get help from our team",
-          onClick: () => window.open('https://imrchnt-243943054.hs-sites-na2.com/tickets-view, '_blank')
+          onClick: () => window.open('https://imrchnt-243943054.hs-sites-na2.com/tickets-view', '_blank')
         },
         {
           title: "Phone Support",
