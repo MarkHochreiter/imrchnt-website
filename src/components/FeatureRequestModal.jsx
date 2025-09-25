@@ -3,7 +3,8 @@ import { X, Mail, User, MessageSquare, Lightbulb } from 'lucide-react'
 
 const FeatureRequestModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
-    name: '',
+    firstname: '',
+    lastname: '',
     email: '',
     featureRequest: ''
   })
@@ -50,7 +51,8 @@ const FeatureRequestModal = ({ isOpen, onClose }) => {
         
         // Reset form
         setFormData({
-          name: '',
+          firstname: '',
+          lastname: '',
           email: '',
           featureRequest: ''
         })
@@ -99,26 +101,46 @@ const FeatureRequestModal = ({ isOpen, onClose }) => {
           {/* Hidden field for Netlify Forms */}
           <input type="hidden" name="form-name" value="feature-request" />
           
-          {/* Name */}
+          {/* First Name */}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Your Name *
+            <label htmlFor="firstname" className="block text-sm font-medium text-gray-700 mb-1">
+              First Name *
             </label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
-                id="name"
-                name="name"
+                id="firstname"
+                name="firstname"
                 required
-                value={formData.name}
+                value={formData.firstname}
                 onChange={handleInputChange}
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f08e80] focus:border-transparent"
-                placeholder="John Doe"
+                placeholder="John"
               />
             </div>
           </div>
 
+          {/* Last Name */}
+          <div>
+            <label htmlFor="lastname" className="block text-sm font-medium text-gray-700 mb-1">
+              Last Name *
+            </label>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                required
+                value={formData.lastname}
+                onChange={handleInputChange}
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f08e80] focus:border-transparent"
+                placeholder="Doe"
+              />
+            </div>
+          </div>
+          
           {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
