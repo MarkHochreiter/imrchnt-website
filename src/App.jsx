@@ -148,11 +148,10 @@ function App() {
   ];
 
   const mobileSupportData = [
-    { name: "Help Center", href: "#" },
-    { name: "Contact Support", href: "#" },
+    { name: "Submit Ticket", href: "#" },
+    { name: "User Guides, href: "#" },
     { name: "Feature Requests", onClick: handleFeatureRequestClick },
-    { name: "API Documentation", href: "#" },
-    { name: "System Status", href: "#" }
+    { name: "Road Map", page: "roadmap"}
   ];
 
   const renderContent = () => {
