@@ -223,21 +223,6 @@ function OffsitePage({ handleSignupClick, onNavigate }) {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-[#f08e80] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Take Your Business Anywhere
-          </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Start selling offsite today with our flexible, mobile-first retail solutions.
-          </p>
-          <Button size="lg" className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4">
-            Start Your Free Trial
-          </Button>
-        </div>
-      </section>
     </div>
   )
 }
