@@ -1,7 +1,7 @@
 // Webhook handler for HubSpot custom workflow actions
 // This handles callbacks from HubSpot workflows for advanced automation
 
-const HUBSPOT_API_BASE = 'https://api.hubapi.com';
+const HUBSPOT_API_BASE = 'https://imrchnt.netlify.app/';
 
 // Helper function to make HubSpot API requests
 async function hubspotRequest(endpoint, options = {}) {
