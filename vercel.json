@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/products.js": {
+      "maxDuration": 30
+    },
+    "api/create-quote.js": {
+      "maxDuration": 60
+    },
+    "api/workflow-webhook.js": {
+      "maxDuration": 45
+    }
+  }
+}
