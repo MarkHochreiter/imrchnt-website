@@ -1,7 +1,7 @@
 // Serverless function to fetch products from HubSpot
 // This can be deployed to Vercel, Netlify, or AWS Lambda
 
-const HUBSPOT_API_BASE = 'https://imrchnt.netlify.app/';
+const HUBSPOT_API_BASE = 'https://api.hubapi.com';
 
 // Helper function to make HubSpot API requests
 async function hubspotRequest(endpoint, options = {}) {
