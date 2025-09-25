@@ -221,7 +221,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
       description: "App to be available on Apple App store by the end of the year.",
       status: "in-progress",
       icon: <Apple className="h-6 w-6" />,
-      category: "Integrations",
+      category: "Launch",
       details: [
       ]
     },
