@@ -28,8 +28,8 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       setProductLoadError(null)
       
       try {
-        // Replace with your actual API endpoint
-        const response = await fetch('/api/products', {
+        // Fetch products from Netlify functions
+        const response = await fetch('https://imrchnt.netlify.app/.netlify/functions/products', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -291,7 +291,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       console.log('Quote data:', quoteData)
 
       // Submit to HubSpot integration endpoint
-      const response = await fetch('/api/create-quote', {
+      const response = await fetch('https://imrchnt.netlify.app/.netlify/functions/create-quote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
