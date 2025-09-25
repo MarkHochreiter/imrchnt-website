@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { X, ShoppingCart, Plus, Minus, Mail, User, Building, Phone, Calculator, CreditCard, DollarSign } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { X, ShoppingCart, Plus, Minus, Mail, User, Building, Phone, Calculator, CreditCard, DollarSign, Loader2 } from 'lucide-react'
 
 const HardwareCartModal = ({ isOpen, onClose }) => {
   const [selectedItems, setSelectedItems] = useState({})
@@ -13,10 +13,56 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
+  
+  // New state for dynamic product loading
+  const [hardwareItems, setHardwareItems] = useState([])
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true)
+  const [productLoadError, setProductLoadError] = useState(null)
 
-  // Hardware items with pricing and accessories
-  const hardwareItems = [
-    // Terminals with rent/buy options and accessories
+  // Fetch products from HubSpot via backend API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (!isOpen) return; // Don't fetch if modal is closed
+      
+      setIsLoadingProducts(true)
+      setProductLoadError(null)
+      
+      try {
+        // Replace with your actual API endpoint
+        const response = await fetch('/api/products', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+        const data = await response.json()
+        
+        if (data.success) {
+          setHardwareItems(data.products || [])
+        } else {
+          throw new Error(data.message || 'Failed to fetch products')
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error)
+        setProductLoadError(error.message)
+        
+        // Fallback to hardcoded products if API fails
+        setHardwareItems(getDefaultProducts())
+      } finally {
+        setIsLoadingProducts(false)
+      }
+    }
+
+    fetchProducts()
+  }, [isOpen])
+
+  // Fallback hardcoded products (same as original)
+  const getDefaultProducts = () => [
     {
       id: 'ams1',
       name: 'AMS1',
@@ -62,7 +108,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         { id: 'sfo1-pouch', name: 'Carrying Pouch', price: 28.00, description: 'Padded carrying pouch' }
       ]
     },
-    // Standalone accessories
     {
       id: 'receipt-printer',
       name: 'Receipt Printer',
@@ -188,17 +233,10 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     return Object.values(selectedItems).reduce((total, { quantity }) => total + quantity, 0)
   }
 
-  // Generate a unique quote ID
   const generateQuoteId = () => {
     const timestamp = Date.now()
     const random = Math.floor(Math.random() * 1000)
     return `HW-${timestamp}-${random}`
-  }
-
-  const encode = (data) => {
-    return Object.keys(data)
-      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-      .join("&")
   }
 
   const handleSubmit = async (e) => {
@@ -210,71 +248,61 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     const timestamp = new Date().toISOString()
 
     try {
-      // Submit each line item as a separate form submission
-      const lineItems = Object.entries(selectedItems).map(([itemKey, itemData], index) => {
-        const price = getItemPrice(itemKey, itemData)
-        const totalPrice = price * itemData.quantity
-        
-        let itemName = ''
-        let itemCategory = ''
-        let parentTerminal = ''
-        
-        if (itemData.type === 'accessory' && itemData.parentTerminal) {
-          itemName = itemData.name
-          itemCategory = 'Terminal Accessory'
-          parentTerminal = itemData.parentTerminal.toUpperCase()
-        } else {
-          const item = hardwareItems.find(h => h.id === itemData.itemId)
-          itemName = item?.name || itemData.name
-          itemCategory = item?.category || 'Accessory'
-        }
-        
-        return {
-          quoteId,
-          lineNumber: index + 1,
-          itemName,
-          itemCategory,
-          parentTerminal,
-          purchaseOption: itemData.option || 'buy',
-          quantity: itemData.quantity,
-          unitPrice: price.toFixed(2),
-          lineTotal: totalPrice.toFixed(2),
-          // Contact info (repeated for each line item)
-          customerFirstName: contactInfo.firstName,
-          customerLastName: contactInfo.lastName,
-          customerEmail: contactInfo.email,
-          customerCompany: contactInfo.company || '',
-          customerPhone: contactInfo.phone || '',
-          customerMessage: contactInfo.message || '',
-          // Quote totals (repeated for each line item)
-          quoteTotalItems: getSelectedItemsCount(),
-          quoteTotalAmount: calculateTotal().toFixed(2),
-          timestamp
-        }
+      // Prepare quote data for HubSpot integration
+      const quoteData = {
+        quoteId,
+        timestamp,
+        contactInfo,
+        selectedItems: Object.entries(selectedItems).map(([itemKey, itemData]) => {
+          const price = getItemPrice(itemKey, itemData)
+          const totalPrice = price * itemData.quantity
+          
+          let itemName = ''
+          let itemCategory = ''
+          let parentTerminal = ''
+          
+          if (itemData.type === 'accessory' && itemData.parentTerminal) {
+            itemName = itemData.name
+            itemCategory = 'Terminal Accessory'
+            parentTerminal = itemData.parentTerminal.toUpperCase()
+          } else {
+            const item = hardwareItems.find(h => h.id === itemData.itemId)
+            itemName = item?.name || itemData.name
+            itemCategory = item?.category || 'Accessory'
+          }
+          
+          return {
+            itemId: itemData.itemId,
+            itemName,
+            itemCategory,
+            parentTerminal,
+            purchaseOption: itemData.option || 'buy',
+            quantity: itemData.quantity,
+            unitPrice: price,
+            lineTotal: totalPrice,
+            sku: hardwareItems.find(h => h.id === itemData.itemId)?.sku || ''
+          }
+        }),
+        quoteTotalItems: getSelectedItemsCount(),
+        quoteTotalAmount: calculateTotal()
+      }
+
+      console.log('Submitting quote to HubSpot integration...')
+      console.log('Quote data:', quoteData)
+
+      // Submit to HubSpot integration endpoint
+      const response = await fetch('/api/create-quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quoteData)
       })
 
-      console.log('Submitting line items to Netlify Forms...')
-      console.log('Line items:', lineItems)
+      const result = await response.json()
 
-      // Submit all line items
-      const submissions = lineItems.map(async (lineItem) => {
-        return fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: encode({
-            "form-name": "hardware-quote-line-item",
-            ...lineItem
-          })
-        })
-      })
-
-      const responses = await Promise.all(submissions)
-      
-      // Check if all submissions were successful
-      const allSuccessful = responses.every(response => response.ok)
-
-      if (allSuccessful) {
-        console.log('✅ All line items submitted successfully to Netlify')
+      if (response.ok && result.success) {
+        console.log('✅ Quote submitted successfully to HubSpot')
         setSubmitStatus('success')
         
         // Reset form
@@ -294,7 +322,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           setSubmitStatus(null)
         }, 3000)
       } else {
-        console.error('❌ Some line item submissions failed')
+        console.error('❌ Quote submission failed:', result.message)
         setSubmitStatus('error')
       }
     } catch (error) {
@@ -326,6 +354,11 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
               Hardware Quote Request
             </h2>
             <p className="text-gray-600 mt-1">Select hardware items and get a custom quote</p>
+            {productLoadError && (
+              <p className="text-orange-600 text-sm mt-1">
+                ⚠️ Using cached product data - {productLoadError}
+              </p>
+            )}
           </div>
           <button
             onClick={onClose}
@@ -336,240 +369,255 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6">
-          {/* Hidden field for Netlify Forms */}
-          <input type="hidden" name="form-name" value="hardware-quote-line-item" />
-          
           {/* Hardware Selection */}
           <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Hardware Items</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+              Select Hardware Items
+              {isLoadingProducts && (
+                <Loader2 className="h-4 w-4 ml-2 animate-spin text-[#f08e80]" />
+              )}
+            </h3>
             
-            {Object.entries(groupedItems).map(([category, items]) => (
-              <div key={category} className="mb-8">
-                <h4 className="text-md font-medium text-[#f08e80] mb-4">{category}</h4>
-                
-                {items.map((item) => (
-                  <div key={item.id} className="mb-6 border border-gray-200 rounded-lg p-4">
-                    {/* Main Item */}
-                    <div className="mb-4">
-                      <h5 className="font-medium text-gray-900 text-lg mb-2">{item.name}</h5>
-                      <p className="text-sm text-gray-600 mb-4">{item.description}</p>
-                      
-                      {item.type === 'terminal' ? (
-                        // Terminal with rent/buy options
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {/* Rent Option */}
-                          <div className={`border rounded-lg p-4 transition-all duration-200 ${
-                            selectedItems[`${item.id}-rent`] 
-                              ? 'border-[#f08e80] bg-[#f08e80]/5' 
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}>
-                            <div className="flex items-start space-x-3">
-                              <input
-                                type="radio"
-                                id={`${item.id}-rent`}
-                                name={`item-${item.id}`}
-                                checked={!!selectedItems[`${item.id}-rent`]}
-                                onChange={() => handleItemToggle(item.id, 'rent')}
-                                className="mt-1 h-4 w-4 text-[#f08e80] focus:ring-[#f08e80] border-gray-300"
-                              />
-                              <div className="flex-1">
-                                <label htmlFor={`${item.id}-rent`} className="cursor-pointer">
-                                  <div className="flex items-center mb-2">
-                                    <CreditCard className="h-4 w-4 text-blue-600 mr-2" />
-                                    <span className="font-medium text-gray-900">Rent</span>
-                                  </div>
-                                  <p className="text-2xl font-bold text-blue-600 mb-1">${item.rentPrice.toFixed(2)}/month</p>
-                                  <p className="text-xs text-gray-500">Monthly rental with support included</p>
-                                </label>
-                                
-                                {selectedItems[`${item.id}-rent`] && (
-                                  <div className="flex items-center space-x-2 mt-3">
-                                    <span className="text-sm text-gray-600">Quantity:</span>
-                                    <button
-                                      type="button"
-                                      onClick={() => handleQuantityChange(`${item.id}-rent`, -1)}
-                                      className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
-                                    >
-                                      <Minus className="h-4 w-4" />
-                                    </button>
-                                    <span className="w-8 text-center font-medium">
-                                      {selectedItems[`${item.id}-rent`].quantity}
-                                    </span>
-                                    <button
-                                      type="button"
-                                      onClick={() => handleQuantityChange(`${item.id}-rent`, 1)}
-                                      className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
-                                    >
-                                      <Plus className="h-4 w-4" />
-                                    </button>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Buy Option */}
-                          <div className={`border rounded-lg p-4 transition-all duration-200 ${
-                            selectedItems[`${item.id}-buy`] 
-                              ? 'border-[#f08e80] bg-[#f08e80]/5' 
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}>
-                            <div className="flex items-start space-x-3">
-                              <input
-                                type="radio"
-                                id={`${item.id}-buy`}
-                                name={`item-${item.id}`}
-                                checked={!!selectedItems[`${item.id}-buy`]}
-                                onChange={() => handleItemToggle(item.id, 'buy')}
-                                className="mt-1 h-4 w-4 text-[#f08e80] focus:ring-[#f08e80] border-gray-300"
-                              />
-                              <div className="flex-1">
-                                <label htmlFor={`${item.id}-buy`} className="cursor-pointer">
-                                  <div className="flex items-center mb-2">
-                                    <DollarSign className="h-4 w-4 text-[#f08e80] mr-2" />
-                                    <span className="font-medium text-gray-900">Buy</span>
-                                  </div>
-                                  <p className="text-2xl font-bold text-[#f08e80] mb-1">${item.buyPrice.toFixed(2)}</p>
-                                  <p className="text-xs text-gray-500">One-time purchase, own forever</p>
-                                </label>
-                                
-                                {selectedItems[`${item.id}-buy`] && (
-                                  <div className="flex items-center space-x-2 mt-3">
-                                    <span className="text-sm text-gray-600">Quantity:</span>
-                                    <button
-                                      type="button"
-                                      onClick={() => handleQuantityChange(`${item.id}-buy`, -1)}
-                                      className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
-                                    >
-                                      <Minus className="h-4 w-4" />
-                                    </button>
-                                    <span className="w-8 text-center font-medium">
-                                      {selectedItems[`${item.id}-buy`].quantity}
-                                    </span>
-                                    <button
-                                      type="button"
-                                      onClick={() => handleQuantityChange(`${item.id}-buy`, 1)}
-                                      className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
-                                    >
-                                      <Plus className="h-4 w-4" />
-                                    </button>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        // Regular accessory item
-                        <div className={`border rounded-lg p-4 transition-all duration-200 ${
-                          selectedItems[item.id] 
-                            ? 'border-[#f08e80] bg-[#f08e80]/5' 
-                            : 'border-gray-200 hover:border-gray-300'
-                        }`}>
-                          <div className="flex items-start space-x-3">
-                            <input
-                              type="radio"
-                              id={item.id}
-                              name={`item-${item.id}`}
-                              checked={!!selectedItems[item.id]}
-                              onChange={() => handleItemToggle(item.id)}
-                              className="mt-1 h-4 w-4 text-[#f08e80] focus:ring-[#f08e80] border-gray-300"
-                            />
-                            <div className="flex-1">
-                              <label htmlFor={item.id} className="cursor-pointer">
-                                <p className="text-2xl font-bold text-[#f08e80] mb-1">${item.price.toFixed(2)}</p>
-                              </label>
-                              
-                              {selectedItems[item.id] && (
-                                <div className="flex items-center space-x-2 mt-3">
-                                  <span className="text-sm text-gray-600">Quantity:</span>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleQuantityChange(item.id, -1)}
-                                    className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
-                                  >
-                                    <Minus className="h-4 w-4" />
-                                  </button>
-                                  <span className="w-8 text-center font-medium">
-                                    {selectedItems[item.id].quantity}
-                                  </span>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleQuantityChange(item.id, 1)}
-                                    className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
-                                  >
-                                    <Plus className="h-4 w-4" />
-                                  </button>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Terminal Accessories */}
-                    {item.type === 'terminal' && item.accessories && (selectedItems[`${item.id}-rent`] || selectedItems[`${item.id}-buy`]) && (
-                      <div className="mt-4 pt-4 border-t border-gray-200">
-                        <h6 className="font-medium text-gray-700 mb-3">Available Accessories for {item.name}</h6>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          {item.accessories.map((accessory) => (
-                            <div 
-                              key={accessory.id}
-                              className={`border rounded-lg p-3 transition-all duration-200 ${
-                                selectedItems[`${item.id}-${accessory.id}`] 
-                                  ? 'border-green-400 bg-green-50' 
+            {isLoadingProducts ? (
+              <div className="flex items-center justify-center py-12">
+                <div className="text-center">
+                  <Loader2 className="h-8 w-8 animate-spin text-[#f08e80] mx-auto mb-4" />
+                  <p className="text-gray-600">Loading products from HubSpot...</p>
+                </div>
+              </div>
+            ) : (
+              Object.entries(groupedItems).map(([category, items]) => (
+                <div key={category} className="mb-8">
+                  <h4 className="text-md font-medium text-[#f08e80] mb-4">{category}</h4>
+                  
+                  {items.map((item) => (
+                    <div key={item.id} className="mb-6 border border-gray-200 rounded-lg p-4">
+                      {/* Main Item */}
+                      <div className="mb-4">
+                        <h5 className="font-medium text-gray-900 text-lg mb-2">{item.name}</h5>
+                        <p className="text-sm text-gray-600 mb-4">{item.description}</p>
+                        {item.sku && (
+                          <p className="text-xs text-gray-500 mb-2">SKU: {item.sku}</p>
+                        )}
+                        
+                        {item.type === 'terminal' ? (
+                          // Terminal with rent/buy options
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* Rent Option */}
+                            {item.rentPrice > 0 && (
+                              <div className={`border rounded-lg p-4 transition-all duration-200 ${
+                                selectedItems[`${item.id}-rent`] 
+                                  ? 'border-[#f08e80] bg-[#f08e80]/5' 
                                   : 'border-gray-200 hover:border-gray-300'
-                              }`}
-                            >
+                              }`}>
+                                <div className="flex items-start space-x-3">
+                                  <input
+                                    type="radio"
+                                    id={`${item.id}-rent`}
+                                    name={`item-${item.id}`}
+                                    checked={!!selectedItems[`${item.id}-rent`]}
+                                    onChange={() => handleItemToggle(item.id, 'rent')}
+                                    className="mt-1 h-4 w-4 text-[#f08e80] focus:ring-[#f08e80] border-gray-300"
+                                  />
+                                  <div className="flex-1">
+                                    <label htmlFor={`${item.id}-rent`} className="cursor-pointer">
+                                      <div className="flex items-center mb-2">
+                                        <CreditCard className="h-4 w-4 text-blue-600 mr-2" />
+                                        <span className="font-medium text-gray-900">Rent</span>
+                                      </div>
+                                      <p className="text-2xl font-bold text-blue-600 mb-1">${item.rentPrice.toFixed(2)}/month</p>
+                                      <p className="text-xs text-gray-500">Monthly rental with support included</p>
+                                    </label>
+                                    
+                                    {selectedItems[`${item.id}-rent`] && (
+                                      <div className="flex items-center space-x-2 mt-3">
+                                        <span className="text-sm text-gray-600">Quantity:</span>
+                                        <button
+                                          type="button"
+                                          onClick={() => handleQuantityChange(`${item.id}-rent`, -1)}
+                                          className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
+                                        >
+                                          <Minus className="h-4 w-4" />
+                                        </button>
+                                        <span className="w-8 text-center font-medium">
+                                          {selectedItems[`${item.id}-rent`].quantity}
+                                        </span>
+                                        <button
+                                          type="button"
+                                          onClick={() => handleQuantityChange(`${item.id}-rent`, 1)}
+                                          className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
+                                        >
+                                          <Plus className="h-4 w-4" />
+                                        </button>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Buy Option */}
+                            <div className={`border rounded-lg p-4 transition-all duration-200 ${
+                              selectedItems[`${item.id}-buy`] 
+                                ? 'border-[#f08e80] bg-[#f08e80]/5' 
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}>
                               <div className="flex items-start space-x-3">
                                 <input
-                                  type="checkbox"
-                                  id={`${item.id}-${accessory.id}`}
-                                  checked={!!selectedItems[`${item.id}-${accessory.id}`]}
-                                  onChange={() => handleAccessoryToggle(accessory.id, item.id)}
-                                  className="mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                                  type="radio"
+                                  id={`${item.id}-buy`}
+                                  name={`item-${item.id}`}
+                                  checked={!!selectedItems[`${item.id}-buy`]}
+                                  onChange={() => handleItemToggle(item.id, 'buy')}
+                                  className="mt-1 h-4 w-4 text-[#f08e80] focus:ring-[#f08e80] border-gray-300"
                                 />
                                 <div className="flex-1">
-                                  <label htmlFor={`${item.id}-${accessory.id}`} className="cursor-pointer">
-                                    <h7 className="font-medium text-gray-900 text-sm">{accessory.name}</h7>
-                                    <p className="text-xs text-gray-600 mb-1">{accessory.description}</p>
-                                    <p className="text-sm font-bold text-green-600">${accessory.price.toFixed(2)}</p>
+                                  <label htmlFor={`${item.id}-buy`} className="cursor-pointer">
+                                    <div className="flex items-center mb-2">
+                                      <DollarSign className="h-4 w-4 text-green-600 mr-2" />
+                                      <span className="font-medium text-gray-900">Buy</span>
+                                    </div>
+                                    <p className="text-2xl font-bold text-green-600 mb-1">${item.buyPrice.toFixed(2)}</p>
+                                    <p className="text-xs text-gray-500">One-time purchase</p>
                                   </label>
                                   
-                                  {selectedItems[`${item.id}-${accessory.id}`] && (
-                                    <div className="flex items-center space-x-2 mt-2">
-                                      <span className="text-xs text-gray-600">Qty:</span>
+                                  {selectedItems[`${item.id}-buy`] && (
+                                    <div className="flex items-center space-x-2 mt-3">
+                                      <span className="text-sm text-gray-600">Quantity:</span>
                                       <button
                                         type="button"
-                                        onClick={() => handleQuantityChange(`${item.id}-${accessory.id}`, -1)}
-                                        className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
+                                        onClick={() => handleQuantityChange(`${item.id}-buy`, -1)}
+                                        className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
                                       >
-                                        <Minus className="h-3 w-3" />
+                                        <Minus className="h-4 w-4" />
                                       </button>
-                                      <span className="w-6 text-center text-sm font-medium">
-                                        {selectedItems[`${item.id}-${accessory.id}`].quantity}
+                                      <span className="w-8 text-center font-medium">
+                                        {selectedItems[`${item.id}-buy`].quantity}
                                       </span>
                                       <button
                                         type="button"
-                                        onClick={() => handleQuantityChange(`${item.id}-${accessory.id}`, 1)}
-                                        className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
+                                        onClick={() => handleQuantityChange(`${item.id}-buy`, 1)}
+                                        className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
                                       >
-                                        <Plus className="h-3 w-3" />
+                                        <Plus className="h-4 w-4" />
                                       </button>
                                     </div>
                                   )}
                                 </div>
                               </div>
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        ) : (
+                          // Standalone accessory
+                          <div className={`border rounded-lg p-4 transition-all duration-200 ${
+                            selectedItems[item.id] 
+                              ? 'border-[#f08e80] bg-[#f08e80]/5' 
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}>
+                            <div className="flex items-start space-x-3">
+                              <input
+                                type="checkbox"
+                                id={item.id}
+                                checked={!!selectedItems[item.id]}
+                                onChange={() => handleItemToggle(item.id)}
+                                className="mt-1 h-4 w-4 text-[#f08e80] focus:ring-[#f08e80] border-gray-300 rounded"
+                              />
+                              <div className="flex-1">
+                                <label htmlFor={item.id} className="cursor-pointer">
+                                  <p className="text-2xl font-bold text-[#f08e80] mb-1">${item.price.toFixed(2)}</p>
+                                </label>
+                                
+                                {selectedItems[item.id] && (
+                                  <div className="flex items-center space-x-2 mt-3">
+                                    <span className="text-sm text-gray-600">Quantity:</span>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleQuantityChange(item.id, -1)}
+                                      className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
+                                    >
+                                      <Minus className="h-4 w-4" />
+                                    </button>
+                                    <span className="w-8 text-center font-medium">
+                                      {selectedItems[item.id].quantity}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleQuantityChange(item.id, 1)}
+                                      className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
+                                    >
+                                      <Plus className="h-4 w-4" />
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ))}
+
+                      {/* Terminal Accessories */}
+                      {item.type === 'terminal' && item.accessories && item.accessories.length > 0 && (selectedItems[`${item.id}-rent`] || selectedItems[`${item.id}-buy`]) && (
+                        <div className="mt-4 pt-4 border-t border-gray-200">
+                          <h6 className="font-medium text-gray-700 mb-3">Available Accessories for {item.name}</h6>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {item.accessories.map((accessory) => (
+                              <div 
+                                key={accessory.id}
+                                className={`border rounded-lg p-3 transition-all duration-200 ${
+                                  selectedItems[`${item.id}-${accessory.id}`] 
+                                    ? 'border-green-400 bg-green-50' 
+                                    : 'border-gray-200 hover:border-gray-300'
+                                }`}
+                              >
+                                <div className="flex items-start space-x-3">
+                                  <input
+                                    type="checkbox"
+                                    id={`${item.id}-${accessory.id}`}
+                                    checked={!!selectedItems[`${item.id}-${accessory.id}`]}
+                                    onChange={() => handleAccessoryToggle(accessory.id, item.id)}
+                                    className="mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                                  />
+                                  <div className="flex-1">
+                                    <label htmlFor={`${item.id}-${accessory.id}`} className="cursor-pointer">
+                                      <h7 className="font-medium text-gray-900 text-sm">{accessory.name}</h7>
+                                      <p className="text-xs text-gray-600 mb-1">{accessory.description}</p>
+                                      <p className="text-sm font-bold text-green-600">${accessory.price.toFixed(2)}</p>
+                                    </label>
+                                    
+                                    {selectedItems[`${item.id}-${accessory.id}`] && (
+                                      <div className="flex items-center space-x-2 mt-2">
+                                        <span className="text-xs text-gray-600">Qty:</span>
+                                        <button
+                                          type="button"
+                                          onClick={() => handleQuantityChange(`${item.id}-${accessory.id}`, -1)}
+                                          className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
+                                        >
+                                          <Minus className="h-3 w-3" />
+                                        </button>
+                                        <span className="w-6 text-center text-sm font-medium">
+                                          {selectedItems[`${item.id}-${accessory.id}`].quantity}
+                                        </span>
+                                        <button
+                                          type="button"
+                                          onClick={() => handleQuantityChange(`${item.id}-${accessory.id}`, 1)}
+                                          className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
+                                        >
+                                          <Plus className="h-3 w-3" />
+                                        </button>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))
+            )}
           </div>
 
           {/* Order Summary */}
@@ -729,13 +777,13 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           {/* Submit Status */}
           {submitStatus === 'success' && (
             <div className="bg-green-50 border border-green-200 rounded-md p-3 mb-4">
-              <p className="text-green-800 text-sm">✅ Quote request submitted successfully! Our sales team will contact you soon.</p>
+              <p className="text-green-800 text-sm">✅ Quote request submitted successfully! Our sales team will contact you soon with your e-signature quote.</p>
             </div>
           )}
 
           {submitStatus === 'error' && (
             <div className="bg-red-50 border border-red-200 rounded-md p-3 mb-4">
-              <p className="text-red-800 text-sm">❌ Something went wrong. Please try again.</p>
+              <p className="text-red-800 text-sm">❌ Something went wrong. Please try again or contact support.</p>
             </div>
           )}
 
@@ -750,13 +798,13 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             </button>
             <button
               type="submit"
-              disabled={isSubmitting || Object.keys(selectedItems).length === 0}
+              disabled={isSubmitting || Object.keys(selectedItems).length === 0 || isLoadingProducts}
               className="flex-1 bg-[#f08e80] hover:bg-[#e07d70] disabled:bg-gray-400 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 flex items-center justify-center"
             >
               {isSubmitting ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  Submitting Quote...
+                  <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                  Creating HubSpot Quote...
                 </>
               ) : (
                 <>
