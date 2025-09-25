@@ -146,10 +146,10 @@ function App() {
     { name: "Receipt Printer", page: "epson-t88" },
     { name: "Label Printer", page: "honeywell-pc43d" }
   ];
-
+  
   const mobileSupportData = [
-    { name: "Submit Ticket", href: "#" },
-    { name: "User Guides, href: "#" },
+    { name: "Submit Ticket", onClick: () => window.open('https://imrchnt-243943054.hs-sites-na2.com/tickets-view', '_blank') },
+    { name: "User Guides, onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im', '_blank') },
     { name: "Feature Requests", onClick: handleFeatureRequestClick },
     { name: "Road Map", page: "roadmap"}
   ];
