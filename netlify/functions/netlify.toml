@@ -1,7 +1,7 @@
 [functions]
-"products" = { path = "functions/products.js", type = "js" }
-"create-quote" = { path = "functions/create-quote.js", type = "js" }
-"workflow-webhook" = { path = "functions/workflow-webhook.js", type = "js" }
+products = { path = "functions/products.js", type = "js" }
+create-quote = { path = "functions/create-quote.js", type = "js" }
+workflow-webhook = { path = "functions/workflow-webhook.js", type = "js" }
 
 [env]
 HUBSPOT_ACCESS_TOKEN = "<YOUR_HUBSPOT_ACCESS_TOKEN>"
