@@ -211,7 +211,7 @@ async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
       hs_title: `Hardware Quote - ${quoteData.quoteId}`,
       hs_expiration_date: expirationDate.toISOString().split("T")[0],
       hs_esign_enabled: "true",
-      hs_language: "ENGLISH",
+      hs_language: "en",
       hs_status: "DRAFT",
       hs_template_type: "CUSTOMIZABLE_QUOTE_TEMPLATE",
       hs_quote_number: quoteData.quoteId,
