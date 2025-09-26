@@ -1,5 +1,6 @@
 // Fixed Netlify function for creating quotes in HubSpot
 // Removed node-fetch import and converted to Netlify function format
+// Required  hs_language: "en", hs_status: "DRAFT", hs_template_type: "CUSTOMIZABLE_QUOTE_TEMPLATE"
 
 const HUBSPOT_API_BASE = "https://api.hubapi.com";
 
