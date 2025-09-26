@@ -1,8 +1,9 @@
 // create-quote.js — Netlify Serverless Function
+import fetch from "node-fetch";
 
 const HUBSPOT_API_BASE = "https://api.hubapi.com";
 
-// Helper: HubSpot API request
+// ======= Helper: HubSpot API request =======
 async function hubspotRequest(endpoint, options = {}) {
   if (!process.env.HUBSPOT_ACCESS_TOKEN) {
     throw new Error("Missing HUBSPOT_ACCESS_TOKEN environment variable");
@@ -16,7 +17,6 @@ async function hubspotRequest(endpoint, options = {}) {
   };
 
   const res = await fetch(url, { ...options, headers });
-
   if (!res.ok) {
     const errorText = await res.text();
     throw new Error(`HubSpot API error: ${res.status} - ${errorText}`);
@@ -24,7 +24,7 @@ async function hubspotRequest(endpoint, options = {}) {
   return res.json();
 }
 
-// Create or update a HubSpot contact
+// ======= Create or Update Contact =======
 async function createOrUpdateContact(info) {
   const contactData = {
     properties: {
@@ -55,13 +55,14 @@ async function createOrUpdateContact(info) {
       body: JSON.stringify(contactData),
     });
   }
+
   return hubspotRequest("/crm/v3/objects/contacts", {
     method: "POST",
     body: JSON.stringify(contactData),
   });
 }
 
-// Create or update a company
+// ======= Create or Update Company =======
 async function createOrUpdateCompany(name, contactId) {
   if (!name) return null;
 
@@ -90,7 +91,7 @@ async function createOrUpdateCompany(name, contactId) {
   return company;
 }
 
-// Create a deal
+// ======= Create Deal =======
 async function createDeal(contactId, companyId, quoteData) {
   const dealData = {
     properties: {
@@ -118,7 +119,7 @@ async function createDeal(contactId, companyId, quoteData) {
   return deal;
 }
 
-// Create line items
+// ======= Create Line Items =======
 async function createLineItems(items, dealId) {
   const results = [];
   for (const item of items) {
@@ -151,7 +152,7 @@ async function createLineItems(items, dealId) {
   return results;
 }
 
-// Create quote
+// ======= Create Quote =======
 async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
   const expirationDate = new Date(Date.now() + 30 * 86400000).toISOString().split("T")[0];
 
@@ -177,7 +178,7 @@ async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
   });
 }
 
-// Trigger signature workflow
+// ======= Trigger Signature Workflow =======
 async function triggerSignatureWorkflow(quoteId) {
   await hubspotRequest(`/crm/v3/objects/quotes/${quoteId}`, {
     method: "PATCH",
@@ -185,8 +186,8 @@ async function triggerSignatureWorkflow(quoteId) {
   });
 }
 
+// ======= Main Handler =======
 export default async function handler(req, res) {
-  // CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -213,7 +214,7 @@ export default async function handler(req, res) {
       data: {
         quoteId: quote.id,
         contactId: contact.id,
-        companyId: company?.id,
+        companyId: company?.id || null,
         dealId: deal.id,
         lineItemCount: lineItems.length,
         hubspotQuoteUrl: `https://app.hubspot.com/contacts/${process.env.HUBSPOT_PORTAL_ID || "your-portal"}/objects/0-14/${quote.id}`,
@@ -224,6 +225,3 @@ export default async function handler(req, res) {
     return res.status(500).json({ success: false, error: err.message });
   }
 }
-
-export default handler;
-
