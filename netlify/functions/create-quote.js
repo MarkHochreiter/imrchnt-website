@@ -1,5 +1,5 @@
 // Fixed Netlify function for creating quotes in HubSpot
-// Updated to fix association type ID issues
+// Ultra-simple version that avoids association issues during quote creation
 
 const HUBSPOT_API_BASE = "https://api.hubapi.com";
 
@@ -80,7 +80,7 @@ async function createOrUpdateCompany(companyName, contactId) {
     properties: {
       name: companyName,
       domain: "",
-      industry: "INFORMATION_TECHNOLOGY_AND_SERVICES", // Fixed: Valid industry
+      industry: "INFORMATION_TECHNOLOGY_AND_SERVICES",
     },
   };
 
@@ -119,7 +119,7 @@ async function createOrUpdateCompany(companyName, contactId) {
     return company;
   } catch (error) {
     console.error("Error creating/updating company:", error);
-    return null; // Don't throw error for company creation failure
+    return null;
   }
 }
 
@@ -132,7 +132,6 @@ async function createDeal(contactId, companyId, quoteData) {
       dealstage: "qualifiedtobuy",
       pipeline: "default",
       closedate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      // hubspot_owner_id: process.env.HUBSPOT_DEFAULT_OWNER_ID || "", // Commented out to avoid invalid owner ID
     },
   };
 
@@ -191,14 +190,13 @@ async function createLineItems(selectedItems, dealId) {
       lineItems.push(lineItem);
     } catch (error) {
       console.error(`Error creating line item for ${item.itemName}:`, error);
-      // Continue with other line items even if one fails
     }
   }
 
   return lineItems;
 }
 
-// ======= Create Quote (Fixed Version) =======
+// ======= Create Quote (Ultra-Simple Version) =======
 async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
   const expirationDate = new Date();
   expirationDate.setDate(expirationDate.getDate() + 30);
@@ -215,55 +213,54 @@ async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
     },
   };
 
-  // Start with minimal associations - just contact and deal
-  const associations = [];
-
-  if (contactId) {
-    associations.push({
-      to: { id: contactId },
-      types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 3 }], // Contact to Quote
-    });
-  }
-
-  if (dealId) {
-    associations.push({
-      to: { id: dealId },
-      types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 5 }], // Deal to Quote
-    });
-  }
-
-  // Create quote first without line item associations
+  // Create quote without any associations first
+  console.log("Creating quote without associations...");
   const quote = await hubspotRequest("/crm/v3/objects/quotes", {
     method: "POST",
-    body: JSON.stringify({ ...quoteRequestData, associations }),
+    body: JSON.stringify(quoteRequestData),
   });
 
-  // Associate line items separately after quote creation
-  if (lineItems.length > 0) {
-    try {
-      for (const lineItem of lineItems) {
-        await hubspotRequest(`/crm/v4/objects/quotes/${quote.id}/associations/default/line_items/${lineItem.id}`, {
-          method: "PUT",
-        });
-      }
-      console.log(`Associated ${lineItems.length} line items with quote ${quote.id}`);
-    } catch (error) {
-      console.error("Error associating line items with quote:", error);
-      // Don't fail the whole process if line item association fails
-    }
-  }
+  console.log(`Quote created successfully: ${quote.id}`);
 
-  // Associate with company if it exists
-  if (companyId) {
-    try {
+  // Add associations after quote creation using v4 API
+  try {
+    if (contactId) {
+      await hubspotRequest(`/crm/v4/objects/quotes/${quote.id}/associations/default/contacts/${contactId}`, {
+        method: "PUT",
+      });
+      console.log(`Associated quote ${quote.id} with contact ${contactId}`);
+    }
+
+    if (dealId) {
+      await hubspotRequest(`/crm/v4/objects/quotes/${quote.id}/associations/default/deals/${dealId}`, {
+        method: "PUT",
+      });
+      console.log(`Associated quote ${quote.id} with deal ${dealId}`);
+    }
+
+    if (companyId) {
       await hubspotRequest(`/crm/v4/objects/quotes/${quote.id}/associations/default/companies/${companyId}`, {
         method: "PUT",
       });
       console.log(`Associated quote ${quote.id} with company ${companyId}`);
-    } catch (error) {
-      console.error("Error associating quote with company:", error);
-      // Don't fail the whole process if company association fails
     }
+
+    // Associate line items
+    for (const lineItem of lineItems) {
+      try {
+        await hubspotRequest(`/crm/v4/objects/quotes/${quote.id}/associations/default/line_items/${lineItem.id}`, {
+          method: "PUT",
+        });
+      } catch (error) {
+        console.error(`Error associating line item ${lineItem.id} with quote:`, error);
+      }
+    }
+
+    console.log(`Associated ${lineItems.length} line items with quote ${quote.id}`);
+
+  } catch (error) {
+    console.error("Error creating associations:", error);
+    // Quote is still created successfully, just associations might have failed
   }
 
   return quote;
@@ -271,10 +268,15 @@ async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
 
 // ======= Trigger Signature Workflow =======
 async function triggerSignatureWorkflow(quoteId) {
-  await hubspotRequest(`/crm/v3/objects/quotes/${quoteId}`, {
-    method: "PATCH",
-    body: JSON.stringify({ properties: { hs_status: "PENDING_APPROVAL" } }),
-  });
+  try {
+    await hubspotRequest(`/crm/v3/objects/quotes/${quoteId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ properties: { hs_status: "PENDING_APPROVAL" } }),
+    });
+    console.log(`Quote ${quoteId} status updated to PENDING_APPROVAL`);
+  } catch (error) {
+    console.error("Error updating quote status:", error);
+  }
 }
 
 // ======= Netlify Function Handler =======
@@ -334,7 +336,7 @@ exports.handler = async (event, context) => {
       headers,
       body: JSON.stringify({
         success: true,
-        message: "Quote created successfully",
+        message: "Quote created successfully in HubSpot",
         data: {
           quoteId: quote.id,
           contactId: contact.id,
@@ -351,7 +353,11 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ success: false, error: err.message })
+      body: JSON.stringify({ 
+        success: false, 
+        error: err.message,
+        details: "Check Netlify function logs for more information"
+      })
     };
   }
 };
