@@ -1,4 +1,4 @@
-// Fixed Netlify function to fetch products from HubSpot with better error handling
+// Fixed Netlify function to properly fetch SKUs from HubSpot
 
 const HUBSPOT_API_BASE = 'https://api.hubapi.com';
 
@@ -39,11 +39,13 @@ function transformProductData(hubspotProducts) {
   return hubspotProducts.map(product => {
     const props = product.properties || {};
     
+    // Get the SKU - this is the key fix!
+    const sku = props.hs_sku || '';
+    
     // Log each product for debugging
-    console.log(`Processing product: ${props.name || 'Unnamed'} (SKU: ${props.hs_sku || 'No SKU'})`);
+    console.log(`Processing product: ${props.name || 'Unnamed'} (SKU: ${sku || 'No SKU'})`);
     
     // Determine if this is a terminal or accessory based on SKU
-    const sku = props.hs_sku || '';
     const skuParts = sku.toUpperCase().split('-');
     const isTerminal = skuParts.length >= 2 && skuParts[1] === 'T';
     const isRental = skuParts.length >= 3 && skuParts[2] === 'R';
@@ -61,7 +63,7 @@ function transformProductData(hubspotProducts) {
       price: price,
       rentPrice: isRental ? price : rentPrice,
       buyPrice: isRental ? 0 : (buyPrice || price),
-      sku: sku,
+      sku: sku, // This should now have the actual SKU!
       type: isTerminal ? 'terminal' : 'accessory',
       
       // Additional properties that might be useful
@@ -117,27 +119,28 @@ exports.handler = async function(event, context) {
     
     console.log('Environment variables OK, making API request...');
 
-    // Fetch products with comprehensive properties
-    const response = await hubspotRequest('/crm/v3/objects/products', {
-      method: 'GET',
-      // Add query parameters to get more properties and more results
-      query: new URLSearchParams({
-        properties: [
-          'name',
-          'description', 
-          'hs_description',
-          'price',
-          'hs_price',
-          'hs_sku',
-          'hs_product_type',
-          'hs_recurring_billing_price',
-          'purchase_price',
-          'rental_price',
-          'createdate',
-          'hs_lastmodifieddate'
-        ].join(','),
-        limit: '100'
-      }).toString()
+    // FIXED: Properly format the query parameters in the URL
+    const queryParams = new URLSearchParams({
+      properties: [
+        'name',
+        'description', 
+        'hs_description',
+        'price',
+        'hs_price',
+        'hs_sku',  // This is the key property we need!
+        'hs_product_type',
+        'hs_recurring_billing_price',
+        'purchase_price',
+        'rental_price',
+        'createdate',
+        'hs_lastmodifieddate'
+      ].join(','),
+      limit: '100'
+    });
+
+    // FIXED: Append query parameters to the URL correctly
+    const response = await hubspotRequest(`/crm/v3/objects/products?${queryParams}`, {
+      method: 'GET'
     });
 
     console.log('Raw HubSpot response:', JSON.stringify(response, null, 2));
@@ -184,6 +187,10 @@ exports.handler = async function(event, context) {
     
     console.log(`Successfully transformed ${transformedProducts.length} products`);
 
+    // Log a sample of SKUs to verify they're coming through
+    const skuSample = transformedProducts.slice(0, 3).map(p => ({ name: p.name, sku: p.sku }));
+    console.log('Sample SKUs:', skuSample);
+
     return {
       statusCode: 200,
       headers,
@@ -195,7 +202,8 @@ exports.handler = async function(event, context) {
         debug: {
           originalCount: response.results.length,
           transformedCount: transformedProducts.length,
-          hubspotTotal: response.total || 0
+          hubspotTotal: response.total || 0,
+          sampleSKUs: skuSample
         }
       })
     };
