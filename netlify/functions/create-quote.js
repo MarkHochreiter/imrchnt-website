@@ -327,7 +327,7 @@ exports.handler = async (event, context) => {
           companyId: company?.id || null,
           dealId: deal.id,
           lineItemCount: lineItems.length,
-          hubspotQuoteUrl: `https://app.hubspot.com/contacts/${process.env.HUBSPOT_PORTAL_ID || "your-portal"}/objects/0-14/${quote.id}`,
+          hubspotQuoteUrl: `https://app.hubspot.com/contacts/${process.env.HUBSPOT_PORTAL_ID || "your-portal"}/objects/0-47/${quote.id}`,
         },
       })
     };
