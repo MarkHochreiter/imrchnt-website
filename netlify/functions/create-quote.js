@@ -203,13 +203,15 @@ async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
   const expirationDate = new Date();
   expirationDate.setDate(expirationDate.getDate() + 30);
 
+  // removed hs_quote_amount: quoteData.quoteTotalAmount.toString(),
+  // isn't a valued that can be set, it is read only
+  
   const quoteRequestData = {
     properties: {
       hs_title: `Hardware Quote - ${quoteData.quoteId}`,
       hs_expiration_date: expirationDate.toISOString().split("T")[0],
       hs_esign_enabled: "true",
       hs_status: "DRAFT",
-      hs_quote_amount: quoteData.quoteTotalAmount.toString(),
       hs_quote_number: quoteData.quoteId,
       hs_terms: quoteData.contactInfo.message || "Standard terms and conditions apply.",
     },
