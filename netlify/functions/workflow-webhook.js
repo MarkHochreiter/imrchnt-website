@@ -153,4 +153,105 @@ Items to fulfill:
 ${lineItems.map((item) => `- ${item.properties.name} (Qty: ${item.properties.quantity})`).join("\n")}
 Total Value: $${quote.properties.hs_quote_amount}
 Next steps:
-1. Verify inventor
+1. Verify inventory
+2. Prepare items
+3. Schedule delivery
+4. Update customer
+        `,
+        hs_task_status: "NOT_STARTED",
+        hs_task_priority: "HIGH",
+        hs_task_type: "TODO",
+        hs_timestamp: new Date().toISOString(),
+      },
+      associations: [
+        {
+          to: { id: quote.id },
+          types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 204 }],
+        },
+      ],
+    }),
+  });
+}
+
+async function handleQuoteExpiration(quoteId) {
+  await hubspotRequest(`/crm/v3/objects/quotes/${quoteId}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      properties: {
+        hs_status: "EXPIRED",
+        expiration_processed_date: new Date().toISOString(),
+      },
+    }),
+  });
+  await hubspotRequest("/crm/v3/objects/tasks", {
+    method: "POST",
+    body: JSON.stringify({
+      properties: {
+        hs_task_subject: `Follow up on expired quote`,
+        hs_task_body: `Quote has expired. Consider follow-up.`,
+        hs_task_status: "NOT_STARTED",
+        hs_task_priority: "MEDIUM",
+        hs_timestamp: new Date().toISOString(),
+      },
+      associations: [
+        {
+          to: { id: quoteId },
+          types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 204 }],
+        },
+      ],
+    }),
+  });
+  return { success: true, message: "Quote expiration processed" };
+}
+
+// ======= Main Handler =======
+export default async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, X-HubSpot-Signature-V2"
+  );
+
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "POST")
+    return res.status(405).json({ error: "Method not allowed" });
+
+  try {
+    validateHubSpotSignature(req);
+    const { actionType, objectId, contactId } = req.body;
+    console.log("Received webhook:", { actionType, objectId, contactId });
+
+    let result;
+    if (actionType === "PROCESS_SIGNED_QUOTE")
+      result = await processSignedQuote(objectId, contactId);
+    else if (actionType === "HANDLE_QUOTE_EXPIRATION")
+      result = await handleQuoteExpiration(objectId);
+    else
+      return res
+        .status(400)
+        .json({ success: false, error: `Unknown action type: ${actionType}` });
+
+    res.status(200).json({
+      success: true,
+      actionType,
+      objectId,
+      result,
+      outputFields: {
+        processing_status:
+          result.errors && result.errors.length === 0
+            ? "SUCCESS"
+            : "PARTIAL_SUCCESS",
+        errors_count: result.errors?.length || 0,
+        processed_timestamp: new Date().toISOString(),
+      },
+    });
+  } catch (error) {
+    console.error("Webhook processing error:", error);
+    res.status(500).json({
+      success: false,
+      error: "Webhook processing failed",
+      message: error.message,
+    });
+  }
+}
