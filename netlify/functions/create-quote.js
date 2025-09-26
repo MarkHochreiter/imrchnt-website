@@ -1,402 +1,228 @@
-// Serverless function to create quotes in HubSpot with line items and associations
-// This can be deployed to Vercel, Netlify, or AWS Lambda
+// create-quote.js — Netlify Serverless Function
 
-const HUBSPOT_API_BASE = 'https://api.hubapi.com';
+const HUBSPOT_API_BASE = "https://api.hubapi.com";
 
-// Helper function to make HubSpot API requests
+// Helper: HubSpot API request
 async function hubspotRequest(endpoint, options = {}) {
+  if (!process.env.HUBSPOT_ACCESS_TOKEN) {
+    throw new Error("Missing HUBSPOT_ACCESS_TOKEN environment variable");
+  }
+
   const url = `${HUBSPOT_API_BASE}${endpoint}`;
   const headers = {
-    'Authorization': `Bearer ${process.env.HUBSPOT_ACCESS_TOKEN}`,
-    'Content-Type': 'application/json',
-    ...options.headers
+    Authorization: `Bearer ${process.env.HUBSPOT_ACCESS_TOKEN}`,
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
   };
 
-  const response = await fetch(url, {
-    ...options,
-    headers
-  });
+  const res = await fetch(url, { ...options, headers });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`HubSpot API error: ${response.status} - ${errorText}`);
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`HubSpot API error: ${res.status} - ${errorText}`);
   }
-
-  return response.json();
+  return res.json();
 }
 
-// Create or update contact in HubSpot
-async function createOrUpdateContact(contactInfo) {
+// Create or update a HubSpot contact
+async function createOrUpdateContact(info) {
   const contactData = {
     properties: {
-      firstname: contactInfo.firstName,
-      lastname: contactInfo.lastName,
-      email: contactInfo.email,
-      phone: contactInfo.phone || '',
-      company: contactInfo.company || '',
-      hs_lead_status: 'NEW'
-    }
+      firstname: info.firstName,
+      lastname: info.lastName,
+      email: info.email,
+      phone: info.phone || "",
+      company: info.company || "",
+      hs_lead_status: "NEW",
+    },
   };
 
-  try {
-    // Try to find existing contact by email
-    const searchResponse = await hubspotRequest('/crm/v3/objects/contacts/search', {
-      method: 'POST',
-      body: JSON.stringify({
-        filterGroups: [{
-          filters: [{
-            propertyName: 'email',
-            operator: 'EQ',
-            value: contactInfo.email
-          }]
-        }]
-      })
-    });
+  const searchRes = await hubspotRequest("/crm/v3/objects/contacts/search", {
+    method: "POST",
+    body: JSON.stringify({
+      filterGroups: [
+        {
+          filters: [{ propertyName: "email", operator: "EQ", value: info.email }],
+        },
+      ],
+    }),
+  });
 
-    if (searchResponse.results && searchResponse.results.length > 0) {
-      // Update existing contact
-      const contactId = searchResponse.results[0].id;
-      const updateResponse = await hubspotRequest(`/crm/v3/objects/contacts/${contactId}`, {
-        method: 'PATCH',
-        body: JSON.stringify(contactData)
-      });
-      return updateResponse;
-    } else {
-      // Create new contact
-      const createResponse = await hubspotRequest('/crm/v3/objects/contacts', {
-        method: 'POST',
-        body: JSON.stringify(contactData)
-      });
-      return createResponse;
-    }
-  } catch (error) {
-    console.error('Error creating/updating contact:', error);
-    throw error;
+  if (searchRes.results?.length) {
+    const contactId = searchRes.results[0].id;
+    return hubspotRequest(`/crm/v3/objects/contacts/${contactId}`, {
+      method: "PATCH",
+      body: JSON.stringify(contactData),
+    });
   }
+  return hubspotRequest("/crm/v3/objects/contacts", {
+    method: "POST",
+    body: JSON.stringify(contactData),
+  });
 }
 
-// Create or update company in HubSpot
-async function createOrUpdateCompany(companyName, contactId) {
-  if (!companyName) return null;
+// Create or update a company
+async function createOrUpdateCompany(name, contactId) {
+  if (!name) return null;
 
-  const companyData = {
-    properties: {
-      name: companyName,
-      domain: '', // Could be extracted from email domain if needed
-      industry: 'Technology' // Default industry
-    }
-  };
+  const companyData = { properties: { name, industry: "Technology" } };
 
-  try {
-    // Try to find existing company by name
-    const searchResponse = await hubspotRequest('/crm/v3/objects/companies/search', {
-      method: 'POST',
-      body: JSON.stringify({
-        filterGroups: [{
-          filters: [{
-            propertyName: 'name',
-            operator: 'EQ',
-            value: companyName
-          }]
-        }]
-      })
+  const searchRes = await hubspotRequest("/crm/v3/objects/companies/search", {
+    method: "POST",
+    body: JSON.stringify({
+      filterGroups: [{ filters: [{ propertyName: "name", operator: "EQ", value: name }] }],
+    }),
+  });
+
+  let company;
+  if (searchRes.results?.length) {
+    company = searchRes.results[0];
+  } else {
+    company = await hubspotRequest("/crm/v3/objects/companies", {
+      method: "POST",
+      body: JSON.stringify(companyData),
     });
-
-    let company;
-    if (searchResponse.results && searchResponse.results.length > 0) {
-      // Use existing company
-      company = searchResponse.results[0];
-    } else {
-      // Create new company
-      company = await hubspotRequest('/crm/v3/objects/companies', {
-        method: 'POST',
-        body: JSON.stringify(companyData)
-      });
-    }
-
-    // Associate contact with company
-    if (contactId && company.id) {
-      await hubspotRequest(`/crm/v4/objects/contacts/${contactId}/associations/default/companies/${company.id}`, {
-        method: 'PUT'
-      });
-    }
-
-    return company;
-  } catch (error) {
-    console.error('Error creating/updating company:', error);
-    // Don't throw error for company creation failure
-    return null;
   }
+
+  if (contactId && company?.id) {
+    await hubspotRequest(`/crm/v4/objects/contacts/${contactId}/associations/default/companies/${company.id}`, { method: "PUT" });
+  }
+  return company;
 }
 
-// Create deal for the quote
+// Create a deal
 async function createDeal(contactId, companyId, quoteData) {
   const dealData = {
     properties: {
       dealname: `Hardware Quote - ${quoteData.contactInfo.firstName} ${quoteData.contactInfo.lastName}`,
       amount: quoteData.quoteTotalAmount.toString(),
-      dealstage: 'qualifiedtobuy', // Default deal stage
-      pipeline: 'default', // Default pipeline
-      closedate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 30 days from now
-      hubspot_owner_id: process.env.HUBSPOT_DEFAULT_OWNER_ID || '' // Optional: set default owner
-    }
+      dealstage: "qualifiedtobuy",
+      pipeline: "default",
+      closedate: new Date(Date.now() + 30 * 86400000).toISOString().split("T")[0],
+      hubspot_owner_id: process.env.HUBSPOT_DEFAULT_OWNER_ID || "",
+    },
   };
 
-  try {
-    const deal = await hubspotRequest('/crm/v3/objects/deals', {
-      method: 'POST',
-      body: JSON.stringify(dealData)
-    });
+  const deal = await hubspotRequest("/crm/v3/objects/deals", {
+    method: "POST",
+    body: JSON.stringify(dealData),
+  });
 
-    // Associate deal with contact
-    if (contactId) {
-      await hubspotRequest(`/crm/v4/objects/deals/${deal.id}/associations/default/contacts/${contactId}`, {
-        method: 'PUT'
-      });
-    }
-
-    // Associate deal with company
-    if (companyId) {
-      await hubspotRequest(`/crm/v4/objects/deals/${deal.id}/associations/default/companies/${companyId}`, {
-        method: 'PUT'
-      });
-    }
-
-    return deal;
-  } catch (error) {
-    console.error('Error creating deal:', error);
-    throw error;
+  if (contactId) {
+    await hubspotRequest(`/crm/v4/objects/deals/${deal.id}/associations/default/contacts/${contactId}`, { method: "PUT" });
   }
+  if (companyId) {
+    await hubspotRequest(`/crm/v4/objects/deals/${deal.id}/associations/default/companies/${companyId}`, { method: "PUT" });
+  }
+
+  return deal;
 }
 
-// Create line items from selected products
-async function createLineItems(selectedItems, dealId) {
-  const lineItems = [];
-
-  for (const item of selectedItems) {
-    const lineItemData = {
+// Create line items
+async function createLineItems(items, dealId) {
+  const results = [];
+  for (const item of items) {
+    const data = {
       properties: {
         name: item.itemName,
         quantity: item.quantity.toString(),
         price: item.unitPrice.toString(),
         amount: item.lineTotal.toString(),
-        hs_sku: item.sku || '',
-        description: `${item.itemCategory} - ${item.purchaseOption === 'rent' ? 'Monthly Rental' : 'Purchase'}`,
-        hs_product_id: item.itemId // Reference to original product if available
-      }
+        hs_sku: item.sku || "",
+        description: `${item.itemCategory} - ${item.purchaseOption === "rent" ? "Monthly Rental" : "Purchase"}`,
+        hs_product_id: item.itemId || "",
+      },
     };
 
-    // Add associations if deal exists
-    const associations = dealId ? [{
-      to: { id: dealId },
-      types: [{
-        associationCategory: 'HUBSPOT_DEFINED',
-        associationTypeId: 20 // Line item to deal association
-      }]
-    }] : [];
+    const associations = dealId
+      ? [{ to: { id: dealId }, types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 20 }] }]
+      : [];
 
     try {
-      const lineItem = await hubspotRequest('/crm/v3/objects/line_items', {
-        method: 'POST',
-        body: JSON.stringify({
-          ...lineItemData,
-          associations
-        })
+      const lineItem = await hubspotRequest("/crm/v3/objects/line_items", {
+        method: "POST",
+        body: JSON.stringify({ ...data, associations }),
       });
-
-      lineItems.push(lineItem);
-    } catch (error) {
-      console.error(`Error creating line item for ${item.itemName}:`, error);
-      // Continue with other line items even if one fails
+      results.push(lineItem);
+    } catch (err) {
+      console.error("Line item creation error:", err.message);
     }
   }
-
-  return lineItems;
+  return results;
 }
 
-// Create quote in HubSpot
+// Create quote
 async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
-  const expirationDate = new Date();
-  expirationDate.setDate(expirationDate.getDate() + 30); // 30 days from now
+  const expirationDate = new Date(Date.now() + 30 * 86400000).toISOString().split("T")[0];
 
-  const quoteRequestData = {
-    properties: {
-      hs_title: `Hardware Quote - ${quoteData.quoteId}`,
-      hs_expiration_date: expirationDate.toISOString().split('T')[0],
-      hs_esign_enabled: 'true', // Enable e-signatures
-      hs_status: 'DRAFT', // Start as draft
-      hs_quote_amount: quoteData.quoteTotalAmount.toString(),
-      hs_quote_number: quoteData.quoteId,
-      hs_terms: quoteData.contactInfo.message || 'Standard terms and conditions apply.'
-    }
+  const quoteProps = {
+    hs_title: `Hardware Quote - ${quoteData.quoteId}`,
+    hs_expiration_date: expirationDate,
+    hs_esign_enabled: "true",
+    hs_status: "DRAFT",
+    hs_quote_amount: quoteData.quoteTotalAmount.toString(),
+    hs_quote_number: quoteData.quoteId,
+    hs_terms: quoteData.contactInfo.message || "Standard terms and conditions apply.",
   };
 
-  // Add associations
   const associations = [];
-  
-  if (contactId) {
-    associations.push({
-      to: { id: contactId },
-      types: [{
-        associationCategory: 'HUBSPOT_DEFINED',
-        associationTypeId: 200 // Quote to contact association
-      }]
-    });
-  }
+  if (contactId) associations.push({ to: { id: contactId }, types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 200 }] });
+  if (companyId) associations.push({ to: { id: companyId }, types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 202 }] });
+  if (dealId) associations.push({ to: { id: dealId }, types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 201 }] });
+  lineItems.forEach(item => associations.push({ to: { id: item.id }, types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 203 }] }));
 
-  if (companyId) {
-    associations.push({
-      to: { id: companyId },
-      types: [{
-        associationCategory: 'HUBSPOT_DEFINED',
-        associationTypeId: 202 // Quote to company association
-      }]
-    });
-  }
-
-  if (dealId) {
-    associations.push({
-      to: { id: dealId },
-      types: [{
-        associationCategory: 'HUBSPOT_DEFINED',
-        associationTypeId: 201 // Quote to deal association
-      }]
-    });
-  }
-
-  // Associate with line items
-  lineItems.forEach(lineItem => {
-    associations.push({
-      to: { id: lineItem.id },
-      types: [{
-        associationCategory: 'HUBSPOT_DEFINED',
-        associationTypeId: 203 // Quote to line item association
-      }]
-    });
+  return hubspotRequest("/crm/v3/objects/quotes", {
+    method: "POST",
+    body: JSON.stringify({ properties: quoteProps, associations }),
   });
-
-  try {
-    const quote = await hubspotRequest('/crm/v3/objects/quotes', {
-      method: 'POST',
-      body: JSON.stringify({
-        ...quoteRequestData,
-        associations
-      })
-    });
-
-    return quote;
-  } catch (error) {
-    console.error('Error creating quote:', error);
-    throw error;
-  }
 }
 
-// Trigger workflow to send quote for signature
-async function triggerSignatureWorkflow(quoteId, contactId) {
-  // This would typically be done through a HubSpot workflow
-  // For now, we'll update the quote status to trigger any existing workflows
-  try {
-    await hubspotRequest(`/crm/v3/objects/quotes/${quoteId}`, {
-      method: 'PATCH',
-      body: JSON.stringify({
-        properties: {
-          hs_status: 'PENDING_APPROVAL' // This status change can trigger workflows
-        }
-      })
-    });
-
-    console.log(`Quote ${quoteId} status updated to trigger signature workflow`);
-  } catch (error) {
-    console.error('Error triggering signature workflow:', error);
-    // Don't throw error as quote creation was successful
-  }
+// Trigger signature workflow
+async function triggerSignatureWorkflow(quoteId) {
+  await hubspotRequest(`/crm/v3/objects/quotes/${quoteId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ properties: { hs_status: "PENDING_APPROVAL" } }),
+  });
 }
 
-// Main handler function
 export default async function handler(req, res) {
-  // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // CORS
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   try {
-    // Check for required environment variable
-    if (!process.env.HUBSPOT_ACCESS_TOKEN) {
-      throw new Error('HUBSPOT_ACCESS_TOKEN environment variable is not set');
+    const data = req.body;
+    if (!data.contactInfo || !data.selectedItems?.length) {
+      return res.status(400).json({ success: false, error: "Missing required quote data" });
     }
 
-    const quoteData = req.body;
+    const contact = await createOrUpdateContact(data.contactInfo);
+    const company = data.contactInfo.company ? await createOrUpdateCompany(data.contactInfo.company, contact.id) : null;
+    const deal = await createDeal(contact.id, company?.id, data);
+    const lineItems = await createLineItems(data.selectedItems, deal.id);
+    const quote = await createQuote(data, contact.id, company?.id, deal.id, lineItems);
+    await triggerSignatureWorkflow(quote.id);
 
-    // Validate required data
-    if (!quoteData.contactInfo || !quoteData.selectedItems || quoteData.selectedItems.length === 0) {
-      return res.status(400).json({
-        success: false,
-        error: 'Missing required quote data'
-      });
-    }
-
-    console.log(`Creating quote ${quoteData.quoteId} for ${quoteData.contactInfo.email}`);
-
-    // Step 1: Create or update contact
-    const contact = await createOrUpdateContact(quoteData.contactInfo);
-    console.log(`Contact created/updated: ${contact.id}`);
-
-    // Step 2: Create or update company (if provided)
-    let company = null;
-    if (quoteData.contactInfo.company) {
-      company = await createOrUpdateCompany(quoteData.contactInfo.company, contact.id);
-      if (company) {
-        console.log(`Company created/updated: ${company.id}`);
-      }
-    }
-
-    // Step 3: Create deal
-    const deal = await createDeal(contact.id, company?.id, quoteData);
-    console.log(`Deal created: ${deal.id}`);
-
-    // Step 4: Create line items
-    const lineItems = await createLineItems(quoteData.selectedItems, deal.id);
-    console.log(`Created ${lineItems.length} line items`);
-
-    // Step 5: Create quote with all associations
-    const quote = await createQuote(quoteData, contact.id, company?.id, deal.id, lineItems);
-    console.log(`Quote created: ${quote.id}`);
-
-    // Step 6: Trigger signature workflow
-    await triggerSignatureWorkflow(quote.id, contact.id);
-
-    // Return success response
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
-      message: 'Quote created successfully in HubSpot',
+      message: "Quote created successfully",
       data: {
         quoteId: quote.id,
         contactId: contact.id,
         companyId: company?.id,
         dealId: deal.id,
         lineItemCount: lineItems.length,
-        hubspotQuoteUrl: `https://app.hubspot.com/contacts/${process.env.HUBSPOT_PORTAL_ID || 'your-portal'}/objects/0-14/${quote.id}`
-      }
+        hubspotQuoteUrl: `https://app.hubspot.com/contacts/${process.env.HUBSPOT_PORTAL_ID || "your-portal"}/objects/0-14/${quote.id}`,
+      },
     });
-
-  } catch (error) {
-    console.error('Error creating quote in HubSpot:', error);
-    
-    res.status(500).json({
-      success: false,
-      error: 'Failed to create quote in HubSpot',
-      message: error.message
-    });
+  } catch (err) {
+    console.error("Error creating quote:", err.message);
+    return res.status(500).json({ success: false, error: err.message });
   }
 }
 
-// Alternative export for different serverless platforms
 module.exports = handler;
