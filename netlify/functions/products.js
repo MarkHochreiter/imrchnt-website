@@ -1,4 +1,4 @@
-// Fetches products from HUBSPOT 
+// Fetches products from HUBSPOT into Website HardwareRequestModal
 
 const HUBSPOT_API_BASE = 'https://api.hubapi.com';
 
