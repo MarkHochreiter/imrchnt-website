@@ -80,7 +80,7 @@ async function createOrUpdateCompany(companyName, contactId) {
     properties: {
       name: companyName,
       domain: "",
-      industry: "Technology",
+      industry: "Retail",
     },
   };
 
