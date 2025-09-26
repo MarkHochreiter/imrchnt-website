@@ -1,6 +1,5 @@
 // Fixed Netlify function for creating quotes in HubSpot
-// Removed node-fetch import and converted to Netlify function format
-// Required  hs_language: "en", hs_status: "DRAFT", hs_template_type: "CUSTOMIZABLE_QUOTE_TEMPLATE"
+// Updated to fix association type ID issues
 
 const HUBSPOT_API_BASE = "https://api.hubapi.com";
 
@@ -81,7 +80,7 @@ async function createOrUpdateCompany(companyName, contactId) {
     properties: {
       name: companyName,
       domain: "",
-      industry: "RETAIL",
+      industry: "INFORMATION_TECHNOLOGY_AND_SERVICES", // Fixed: Valid industry
     },
   };
 
@@ -133,7 +132,7 @@ async function createDeal(contactId, companyId, quoteData) {
       dealstage: "qualifiedtobuy",
       pipeline: "default",
       closedate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      hubspot_owner_id: process.env.HUBSPOT_DEFAULT_OWNER_ID || "",
+      // hubspot_owner_id: process.env.HUBSPOT_DEFAULT_OWNER_ID || "", // Commented out to avoid invalid owner ID
     },
   };
 
@@ -199,14 +198,11 @@ async function createLineItems(selectedItems, dealId) {
   return lineItems;
 }
 
-// ======= Create Quote =======
+// ======= Create Quote (Fixed Version) =======
 async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
   const expirationDate = new Date();
   expirationDate.setDate(expirationDate.getDate() + 30);
 
-  // removed hs_quote_amount: quoteData.quoteTotalAmount.toString(),
-  // isn't a valued that can be set, it is read only
-  
   const quoteRequestData = {
     properties: {
       hs_title: `Hardware Quote - ${quoteData.quoteId}`,
@@ -214,46 +210,63 @@ async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
       hs_esign_enabled: "true",
       hs_language: "en",
       hs_status: "DRAFT",
-      hs_template_type: "CUSTOMIZABLE_QUOTE_TEMPLATE",
       hs_quote_number: quoteData.quoteId,
       hs_terms: quoteData.contactInfo.message || "Standard terms and conditions apply.",
     },
   };
 
+  // Start with minimal associations - just contact and deal
   const associations = [];
 
   if (contactId) {
     associations.push({
       to: { id: contactId },
-      types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 200 }],
-    });
-  }
-
-  if (companyId) {
-    associations.push({
-      to: { id: companyId },
-      types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 202 }],
+      types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 3 }], // Contact to Quote
     });
   }
 
   if (dealId) {
     associations.push({
       to: { id: dealId },
-      types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 201 }],
+      types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 5 }], // Deal to Quote
     });
   }
 
-  lineItems.forEach((lineItem) => {
-    associations.push({
-      to: { id: lineItem.id },
-      types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 203 }],
-    });
-  });
-
-  return await hubspotRequest("/crm/v3/objects/quotes", {
+  // Create quote first without line item associations
+  const quote = await hubspotRequest("/crm/v3/objects/quotes", {
     method: "POST",
     body: JSON.stringify({ ...quoteRequestData, associations }),
   });
+
+  // Associate line items separately after quote creation
+  if (lineItems.length > 0) {
+    try {
+      for (const lineItem of lineItems) {
+        await hubspotRequest(`/crm/v4/objects/quotes/${quote.id}/associations/default/line_items/${lineItem.id}`, {
+          method: "PUT",
+        });
+      }
+      console.log(`Associated ${lineItems.length} line items with quote ${quote.id}`);
+    } catch (error) {
+      console.error("Error associating line items with quote:", error);
+      // Don't fail the whole process if line item association fails
+    }
+  }
+
+  // Associate with company if it exists
+  if (companyId) {
+    try {
+      await hubspotRequest(`/crm/v4/objects/quotes/${quote.id}/associations/default/companies/${companyId}`, {
+        method: "PUT",
+      });
+      console.log(`Associated quote ${quote.id} with company ${companyId}`);
+    } catch (error) {
+      console.error("Error associating quote with company:", error);
+      // Don't fail the whole process if company association fails
+    }
+  }
+
+  return quote;
 }
 
 // ======= Trigger Signature Workflow =======
@@ -328,7 +341,7 @@ exports.handler = async (event, context) => {
           companyId: company?.id || null,
           dealId: deal.id,
           lineItemCount: lineItems.length,
-          hubspotQuoteUrl: `https://app.hubspot.com/contacts/${process.env.HUBSPOT_PORTAL_ID || "your-portal"}/objects/0-47/${quote.id}`,
+          hubspotQuoteUrl: `https://app.hubspot.com/contacts/${process.env.HUBSPOT_PORTAL_ID || "your-portal"}/objects/0-14/${quote.id}`,
         },
       })
     };
