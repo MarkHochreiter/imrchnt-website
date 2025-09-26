@@ -1,12 +1,35 @@
-[build]
-  command = "npm run build"
-  functions = "netlify/functions"
-  publish = "dist"
-
 [functions]
-  node_bundler = "esbuild"
+"products" = { path = "functions/products.js", type = "js" }
+"create-quote" = { path = "functions/create-quote.js", type = "js" }
+"workflow-webhook" = { path = "functions/workflow-webhook.js", type = "js" }
+
+[env]
+HUBSPOT_ACCESS_TOKEN = "<YOUR_HUBSPOT_ACCESS_TOKEN>"
+INVENTORY_API_KEY = "<YOUR_INVENTORY_API_KEY>"
+SHIPPING_API_KEY = "<YOUR_SHIPPING_API_KEY>"
+
+[build]
+node_version = "18"
+
+[settings]
+log_level = "debug"
+cors = "*"
+webhooks_enabled = true
 
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
+from = "/api/products"
+to = "/.netlify/functions/products"
+status = 200
+force = true
+
+[[redirects]]
+from = "/api/create-quote"
+to = "/.netlify/functions/create-quote"
+status = 200
+force = true
+
+[[redirects]]
+from = "/api/workflow-webhook"
+to = "/.netlify/functions/workflow-webhook"
+status = 200
+force = true
