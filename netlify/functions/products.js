@@ -1,3 +1,5 @@
+// Fetches products from HUBSPOT 
+
 const HUBSPOT_API_BASE = 'https://api.hubapi.com';
 
 async function hubspotRequest(endpoint, options = {}) {
