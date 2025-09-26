@@ -231,7 +231,7 @@ function Sfo1Page({ onNavigateBack, onContactSales }) {
               onClick={onContactSales}
             >
               Generate Quote
-            </Button>>
+            </Button>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
               <div className="text-center mb-4">
@@ -246,7 +246,7 @@ function Sfo1Page({ onNavigateBack, onContactSales }) {
               onClick={onContactSales}
             >
               Generate Quote
-            </Button>>
+            </Button>
             </div>
           </div>
         </div>
