@@ -1,16 +1,18 @@
-const HUBSPOT_API_BASE = 'https://api.hubapi.com';
+// products.js — Netlify Serverless Function
+
+const HUBSPOT_API_BASE = "https://api.hubapi.com";
 
 async function hubspotRequest(endpoint, options = {}) {
   const url = `${HUBSPOT_API_BASE}${endpoint}`;
   const headers = {
-    'Authorization': `Bearer ${process.env.HUBSPOT_ACCESS_TOKEN}`,
-    'Content-Type': 'application/json',
-    ...options.headers
+    Authorization: `Bearer ${process.env.HUBSPOT_ACCESS_TOKEN}`,
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
   };
 
   const response = await fetch(url, {
     ...options,
-    headers
+    headers,
   });
 
   if (!response.ok) {
@@ -24,64 +26,47 @@ async function hubspotRequest(endpoint, options = {}) {
 function transformProductData(hubspotProducts) {
   return hubspotProducts.map(product => ({
     id: product.id,
-    name: product.properties.name || 'Unnamed Product',
-    description: product.properties.description || '',
-    category: product.properties.hs_product_type || 'Uncategorized',
-    price: parseFloat(product.properties.price || '0'),
-    sku: product.properties.hs_sku || '',
-    type: product.properties.hs_product_type === 'Terminal' ? 'terminal' : 'accessory'
+    name: product.properties.name || "Unnamed Product",
+    description: product.properties.description || "",
+    category: product.properties.hs_product_type || "Uncategorized",
+    price: parseFloat(product.properties.price || "0"),
+    sku: product.properties.hs_sku || "",
+    type: product.properties.hs_product_type === "Terminal" ? "terminal" : "accessory",
   }));
 }
 
-exports.handler = async function(event, context) {
-  if (event.httpMethod === "OPTIONS") {
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type"
-      }
-    };
-  }
+export default async function handler(req, res) {
+  // CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  if (event.httpMethod !== "GET") {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ error: "Method not allowed" })
-    };
-  }
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
 
   try {
     if (!process.env.HUBSPOT_ACCESS_TOKEN) {
-      throw new Error("HUBSPOT_ACCESS_TOKEN not set");
+      throw new Error("Missing HUBSPOT_ACCESS_TOKEN environment variable");
     }
 
-    const response = await hubspotRequest("/crm/v3/objects/products", {
-      method: "GET"
+    const response = await hubspotRequest("/crm/v3/objects/products?limit=100", {
+      method: "GET",
     });
 
     const transformedProducts = transformProductData(response.results || []);
 
-    return {
-      statusCode: 200,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        success: true,
-        products: transformedProducts,
-        total: transformedProducts.length
-      })
-    };
+    return res.status(200).json({
+      success: true,
+      products: transformedProducts,
+      total: transformedProducts.length,
+    });
   } catch (error) {
     console.error("Error fetching products:", error);
 
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        success: false,
-        error: "Failed to fetch products",
-        message: error.message
-      })
-    };
+    return res.status(500).json({
+      success: false,
+      error: "Failed to fetch products",
+      message: error.message,
+    });
   }
-};
+}
