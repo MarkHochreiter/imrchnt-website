@@ -17,6 +17,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
   });
   const [showContactForm, setShowContactForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   // Fetch products from API
   useEffect(() => {
@@ -98,7 +99,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     }
   };
 
-  // UPDATED: Handle accessory selection (checkbox style - multiple selections allowed)
+  // Handle accessory selection (checkbox style - multiple selections allowed)
   const handleAccessorySelection = (accessoryId, isSelected) => {
     if (isSelected) {
       setSelectedItems(prev => ({
@@ -120,6 +121,14 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         return newSelected;
       });
     }
+  };
+
+  // Handle contact form changes
+  const handleContactChange = (e) => {
+    setContactInfo({
+      ...contactInfo,
+      [e.target.name]: e.target.value
+    });
   };
 
   // Group products by terminal family with proper SKU parsing
@@ -416,7 +425,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // UPDATED: Accessory Grid Component - now uses checkboxes for multiple selection
+  // Accessory Grid Component - uses checkboxes for multiple selection
   const AccessoryGrid = ({ terminalFamily, accessories }) => {
     if (accessories.length === 0) return null;
     
@@ -502,10 +511,219 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
+  // Customer Information Form Component
+  const CustomerForm = () => {
+    return (
+      <div className="space-y-6">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Contact Information</h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
+              First Name *
+            </label>
+            <div className="relative">
+              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                required
+                value={contactInfo.firstName}
+                onChange={handleContactChange}
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="John"
+              />
+            </div>
+          </div>
+          
+          <div>
+            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
+              Last Name *
+            </label>
+            <div className="relative">
+              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                required
+                value={contactInfo.lastName}
+                onChange={handleContactChange}
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Doe"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              Email Address *
+            </label>
+            <div className="relative">
+              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                value={contactInfo.email}
+                onChange={handleContactChange}
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="john@example.com"
+              />
+            </div>
+          </div>
+          
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+              Phone Number
+            </label>
+            <div className="relative">
+              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={contactInfo.phone}
+                onChange={handleContactChange}
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="(555) 123-4567"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
+            Company Name
+          </label>
+          <div className="relative">
+            <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              value={contactInfo.company}
+              onChange={handleContactChange}
+              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Your Company"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+            Additional Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows={3}
+            value={contactInfo.message}
+            onChange={handleContactChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            placeholder="Any specific requirements or questions about your hardware needs..."
+          />
+        </div>
+      </div>
+    );
+  };
+
   // Handle form submission
-  const handleSubmit = async () => {
-    // Validation and submission logic here
-    // (Same as your existing submission logic)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Prepare quote data for HubSpot integration
+      const quoteData = {
+        contactInfo,
+        selectedTerminals: Object.entries(selectedTerminals).filter(([_, isSelected]) => isSelected).map(([terminalId]) => {
+          const terminal = hardwareItems.find(item => item.id === terminalId);
+          return {
+            id: terminalId,
+            name: terminal?.name,
+            sku: terminal?.sku,
+            price: terminal?.price,
+            quantity: getQuantity(terminalId),
+            total: terminal?.price * getQuantity(terminalId)
+          };
+        }),
+        selectedAccessories: Object.entries(selectedItems).filter(([_, isSelected]) => isSelected).map(([itemId]) => {
+          const item = hardwareItems.find(item => item.id === itemId);
+          return {
+            id: itemId,
+            name: item?.name,
+            sku: item?.sku,
+            price: item?.price,
+            quantity: getQuantity(itemId),
+            total: item?.price * getQuantity(itemId)
+          };
+        }),
+        totalAmount: calculateTotal(),
+        totalItems: getTotalItemCount()
+      };
+
+      console.log('Submitting quote to HubSpot integration...', quoteData);
+
+      // Submit to HubSpot integration endpoint
+      const response = await fetch('/api/create-quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quoteData)
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        console.log('✅ Quote submitted successfully to HubSpot');
+        setSubmitStatus('success');
+        
+        // Reset form
+        setSelectedItems({});
+        setSelectedTerminals({});
+        setQuantities({});
+        setContactInfo({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          company: '',
+          message: ''
+        });
+        
+        // Close modal after 3 seconds
+        setTimeout(() => {
+          onClose();
+          setSubmitStatus(null);
+          setShowContactForm(false);
+        }, 3000);
+      } else {
+        console.error('❌ Quote submission failed:', result.message);
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('❌ Network error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   // Calculate totals with quantities for both terminals and accessories
@@ -570,7 +788,9 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       <div className="bg-white rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-800">Select Hardware Items</h2>
+          <h2 className="text-2xl font-bold text-gray-800">
+            {showContactForm ? 'Contact Information' : 'Select Hardware Items'}
+          </h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
@@ -581,55 +801,106 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
 
         {/* Content */}
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
-          {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-              <span className="ml-3 text-gray-600">Loading products...</span>
-            </div>
-          ) : error ? (
-            <div className="text-center py-12">
-              <div className="text-red-600 mb-4">
-                <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <h3 className="text-lg font-semibold">Error Loading Products</h3>
-                <p className="text-gray-600 mt-2">{error}</p>
-              </div>
-              <button
-                onClick={fetchProducts}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-              >
-                Try Again
-              </button>
-            </div>
-          ) : Object.keys(groupedProducts).length === 0 ? (
-            <div className="text-center py-12">
-              <svg className="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              <h3 className="text-lg font-semibold text-gray-600">No Products Found</h3>
-              <p className="text-gray-500 mt-2">Please check your HubSpot product catalog or contact support.</p>
-            </div>
-          ) : (
-            <div className="space-y-8">
-              {Object.entries(groupedProducts).map(([family, group]) => (
-                <div key={family} className="border border-gray-200 rounded-lg p-6">
-                  <TerminalSelector 
-                    terminalFamily={family} 
-                    terminals={group.terminals} 
-                  />
-                  <AccessoryGrid 
-                    terminalFamily={family} 
-                    accessories={group.accessories} 
-                  />
+          {showContactForm ? (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <CustomerForm />
+              
+              {/* Submit Status */}
+              {submitStatus === 'success' && (
+                <div className="bg-green-50 border border-green-200 rounded-md p-3">
+                  <p className="text-green-800 text-sm">✅ Quote request submitted successfully! Our sales team will contact you soon.</p>
                 </div>
-              ))}
-            </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                  <p className="text-red-800 text-sm">❌ Something went wrong. Please try again or contact support.</p>
+                </div>
+              )}
+
+              {/* Submit Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
+                <button
+                  type="button"
+                  onClick={() => setShowContactForm(false)}
+                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  Back to Selection
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting || !contactInfo.firstName || !contactInfo.lastName || !contactInfo.email}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-4 rounded-md transition-colors flex items-center justify-center"
+                >
+                  {submitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Creating Quote...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                      </svg>
+                      Submit Quote Request
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <>
+              {loading ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                  <span className="ml-3 text-gray-600">Loading products...</span>
+                </div>
+              ) : error ? (
+                <div className="text-center py-12">
+                  <div className="text-red-600 mb-4">
+                    <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 className="text-lg font-semibold">Error Loading Products</h3>
+                    <p className="text-gray-600 mt-2">{error}</p>
+                  </div>
+                  <button
+                    onClick={fetchProducts}
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  >
+                    Try Again
+                  </button>
+                </div>
+              ) : Object.keys(groupedProducts).length === 0 ? (
+                <div className="text-center py-12">
+                  <svg className="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                  <h3 className="text-lg font-semibold text-gray-600">No Products Found</h3>
+                  <p className="text-gray-500 mt-2">Please check your HubSpot product catalog or contact support.</p>
+                </div>
+              ) : (
+                <div className="space-y-8">
+                  {Object.entries(groupedProducts).map(([family, group]) => (
+                    <div key={family} className="border border-gray-200 rounded-lg p-6">
+                      <TerminalSelector 
+                        terminalFamily={family} 
+                        terminals={group.terminals} 
+                      />
+                      <AccessoryGrid 
+                        terminalFamily={family} 
+                        accessories={group.accessories} 
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
 
         {/* Footer with item count and total */}
-        {!loading && !error && hasSelections && (
+        {!loading && !error && hasSelections && !showContactForm && (
           <div className="border-t border-gray-200 p-6 bg-gray-50">
             <div className="flex justify-between items-center">
               <div className="text-lg">
