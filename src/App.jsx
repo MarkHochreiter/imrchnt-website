@@ -13,6 +13,7 @@ import Ams1Page from './components/Ams1Page.jsx'
 import Sfo1Page from './components/Sfo1Page.jsx'
 import EpsonT88Page from './components/EpsonT88Page.jsx'
 import HoneywellPC43dPage from './components/HoneywellPC43dPage.jsx'
+import APGCashDrawerPage from './components/APGCashDrawerPage.jsx'
 import SignupModal from './components/SignupModal.jsx'
 import FeatureRequestModal from './components/FeatureRequestModal.jsx'
 import HardwareCartModal from './components/HardwareCartModal.jsx'
@@ -144,7 +145,8 @@ function App() {
     { name: "AMS1", page: "ams1" },
     { name: "SFO1", page: "sfo1" },
     { name: "Receipt Printer", page: "epson-t88" },
-    { name: "Label Printer", page: "honeywell-pc43d" }
+    { name: "Label Printer", page: "honeywell-pc43d" },
+    { name: "Cash Drawer", page: "apg-cash-drawer" }
   ];
   
 const mobileSupportData = [
@@ -373,6 +375,8 @@ const mobileSupportData = [
         return <EpsonT88Page onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'honeywell-pc43d':
         return <HoneywellPC43dPage onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
+      case 'apg-cash-drawer':
+        return <APGCashDrawerPage onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'roadmap':
         return <RoadMapPage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       default:
@@ -468,28 +472,25 @@ const mobileSupportData = [
                   isVisible={supportMegaMenuVisible}
                   onMouseEnter={() => setSupportMegaMenuVisible(true)}
                   onMouseLeave={() => setSupportMegaMenuVisible(false)}
-                  onNavigate={handleNavigation}
-                  onClose={() => setSupportMegaMenuVisible(false)}
-                  onFeatureRequest={handleFeatureRequestClick}
                 />
               </div>
             </nav>
 
-            {/* Right side buttons */}
+            {/* Desktop CTA */}
             <div className="hidden md:flex items-center space-x-4">
               <a 
-                href="https://pos.imrchnt.com/auth/sign-in" 
+                href="https://pos.imrchnt.com/auth/sign-in"
                 className="text-gray-700 hover:text-gray-900"
                 target="_blank" 
                 rel="noopener noreferrer"
               >
-              Log in
+                Log in
               </a>
               <Button 
                 className="bg-[#f08e80] hover:bg-violet-400 text-white"
                 onClick={handleSignupClick}
               >
-              Request Access
+                Request Access
               </Button>
             </div>
 
@@ -497,7 +498,7 @@ const mobileSupportData = [
             <div className="md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-700"
+                className="text-gray-700 hover:text-gray-900"
               >
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
