@@ -32,7 +32,7 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
         },
         {
           title: "Sfo1",
-          subtitle: "Payment, branding, and customer engagement — all in one terminal",
+          subtitle: "Payment, branding, and customer engagement",
           icon: <CreditCard className="h-5 w-5" />,
           page: "sfo1"
         }
@@ -72,7 +72,7 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
           title: "Cash Drawer",
           subtitle: (
             <>
-              APG VB320-1-BL1616 <br /> Standard-duty cash drawer with printer integration
+              APG VB320-1-BL1616 <br /> Standard-duty cash drawer
             </>
           ),
           icon: <Coins className="h-5 w-5" />,
@@ -88,7 +88,7 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
           title: "Socket Scan",
           subtitle: (
             <>
-              SocketScan S720 <br /> Bluetooth 1D & 2D barcode scanner
+              SocketScan S720 <br /> Bluetooth barcode scanner
             </>
           ),
           icon: <Scan className="h-5 w-5" />,
