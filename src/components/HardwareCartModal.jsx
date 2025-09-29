@@ -18,7 +18,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
   const [showContactForm, setShowContactForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
-  const [debugInfo, setDebugInfo] = useState('');
 
   // Fetch products from API
   useEffect(() => {
@@ -592,12 +591,11 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // Handle form submission with detailed debugging
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     setSubmitStatus(null);
-    setDebugInfo('Starting quote submission...');
 
     try {
       // Generate a unique quote ID
@@ -656,55 +654,20 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         timestamp: new Date().toISOString()
       };
 
-      setDebugInfo(`Prepared quote data: ${JSON.stringify(quoteData, null, 2)}`);
       console.log('Submitting quote to HubSpot:', quoteData);
 
-      // Try different API endpoints to debug
-      const endpoints = [
-        '/api/create-quote',
-        '/.netlify/functions/create-quote',
-        'https://imrchnt.netlify.app/.netlify/functions/create-quote'
-      ];
-
-      let response;
-      let lastError;
-
-      for (const endpoint of endpoints) {
-        try {
-          setDebugInfo(prev => prev + `\\n\\nTrying endpoint: ${endpoint}`);
-          
-          response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(quoteData)
-          });
-
-          setDebugInfo(prev => prev + `\\nResponse status: ${response.status}`);
-          
-          if (response.ok) {
-            break; // Success, exit the loop
-          } else {
-            const errorText = await response.text();
-            setDebugInfo(prev => prev + `\\nError response: ${errorText}`);
-            lastError = new Error(`HTTP ${response.status}: ${errorText}`);
-          }
-        } catch (error) {
-          setDebugInfo(prev => prev + `\\nEndpoint ${endpoint} failed: ${error.message}`);
-          lastError = error;
-          continue; // Try next endpoint
-        }
-      }
-
-      if (!response || !response.ok) {
-        throw lastError || new Error('All endpoints failed');
-      }
+      // Submit to HubSpot integration endpoint
+      const response = await fetch('/.netlify/functions/create-quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quoteData)
+      });
 
       const result = await response.json();
-      setDebugInfo(prev => prev + `\\n\\nSuccess response: ${JSON.stringify(result, null, 2)}`);
 
-      if (result.success) {
+      if (response.ok && result.success) {
         console.log('✅ Quote submitted successfully to HubSpot');
         setSubmitStatus('success');
         
@@ -730,12 +693,10 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       } else {
         console.error('❌ Quote submission failed:', result.message);
         setSubmitStatus('error');
-        setDebugInfo(prev => prev + `\\n\\nAPI returned success: false - ${result.message}`);
       }
     } catch (error) {
       console.error('❌ Network error:', error);
       setSubmitStatus('error');
-      setDebugInfo(prev => prev + `\\n\\nCatch block error: ${error.message}\\nStack: ${error.stack}`);
     } finally {
       setSubmitting(false);
     }
@@ -816,16 +777,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <CustomerForm />
               
-              {/* Debug Information */}
-              {debugInfo && (
-                <div className="bg-gray-100 border border-gray-300 rounded-md p-3">
-                  <h4 className="font-semibold text-gray-800 mb-2">Debug Information:</h4>
-                  <pre className="text-xs text-gray-600 whitespace-pre-wrap max-h-40 overflow-y-auto">
-                    {debugInfo}
-                  </pre>
-                </div>
-              )}
-              
               {/* Submit Status */}
               {submitStatus === 'success' && (
                 <div className="bg-green-50 border border-green-200 rounded-md p-3">
@@ -835,7 +786,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
 
               {submitStatus === 'error' && (
                 <div className="bg-red-50 border border-red-200 rounded-md p-3">
-                  <p className="text-red-800 text-sm">❌ Something went wrong. Please check the debug information above.</p>
+                  <p className="text-red-800 text-sm">❌ Something went wrong. Please try again or contact support.</p>
                 </div>
               )}
 
