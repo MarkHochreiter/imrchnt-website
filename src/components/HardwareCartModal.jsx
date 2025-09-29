@@ -4,6 +4,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
   const [hardwareItems, setHardwareItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
   const [selectedTerminals, setSelectedTerminals] = useState({});
+  const [quantities, setQuantities] = useState({}); // NEW: Quantity state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [contactInfo, setContactInfo] = useState({
@@ -57,6 +58,35 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       setHardwareItems([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // NEW: Quantity management functions
+  const updateQuantity = (itemId, quantity) => {
+    const newQuantity = Math.max(1, Math.min(99, quantity)); // Min 1, Max 99
+    setQuantities(prev => ({
+      ...prev,
+      [itemId]: newQuantity
+    }));
+  };
+
+  const getQuantity = (itemId) => {
+    return quantities[itemId] || 1;
+  };
+
+  // UPDATED: Handle item selection with quantity initialization
+  const handleItemSelection = (itemId, isSelected) => {
+    setSelectedItems(prev => ({
+      ...prev,
+      [itemId]: isSelected
+    }));
+    
+    // Initialize quantity to 1 when item is selected
+    if (isSelected && !quantities[itemId]) {
+      setQuantities(prev => ({
+        ...prev,
+        [itemId]: 1
+      }));
     }
   };
 
@@ -149,6 +179,40 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             loading="lazy"
           />
         )}
+      </div>
+    );
+  };
+
+  // NEW: Quantity Controls Component
+  const QuantityControls = ({ itemId, className = "" }) => {
+    const quantity = getQuantity(itemId);
+    
+    return (
+      <div className={`flex items-center space-x-2 ${className}`}>
+        <button
+          onClick={() => updateQuantity(itemId, quantity - 1)}
+          className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600 font-bold transition-colors"
+          disabled={quantity <= 1}
+        >
+          -
+        </button>
+        <div className="w-12 text-center">
+          <input
+            type="number"
+            value={quantity}
+            onChange={(e) => updateQuantity(itemId, parseInt(e.target.value) || 1)}
+            className="w-full text-center font-semibold bg-transparent border-none outline-none"
+            min="1"
+            max="99"
+          />
+        </div>
+        <button
+          onClick={() => updateQuantity(itemId, quantity + 1)}
+          className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600 font-bold transition-colors"
+          disabled={quantity >= 99}
+        >
+          +
+        </button>
       </div>
     );
   };
@@ -267,7 +331,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // Accessory Grid Component
+  // UPDATED: Accessory Grid Component with Quantity Controls
   const AccessoryGrid = ({ terminalFamily, accessories }) => {
     if (accessories.length === 0) return null;
     
@@ -284,40 +348,59 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           {accessories.map((accessory) => (
             <div
               key={accessory.id}
-              className={`border rounded-lg p-4 cursor-pointer transition-all ${
+              className={`border rounded-lg p-4 transition-all ${
                 selectedItems[accessory.id]
                   ? 'border-orange-500 bg-orange-50 shadow-md'
                   : 'border-gray-200 hover:border-orange-300'
               }`}
             >
-              <label className="cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={selectedItems[accessory.id] || false}
-                  onChange={(e) => setSelectedItems({
-                    ...selectedItems,
-                    [accessory.id]: e.target.checked
-                  })}
-                  className="sr-only"
+              <div className="text-center">
+                <ProductImage 
+                  product={accessory} 
+                  className="w-full h-32 rounded-lg mb-3"
                 />
                 
-                <div className="text-center">
-                  <ProductImage 
-                    product={accessory} 
-                    className="w-full h-32 rounded-lg mb-3"
-                  />
+                <h5 className="font-semibold text-gray-800 mb-2">{accessory.name}</h5>
+                <p className="text-sm text-gray-600 mb-3 line-clamp-2">{accessory.description}</p>
+                
+                {/* Selection and Price Row */}
+                <div className="flex items-center justify-between mb-3">
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={selectedItems[accessory.id] || false}
+                      onChange={(e) => handleItemSelection(accessory.id, e.target.checked)}
+                      className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
+                    />
+                    <span className="ml-2 text-sm font-medium text-gray-700">Select</span>
+                  </label>
                   
-                  <h5 className="font-semibold text-gray-800 mb-2">{accessory.name}</h5>
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{accessory.description}</p>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-orange-600">
-                      ${accessory.price.toFixed(2)}
-                    </span>
-                    <span className="text-xs text-gray-500">SKU: {accessory.sku}</span>
-                  </div>
+                  <span className="text-lg font-bold text-orange-600">
+                    ${accessory.price.toFixed(2)}
+                  </span>
                 </div>
-              </label>
+                
+                {/* Quantity Controls - Only show when selected */}
+                {selectedItems[accessory.id] && (
+                  <div className="border-t pt-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-700">Quantity:</span>
+                      <QuantityControls itemId={accessory.id} />
+                    </div>
+                    
+                    {/* Subtotal */}
+                    <div className="mt-2 text-sm text-gray-600">
+                      Subtotal: <span className="font-semibold text-orange-600">
+                        ${(accessory.price * getQuantity(accessory.id)).toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+                )}
+                
+                <div className="mt-2">
+                  <span className="text-xs text-gray-500">SKU: {accessory.sku}</span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -331,11 +414,11 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     // (Same as your existing submission logic)
   };
 
-  // Calculate totals
+  // UPDATED: Calculate totals with quantities
   const calculateTotal = () => {
     let total = 0;
     
-    // Add selected terminals
+    // Add selected terminals (quantity is always 1 for terminals)
     Object.entries(selectedTerminals).forEach(([family, option]) => {
       const groups = getGroupedProducts();
       if (groups[family] && groups[family].terminals[option]) {
@@ -343,12 +426,13 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       }
     });
     
-    // Add selected accessories
+    // Add selected accessories with quantities
     Object.entries(selectedItems).forEach(([itemId, isSelected]) => {
       if (isSelected) {
         const item = hardwareItems.find(item => item.id === itemId);
+        const quantity = getQuantity(itemId);
         if (item) {
-          total += item.price;
+          total += item.price * quantity;
         }
       }
     });
@@ -356,10 +440,28 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     return total;
   };
 
+  // NEW: Get total item count
+  const getTotalItemCount = () => {
+    let count = 0;
+    
+    // Count selected terminals (always 1 each)
+    count += Object.keys(selectedTerminals).length;
+    
+    // Count selected accessories with quantities
+    Object.entries(selectedItems).forEach(([itemId, isSelected]) => {
+      if (isSelected) {
+        count += getQuantity(itemId);
+      }
+    });
+    
+    return count;
+  };
+
   if (!isOpen) return null;
 
   const groupedProducts = getGroupedProducts();
   const totalAmount = calculateTotal();
+  const totalItems = getTotalItemCount();
   const hasSelections = Object.keys(selectedTerminals).length > 0 || Object.keys(selectedItems).some(key => selectedItems[key]);
 
   return (
@@ -425,19 +527,24 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           )}
         </div>
 
-        {/* Footer */}
+        {/* UPDATED: Footer with item count and total */}
         {!loading && !error && hasSelections && (
           <div className="border-t border-gray-200 p-6 bg-gray-50">
             <div className="flex justify-between items-center">
               <div className="text-lg">
-                <span className="text-gray-600">Total: </span>
-                <span className="font-bold text-2xl text-green-600">
-                  ${totalAmount.toFixed(2)}
-                </span>
+                <div className="text-gray-600 text-sm mb-1">
+                  {totalItems} item{totalItems !== 1 ? 's' : ''} selected
+                </div>
+                <div>
+                  <span className="text-gray-600">Total: </span>
+                  <span className="font-bold text-2xl text-green-600">
+                    ${totalAmount.toFixed(2)}
+                  </span>
+                </div>
               </div>
               <button
                 onClick={() => setShowContactForm(true)}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold"
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold transition-colors"
               >
                 Get Quote
               </button>
