@@ -52,7 +52,8 @@ function transformProductData(hubspotProducts) {
       imageUrl = props.image_url;
     } else if (props.hs_featured_image) {
       imageUrl = props.hs_featured_image;
-    }
+    } else if (props.hs_image_url) {
+      imagerUrl = props.hs_image_url;
     
     // Log each product for debugging
     console.log(`Processing product: ${props.name || 'Unnamed'} (SKU: ${sku || 'No SKU'}) (Image: ${imageUrl ? 'Yes' : 'No'})`);
@@ -174,6 +175,7 @@ exports.handler = async function(event, context) {
         'product_image',
         'image_url',
         'hs_featured_image',
+        'hs_image_url',
         'featured_image'
       ].join(','),
       limit: '100'
