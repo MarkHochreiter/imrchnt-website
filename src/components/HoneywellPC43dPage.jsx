@@ -50,12 +50,11 @@ function HoneywellPC43dPage({ onNavigateBack, onContactSales }) {
                   className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
                   onClick={onContactSales}
                 >
-                  Generate Quote
+                  Request Quote
                 </Button>
               </div>
             </div>
             <div className="bg-gray-100 rounded-lg p-8 flex items-center justify-center">
-              <div className="w-64 h-64 bg-gray-300 rounded-lg flex items-center justify-center">
                 <img src={honeywellPC43d} alt="HoneyWell 43d" className="max-w-full h-auto" />
                 <span className="sr-only">Honeywell PC43d Label Printer</span>
               </div>
@@ -258,7 +257,7 @@ function HoneywellPC43dPage({ onNavigateBack, onContactSales }) {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
                   size="lg" 
-                  className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4"
+                  className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4 !text-[#f08e80]"
                   onClick={onContactSales}
               >
                 Request Quote
