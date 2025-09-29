@@ -70,8 +70,13 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
       items: [
         {
           title: "Cash Drawer",
-          subtitle: "APG Cash Drawer",
-          icon: <Coins className="h-5 w-5" />
+          subtitle: (
+            <>
+              APG VB320-1-BL1616 <br /> Standard-duty cash drawer with printer integration
+            </>
+          ),
+          icon: <Coins className="h-5 w-5" />,
+          page: "apg-cash-drawer"
         }
       ]
     },
