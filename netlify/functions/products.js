@@ -54,6 +54,7 @@ function transformProductData(hubspotProducts) {
       imageUrl = props.hs_featured_image;
     } else if (props.hs_image_url) {
       imageUrl = props.hs_image_url;
+    }
     
     // Log each product for debugging
     console.log(`Processing product: ${props.name || 'Unnamed'} (SKU: ${sku || 'No SKU'}) (Image: ${imageUrl ? 'Yes' : 'No'})`);
