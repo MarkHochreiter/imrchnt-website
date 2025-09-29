@@ -302,30 +302,6 @@ function SocketScanS720Page({ onNavigateBack, onContactSales }) {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Pricing & Warranty</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="text-3xl font-bold text-[#f08e80] mb-2">$319</div>
-              <div className="text-gray-600 mb-4">Base Price</div>
-              <div className="text-sm text-gray-500">Includes 1-year warranty</div>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="text-2xl font-bold text-blue-600 mb-2">3 Years</div>
-              <div className="text-gray-600 mb-4">Extended Warranty</div>
-              <div className="text-sm text-gray-500">Available upgrade option</div>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="text-2xl font-bold text-purple-600 mb-2">5 Years</div>
-              <div className="text-gray-600 mb-4">Maximum Coverage</div>
-              <div className="text-sm text-gray-500">Premium warranty option</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-16 bg-[#f08e80]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -335,10 +311,12 @@ function SocketScanS720Page({ onNavigateBack, onContactSales }) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
            <Button 
-                className="w-full bg-white text-[#f08e80] hover:bg-gray-100"
-                onClick={onContactSales}
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  onClick={onContactSales}
               >
-                Generate Quote
+                Request Quote
               </Button>
           </div>
         </div>
