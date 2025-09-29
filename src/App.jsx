@@ -391,7 +391,16 @@ const mobileSupportData = [
   return (
     <div className="min-h-screen bg-white">
       {/* Hidden forms for Netlify Forms detection */}
-      <div style={{ display: 'none' }}>
+      <div style={{ 
+        position: 'absolute', 
+        left: '-9999px', 
+        top: '-9999px', 
+        visibility: 'hidden', 
+        opacity: 0, 
+        height: 0, 
+        width: 0, 
+        overflow: 'hidden' 
+      }}>
         <form name="feature-request" netlify="true">
           <input type="text" name="name" />
           <input type="email" name="email" />
