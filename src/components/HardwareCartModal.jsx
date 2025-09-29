@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 const HardwareCartModal = ({ isOpen, onClose }) => {
   const [hardwareItems, setHardwareItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
-  const [selectedTerminals, setSelectedTerminals] = useState({});
+  const [selectedTerminals, setSelectedTerminals] = useState({}); // Now stores individual terminal selections
   const [quantities, setQuantities] = useState({}); // Quantity state for all items
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -74,23 +74,31 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     return quantities[itemId] || 1;
   };
 
-  // UPDATED: Handle terminal selection with quantity initialization
-  const handleTerminalSelection = (terminalFamily, option, terminalId) => {
-    setSelectedTerminals(prev => ({
-      ...prev,
-      [terminalFamily]: { option, terminalId }
-    }));
-    
-    // Initialize quantity to 1 when terminal is selected
-    if (!quantities[terminalId]) {
-      setQuantities(prev => ({
+  // UPDATED: Handle terminal selection - now allows both purchase AND rental
+  const handleTerminalSelection = (terminalId, isSelected) => {
+    if (isSelected) {
+      setSelectedTerminals(prev => ({
         ...prev,
-        [terminalId]: 1
+        [terminalId]: true
       }));
+      
+      // Initialize quantity to 1 when terminal is selected
+      if (!quantities[terminalId]) {
+        setQuantities(prev => ({
+          ...prev,
+          [terminalId]: 1
+        }));
+      }
+    } else {
+      setSelectedTerminals(prev => {
+        const newSelected = { ...prev };
+        delete newSelected[terminalId];
+        return newSelected;
+      });
     }
   };
 
-  // UPDATED: Handle accessory selection (radio button style)
+  // UPDATED: Handle accessory selection (radio button style per family)
   const handleAccessorySelection = (accessoryId, terminalFamily) => {
     // For radio button behavior, unselect other accessories in the same family
     const newSelectedItems = { ...selectedItems };
@@ -215,14 +223,17 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // Quantity Controls Component
+  // FIXED: Quantity Controls Component with proper event handling
   const QuantityControls = ({ itemId, className = "" }) => {
     const quantity = getQuantity(itemId);
     
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
         <button
-          onClick={() => updateQuantity(itemId, quantity - 1)}
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent event bubbling
+            updateQuantity(itemId, quantity - 1);
+          }}
           className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600 font-bold transition-colors"
           disabled={quantity <= 1}
         >
@@ -232,14 +243,21 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           <input
             type="number"
             value={quantity}
-            onChange={(e) => updateQuantity(itemId, parseInt(e.target.value) || 1)}
+            onChange={(e) => {
+              e.stopPropagation(); // Prevent event bubbling
+              updateQuantity(itemId, parseInt(e.target.value) || 1);
+            }}
+            onClick={(e) => e.stopPropagation()} // Prevent event bubbling
             className="w-full text-center font-semibold bg-transparent border-none outline-none"
             min="1"
             max="99"
           />
         </div>
         <button
-          onClick={() => updateQuantity(itemId, quantity + 1)}
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent event bubbling
+            updateQuantity(itemId, quantity + 1);
+          }}
           className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600 font-bold transition-colors"
           disabled={quantity >= 99}
         >
@@ -249,10 +267,8 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // UPDATED: Terminal Selection Component with Quantity Controls
+  // UPDATED: Terminal Selection Component - now allows both purchase AND rental
   const TerminalSelector = ({ terminalFamily, terminals }) => {
-    const selectedTerminal = selectedTerminals[terminalFamily];
-    
     return (
       <div className="mb-8">
         <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
@@ -260,26 +276,21 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             {terminalFamily}
           </span>
           Terminal Options
+          <span className="text-sm text-gray-500 ml-2">(Select purchase, rental, or both)</span>
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {/* Purchase Option */}
           {terminals.buy && (
             <div className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
-              selectedTerminal?.option === 'buy' 
+              selectedTerminals[terminals.buy.id] 
                 ? 'border-green-500 bg-green-50 shadow-md' 
                 : 'border-gray-200 hover:border-green-300'
             }`}>
-              <label className="cursor-pointer">
-                <input
-                  type="radio"
-                  name={`terminal-${terminalFamily}`}
-                  value="buy"
-                  checked={selectedTerminal?.option === 'buy'}
-                  onChange={() => handleTerminalSelection(terminalFamily, 'buy', terminals.buy.id)}
-                  className="sr-only"
-                />
-                
+              <div 
+                onClick={() => handleTerminalSelection(terminals.buy.id, !selectedTerminals[terminals.buy.id])}
+                className="cursor-pointer"
+              >
                 <div className="flex items-start space-x-4">
                   <ProductImage 
                     product={terminals.buy} 
@@ -303,45 +314,53 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                       <span className="text-xs text-gray-500">SKU: {terminals.buy.sku}</span>
                     </div>
                     
-                    {/* Quantity Controls for Terminal */}
-                    {selectedTerminal?.option === 'buy' && (
-                      <div className="border-t pt-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium text-gray-700">Quantity:</span>
-                          <QuantityControls itemId={terminals.buy.id} />
-                        </div>
-                        
-                        {/* Subtotal */}
-                        <div className="mt-2 text-sm text-gray-600">
-                          Subtotal: <span className="font-semibold text-green-600">
-                            ${(terminals.buy.price * getQuantity(terminals.buy.id)).toFixed(2)}
-                          </span>
-                        </div>
-                      </div>
-                    )}
+                    {/* Selection Checkbox */}
+                    <div className="flex items-center mb-3">
+                      <input
+                        type="checkbox"
+                        checked={selectedTerminals[terminals.buy.id] || false}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          handleTerminalSelection(terminals.buy.id, e.target.checked);
+                        }}
+                        className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
+                      />
+                      <span className="ml-2 text-sm font-medium text-gray-700">Select for purchase</span>
+                    </div>
                   </div>
                 </div>
-              </label>
+              </div>
+              
+              {/* Quantity Controls for Terminal */}
+              {selectedTerminals[terminals.buy.id] && (
+                <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700">Quantity:</span>
+                    <QuantityControls itemId={terminals.buy.id} />
+                  </div>
+                  
+                  {/* Subtotal */}
+                  <div className="mt-2 text-sm text-gray-600">
+                    Subtotal: <span className="font-semibold text-green-600">
+                      ${(terminals.buy.price * getQuantity(terminals.buy.id)).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           )}
           
           {/* Rental Option */}
           {terminals.rent && (
             <div className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
-              selectedTerminal?.option === 'rent' 
+              selectedTerminals[terminals.rent.id] 
                 ? 'border-blue-500 bg-blue-50 shadow-md' 
                 : 'border-gray-200 hover:border-blue-300'
             }`}>
-              <label className="cursor-pointer">
-                <input
-                  type="radio"
-                  name={`terminal-${terminalFamily}`}
-                  value="rent"
-                  checked={selectedTerminal?.option === 'rent'}
-                  onChange={() => handleTerminalSelection(terminalFamily, 'rent', terminals.rent.id)}
-                  className="sr-only"
-                />
-                
+              <div 
+                onClick={() => handleTerminalSelection(terminals.rent.id, !selectedTerminals[terminals.rent.id])}
+                className="cursor-pointer"
+              >
                 <div className="flex items-start space-x-4">
                   <ProductImage 
                     product={terminals.rent} 
@@ -365,25 +384,39 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                       <span className="text-xs text-gray-500">SKU: {terminals.rent.sku}</span>
                     </div>
                     
-                    {/* Quantity Controls for Terminal */}
-                    {selectedTerminal?.option === 'rent' && (
-                      <div className="border-t pt-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium text-gray-700">Quantity:</span>
-                          <QuantityControls itemId={terminals.rent.id} />
-                        </div>
-                        
-                        {/* Subtotal */}
-                        <div className="mt-2 text-sm text-gray-600">
-                          Subtotal: <span className="font-semibold text-blue-600">
-                            ${(terminals.rent.price * getQuantity(terminals.rent.id)).toFixed(2)}/mo
-                          </span>
-                        </div>
-                      </div>
-                    )}
+                    {/* Selection Checkbox */}
+                    <div className="flex items-center mb-3">
+                      <input
+                        type="checkbox"
+                        checked={selectedTerminals[terminals.rent.id] || false}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          handleTerminalSelection(terminals.rent.id, e.target.checked);
+                        }}
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                      />
+                      <span className="ml-2 text-sm font-medium text-gray-700">Select for rental</span>
+                    </div>
                   </div>
                 </div>
-              </label>
+              </div>
+              
+              {/* Quantity Controls for Terminal */}
+              {selectedTerminals[terminals.rent.id] && (
+                <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700">Quantity:</span>
+                    <QuantityControls itemId={terminals.rent.id} />
+                  </div>
+                  
+                  {/* Subtotal */}
+                  <div className="mt-2 text-sm text-gray-600">
+                    Subtotal: <span className="font-semibold text-blue-600">
+                      ${(terminals.rent.price * getQuantity(terminals.rent.id)).toFixed(2)}/mo
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -391,7 +424,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // UPDATED: Accessory Grid Component with Radio Button Selection
+  // FIXED: Accessory Grid Component with proper event handling
   const AccessoryGrid = ({ terminalFamily, accessories }) => {
     if (accessories.length === 0) return null;
     
@@ -409,12 +442,11 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           {accessories.map((accessory) => (
             <div
               key={accessory.id}
-              className={`border rounded-lg p-4 cursor-pointer transition-all ${
+              className={`border rounded-lg p-4 transition-all ${
                 selectedItems[accessory.id]
                   ? 'border-orange-500 bg-orange-50 shadow-md'
                   : 'border-gray-200 hover:border-orange-300'
               }`}
-              onClick={() => handleAccessorySelection(accessory.id, terminalFamily)}
             >
               <div className="text-center">
                 <ProductImage 
@@ -432,7 +464,10 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                       type="radio"
                       name={`accessory-${terminalFamily}`}
                       checked={selectedItems[accessory.id] || false}
-                      onChange={() => handleAccessorySelection(accessory.id, terminalFamily)}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        handleAccessorySelection(accessory.id, terminalFamily);
+                      }}
                       className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700">Select</span>
@@ -445,7 +480,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                 
                 {/* Quantity Controls - Only show when selected */}
                 {selectedItems[accessory.id] && (
-                  <div className="border-t pt-3">
+                  <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-gray-700">Quantity:</span>
                       <QuantityControls itemId={accessory.id} />
@@ -482,12 +517,13 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     let total = 0;
     
     // Add selected terminals with quantities
-    Object.entries(selectedTerminals).forEach(([family, selection]) => {
-      const groups = getGroupedProducts();
-      if (groups[family] && groups[family].terminals[selection.option]) {
-        const terminal = groups[family].terminals[selection.option];
-        const quantity = getQuantity(selection.terminalId);
-        total += terminal.price * quantity;
+    Object.entries(selectedTerminals).forEach(([terminalId, isSelected]) => {
+      if (isSelected) {
+        const terminal = hardwareItems.find(item => item.id === terminalId);
+        if (terminal) {
+          const quantity = getQuantity(terminalId);
+          total += terminal.price * quantity;
+        }
       }
     });
     
@@ -510,8 +546,10 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     let count = 0;
     
     // Count selected terminals with quantities
-    Object.entries(selectedTerminals).forEach(([family, selection]) => {
-      count += getQuantity(selection.terminalId);
+    Object.entries(selectedTerminals).forEach(([terminalId, isSelected]) => {
+      if (isSelected) {
+        count += getQuantity(terminalId);
+      }
     });
     
     // Count selected accessories with quantities
@@ -529,7 +567,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
   const groupedProducts = getGroupedProducts();
   const totalAmount = calculateTotal();
   const totalItems = getTotalItemCount();
-  const hasSelections = Object.keys(selectedTerminals).length > 0 || Object.keys(selectedItems).some(key => selectedItems[key]);
+  const hasSelections = Object.keys(selectedTerminals).some(key => selectedTerminals[key]) || Object.keys(selectedItems).some(key => selectedItems[key]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
