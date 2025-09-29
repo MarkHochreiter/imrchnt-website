@@ -312,8 +312,7 @@ function SocketScanS720Page({ onNavigateBack, onContactSales }) {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
            <Button 
                   size="lg" 
-                  variant="outline" 
-                  className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
+                  className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4"
                   onClick={onContactSales}
               >
                 Request Quote
