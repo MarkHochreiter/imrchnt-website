@@ -149,7 +149,7 @@ function S1f2Page({ onNavigateBack, onContactSales }) {
                   className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4"
                   onClick={onContactSales}
             >
-              Generate Quote
+              Request Quote
             </Button>
           </div>
         </div>
