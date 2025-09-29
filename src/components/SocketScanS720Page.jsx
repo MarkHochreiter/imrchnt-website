@@ -1,5 +1,5 @@
 import { Scan, Wifi, Smartphone, Zap, Shield, ArrowLeft, Bluetooth, Battery, QrCode, Package } from 'lucide-react'
-import socketScanImage from '../assets/socket-scan-s720.png'
+import socketScanImage from '../assets/socketscan-700.png'
 
 // Button component to match your design system
 const Button = ({ children, className = '', size = 'default', variant = 'default', onClick, ...props }) => {
