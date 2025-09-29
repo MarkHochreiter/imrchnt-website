@@ -1,4 +1,4 @@
-import { Receipt, Wifi, Smartphone, Zap, Shield, ArrowLeft, Lock, Settings, Package, Printer } from 'lucide-react'
+import { DollarSign, Wifi, Smartphone, Zap, Shield, ArrowLeft, Lock, Settings, Package, Printer } from 'lucide-react'
 import apgCashDrawerImage from '../assets/cash_drawer.png'
 
 // Button component to match your design system
@@ -34,7 +34,7 @@ function APGCashDrawerPage({ onNavigateBack, onContactSales }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center space-x-3 mb-6">
-                <Receipt className="h-12 w-12 text-[#f08e80]" />
+                <DollarSign className="h-12 w-12 text-[#f08e80]" />
                 <div>
                   <h1 className="text-4xl font-bold text-gray-900">APG VB320-1-BL1616</h1>
                   <p className="text-xl text-[#f08e80] font-medium">Standard-Duty Cash Drawer</p>
