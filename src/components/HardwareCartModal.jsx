@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 const HardwareCartModal = ({ isOpen, onClose }) => {
   const [hardwareItems, setHardwareItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
-  const [selectedTerminals, setSelectedTerminals] = useState({}); // Now stores individual terminal selections
-  const [quantities, setQuantities] = useState({}); // Quantity state for all items
+  const [selectedTerminals, setSelectedTerminals] = useState({});
+  const [quantities, setQuantities] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [contactInfo, setContactInfo] = useState({
@@ -18,6 +18,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
   const [showContactForm, setShowContactForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [debugInfo, setDebugInfo] = useState('');
 
   // Fetch products from API
   useEffect(() => {
@@ -47,15 +48,12 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       if (data.success && data.products) {
         setHardwareItems(data.products);
         console.log('Products loaded:', data.products);
-        console.log('Image stats:', data.imageStats);
       } else {
         throw new Error(data.message || 'Failed to load products');
       }
     } catch (error) {
       console.error('Error fetching products:', error);
       setError(error.message);
-      
-      // Fallback to cached/default data if API fails
       setHardwareItems([]);
     } finally {
       setLoading(false);
@@ -64,7 +62,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
 
   // Quantity management functions
   const updateQuantity = (itemId, quantity) => {
-    const newQuantity = Math.max(1, Math.min(99, quantity)); // Min 1, Max 99
+    const newQuantity = Math.max(1, Math.min(99, quantity));
     setQuantities(prev => ({
       ...prev,
       [itemId]: newQuantity
@@ -75,7 +73,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     return quantities[itemId] || 1;
   };
 
-  // Handle terminal selection - allows both purchase AND rental
+  // Handle terminal selection
   const handleTerminalSelection = (terminalId, isSelected) => {
     if (isSelected) {
       setSelectedTerminals(prev => ({
@@ -83,7 +81,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         [terminalId]: true
       }));
       
-      // Initialize quantity to 1 when terminal is selected
       if (!quantities[terminalId]) {
         setQuantities(prev => ({
           ...prev,
@@ -99,7 +96,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     }
   };
 
-  // Handle accessory selection (checkbox style - multiple selections allowed)
+  // Handle accessory selection
   const handleAccessorySelection = (accessoryId, isSelected) => {
     if (isSelected) {
       setSelectedItems(prev => ({
@@ -107,7 +104,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         [accessoryId]: true
       }));
       
-      // Initialize quantity to 1 when accessory is selected
       if (!quantities[accessoryId]) {
         setQuantities(prev => ({
           ...prev,
@@ -131,19 +127,18 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     });
   };
 
-  // Group products by terminal family with proper SKU parsing
+  // Group products by terminal family
   const getGroupedProducts = () => {
     const groups = {};
     
     hardwareItems.forEach(product => {
-      if (!product.sku) return; // Skip products without SKUs
+      if (!product.sku) return;
       
       const skuParts = product.sku.toUpperCase().split('-');
-      if (skuParts.length < 2) return; // Skip malformed SKUs
+      if (skuParts.length < 2) return;
       
       const [terminalFamily, type, option] = skuParts;
       
-      // Initialize group if it doesn't exist
       if (!groups[terminalFamily]) {
         groups[terminalFamily] = {
           name: terminalFamily,
@@ -153,14 +148,12 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       }
       
       if (type === 'T') {
-        // Terminal: AMS1-T-B or AMS1-T-R
         if (option === 'B') {
           groups[terminalFamily].terminals.buy = product;
         } else if (option === 'R') {
           groups[terminalFamily].terminals.rent = product;
         }
       } else if (type === 'A') {
-        // Accessory: AMS1-A-01, SFO1-A-VM, etc.
         groups[terminalFamily].accessories.push(product);
       }
     });
@@ -168,7 +161,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     return groups;
   };
 
-  // Product Image Component with fallback handling
+  // Product Image Component
   const ProductImage = ({ product, className = "" }) => {
     const [imageError, setImageError] = useState(false);
     const [imageLoading, setImageLoading] = useState(true);
@@ -182,7 +175,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       setImageLoading(false);
     };
     
-    // Use fallback if no image URL or if image failed to load
     const shouldUseFallback = !product.imageUrl || imageError || !product.hasImage;
     
     return (
@@ -194,23 +186,15 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         )}
         
         {shouldUseFallback ? (
-          // Fallback: Icon or placeholder
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
             <div className="text-center">
-              {product.type === 'terminal' ? (
-                <svg className="w-12 h-12 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                </svg>
-              ) : (
-                <svg className="w-12 h-12 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-              )}
+              <svg className="w-12 h-12 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+              </svg>
               <p className="text-xs text-gray-500 font-medium">{product.sku}</p>
             </div>
           </div>
         ) : (
-          // Actual product image
           <img
             src={product.imageUrl}
             alt={product.name}
@@ -224,7 +208,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // Quantity Controls Component with proper event handling
+  // Quantity Controls Component
   const QuantityControls = ({ itemId, className = "" }) => {
     const quantity = getQuantity(itemId);
     
@@ -232,7 +216,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       <div className={`flex items-center space-x-2 ${className}`}>
         <button
           onClick={(e) => {
-            e.stopPropagation(); // Prevent event bubbling
+            e.stopPropagation();
             updateQuantity(itemId, quantity - 1);
           }}
           className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600 font-bold transition-colors"
@@ -245,10 +229,10 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             type="number"
             value={quantity}
             onChange={(e) => {
-              e.stopPropagation(); // Prevent event bubbling
+              e.stopPropagation();
               updateQuantity(itemId, parseInt(e.target.value) || 1);
             }}
-            onClick={(e) => e.stopPropagation()} // Prevent event bubbling
+            onClick={(e) => e.stopPropagation()}
             className="w-full text-center font-semibold bg-transparent border-none outline-none"
             min="1"
             max="99"
@@ -256,7 +240,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         </div>
         <button
           onClick={(e) => {
-            e.stopPropagation(); // Prevent event bubbling
+            e.stopPropagation();
             updateQuantity(itemId, quantity + 1);
           }}
           className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600 font-bold transition-colors"
@@ -268,7 +252,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // Terminal Selection Component - allows both purchase AND rental
+  // Terminal Selection Component
   const TerminalSelector = ({ terminalFamily, terminals }) => {
     return (
       <div className="mb-8">
@@ -315,7 +299,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                       <span className="text-xs text-gray-500">SKU: {terminals.buy.sku}</span>
                     </div>
                     
-                    {/* Selection Checkbox */}
                     <div className="flex items-center mb-3">
                       <input
                         type="checkbox"
@@ -332,7 +315,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
               
-              {/* Quantity Controls for Terminal */}
               {selectedTerminals[terminals.buy.id] && (
                 <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
                   <div className="flex items-center justify-between">
@@ -340,7 +322,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                     <QuantityControls itemId={terminals.buy.id} />
                   </div>
                   
-                  {/* Subtotal */}
                   <div className="mt-2 text-sm text-gray-600">
                     Subtotal: <span className="font-semibold text-green-600">
                       ${(terminals.buy.price * getQuantity(terminals.buy.id)).toFixed(2)}
@@ -385,7 +366,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                       <span className="text-xs text-gray-500">SKU: {terminals.rent.sku}</span>
                     </div>
                     
-                    {/* Selection Checkbox */}
                     <div className="flex items-center mb-3">
                       <input
                         type="checkbox"
@@ -402,7 +382,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
               
-              {/* Quantity Controls for Terminal */}
               {selectedTerminals[terminals.rent.id] && (
                 <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
                   <div className="flex items-center justify-between">
@@ -410,7 +389,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                     <QuantityControls itemId={terminals.rent.id} />
                   </div>
                   
-                  {/* Subtotal */}
                   <div className="mt-2 text-sm text-gray-600">
                     Subtotal: <span className="font-semibold text-blue-600">
                       ${(terminals.rent.price * getQuantity(terminals.rent.id)).toFixed(2)}/mo
@@ -425,7 +403,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // Accessory Grid Component - uses checkboxes for multiple selection
+  // Accessory Grid Component
   const AccessoryGrid = ({ terminalFamily, accessories }) => {
     if (accessories.length === 0) return null;
     
@@ -462,7 +440,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                   <h5 className="font-semibold text-gray-800 mb-2">{accessory.name}</h5>
                   <p className="text-sm text-gray-600 mb-3 line-clamp-2">{accessory.description}</p>
                   
-                  {/* Selection and Price Row */}
                   <div className="flex items-center justify-between mb-3">
                     <label className="flex items-center cursor-pointer">
                       <input
@@ -488,7 +465,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
               
-              {/* Quantity Controls - Only show when selected */}
               {selectedItems[accessory.id] && (
                 <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
                   <div className="flex items-center justify-between">
@@ -496,7 +472,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                     <QuantityControls itemId={accessory.id} />
                   </div>
                   
-                  {/* Subtotal */}
                   <div className="mt-2 text-sm text-gray-600">
                     Subtotal: <span className="font-semibold text-orange-600">
                       ${(accessory.price * getQuantity(accessory.id)).toFixed(2)}
@@ -522,42 +497,32 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
               First Name *
             </label>
-            <div className="relative">
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                required
-                value={contactInfo.firstName}
-                onChange={handleContactChange}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="John"
-              />
-            </div>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              required
+              value={contactInfo.firstName}
+              onChange={handleContactChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="John"
+            />
           </div>
           
           <div>
             <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
               Last Name *
             </label>
-            <div className="relative">
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                required
-                value={contactInfo.lastName}
-                onChange={handleContactChange}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Doe"
-              />
-            </div>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              required
+              value={contactInfo.lastName}
+              onChange={handleContactChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Doe"
+            />
           </div>
         </div>
 
@@ -566,41 +531,31 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email Address *
             </label>
-            <div className="relative">
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                value={contactInfo.email}
-                onChange={handleContactChange}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="john@example.com"
-              />
-            </div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              value={contactInfo.email}
+              onChange={handleContactChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="john@example.com"
+            />
           </div>
           
           <div>
             <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
               Phone Number
             </label>
-            <div className="relative">
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={contactInfo.phone}
-                onChange={handleContactChange}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="(555) 123-4567"
-              />
-            </div>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={contactInfo.phone}
+              onChange={handleContactChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="(555) 123-4567"
+            />
           </div>
         </div>
 
@@ -608,20 +563,15 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
             Company Name
           </label>
-          <div className="relative">
-            <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
-            <input
-              type="text"
-              id="company"
-              name="company"
-              value={contactInfo.company}
-              onChange={handleContactChange}
-              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Your Company"
-            />
-          </div>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            value={contactInfo.company}
+            onChange={handleContactChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Your Company"
+          />
         </div>
 
         <div>
@@ -642,56 +592,119 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // Handle form submission
+  // Handle form submission with detailed debugging
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     setSubmitStatus(null);
+    setDebugInfo('Starting quote submission...');
 
     try {
-      // Prepare quote data for HubSpot integration
-      const quoteData = {
-        contactInfo,
-        selectedTerminals: Object.entries(selectedTerminals).filter(([_, isSelected]) => isSelected).map(([terminalId]) => {
+      // Generate a unique quote ID
+      const quoteId = `HW-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      
+      // Prepare selected items in the format expected by the API
+      const selectedItemsArray = [];
+      
+      // Add selected terminals
+      Object.entries(selectedTerminals).forEach(([terminalId, isSelected]) => {
+        if (isSelected) {
           const terminal = hardwareItems.find(item => item.id === terminalId);
-          return {
-            id: terminalId,
-            name: terminal?.name,
-            sku: terminal?.sku,
-            price: terminal?.price,
-            quantity: getQuantity(terminalId),
-            total: terminal?.price * getQuantity(terminalId)
-          };
-        }),
-        selectedAccessories: Object.entries(selectedItems).filter(([_, isSelected]) => isSelected).map(([itemId]) => {
+          if (terminal) {
+            const quantity = getQuantity(terminalId);
+            const isRental = terminal.sku.includes('-T-R');
+            selectedItemsArray.push({
+              itemId: terminalId,
+              itemName: terminal.name,
+              itemCategory: 'Terminal',
+              sku: terminal.sku,
+              unitPrice: terminal.price,
+              quantity: quantity,
+              lineTotal: terminal.price * quantity,
+              purchaseOption: isRental ? 'rent' : 'buy'
+            });
+          }
+        }
+      });
+      
+      // Add selected accessories
+      Object.entries(selectedItems).forEach(([itemId, isSelected]) => {
+        if (isSelected) {
           const item = hardwareItems.find(item => item.id === itemId);
-          return {
-            id: itemId,
-            name: item?.name,
-            sku: item?.sku,
-            price: item?.price,
-            quantity: getQuantity(itemId),
-            total: item?.price * getQuantity(itemId)
-          };
-        }),
-        totalAmount: calculateTotal(),
-        totalItems: getTotalItemCount()
-      };
-
-      console.log('Submitting quote to HubSpot integration...', quoteData);
-
-      // Submit to HubSpot integration endpoint
-      const response = await fetch('/api/create-quote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(quoteData)
+          if (item) {
+            const quantity = getQuantity(itemId);
+            selectedItemsArray.push({
+              itemId: itemId,
+              itemName: item.name,
+              itemCategory: 'Accessory',
+              sku: item.sku,
+              unitPrice: item.price,
+              quantity: quantity,
+              lineTotal: item.price * quantity,
+              purchaseOption: 'buy'
+            });
+          }
+        }
       });
 
-      const result = await response.json();
+      const quoteData = {
+        quoteId: quoteId,
+        contactInfo: contactInfo,
+        selectedItems: selectedItemsArray,
+        quoteTotalAmount: calculateTotal(),
+        totalItems: getTotalItemCount(),
+        timestamp: new Date().toISOString()
+      };
 
-      if (response.ok && result.success) {
+      setDebugInfo(`Prepared quote data: ${JSON.stringify(quoteData, null, 2)}`);
+      console.log('Submitting quote to HubSpot:', quoteData);
+
+      // Try different API endpoints to debug
+      const endpoints = [
+        '/api/create-quote',
+        '/.netlify/functions/create-quote',
+        'https://imrchnt.netlify.app/.netlify/functions/create-quote'
+      ];
+
+      let response;
+      let lastError;
+
+      for (const endpoint of endpoints) {
+        try {
+          setDebugInfo(prev => prev + `\\n\\nTrying endpoint: ${endpoint}`);
+          
+          response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(quoteData)
+          });
+
+          setDebugInfo(prev => prev + `\\nResponse status: ${response.status}`);
+          
+          if (response.ok) {
+            break; // Success, exit the loop
+          } else {
+            const errorText = await response.text();
+            setDebugInfo(prev => prev + `\\nError response: ${errorText}`);
+            lastError = new Error(`HTTP ${response.status}: ${errorText}`);
+          }
+        } catch (error) {
+          setDebugInfo(prev => prev + `\\nEndpoint ${endpoint} failed: ${error.message}`);
+          lastError = error;
+          continue; // Try next endpoint
+        }
+      }
+
+      if (!response || !response.ok) {
+        throw lastError || new Error('All endpoints failed');
+      }
+
+      const result = await response.json();
+      setDebugInfo(prev => prev + `\\n\\nSuccess response: ${JSON.stringify(result, null, 2)}`);
+
+      if (result.success) {
         console.log('✅ Quote submitted successfully to HubSpot');
         setSubmitStatus('success');
         
@@ -717,20 +730,21 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       } else {
         console.error('❌ Quote submission failed:', result.message);
         setSubmitStatus('error');
+        setDebugInfo(prev => prev + `\\n\\nAPI returned success: false - ${result.message}`);
       }
     } catch (error) {
       console.error('❌ Network error:', error);
       setSubmitStatus('error');
+      setDebugInfo(prev => prev + `\\n\\nCatch block error: ${error.message}\\nStack: ${error.stack}`);
     } finally {
       setSubmitting(false);
     }
   };
 
-  // Calculate totals with quantities for both terminals and accessories
+  // Calculate totals
   const calculateTotal = () => {
     let total = 0;
     
-    // Add selected terminals with quantities
     Object.entries(selectedTerminals).forEach(([terminalId, isSelected]) => {
       if (isSelected) {
         const terminal = hardwareItems.find(item => item.id === terminalId);
@@ -741,7 +755,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
       }
     });
     
-    // Add selected accessories with quantities
     Object.entries(selectedItems).forEach(([itemId, isSelected]) => {
       if (isSelected) {
         const item = hardwareItems.find(item => item.id === itemId);
@@ -755,18 +768,16 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     return total;
   };
 
-  // Get total item count including quantities
+  // Get total item count
   const getTotalItemCount = () => {
     let count = 0;
     
-    // Count selected terminals with quantities
     Object.entries(selectedTerminals).forEach(([terminalId, isSelected]) => {
       if (isSelected) {
         count += getQuantity(terminalId);
       }
     });
     
-    // Count selected accessories with quantities
     Object.entries(selectedItems).forEach(([itemId, isSelected]) => {
       if (isSelected) {
         count += getQuantity(itemId);
@@ -805,6 +816,16 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <CustomerForm />
               
+              {/* Debug Information */}
+              {debugInfo && (
+                <div className="bg-gray-100 border border-gray-300 rounded-md p-3">
+                  <h4 className="font-semibold text-gray-800 mb-2">Debug Information:</h4>
+                  <pre className="text-xs text-gray-600 whitespace-pre-wrap max-h-40 overflow-y-auto">
+                    {debugInfo}
+                  </pre>
+                </div>
+              )}
+              
               {/* Submit Status */}
               {submitStatus === 'success' && (
                 <div className="bg-green-50 border border-green-200 rounded-md p-3">
@@ -814,7 +835,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
 
               {submitStatus === 'error' && (
                 <div className="bg-red-50 border border-red-200 rounded-md p-3">
-                  <p className="text-red-800 text-sm">❌ Something went wrong. Please try again or contact support.</p>
+                  <p className="text-red-800 text-sm">❌ Something went wrong. Please check the debug information above.</p>
                 </div>
               )}
 
@@ -838,12 +859,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                       Creating Quote...
                     </>
                   ) : (
-                    <>
-                      <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                      </svg>
-                      Submit Quote Request
-                    </>
+                    'Submit Quote Request'
                   )}
                 </button>
               </div>
@@ -899,7 +915,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           )}
         </div>
 
-        {/* Footer with item count and total */}
+        {/* Footer */}
         {!loading && !error && hasSelections && !showContactForm && (
           <div className="border-t border-gray-200 p-6 bg-gray-50">
             <div className="flex justify-between items-center">
