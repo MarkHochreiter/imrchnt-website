@@ -1,5 +1,5 @@
 import { DollarSign, Wifi, Smartphone, Zap, Shield, ArrowLeft, Lock, Settings, Package, Printer } from 'lucide-react'
-import apgCashDrawerImage from '../assets/apg-cash-drawer.jpeg'
+import apgCashDrawerImage from '../assets/cash_drawer.png'
 
 // Button component to match your design system
 const Button = ({ children, className = '', size = 'default', variant = 'default', onClick, ...props }) => {
