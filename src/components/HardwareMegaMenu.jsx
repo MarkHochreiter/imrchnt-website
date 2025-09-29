@@ -86,8 +86,13 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
       items: [
         {
           title: "Socket Scan",
-          subtitle: "Barcode scanning solution",
-          icon: <Scan className="h-5 w-5" />
+          subtitle: (
+            <>
+              SocketScan S720 <br /> Bluetooth 1D & 2D barcode scanner
+            </>
+          ),
+          icon: <Scan className="h-5 w-5" />,
+          page: "socket-scan-s720"
         }
       ]
     }
