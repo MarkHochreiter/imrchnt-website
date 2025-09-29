@@ -27,7 +27,7 @@ function S1f2Page({ onNavigateBack, onContactSales }) {
                   className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
                   onClick={onContactSales}
                 >
-                  Generate Quote
+                  Request Quote
                 </Button>
               </div>
             </div>
