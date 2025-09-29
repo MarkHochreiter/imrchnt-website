@@ -60,7 +60,6 @@ function HoneywellPC43dPage({ onNavigateBack, onContactSales }) {
               </div>
             </div>
           </div>
-        </div>
       </section>
 
       {/* Key Features */}
