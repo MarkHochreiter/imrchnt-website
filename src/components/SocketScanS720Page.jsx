@@ -168,22 +168,8 @@ function SocketScanS720Page({ onNavigateBack, onContactSales }) {
             <div>
               <h3 className="text-2xl font-semibold text-gray-900 mb-4">Native Support</h3>
               <p className="text-lg text-gray-600 mb-6">
-                The SocketScan S720 offers native integration with popular point-of-sale and business platforms, ensuring seamless operation without additional software requirements.
+                The SocketScan S720 is natively integrated with imrchnt, ensuring seamless operation without additional software requirements.
               </p>
-              <div className="grid grid-cols-3 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-lg text-center shadow-sm">
-                  <div className="font-semibold text-gray-900">Square</div>
-                  <p className="text-sm text-gray-600">POS System</p>
-                </div>
-                <div className="bg-white p-4 rounded-lg text-center shadow-sm">
-                  <div className="font-semibold text-gray-900">Shopify</div>
-                  <p className="text-sm text-gray-600">E-commerce</p>
-                </div>
-                <div className="bg-white p-4 rounded-lg text-center shadow-sm">
-                  <div className="font-semibold text-gray-900">SumUp</div>
-                  <p className="text-sm text-gray-600">Payment</p>
-                </div>
-              </div>
             </div>
             <div>
               <h3 className="text-2xl font-semibold text-gray-900 mb-4">Device Compatibility</h3>
