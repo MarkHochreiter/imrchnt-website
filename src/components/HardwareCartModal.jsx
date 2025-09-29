@@ -74,7 +74,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     return quantities[itemId] || 1;
   };
 
-  // UPDATED: Handle terminal selection - now allows both purchase AND rental
+  // Handle terminal selection - allows both purchase AND rental
   const handleTerminalSelection = (terminalId, isSelected) => {
     if (isSelected) {
       setSelectedTerminals(prev => ({
@@ -98,26 +98,14 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     }
   };
 
-  // UPDATED: Handle accessory selection (radio button style per family)
-  const handleAccessorySelection = (accessoryId, terminalFamily) => {
-    // For radio button behavior, unselect other accessories in the same family
-    const newSelectedItems = { ...selectedItems };
-    
-    // Find all accessories in this family and unselect them
-    const groups = getGroupedProducts();
-    if (groups[terminalFamily]) {
-      groups[terminalFamily].accessories.forEach(acc => {
-        if (acc.id !== accessoryId) {
-          delete newSelectedItems[acc.id];
-        }
-      });
-    }
-    
-    // Toggle the selected accessory
-    if (selectedItems[accessoryId]) {
-      delete newSelectedItems[accessoryId];
-    } else {
-      newSelectedItems[accessoryId] = true;
+  // UPDATED: Handle accessory selection (checkbox style - multiple selections allowed)
+  const handleAccessorySelection = (accessoryId, isSelected) => {
+    if (isSelected) {
+      setSelectedItems(prev => ({
+        ...prev,
+        [accessoryId]: true
+      }));
+      
       // Initialize quantity to 1 when accessory is selected
       if (!quantities[accessoryId]) {
         setQuantities(prev => ({
@@ -125,9 +113,13 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           [accessoryId]: 1
         }));
       }
+    } else {
+      setSelectedItems(prev => {
+        const newSelected = { ...prev };
+        delete newSelected[accessoryId];
+        return newSelected;
+      });
     }
-    
-    setSelectedItems(newSelectedItems);
   };
 
   // Group products by terminal family with proper SKU parsing
@@ -223,7 +215,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // FIXED: Quantity Controls Component with proper event handling
+  // Quantity Controls Component with proper event handling
   const QuantityControls = ({ itemId, className = "" }) => {
     const quantity = getQuantity(itemId);
     
@@ -267,7 +259,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // UPDATED: Terminal Selection Component - now allows both purchase AND rental
+  // Terminal Selection Component - allows both purchase AND rental
   const TerminalSelector = ({ terminalFamily, terminals }) => {
     return (
       <div className="mb-8">
@@ -424,7 +416,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // FIXED: Accessory Grid Component with proper event handling
+  // UPDATED: Accessory Grid Component - now uses checkboxes for multiple selection
   const AccessoryGrid = ({ terminalFamily, accessories }) => {
     if (accessories.length === 0) return null;
     
@@ -435,70 +427,74 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
           </svg>
           {terminalFamily} Accessories
-          <span className="text-sm text-gray-500 ml-2">(Select one)</span>
+          <span className="text-sm text-gray-500 ml-2">(Select multiple)</span>
         </h4>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {accessories.map((accessory) => (
             <div
               key={accessory.id}
-              className={`border rounded-lg p-4 transition-all ${
+              className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
                 selectedItems[accessory.id]
                   ? 'border-orange-500 bg-orange-50 shadow-md'
                   : 'border-gray-200 hover:border-orange-300'
               }`}
             >
-              <div className="text-center">
-                <ProductImage 
-                  product={accessory} 
-                  className="w-full h-32 rounded-lg mb-3"
-                />
-                
-                <h5 className="font-semibold text-gray-800 mb-2">{accessory.name}</h5>
-                <p className="text-sm text-gray-600 mb-3 line-clamp-2">{accessory.description}</p>
-                
-                {/* Selection and Price Row */}
-                <div className="flex items-center justify-between mb-3">
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name={`accessory-${terminalFamily}`}
-                      checked={selectedItems[accessory.id] || false}
-                      onChange={(e) => {
-                        e.stopPropagation();
-                        handleAccessorySelection(accessory.id, terminalFamily);
-                      }}
-                      className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2"
-                    />
-                    <span className="ml-2 text-sm font-medium text-gray-700">Select</span>
-                  </label>
+              <div 
+                onClick={() => handleAccessorySelection(accessory.id, !selectedItems[accessory.id])}
+                className="cursor-pointer"
+              >
+                <div className="text-center">
+                  <ProductImage 
+                    product={accessory} 
+                    className="w-full h-32 rounded-lg mb-3"
+                  />
                   
-                  <span className="text-lg font-bold text-orange-600">
-                    ${accessory.price.toFixed(2)}
-                  </span>
-                </div>
-                
-                {/* Quantity Controls - Only show when selected */}
-                {selectedItems[accessory.id] && (
-                  <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-700">Quantity:</span>
-                      <QuantityControls itemId={accessory.id} />
-                    </div>
+                  <h5 className="font-semibold text-gray-800 mb-2">{accessory.name}</h5>
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{accessory.description}</p>
+                  
+                  {/* Selection and Price Row */}
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={selectedItems[accessory.id] || false}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          handleAccessorySelection(accessory.id, e.target.checked);
+                        }}
+                        className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
+                      />
+                      <span className="ml-2 text-sm font-medium text-gray-700">Select</span>
+                    </label>
                     
-                    {/* Subtotal */}
-                    <div className="mt-2 text-sm text-gray-600">
-                      Subtotal: <span className="font-semibold text-orange-600">
-                        ${(accessory.price * getQuantity(accessory.id)).toFixed(2)}
-                      </span>
-                    </div>
+                    <span className="text-lg font-bold text-orange-600">
+                      ${accessory.price.toFixed(2)}
+                    </span>
                   </div>
-                )}
-                
-                <div className="mt-2">
-                  <span className="text-xs text-gray-500">SKU: {accessory.sku}</span>
+                  
+                  <div className="mt-2">
+                    <span className="text-xs text-gray-500">SKU: {accessory.sku}</span>
+                  </div>
                 </div>
               </div>
+              
+              {/* Quantity Controls - Only show when selected */}
+              {selectedItems[accessory.id] && (
+                <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700">Quantity:</span>
+                    <QuantityControls itemId={accessory.id} />
+                  </div>
+                  
+                  {/* Subtotal */}
+                  <div className="mt-2 text-sm text-gray-600">
+                    Subtotal: <span className="font-semibold text-orange-600">
+                      ${(accessory.price * getQuantity(accessory.id)).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -512,7 +508,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     // (Same as your existing submission logic)
   };
 
-  // UPDATED: Calculate totals with quantities for both terminals and accessories
+  // Calculate totals with quantities for both terminals and accessories
   const calculateTotal = () => {
     let total = 0;
     
