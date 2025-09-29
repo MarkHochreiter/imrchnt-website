@@ -391,32 +391,34 @@ const mobileSupportData = [
   return (
     <div className="min-h-screen bg-white">
       {/* Hidden forms for Netlify Forms detection */}
-      <form name="feature-request" netlify="true" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <textarea name="featureRequest"></textarea>
-      </form>
-      
-      <form name="hardware-quote-line-item" netlify="true" hidden>
-        <input type="text" name="quoteId" />
-        <input type="number" name="lineNumber" />
-        <input type="text" name="itemName" />
-        <input type="text" name="itemCategory" />
-        <input type="text" name="parentTerminal" />
-        <input type="text" name="purchaseOption" />
-        <input type="number" name="quantity" />
-        <input type="text" name="unitPrice" />
-        <input type="text" name="lineTotal" />
-        <input type="text" name="customerFirstName" />
-        <input type="text" name="customerLastName" />
-        <input type="email" name="customerEmail" />
-        <input type="text" name="customerCompany" />
-        <input type="tel" name="customerPhone" />
-        <textarea name="customerMessage"></textarea>
-        <input type="number" name="quoteTotalItems" />
-        <input type="text" name="quoteTotalAmount" />
-        <input type="hidden" name="timestamp" />
-      </form>
+      <div style={{ display: 'none' }}>
+        <form name="feature-request" netlify="true">
+          <input type="text" name="name" />
+          <input type="email" name="email" />
+          <textarea name="featureRequest"></textarea>
+        </form>
+        
+        <form name="hardware-quote-line-item" netlify="true">
+          <input type="text" name="quoteId" />
+          <input type="number" name="lineNumber" />
+          <input type="text" name="itemName" />
+          <input type="text" name="itemCategory" />
+          <input type="text" name="parentTerminal" />
+          <input type="text" name="purchaseOption" />
+          <input type="number" name="quantity" />
+          <input type="text" name="unitPrice" />
+          <input type="text" name="lineTotal" />
+          <input type="text" name="customerFirstName" />
+          <input type="text" name="customerLastName" />
+          <input type="email" name="customerEmail" />
+          <input type="text" name="customerCompany" />
+          <input type="tel" name="customerPhone" />
+          <textarea name="customerMessage"></textarea>
+          <input type="number" name="quoteTotalItems" />
+          <input type="text" name="quoteTotalAmount" />
+          <input type="hidden" name="timestamp" />
+        </form>
+      </div>
 
       {/* Header */}
       <header className="border-b border-gray-200 bg-white sticky top-0 z-[1000]">
