@@ -28,7 +28,7 @@ function Sfo1Page({ onNavigateBack, onContactSales }) {
                   className="border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white"
                   onClick={onContactSales}
                 >
-                  Generate Quote
+                  Request Quote
                 </Button>
               </div>
             </div>
@@ -175,7 +175,7 @@ function Sfo1Page({ onNavigateBack, onContactSales }) {
                   className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4"
                   onClick={onContactSales}
             >
-              Generate Quote
+              Request Quote
             </Button>
           </div>
         </div>
