@@ -257,8 +257,9 @@ function HoneywellPC43dPage({ onNavigateBack, onContactSales }) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-                className="w-full bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                onClick={onContactSales}
+                  size="lg" 
+                  className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4"
+                  onClick={onContactSales}
               >
                 Generate Quote
               </Button>
