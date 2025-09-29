@@ -14,6 +14,7 @@ import Sfo1Page from './components/Sfo1Page.jsx'
 import EpsonT88Page from './components/EpsonT88Page.jsx'
 import HoneywellPC43dPage from './components/HoneywellPC43dPage.jsx'
 import APGCashDrawerPage from './components/APGCashDrawerPage.jsx'
+import SocketScanS720Page from './components/SocketScanS720Page.jsx'
 import SignupModal from './components/SignupModal.jsx'
 import FeatureRequestModal from './components/FeatureRequestModal.jsx'
 import HardwareCartModal from './components/HardwareCartModal.jsx'
@@ -146,7 +147,8 @@ function App() {
     { name: "SFO1", page: "sfo1" },
     { name: "Receipt Printer", page: "epson-t88" },
     { name: "Label Printer", page: "honeywell-pc43d" },
-    { name: "Cash Drawer", page: "apg-cash-drawer" }
+    { name: "Cash Drawer", page: "apg-cash-drawer" },
+    { name: "Socket Scan", page: "socket-scan-s720" }
   ];
   
 const mobileSupportData = [
@@ -377,6 +379,8 @@ const mobileSupportData = [
         return <HoneywellPC43dPage onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'apg-cash-drawer':
         return <APGCashDrawerPage onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
+      case 'socket-scan-s720':
+        return <SocketScanS720Page onNavigateBack={() => navigateTo('home')} onContactSales={handleContactSalesClick} />;
       case 'roadmap':
         return <RoadMapPage onSignupClick={handleSignupClick} onNavigate={navigateTo} />;
       default:
