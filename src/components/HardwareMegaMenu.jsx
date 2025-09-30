@@ -111,7 +111,7 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
           {hardwareData.map((column, columnIndex) => (
             <div key={columnIndex} className="space-y-6">
               {/* Column Header */}
-              <div className="flex items-center space-x-3 pb-4">
+              <div className="flex items-center space-x-3 mb-8">
                 {column.icon}
                 <h3 className="text-2xl font-extrabold text-gray-900 font-varela">
                   {column.title}
