@@ -73,6 +73,24 @@ function App() {
     }
   }, [])
 
+  const handleSolutionsMenuClick = () => {
+    setMegaMenuVisible(!megaMenuVisible)
+    setHardwareMegaMenuVisible(false)
+    setSupportMegaMenuVisible(false)
+  }
+
+  const handleHardwareMenuClick = () => {
+    setHardwareMegaMenuVisible(!hardwareMegaMenuVisible)
+    setMegaMenuVisible(false)
+    setSupportMegaMenuVisible(false)
+  }
+
+  const handleSupportMenuClick = () => {
+    setSupportMegaMenuVisible(!supportMegaMenuVisible)
+    setMegaMenuVisible(false)
+    setHardwareMegaMenuVisible(false)
+  }
+
   const handleHardwareNavigation = (page) => {
     setCurrentPage(page)
     setHardwareMegaMenuVisible(false)
@@ -407,7 +425,7 @@ const mobileSupportData = [
             <nav className="hidden md:flex space-x-8">
               <div className="relative">
                 <button 
-                  onClick={() => setMegaMenuVisible(!megaMenuVisible)}
+                  onClick={handleSolutionsMenuClick}
                   className="flex items-center text-gray-700 hover:text-gray-900"
                 >
                   Solutions <ChevronDown className="ml-1 h-4 w-4" />
@@ -428,7 +446,7 @@ const mobileSupportData = [
               <div className="relative group">
                 <button 
                   className="flex items-center text-gray-700 hover:text-gray-900"
-                  onClick={() => setHardwareMegaMenuVisible(!hardwareMegaMenuVisible)}
+                  onClick={handleHardwareMenuClick}
                 >
                   Hardware <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
@@ -442,7 +460,7 @@ const mobileSupportData = [
               <div className="relative group">
                 <button 
                   className="flex items-center text-gray-700 hover:text-gray-900"
-                  onClick={() => setSupportMegaMenuVisible(!supportMegaMenuVisible)}
+                  onClick={handleSupportMenuClick}
                 >
                   Support <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
