@@ -125,14 +125,14 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-4 gap-8">
           {supportData.map((column, columnIndex) => (
             <div key={columnIndex} className="space-y-6">
               {/* Column Header */}
-              <div className="flex items-center space-x-3 pb-4 border-b border-gray-100">
+              <div className="flex items-center space-x-3 mb-8">
                 {column.icon}
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-2xl font-extrabold text-gray-900 font-varela">
                   {column.title}
                 </h3>
               </div>
@@ -156,15 +156,15 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
                         {item.icon}
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-medium text-gray-900 group-hover:text-[#f08e80] transition-colors duration-200">
+                        <div className="text-gray-900 font-medium group-hover:text-[#f08e80] transition-colors duration-200 font-varela">
                           {item.title}
-                        </h4>
-                        <p className="text-sm text-gray-500 mt-1">
+                        </div>
+                        <div className="text-sm text-gray-500 mt-1 font-varela">
                           {item.subtitle}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-1">
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1 font-varela">
                           {item.description}
-                        </p>
+                        </div>
                       </div>
                     </div>
                   </a>
