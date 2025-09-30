@@ -39,7 +39,7 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
       ]
     },
     {
-  title: "Printers",
+  title: "Printers & Accessories",
   icon: <Printer className="h-8 w-8 text-[#f08e80]" />,
   items: [
     {
@@ -111,7 +111,7 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
           {hardwareData.map((column, columnIndex) => (
             <div key={columnIndex} className="space-y-6">
               {/* Column Header */}
-              <div className="flex items-center space-x-3 pb-4 border-b border-gray-100">
+              <div className="flex items-center space-x-3 pb-4">
                 {column.icon}
                 <h3 className="text-2xl font-extrabold text-gray-900 font-varela">
                   {column.title}
@@ -135,12 +135,12 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
                         {item.icon}
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-medium text-gray-900 group-hover:text-[#f08e80] transition-colors duration-200">
+                        <div className="text-gray-900 font-medium group-hover:text-[#f08e80] transition-colors duration-200 font-varela">
                           {item.title}
-                        </h4>
-                        <p className="text-sm text-gray-500 mt-1">
+                        </div>
+                        <div className="text-sm text-gray-500 mt-1 font-varela">
                           {item.subtitle}
-                        </p>
+                        </div>
                         {item.price && (
                           <p className="text-sm font-medium text-[#f08e80] mt-1">
                             {item.price}
