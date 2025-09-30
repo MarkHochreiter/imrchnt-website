@@ -29,8 +29,7 @@ import {
   Tag,
   Book} from 'lucide-react';
 import { useState } from 'react';
-import analytics from '../assets/analytics.png';
-import transactions from '../assets/transactions.png';
+import customers from '../assets/customers.png';
 
 
 // A reusable Button component, matching the new aesthetic.
@@ -62,28 +61,19 @@ function CustomerPage({ onNavigateBack }) {
   // Device type configurations
   const deviceTypes = [
     {
-      id: 'analytics',
-      name: 'Analytics',
+      id: 'customers',
+      name: 'Customers',
       icon: <Monitor className="h-5 w-5" />,
-      title: 'Data Visualization',
+      title: 'Capture & Analyze Customer Data',
       subtitle: 'A new perspective on data',
-      description: 'Visualize your data and track Key performance indicators (KPI) from any device',
-      imageSrc: analytics
-    },
-    {
-      id: 'transactions',
-      name: 'Transactions',
-      icon: <Tablet className="h-5 w-5" />,
-      title: 'Transaction History',
-      subtitle: 'Simple transaction lookup',
-      description: 'Simplified transaction lookup using barcode or qr code form receipt or by a series of other available filters. Issue refunds, research payment methods, find items, discounts, taxes or tips applied to sales.',
-      imageSrc: transactions 
+      description: 'Tie customers to sales for analytics that drive buying and targeted marketing.',
+      imageSrc: customers
     }
   ];
 
   // Features for different device types
   const deviceFeatures = {
-    'analytics': [
+    'customers': [
   {
     id: 1, // DONE
     title: "Search",
