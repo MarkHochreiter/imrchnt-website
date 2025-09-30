@@ -430,27 +430,6 @@ function SingleDevicePage({ onNavigateBack }) {
             </div>
           </div>
         </div>
-
-        {/* Call to Action Section */}
-        <div className="mt-20 text-center">
-          <div className="bg-gray-50 rounded-2xl p-8 md:p-12">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              Ready to Get Started with {currentDevice?.name} POS?
-            </h3>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Experience the power of our {selectedDeviceType.replace('-', ' ')} solution. 
-              Contact us today to learn more about pricing and implementation.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="px-8 py-3 text-base">
-                Start Free Trial
-              </Button>
-              <Button variant="secondary" className="px-8 py-3 text-base">
-                Schedule Demo
-              </Button>
-            </div>
-          </div>
-        </div>
       </main>
     </div>
   );
