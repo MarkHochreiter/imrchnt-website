@@ -61,7 +61,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           subtitle: "Step-by-step instructions",
           icon: <BookOpen className="h-5 w-5" />,
           description: "Comprehensive guides for all features",
-          onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im', '_blank')
+          onClick: () => window.open('https://243943054.hs-sites-na2.com/', '_blank')
         },
         {
           title: "Video Tutorials - COMING SOON",
