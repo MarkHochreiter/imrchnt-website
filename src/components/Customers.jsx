@@ -117,7 +117,7 @@ function CustomerPage({ onNavigateBack }) {
   {
     id: 6,
     title: "Email",
-    description: "",
+    description: "Maintain the customers email for targeted email campaigns, send receipt via email, and as a unique data point for lookup",
     icon: <AtSign size={20} />,
     position: { top: '41%', left: '50%' }
   },  
