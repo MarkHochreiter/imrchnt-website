@@ -135,7 +135,7 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
                         {item.icon}
                       </div>
                       <div className="flex-1">
-                        <div className="text-gray-900 font-medium group-hover:text-[#f08e80] transition-colors duration-200 font-varela">
+                        <div className="!text-gray-900 font-medium group-hover:text-[#f08e80] transition-colors duration-200 font-varela">
                           {item.title}
                         </div>
                         <div className="text-sm text-gray-500 mt-1 font-varela">
