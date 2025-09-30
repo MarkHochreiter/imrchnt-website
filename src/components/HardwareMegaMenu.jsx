@@ -39,7 +39,7 @@ function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate })
       ]
     },
     {
-  title: "Printers & Accessories",
+  title: "Printers",
   icon: <Printer className="h-8 w-8 text-[#f08e80]" />,
   items: [
     {
