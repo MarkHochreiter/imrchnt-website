@@ -464,11 +464,14 @@ const mobileSupportData = [
                 >
                   Support <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
-                <SupportMegaMenu 
-                  isVisible={supportMegaMenuVisible}
-                  onMouseEnter={() => setSupportMegaMenuVisible(true)}
-                  onMouseLeave={() => setSupportMegaMenuVisible(false)}
+                 <SupportMegaMenu 
+                    isVisible={supportMegaMenuVisible}
+                    onMouseEnter={() => setSupportMegaMenuVisible(true)}
+                    onMouseLeave={() => setSupportMegaMenuVisible(false)}
+                    onNavigate={handleNavigation}   // <-- this is missing
+                    onClose={() => setSupportMegaMenuVisible(false)}
                 />
+
               </div>
             </nav>
 
