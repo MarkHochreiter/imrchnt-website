@@ -1,15 +1,5 @@
-import { 
-  HelpCircle, 
-  FileText, 
-  MessageSquare, 
-  Phone,
-  Mail,
-  Clock,
-  Users,
-  BookOpen,
-  Monitor,
-  Map
-} from 'lucide-react'
+import React, { useState } from 'react'
+import { HelpCircle, FileText, Users, ExternalLink } from 'lucide-react'
 
 // Button component to match your design system
 const Button = ({ children, className = '', variant = 'default', onClick, ...props }) => {
@@ -17,7 +7,7 @@ const Button = ({ children, className = '', variant = 'default', onClick, ...pro
   
   const variants = {
     default: 'bg-[#f08e80] hover:bg-[#e07d70] text-white',
-    outline: 'border border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white bg-transparent'
+    outline: 'border border-gray-300 bg-white hover:bg-gray-50 text-gray-700',
   };
 
   return (
@@ -31,93 +21,93 @@ const Button = ({ children, className = '', variant = 'default', onClick, ...pro
   );
 };
 
-function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, onClose, onFeatureRequest }) {
+const SupportMegaMenu = ({ onNavigate, onMouseEnter, onMouseLeave }) => {
+  const [hoveredItem, setHoveredItem] = useState(null)
+
   const supportData = [
     {
       title: "Get Help",
-      icon: <HelpCircle className="h-8 w-8 text-[#f08e80]" />,
+      icon: <HelpCircle className="h-6 w-6 text-[#f08e80]" />,
       items: [
         {
-          title: "Submit Ticket",
-          subtitle: "Get personalized support",
-          icon: <MessageSquare className="h-5 w-5" />,
-          description: "Submit a support request and get help from our team",
-          onClick: () => window.open('https://imrchnt-243943054.hs-sites-na2.com/tickets-view', '_blank')
+          title: "Contact Support",
+          subtitle: "Get help from our team",
+          description: "24/7 support available",
+          icon: <HelpCircle className="h-5 w-5" />,
+          onClick: () => console.log('Contact Support clicked')
         },
         {
-          title: "Phone Support",
-          subtitle: "(603)-298-5721",
-          icon: <Phone className="h-5 w-5" />,
-          description: "Speak directly with a support specialist"
+          title: "Live Chat",
+          subtitle: "Chat with support",
+          description: "Instant help available",
+          icon: <HelpCircle className="h-5 w-5" />,
+          onClick: () => console.log('Live Chat clicked')
         }
       ]
     },
     {
       title: "Documentation",
-      icon: <FileText className="h-8 w-8 text-[#f08e80]" />,
+      icon: <FileText className="h-6 w-6 text-[#f08e80]" />,
       items: [
         {
-          title: "User Guides",
-          subtitle: "Step-by-step instructions",
-          icon: <BookOpen className="h-5 w-5" />,
-          description: "Comprehensive guides for all features",
-          onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im', '_blank')
+          title: "API Docs",
+          subtitle: "Developer resources",
+          description: "Complete API reference",
+          icon: <FileText className="h-5 w-5" />,
+          onClick: () => console.log('API Docs clicked')
         },
         {
-          title: "Video Tutorials - COMING SOON",
-          subtitle: "Visual learning resources",
-          icon: <Monitor className="h-5 w-5" />,
-          description: "Watch and learn at your own pace"
+          title: "User Guide",
+          subtitle: "How to use our platform",
+          description: "Step-by-step tutorials",
+          icon: <FileText className="h-5 w-5" />,
+          onClick: () => console.log('User Guide clicked')
         }
       ]
     },
     {
       title: "Community",
-      icon: <Users className="h-8 w-8 text-[#f08e80]" />,
+      icon: <Users className="h-6 w-6 text-[#f08e80]" />,
       items: [
         {
-          title: "Community Forum - COMING SOON",
-          subtitle: "Connect with other users",
+          title: "Forum",
+          subtitle: "Community discussions",
+          description: "Connect with other users",
           icon: <Users className="h-5 w-5" />,
-          description: "Ask questions and share experiences"
+          onClick: () => console.log('Forum clicked')
         },
         {
-          title: "Feature Requests",
-          subtitle: "Suggest improvements",
-          icon: <HelpCircle className="h-5 w-5" />,
-          description: "Help us improve our platform",
-          onClick: () => {
-            if (onClose) onClose()
-            if (onFeatureRequest) onFeatureRequest()
-          }
+          title: "Discord",
+          subtitle: "Real-time chat",
+          description: "Join our Discord server",
+          icon: <Users className="h-5 w-5" />,
+          onClick: () => console.log('Discord clicked')
         }
       ]
     },
     {
       title: "Resources",
-      icon: <Clock className="h-8 w-8 text-[#f08e80]" />,
+      icon: <ExternalLink className="h-6 w-6 text-[#f08e80]" />,
       items: [
         {
-          title: "Release Notes - COMING SOON",
-          subtitle: "Latest updates and features",
-          icon: <FileText className="h-5 w-5" />,
-          description: "Stay informed about new releases"
+          title: "Blog",
+          subtitle: "Latest updates",
+          description: "News and insights",
+          icon: <ExternalLink className="h-5 w-5" />,
+          onClick: () => console.log('Blog clicked')
         },
         {
-          title: "Road Map",
-          subtitle: "Future development plans",
-          icon: <Map className="h-5 w-5" />,
-          description: "Real-time status of our services",
-          onClick: () => {
-            if (onNavigate) onNavigate('roadmap')
-            if (onClose) onClose()
-          }
-        },
+          title: "Status Page",
+          subtitle: "System status",
+          description: "Check service health",
+          icon: <ExternalLink className="h-5 w-5" />,
+          onClick: () => console.log('Status Page clicked')
+        }
       ]
     }
   ]
 
-  if (!isVisible) return null
+  const getItemKey = (columnIndex, itemIndex) => `${columnIndex}-${itemIndex}`
 
   return (
     <div 
@@ -139,36 +129,51 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
               
               {/* Column Items */}
               <div className="space-y-4">
-                {column.items.map((item, itemIndex) => (
-                  <a
-                    key={itemIndex}
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      if (item.onClick) {
-                        item.onClick()
-                      }
-                    }}
-                    className="group block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
-                  >
-                    <div className="flex items-start space-x-3">
-                      <div className="!text-gray-400 group-hover:!text-[#f08e80] transition-colors duration-200 mt-1">
-                        {item.icon}
+                {column.items.map((item, itemIndex) => {
+                  const itemKey = getItemKey(columnIndex, itemIndex)
+                  const isHovered = hoveredItem === itemKey
+                  
+                  return (
+                    <a
+                      key={itemIndex}
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        if (item.onClick) {
+                          item.onClick()
+                        }
+                      }}
+                      className="block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+                      onMouseEnter={() => setHoveredItem(itemKey)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                    >
+                      <div className="flex items-start space-x-3">
+                        <div 
+                          className={`transition-colors duration-200 mt-1 ${
+                            isHovered ? 'text-[#f08e80]' : 'text-gray-400'
+                          }`}
+                        >
+                          {item.icon}
+                        </div>
+                        <div className="flex-1">
+                          <div 
+                            className={`font-medium transition-colors duration-200 font-varela ${
+                              isHovered ? 'text-[#f08e80]' : 'text-gray-900'
+                            }`}
+                          >
+                            {item.title}
+                          </div>
+                          <div className="text-sm text-gray-500 mt-1 font-varela">
+                            {item.subtitle}
+                          </div>
+                          <div className="text-xs text-gray-400 mt-1 font-varela">
+                            {item.description}
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <div className="!text-gray-900 font-medium group-hover:!text-[#f08e80] transition-colors duration-200 font-varela">
-                          {item.title}
-                        </div>
-                        <div className="text-sm text-gray-500 mt-1 font-varela">
-                          {item.subtitle}
-                        </div>
-                        <div className="text-xs text-gray-400 mt-1 font-varela">
-                          {item.description}
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                ))}
+                    </a>
+                  )
+                })}
               </div>
             </div>
           ))}
