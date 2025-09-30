@@ -206,8 +206,11 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
         <section className="py-10 mb-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-             Your organization at your fingertips, no matter where you are.
+             Reporting Hub
             </h1>
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            Your organization at your fingertips, no matter where you are.
+            </p>
           </div>
         </section>
 
