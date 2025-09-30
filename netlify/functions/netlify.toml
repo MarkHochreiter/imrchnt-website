@@ -33,3 +33,10 @@ from = "/api/workflow-webhook"
 to = "/.netlify/functions/workflow-webhook"
 status = 200
 force = true
+
+[[redirects]]
+  from = "/implus"
+  to = "/"
+  status = 301
+  force = true
+
