@@ -1,13 +1,22 @@
-import React, { useState } from 'react'
-import { CreditCard, Printer, DollarSign, Scan } from 'lucide-react'
+import { 
+  CreditCard, 
+  Monitor, 
+  Printer, 
+  DollarSign,
+  Package,
+  Scan,
+  ShoppingCart,
+  Tag,
+  Receipt,
+  Coins
+} from 'lucide-react'
+import { Button } from '@/components/ui/button.jsx'
 
-const HardwareMegaMenu = ({ onNavigate, onMouseEnter, onMouseLeave }) => {
-  const [hoveredItem, setHoveredItem] = useState(null)
-
+function HardwareMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
   const hardwareData = [
     {
       title: "Card Readers",
-      icon: <CreditCard className="h-6 w-6 text-[#f08e80]" />,
+      icon: <CreditCard className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
           title: "S1f2",
@@ -30,42 +39,58 @@ const HardwareMegaMenu = ({ onNavigate, onMouseEnter, onMouseLeave }) => {
       ]
     },
     {
-      title: "Printers & Accessories",
-      icon: <Printer className="h-6 w-6 text-[#f08e80]" />,
-      items: [
+  title: "Printers",
+  icon: <Printer className="h-8 w-8 text-[#f08e80]" />,
+  items: [
+    {
+      title: "Receipt Printer",
+      subtitle: (
+        <>
+          Epson TM-T88V <br /> Industry leading thermal printer
+        </>
+      ),
+      icon: <Receipt className="h-5 w-5" />,
+      page: "epson-t88"
+    },
         {
-          title: "Receipt Printer",
-          subtitle: "Epson TM-T88V",
-          icon: <Printer className="h-5 w-5" />,
-          page: "epson-t88"
-        },
-        {
-          title: "Kitchen Printer",
-          subtitle: "High-speed thermal printer",
-          icon: <Printer className="h-5 w-5" />,
-          page: "kitchen-printer"
+          title: "Label Printer",
+          subtitle: (
+             <>
+               Honeywell PC43d <br /> Desktop thermal label printer
+             </>
+            ),
+          icon: <Tag className="h-5 w-5" />,
+          page: "honeywell-pc43d"
         }
       ]
     },
     {
       title: "Cash Management",
-      icon: <DollarSign className="h-6 w-6 text-[#f08e80]" />,
+      icon: <DollarSign className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
           title: "Cash Drawer",
-          subtitle: "APG Vasario Series",
-          icon: <DollarSign className="h-5 w-5" />,
+          subtitle: (
+            <>
+              APG VB320-1-BL1616 <br /> Standard-duty cash drawer
+            </>
+          ),
+          icon: <Coins className="h-5 w-5" />,
           page: "apg-cash-drawer"
         }
       ]
     },
     {
       title: "Scanners",
-      icon: <Scan className="h-6 w-6 text-[#f08e80]" />,
+      icon: <Scan className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
           title: "Socket Scan",
-          subtitle: "Bluetooth 1D & 2D barcode scanner",
+          subtitle: (
+            <>
+              SocketScan S720 <br /> Bluetooth barcode scanner
+            </>
+          ),
           icon: <Scan className="h-5 w-5" />,
           page: "socket-scan-s720"
         }
@@ -73,7 +98,7 @@ const HardwareMegaMenu = ({ onNavigate, onMouseEnter, onMouseLeave }) => {
     }
   ]
 
-  const getItemKey = (columnIndex, itemIndex) => `${columnIndex}-${itemIndex}`
+  if (!isVisible) return null
 
   return (
     <div 
@@ -95,51 +120,36 @@ const HardwareMegaMenu = ({ onNavigate, onMouseEnter, onMouseLeave }) => {
               
               {/* Column Items */}
               <div className="space-y-4">
-                {column.items.map((item, itemIndex) => {
-                  const itemKey = getItemKey(columnIndex, itemIndex)
-                  const isHovered = hoveredItem === itemKey
-                  
-                  return (
-                    <div
-                      key={itemIndex}
-                      className="block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
-                      onMouseEnter={() => setHoveredItem(itemKey)}
-                      onMouseLeave={() => setHoveredItem(null)}
-                      onClick={() => {
-                        if (item.page) {
-                          onNavigate(item.page)
-                        }
-                      }}
-                    >
-                      <div className="flex items-start space-x-3">
-                        <div 
-                          className={`transition-colors duration-200 mt-1 ${
-                            isHovered ? 'text-[#f08e80]' : 'text-gray-400'
-                          }`}
-                        >
-                          {item.icon}
+                {column.items.map((item, itemIndex) => (
+                  <div
+                    key={itemIndex}
+                    className="group block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+                    onClick={() => {
+                      if (item.page) {
+                        onNavigate(item.page)
+                      }
+                    }}
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="!text-gray-400 group-hover:!text-[#f08e80] transition-colors duration-200 mt-1">
+                        {item.icon}
+                      </div>
+                      <div className="flex-1">
+                        <div className="!text-gray-900 font-medium group-hover:!text-[#f08e80] transition-colors duration-200 font-varela">
+                          {item.title}
                         </div>
-                        <div className="flex-1">
-                          <div 
-                            className={`font-medium transition-colors duration-200 font-varela ${
-                              isHovered ? 'text-[#f08e80]' : 'text-gray-900'
-                            }`}
-                          >
-                            {item.title}
-                          </div>
-                          <div className="text-sm text-gray-500 mt-1 font-varela">
-                            {item.subtitle}
-                          </div>
-                          {item.price && (
-                            <p className="text-sm font-medium text-[#f08e80] mt-1">
-                              {item.price}
-                            </p>
-                          )}
+                        <div className="text-sm text-gray-500 mt-1 font-varela">
+                          {item.subtitle}
                         </div>
+                        {item.price && (
+                          <p className="text-sm font-medium text-[#f08e80] mt-1">
+                            {item.price}
+                          </p>
+                        )}
                       </div>
                     </div>
-                  )
-                })}
+                  </div>
+                ))}
               </div>
             </div>
           ))}
