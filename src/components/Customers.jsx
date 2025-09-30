@@ -19,13 +19,16 @@ import {
   Cloud, 
   Users, 
   BarChart3, 
-  Package, 
+  Package,
+  Phone,
   Percent, 
   Shredder, 
   Calculator,
+  User,
   BookPlus,
   Flag,
   Wallet,
+  File,
   Tag,
   Book,
   AtSign} from 'lucide-react';
@@ -64,8 +67,8 @@ function CustomerPage({ onNavigateBack }) {
     {
       id: 'customers',
       name: 'Customers',
-      icon: <Monitor className="h-5 w-5" />,
-      title: 'Capture & Analyze Customer Data',
+      icon: <User className="h-5 w-5" />,
+      title: '',
       subtitle: 'A new perspective on data',
       description: 'Tie customers to sales for analytics that drive buying and targeted marketing.',
       imageSrc: customers
@@ -86,7 +89,7 @@ function CustomerPage({ onNavigateBack }) {
     id: 2,
     title: "Add Customer",
     description: "Add customer to your database to connect purchases to the customer",
-    icon: <Users size={20} />,
+    icon: <User size={20} />,
     position: { top: '34%', left: '96%' }
   },
   {
@@ -100,13 +103,13 @@ function CustomerPage({ onNavigateBack }) {
     id: 4,
     title: "Orders",
     description: "Track the number of total sales a customer has completed",
-    icon: <Shredder size={20} />,
+    icon: <File size={20} />,
     position: { top: '41%', left: '79%' }
   },
   {
     id: 5,
     title: "Customer Name",
-    description: "",
+    description: "Store the customers Full Name",
     icon: <users size={20} />,
     position: { top: '41%', left: '25%' }
   },
@@ -122,7 +125,7 @@ function CustomerPage({ onNavigateBack }) {
     id: 7,
     title: "Phone Number",
     description: "Maintain the customers Phone Number. Keeping their mobile number will allow you to Text the customer receipts and other messages",
-    icon: <Trash2 size={20} />,
+    icon: <Phone size={20} />,
     position: { top: '41%', left: '64%' }
   }
   
@@ -141,7 +144,7 @@ const currentDevice = deviceTypes.find(device => device.id === selectedDeviceTyp
         <section className="py-10 mb-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-             Choose your POS platform
+             Capture & Analyze Customer Data
             </h1>
           </div>
         </section>
