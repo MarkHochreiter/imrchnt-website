@@ -455,7 +455,7 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
               The Future is Bright!
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-              Some has to start saying it and plan on delivering it. Here's where we've been and where we are going.
+              We aren't just saying that. We are delivering it.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
             </div>
