@@ -470,6 +470,10 @@ const mobileSupportData = [
                     onMouseLeave={() => setSupportMegaMenuVisible(false)}
                     onNavigate={handleNavigation}   // <-- this is missing
                     onClose={() => setSupportMegaMenuVisible(false)}
+                   onFeatureRequest={() => {
+                    setFeatureRequestModalOpen(true)
+                    setSupportMegaMenuVisible(false)
+                    }}
                 />
 
               </div>
