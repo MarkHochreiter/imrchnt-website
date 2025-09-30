@@ -187,8 +187,8 @@ const mobileSupportData = [
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-4xl">
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-6">
-                    Seamless POS. <br />
-                    Intuitive Design. <br />
+                    Seamless POS <br />
+                    Intuitive Design <br />
                     Built for Bookstores
                   </h1>
                   <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
