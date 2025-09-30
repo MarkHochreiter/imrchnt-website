@@ -27,7 +27,8 @@ import {
   Flag,
   Wallet,
   Tag,
-  Book} from 'lucide-react';
+  Book,
+  AtSign} from 'lucide-react';
 import { useState } from 'react';
 import customers from '../assets/customers.png';
 
@@ -75,125 +76,52 @@ function CustomerPage({ onNavigateBack }) {
   const deviceFeatures = {
     'customers': [
   {
-    id: 1, // DONE
+    id: 1,
     title: "Search",
-    description: "Either scan item into sale with Bluetooth connected Scanner or use our blazing fast search to manually find and add item into sale",
+    description: "Search for customer by name, phone, email",
     icon: <Search size={20} />,
-    position: { top: '27%', left: '5%' }
-  },
-
-  {
-    id: 2, // DONE
-    title: "Store - Cashier",
-    description: "Displays store you're selling from and cashier making the sale",
-    icon: <Zap size={20} />,
-    position: { top: '13%', left: '67%' }
+    position: { top: '27%', left: '35%' }
   },
   {
-    id: 3, // DONE
-    title: "POS drawer",
-    description: "Navigate to Transactions, Close Day, Assign Card Reader, Attach Bluetooth scanner",
-    icon: <Flag size={20} />,
-    position: { top: '13%', left: '83%' }
-  },
-  {
-    id: 4, // DONE
-    title: "Home",
-    description: "Navigate back to Home to access other app modules",
-    icon: <Home size={20} />,
-    position: { top: '13%', left: '96%' }
-  },
-  {
-    id: 5, // DONE 
+    id: 2,
     title: "Add Customer",
-    description: "Add customer to sale at any point. Look up by Phone, Email, Name, Address",
+    description: "Add customer to your database to connect purchases to the customer",
     icon: <Users size={20} />,
     position: { top: '34%', left: '96%' }
   },
   {
-    id: 6,
-    title: "Subtotal",
-    description: "sale subtotal",
-    icon: <DollarSign size={20} />,
-    position: { top: '41%', left: '96%' }
-  },
-  {
-    id: 7,
-    title: "Discount",
-    description: "Discount amount applied to sale",
-    icon: <Tag size={20} />,
-    position: { top: '47%', left: '96%' }
-  },
-  {
-    id: 8, // DONE
-    title: "Tax",
-    description: "Tax amount applied to sale",
-    icon: <Percent size={20} />,
-    position: { top: '53%', left: '96%' }
-  },
-  {
-    id: 9,
-    title: "Sale Total",
-    description: "Total amount to be charged in sale",
+    id: 3,
+    title: "Amount Spent",
+    description: "Tracks the amount the customer has spent with you",
     icon: <Calculator size={20} />,
     position: { top: '59%', left: '96%' }
   },
   {
-    id: 10, // DONE 
-    title: "Clear order",
-    description: "removes everything from sale",
+    id: 4,
+    title: "Orders",
+    description: "Track the number of total sales a customer has completed",
     icon: <Shredder size={20} />,
-    position: { top: '74%', left: '81%' }
+    position: { top: '41%', left: '79%' }
   },
   {
-    id: 12, // DONE
-    title: "Payment",
-    description: "Click on Payment to Tender and complete sale",
-    icon: <Wallet size={20} />,
-    position: { top: '85%', left: '96%' }
-  },
-  {
-    id: 11, // DONE
-    title: "Discount",
-    description: "Manually apply discount to sale by flat dollar amount or by a certain percent",
-    icon: <Tag size={20} />,
-    position: { top: '74%', left: '96%' }
-  },
-  {
-    id: 13,
-    title: "Line Item",
-    description: "Product Number and Description",
-    icon: <Book size={20} />,
-    position: { top: '41%', left: '5%' }
-  },  
-  {
-    id: 14,
-    title: "Retail Price",
-    description: "Unit Retail Price",
-    icon: <DollarSign size={20} />,
+    id: 5,
+    title: "Customer Name",
+    description: "",
+    icon: <users size={20} />,
     position: { top: '41%', left: '25%' }
   },
   
   {
-    id: 15,
-    title: "Quantity",
-    description: "Click + or - to adjust quantity, auto adjusts with scan",
-    icon: <BookPlus size={20} />,
-    position: { top: '41%', left: '36%' }
-  },
- 
+    id: 6,
+    title: "Email",
+    description: "",
+    icon: <AtSign size={20} />,
+    position: { top: '41%', left: '50%' }
+  },  
   {
-    id: 16,
-    title: "Total",
-    description: "Item Total (Retail x Quantity",
-    icon: <Calculator size={20} />,
-    position: { top: '41%', left: '52%' }
-  },
-  
-  {
-    id: 17,
-    title: "Delete",
-    description: "Remove item from sale",
+    id: 7,
+    title: "Phone Number",
+    description: "Maintain the customers Phone Number. Keeping their mobile number will allow you to Text the customer receipts and other messages",
     icon: <Trash2 size={20} />,
     position: { top: '41%', left: '64%' }
   }
