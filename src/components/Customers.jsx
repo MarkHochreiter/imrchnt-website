@@ -55,7 +55,7 @@ const Button = ({ children, className = '', variant = 'primary', ...props }) => 
 // Main component for the Reports Page
 function CustomerPage({ onNavigateBack }) {
   const [hoveredFeature, setHoveredFeature] = useState(null);
-  const [selectedDeviceType, setSelectedDeviceType] = useState('analytics');
+  const [selectedDeviceType, setSelectedDeviceType] = useState('customers');
 
   // ... (deviceTypes and deviceFeatures data remains the same)
   // Device type configurations
