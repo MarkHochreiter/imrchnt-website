@@ -35,24 +35,3 @@ to = "/.netlify/functions/workflow-webhook"
 status = 200
 force = true
 
-# Page redirects - these should come before the catch-all SPA redirect
-[[redirects]]
-from = "/implus"
-to = "/"
-status = 301
-
-[[redirects]]
-from = "/implus/"
-to = "/"
-status = 301
-
-[[redirects]]
-from = "/implus/*"
-to = "/"
-status = 301
-
-# SPA catch-all redirect (this should be last)
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
