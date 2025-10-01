@@ -1,0 +1,7 @@
+# Redirect implus to home page
+/implus / 301
+/implus/ / 301
+/implus/* / 301
+
+# SPA fallback for React Router (must be last)
+/* /index.html 200
