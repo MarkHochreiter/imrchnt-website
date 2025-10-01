@@ -122,23 +122,6 @@ function PricingPage() {
             <span className="text-[#f08e80] font-bold">Interchange++ .15% + .15 cents for everything else</span>
             
           </p> 
-          
-          {/* Email Signup */}
-          <div className="max-w-md mx-auto mb-12">
-            <div className="flex">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[#f08e80]"
-              />
-              <Button className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-r-lg">
-                Start free trial
-              </Button>
-            </div>
-            <p className="text-sm text-gray-500 mt-2">
-              Try imrchnt free, no credit card required.
-            </p>
-          </div>
 
           {/* Monthly/Yearly Toggle */}
           <div className="flex justify-center mb-12">
@@ -200,16 +183,6 @@ function PricingPage() {
                   </div>
 
                 </div>
-
-                <Button 
-                  className={`w-full mb-8 ${
-                    plan.badge 
-                      ? 'bg-[#f08e80] hover:bg-[#f08e80]/90 text-white' 
-                      : 'bg-gray-900 hover:bg-gray-800 text-white'
-                  }`}
-                >
-                  Start free trial
-                </Button>
 
                 <div className="space-y-3">
                   {plan.features.slice(0, 5).map((feature, featureIndex) => (
@@ -344,35 +317,6 @@ function PricingPage() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-20 bg-[#f08e80] text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
-            Everything you need to sell online, all in one place
-          </h2>
-          <p className="text-xl mb-12">
-            Whether you're building a website, managing inventory, or responding to customers, 
-            you can do it all with imrchnt.
-          </p>
-          
-          <div className="max-w-md mx-auto">
-            <div className="flex">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="flex-1 px-4 py-3 border border-white/20 rounded-l-lg bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white"
-              />
-              <Button className="bg-white text-[#f08e80] hover:bg-gray-100 px-6 py-3 rounded-r-lg font-medium">
-                Start free trial
-              </Button>
-            </div>
-            <p className="text-sm text-white/80 mt-2">
-              Try imrchnt free, no credit card required.
-            </p>
-          </div>
         </div>
       </section>
     </div>
