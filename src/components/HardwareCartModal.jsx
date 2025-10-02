@@ -801,7 +801,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
               <p className="text-gray-500 mt-2">Please check your HubSpot product catalog or contact support.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form id="hardware-quote-form" onSubmit={handleSubmit} className="space-y-8">
               {/* Hardware Selection */}
               <div className="space-y-8">
                 {Object.entries(groupedProducts).map(([family, group]) => (
@@ -837,30 +837,12 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                 </div>
               )}
 
-              {/* Submit Button */}
-              {hasSelections && (
-                <div className="flex justify-center pt-4 border-t">
-                  <button
-                    type="submit"
-                    disabled={submitting || !contactInfo.firstName || !contactInfo.lastName || !contactInfo.email}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-8 rounded-md transition-colors flex items-center justify-center"
-                  >
-                    {submitting ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                        Creating Quote...
-                      </>
-                    ) : (
-                      'Submit Quote Request'
-                    )}
-                  </button>
-                </div>
-              )}
+
             </form>
           )}
         </div>
 
-        {/* Footer with totals */}
+        {/* Footer with totals and submit button */}
         {!loading && !error && hasSelections && (
           <div className="border-t border-gray-200 p-6 bg-gray-50">
             <div className="flex justify-between items-center">
@@ -875,6 +857,21 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                   </span>
                 </div>
               </div>
+              <button
+                type="submit"
+                form="hardware-quote-form"
+                disabled={submitting || !contactInfo.firstName || !contactInfo.lastName || !contactInfo.email}
+                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-8 rounded-md transition-colors flex items-center justify-center"
+              >
+                {submitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Creating Quote...
+                  </>
+                ) : (
+                  'Submit Quote Request'
+                )}
+              </button>
             </div>
           </div>
         )}
