@@ -578,24 +578,13 @@ function RoadmapPage({ onSignupClick, onNavigate }) {
             <h3 className="text-3xl md:text-4xl font-bold mb-4">
               Be Part of the Future
             </h3>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Join thousands of businesses already transforming their retail operations with im+. 
-              Experience the future of commerce today.
-            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                size="lg"
-                onClick={onSignupClick}
+                           <Button 
+                size="lg" 
+                className="bg-[#f08e80] hover:bg-violet-400 text-white"
+                onClick={handleSignupClick}
               >
-                Start Your Journey
-              </Button>
-              <Button 
-                className="bg-transparent border border-white text-white hover:bg-white hover:text-gray-900"
-                size="lg"
-                onClick={() => onNavigate('pricing')}
-              >
-                View Pricing
+                Request Access
               </Button>
             </div>
           </div>
