@@ -143,6 +143,13 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault()
+                    
+                    // DEBUG LOGGING
+                    console.log('🔍 MegaMenu Click Debug:')
+                    console.log('Column title:', column.title)
+                    console.log('Item title:', item.title)
+                    console.log('onNavigate function:', onNavigate)
+                    
                     const pageMap = {
                       'Back Office': 'system',
                       'Sales Floor': 'instore',
@@ -165,8 +172,17 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
                     }
                     const page = pageMap[column.title]
                     const section = sectionMap[item.title]
+                    
+                    console.log('Mapped page:', page)
+                    console.log('Mapped section:', section)
+                    
                     if (page && section) {
+                      console.log('✅ Calling onNavigate with:', page, section)
                       onNavigate(page, section)
+                    } else {
+                      console.log('❌ Missing page or section mapping')
+                      console.log('Available pageMap:', pageMap)
+                      console.log('Available sectionMap:', sectionMap)
                     }
                   }}
                   className="group block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
