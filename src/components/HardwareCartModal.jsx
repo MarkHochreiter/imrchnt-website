@@ -664,10 +664,15 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         body: JSON.stringify(quoteData)
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
       const result = await response.json();
+      console.log('Response result:', result);
 
       if (response.ok && result.success) {
         console.log('✅ Quote submitted successfully to HubSpot');
+        console.log('HubSpot response data:', result.data);
         setSubmitStatus('success');
         
         // Reset form
@@ -689,7 +694,8 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           setSubmitStatus(null);
         }, 3000);
       } else {
-        console.error('❌ Quote submission failed:', result.message);
+        console.error('❌ Quote submission failed:', result);
+        console.error('Error message:', result.error || result.message);
         setSubmitStatus('error');
       }
     } catch (error) {
