@@ -52,7 +52,7 @@ const Button = ({ children, className = '', size = 'default', onClick, ...props 
   );
 };
 
-function RoadmapPage({ onSignupClick, onNavigate }) {
+function RoadmapPage({ onSignupClick, onNavigate, handleSignupClick }) {
   const [currentMilestone, setCurrentMilestone] = useState(0);
 
   // Auto-scroll through milestones
