@@ -179,14 +179,13 @@ function HomePage() {
 }
 
 // Navigation component that uses React Router
-function Navigation() {
+function Navigation({ onContactSales }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [megaMenuVisible, setMegaMenuVisible] = useState(false)
   const [hardwareMegaMenuVisible, setHardwareMegaMenuVisible] = useState(false)
   const [supportMegaMenuVisible, setSupportMegaMenuVisible] = useState(false)
   const [signupModalOpen, setSignupModalOpen] = useState(false)
   const [featureRequestModalOpen, setFeatureRequestModalOpen] = useState(false)
-  const [hardwareCartModalOpen, setHardwareCartModalOpen] = useState(false)
   
   // Mobile menu states
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
@@ -262,10 +261,6 @@ function Navigation() {
 
   const handleFeatureRequestClick = () => {
     setFeatureRequestModalOpen(true)
-  }
-
-  const handleContactSalesClick = () => {
-    setHardwareCartModalOpen(true)
   }
 
   // Mobile menu data
@@ -563,7 +558,7 @@ function Navigation() {
         )}
       </nav>
 
-      {/* Global Modals */}
+      {/* Navigation-level Modals */}
       <SignupModal 
         isOpen={signupModalOpen} 
         onClose={() => setSignupModalOpen(false)} 
@@ -573,17 +568,18 @@ function Navigation() {
         isOpen={featureRequestModalOpen}
         onClose={() => setFeatureRequestModalOpen(false)}
       />
-      
-      <HardwareCartModal 
-        isOpen={hardwareCartModalOpen}
-        onClose={() => setHardwareCartModalOpen(false)}
-      />
     </>
   )
 }
 
 // Main App component with Router
 function App() {
+  const [hardwareCartModalOpen, setHardwareCartModalOpen] = useState(false)
+
+  const handleContactSalesClick = () => {
+    setHardwareCartModalOpen(true)
+  }
+
   // A generic function to navigate between pages
   const navigateTo = (page) => {
     // This will be handled by React Router
@@ -593,7 +589,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-white">
-        <Navigation />
+        <Navigation onContactSales={handleContactSalesClick} />
         
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -607,16 +603,22 @@ function App() {
           <Route path="/instore" element={<InStorePage onNavigate={navigateTo} handleSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} />} />
           <Route path="/offsite" element={<OffsitePage onNavigate={navigateTo} handleSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} />} />
           <Route path="/credit-cards" element={<CreditCardProcessingPage onNavigate={navigateTo} handleSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} />} />
-          <Route path="/s1f2" element={<S1f2Page />} />
-          <Route path="/ams1" element={<Ams1Page />} />
-          <Route path="/sfo1" element={<Sfo1Page />} />
-          <Route path="/epson-t88" element={<EpsonT88Page />} />
-          <Route path="/honeywell-pc43d" element={<HoneywellPC43dPage />} />
-          <Route path="/apg-cash-drawer" element={<APGCashDrawerPage />} />
-          <Route path="/socket-scan-s720" element={<SocketScanS720Page />} />
+          <Route path="/s1f2" element={<S1f2Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
+          <Route path="/ams1" element={<Ams1Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
+          <Route path="/sfo1" element={<Sfo1Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
+          <Route path="/epson-t88" element={<EpsonT88Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
+          <Route path="/honeywell-pc43d" element={<HoneywellPC43dPage onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
+          <Route path="/apg-cash-drawer" element={<APGCashDrawerPage onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
+          <Route path="/socket-scan-s720" element={<SocketScanS720Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
           <Route path="/pos-diagram" element={<POSDiagramPage onNavigateBack={() => navigateTo('system')} />} />
           <Route path="/roadmap" element={<RoadMapPage onSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} onNavigate={navigateTo} />} />
         </Routes>
+
+        {/* Global Hardware Cart Modal */}
+        <HardwareCartModal 
+          isOpen={hardwareCartModalOpen}
+          onClose={() => setHardwareCartModalOpen(false)}
+        />
       </div>
     </Router>
   )
