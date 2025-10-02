@@ -824,18 +824,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                 handleContactChange={handleContactChange}
               />
 
-              {/* Submit Status */}
-              {submitStatus === 'success' && (
-                <div className="bg-green-50 border border-green-200 rounded-md p-3">
-                  <p className="text-green-800 text-sm">✅ Quote request submitted successfully! Our sales team will contact you soon.</p>
-                </div>
-              )}
 
-              {submitStatus === 'error' && (
-                <div className="bg-red-50 border border-red-200 rounded-md p-3">
-                  <p className="text-red-800 text-sm">❌ Something went wrong. Please try again or contact support.</p>
-                </div>
-              )}
 
 
             </form>
@@ -845,6 +834,19 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         {/* Footer with totals and submit button */}
         {!loading && !error && hasSelections && (
           <div className="border-t border-gray-200 p-6 bg-gray-50">
+            {/* Submit Status Messages */}
+            {submitStatus === 'success' && (
+              <div className="bg-green-50 border border-green-200 rounded-md p-3 mb-4">
+                <p className="text-green-800 text-sm">✅ Quote request submitted successfully! Our sales team will contact you soon.</p>
+              </div>
+            )}
+
+            {submitStatus === 'error' && (
+              <div className="bg-red-50 border border-red-200 rounded-md p-3 mb-4">
+                <p className="text-red-800 text-sm">❌ Something went wrong. Please try again or contact support.</p>
+              </div>
+            )}
+
             <div className="flex justify-between items-center">
               <div className="text-lg">
                 <div className="text-gray-600 text-sm mb-1">
