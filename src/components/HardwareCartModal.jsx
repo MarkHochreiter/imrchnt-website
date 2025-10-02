@@ -1,5 +1,111 @@
 import React, { useState, useEffect } from 'react';
 
+// Move CustomerForm outside the main component to prevent re-creation and input focus loss
+const CustomerForm = ({ contactInfo, handleContactChange }) => {
+  return (
+    <div className="space-y-6 bg-gray-50 p-6 rounded-lg border-2 border-gray-200">
+      <h3 className="text-xl font-bold text-gray-800 mb-4">Contact Information</h3>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
+            First Name *
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            required
+            value={contactInfo.firstName}
+            onChange={handleContactChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="John"
+          />
+        </div>
+        
+        <div>
+          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
+            Last Name *
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            required
+            value={contactInfo.lastName}
+            onChange={handleContactChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Doe"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            Email Address *
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            value={contactInfo.email}
+            onChange={handleContactChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="john@example.com"
+          />
+        </div>
+        
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={contactInfo.phone}
+            onChange={handleContactChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="(555) 123-4567"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
+          Company Name
+        </label>
+        <input
+          type="text"
+          id="company"
+          name="company"
+          value={contactInfo.company}
+          onChange={handleContactChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Your Company"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+          Additional Message
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows={3}
+          value={contactInfo.message}
+          onChange={handleContactChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+          placeholder="Any specific requirements or questions about your hardware needs..."
+        />
+      </div>
+    </div>
+  );
+};
+
 const HardwareCartModal = ({ isOpen, onClose }) => {
   const [hardwareItems, setHardwareItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
@@ -484,112 +590,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // Customer Information Form Component
-  const CustomerForm = () => {
-    return (
-      <div className="space-y-6 bg-gray-50 p-6 rounded-lg border-2 border-gray-200">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Contact Information</h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-              First Name *
-            </label>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              required
-              value={contactInfo.firstName}
-              onChange={handleContactChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="John"
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-              Last Name *
-            </label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              required
-              value={contactInfo.lastName}
-              onChange={handleContactChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Doe"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email Address *
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              value={contactInfo.email}
-              onChange={handleContactChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="john@example.com"
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={contactInfo.phone}
-              onChange={handleContactChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="(555) 123-4567"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
-            Company Name
-          </label>
-          <input
-            type="text"
-            id="company"
-            name="company"
-            value={contactInfo.company}
-            onChange={handleContactChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Your Company"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-            Additional Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            rows={3}
-            value={contactInfo.message}
-            onChange={handleContactChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-            placeholder="Any specific requirements or questions about your hardware needs..."
-          />
-        </div>
-      </div>
-    );
-  };
-
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -819,7 +819,10 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
               </div>
 
               {/* Contact Information Form */}
-              <CustomerForm />
+              <CustomerForm 
+                contactInfo={contactInfo}
+                handleContactChange={handleContactChange}
+              />
 
               {/* Submit Status */}
               {submitStatus === 'success' && (
