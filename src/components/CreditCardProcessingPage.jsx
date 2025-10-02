@@ -1,7 +1,7 @@
 import { DollarSign, Monitor, MessageCircle, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 
-function CreditCardProcessingPage() {
+function CreditCardProcessingPage({ onNavigate, handleSignupClick }) {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
