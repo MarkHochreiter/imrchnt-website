@@ -15,7 +15,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     company: '',
     message: ''
   });
-  const [showContactForm, setShowContactForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
@@ -488,7 +487,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
   // Customer Information Form Component
   const CustomerForm = () => {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 bg-gray-50 p-6 rounded-lg border-2 border-gray-200">
         <h3 className="text-xl font-bold text-gray-800 mb-4">Contact Information</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -688,7 +687,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         setTimeout(() => {
           onClose();
           setSubmitStatus(null);
-          setShowContactForm(false);
         }, 3000);
       } else {
         console.error('❌ Quote submission failed:', result.message);
@@ -761,7 +759,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-gray-200">
           <h2 className="text-2xl font-bold text-gray-800">
-            {showContactForm ? 'Contact Information' : 'Select Hardware Items'}
+            Select Hardware Items & Contact Information
           </h2>
           <button
             onClick={onClose}
@@ -773,10 +771,56 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
 
         {/* Content */}
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
-          {showContactForm ? (
-            <form onSubmit={handleSubmit} className="space-y-6">
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+              <span className="ml-3 text-gray-600">Loading products...</span>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <div className="text-red-600 mb-4">
+                <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h3 className="text-lg font-semibold">Error Loading Products</h3>
+                <p className="text-gray-600 mt-2">{error}</p>
+              </div>
+              <button
+                onClick={fetchProducts}
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : Object.keys(groupedProducts).length === 0 ? (
+            <div className="text-center py-12">
+              <svg className="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              <h3 className="text-lg font-semibold text-gray-600">No Products Found</h3>
+              <p className="text-gray-500 mt-2">Please check your HubSpot product catalog or contact support.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Hardware Selection */}
+              <div className="space-y-8">
+                {Object.entries(groupedProducts).map(([family, group]) => (
+                  <div key={family} className="border border-gray-200 rounded-lg p-6">
+                    <TerminalSelector 
+                      terminalFamily={family} 
+                      terminals={group.terminals} 
+                    />
+                    <AccessoryGrid 
+                      terminalFamily={family} 
+                      accessories={group.accessories} 
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Contact Information Form */}
               <CustomerForm />
-              
+
               {/* Submit Status */}
               {submitStatus === 'success' && (
                 <div className="bg-green-50 border border-green-200 rounded-md p-3">
@@ -790,84 +834,31 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                 </div>
               )}
 
-              {/* Submit Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
-                <button
-                  type="button"
-                  onClick={() => setShowContactForm(false)}
-                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
-                >
-                  Back to Selection
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting || !contactInfo.firstName || !contactInfo.lastName || !contactInfo.email}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-4 rounded-md transition-colors flex items-center justify-center"
-                >
-                  {submitting ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Creating Quote...
-                    </>
-                  ) : (
-                    'Submit Quote Request'
-                  )}
-                </button>
-              </div>
-            </form>
-          ) : (
-            <>
-              {loading ? (
-                <div className="flex items-center justify-center py-12">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-                  <span className="ml-3 text-gray-600">Loading products...</span>
-                </div>
-              ) : error ? (
-                <div className="text-center py-12">
-                  <div className="text-red-600 mb-4">
-                    <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <h3 className="text-lg font-semibold">Error Loading Products</h3>
-                    <p className="text-gray-600 mt-2">{error}</p>
-                  </div>
+              {/* Submit Button */}
+              {hasSelections && (
+                <div className="flex justify-center pt-4 border-t">
                   <button
-                    onClick={fetchProducts}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    type="submit"
+                    disabled={submitting || !contactInfo.firstName || !contactInfo.lastName || !contactInfo.email}
+                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-8 rounded-md transition-colors flex items-center justify-center"
                   >
-                    Try Again
+                    {submitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Creating Quote...
+                      </>
+                    ) : (
+                      'Submit Quote Request'
+                    )}
                   </button>
                 </div>
-              ) : Object.keys(groupedProducts).length === 0 ? (
-                <div className="text-center py-12">
-                  <svg className="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                  </svg>
-                  <h3 className="text-lg font-semibold text-gray-600">No Products Found</h3>
-                  <p className="text-gray-500 mt-2">Please check your HubSpot product catalog or contact support.</p>
-                </div>
-              ) : (
-                <div className="space-y-8">
-                  {Object.entries(groupedProducts).map(([family, group]) => (
-                    <div key={family} className="border border-gray-200 rounded-lg p-6">
-                      <TerminalSelector 
-                        terminalFamily={family} 
-                        terminals={group.terminals} 
-                      />
-                      <AccessoryGrid 
-                        terminalFamily={family} 
-                        accessories={group.accessories} 
-                      />
-                    </div>
-                  ))}
-                </div>
               )}
-            </>
+            </form>
           )}
         </div>
 
-        {/* Footer */}
-        {!loading && !error && hasSelections && !showContactForm && (
+        {/* Footer with totals */}
+        {!loading && !error && hasSelections && (
           <div className="border-t border-gray-200 p-6 bg-gray-50">
             <div className="flex justify-between items-center">
               <div className="text-lg">
@@ -881,12 +872,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                   </span>
                 </div>
               </div>
-              <button
-                onClick={() => setShowContactForm(true)}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold transition-colors"
-              >
-                Get Quote
-              </button>
             </div>
           </div>
         )}
