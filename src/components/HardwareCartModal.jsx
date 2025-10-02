@@ -675,23 +675,22 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         console.log('HubSpot response data:', result.data);
         setSubmitStatus('success');
         
-        // Reset form
-        setSelectedItems({});
-        setSelectedTerminals({});
-        setQuantities({});
-        setContactInfo({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          company: '',
-          message: ''
-        });
-        
-        // Close modal after 3 seconds
+        // Close modal after 3 seconds and reset form when closing
         setTimeout(() => {
-          onClose();
+          // Reset form
+          setSelectedItems({});
+          setSelectedTerminals({});
+          setQuantities({});
+          setContactInfo({
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            company: '',
+            message: ''
+          });
           setSubmitStatus(null);
+          onClose();
         }, 3000);
       } else {
         console.error('❌ Quote submission failed:', result);
@@ -838,7 +837,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer with totals and submit button */}
-        {!loading && !error && hasSelections && (
+        {!loading && !error && (hasSelections || submitStatus) && (
           <div className="border-t border-gray-200 p-6 bg-gray-50">
             {/* Submit Status Messages */}
             {submitStatus === 'success' && (
@@ -853,34 +852,36 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
               </div>
             )}
 
-            <div className="flex justify-between items-center">
-              <div className="text-lg">
-                <div className="text-gray-600 text-sm mb-1">
-                  {totalItems} item{totalItems !== 1 ? 's' : ''} selected
+            {hasSelections && (
+              <div className="flex justify-between items-center">
+                <div className="text-lg">
+                  <div className="text-gray-600 text-sm mb-1">
+                    {totalItems} item{totalItems !== 1 ? 's' : ''} selected
+                  </div>
+                  <div>
+                    <span className="text-gray-600">Total: </span>
+                    <span className="font-bold text-2xl text-green-600">
+                      ${totalAmount.toFixed(2)}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-gray-600">Total: </span>
-                  <span className="font-bold text-2xl text-green-600">
-                    ${totalAmount.toFixed(2)}
-                  </span>
-                </div>
+                <button
+                  type="submit"
+                  form="hardware-quote-form"
+                  disabled={submitting || !contactInfo.firstName || !contactInfo.lastName || !contactInfo.email}
+                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-8 rounded-md transition-colors flex items-center justify-center"
+                >
+                  {submitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Creating Quote...
+                    </>
+                  ) : (
+                    'Submit Quote Request'
+                  )}
+                </button>
               </div>
-              <button
-                type="submit"
-                form="hardware-quote-form"
-                disabled={submitting || !contactInfo.firstName || !contactInfo.lastName || !contactInfo.email}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-8 rounded-md transition-colors flex items-center justify-center"
-              >
-                {submitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Creating Quote...
-                  </>
-                ) : (
-                  'Submit Quote Request'
-                )}
-              </button>
-            </div>
+            )}
           </div>
         )}
       </div>
