@@ -1,119 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { X, Plus, Minus, ShoppingCart } from 'lucide-react';
 
-// Move CustomerForm outside the main component to prevent re-creation and input focus loss
-const CustomerForm = ({ contactInfo, handleContactChange }) => {
-  return (
-    <div className="space-y-6">
-      <h3 className="text-xl font-bold text-gray-800 mb-4">Contact Information</h3>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-            First Name *
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            required
-            value={contactInfo.firstName}
-            onChange={handleContactChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="John"
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-            Last Name *
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            required
-            value={contactInfo.lastName}
-            onChange={handleContactChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Doe"
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-            Email Address *
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={contactInfo.email}
-            onChange={handleContactChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="john@example.com"
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-            Phone Number
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={contactInfo.phone}
-            onChange={handleContactChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="(555) 123-4567"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
-          Company Name
-        </label>
-        <input
-          type="text"
-          id="company"
-          name="company"
-          value={contactInfo.company}
-          onChange={handleContactChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          placeholder="Your Company"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-          Additional Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          rows={3}
-          value={contactInfo.message}
-          onChange={handleContactChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-          placeholder="Any specific requirements or questions about your hardware needs..."
-        />
-      </div>
-    </div>
-  );
-};
-
-function HardwareCartModal({ isOpen, onClose }) {
+const HardwareCartModal = ({ isOpen, onClose }) => {
   const [hardwareItems, setHardwareItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [selectedItems, setSelectedItems] = useState({});
   const [selectedTerminals, setSelectedTerminals] = useState({});
   const [quantities, setQuantities] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [contactInfo, setContactInfo] = useState({
     firstName: '',
     lastName: '',
@@ -126,66 +19,102 @@ function HardwareCartModal({ isOpen, onClose }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  // Load hardware data
+  // Fetch products from API
   useEffect(() => {
     if (isOpen) {
-      loadHardwareData();
+      fetchProducts();
     }
   }, [isOpen]);
 
-  const loadHardwareData = async () => {
+  const fetchProducts = async () => {
     try {
       setLoading(true);
       setError(null);
       
-      // Simulated hardware data - replace with actual API call
-      const mockData = [
-        {
-          id: 's1f2',
-          name: 'S1F2 Terminal',
-          category: 'terminals',
-          description: 'Compact POS terminal with built-in payment processing',
-          price: { rent: 49, buy: 299 },
-          image: '/api/placeholder/300/200',
-          accessories: [
-            { id: 'receipt-printer', name: 'Receipt Printer', price: { rent: 15, buy: 89 } },
-            { id: 'cash-drawer', name: 'Cash Drawer', price: { rent: 10, buy: 59 } }
-          ]
+      const response = await fetch('https://imrchnt.netlify.app/.netlify/functions/products', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          id: 'ams1',
-          name: 'AMS1 Terminal',
-          category: 'terminals',
-          description: 'Advanced multi-station terminal for high-volume businesses',
-          price: { rent: 79, buy: 499 },
-          image: '/api/placeholder/300/200',
-          accessories: [
-            { id: 'receipt-printer', name: 'Receipt Printer', price: { rent: 15, buy: 89 } },
-            { id: 'label-printer', name: 'Label Printer', price: { rent: 20, buy: 129 } },
-            { id: 'cash-drawer', name: 'Cash Drawer', price: { rent: 10, buy: 59 } },
-            { id: 'barcode-scanner', name: 'Barcode Scanner', price: { rent: 12, buy: 79 } }
-          ]
-        },
-        {
-          id: 'sfo1',
-          name: 'SFO1 Terminal',
-          category: 'terminals',
-          description: 'Portable terminal perfect for mobile sales and events',
-          price: { rent: 39, buy: 249 },
-          image: '/api/placeholder/300/200',
-          accessories: [
-            { id: 'receipt-printer', name: 'Portable Receipt Printer', price: { rent: 18, buy: 99 } },
-            { id: 'card-reader', name: 'Mobile Card Reader', price: { rent: 8, buy: 49 } }
-          ]
-        }
-      ];
+      });
 
-      setHardwareItems(mockData);
-    } catch (err) {
-      setError('Failed to load hardware data. Please try again.');
-      console.error('Error loading hardware data:', err);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.success && data.products) {
+        setHardwareItems(data.products);
+        console.log('Products loaded:', data.products);
+      } else {
+        throw new Error(data.message || 'Failed to load products');
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setError(error.message);
+      setHardwareItems([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Quantity management functions
+  const updateQuantity = (itemId, quantity) => {
+    const newQuantity = Math.max(1, Math.min(99, quantity));
+    setQuantities(prev => ({
+      ...prev,
+      [itemId]: newQuantity
+    }));
+  };
+
+  const getQuantity = (itemId) => {
+    return quantities[itemId] || 1;
+  };
+
+  // Handle terminal selection
+  const handleTerminalSelection = (terminalId, isSelected) => {
+    if (isSelected) {
+      setSelectedTerminals(prev => ({
+        ...prev,
+        [terminalId]: true
+      }));
+      
+      if (!quantities[terminalId]) {
+        setQuantities(prev => ({
+          ...prev,
+          [terminalId]: 1
+        }));
+      }
+    } else {
+      setSelectedTerminals(prev => {
+        const newSelected = { ...prev };
+        delete newSelected[terminalId];
+        return newSelected;
+      });
+    }
+  };
+
+  // Handle accessory selection
+  const handleAccessorySelection = (accessoryId, isSelected) => {
+    if (isSelected) {
+      setSelectedItems(prev => ({
+        ...prev,
+        [accessoryId]: true
+      }));
+      
+      if (!quantities[accessoryId]) {
+        setQuantities(prev => ({
+          ...prev,
+          [accessoryId]: 1
+        }));
+      }
+    } else {
+      setSelectedItems(prev => {
+        const newSelected = { ...prev };
+        delete newSelected[accessoryId];
+        return newSelected;
+      });
     }
   };
 
@@ -197,71 +126,469 @@ function HardwareCartModal({ isOpen, onClose }) {
     });
   };
 
-  // Handle item selection
-  const handleItemSelect = (itemId, accessoryId = null) => {
-    const key = accessoryId ? `${itemId}-${accessoryId}` : itemId;
-    setSelectedItems(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
+  // Group products by terminal family
+  const getGroupedProducts = () => {
+    const groups = {};
     
-    // Initialize quantity if selecting
-    if (!selectedItems[key]) {
-      setQuantities(prev => ({
-        ...prev,
-        [key]: 1
-      }));
-    }
-  };
-
-  // Handle terminal selection for accessories
-  const handleTerminalSelect = (accessoryId, terminalId) => {
-    setSelectedTerminals(prev => ({
-      ...prev,
-      [accessoryId]: terminalId
-    }));
-  };
-
-  // Handle quantity changes
-  const handleQuantityChange = (key, change) => {
-    setQuantities(prev => ({
-      ...prev,
-      [key]: Math.max(1, (prev[key] || 1) + change)
-    }));
-  };
-
-  // Calculate totals
-  const calculateTotals = () => {
-    let rentTotal = 0;
-    let buyTotal = 0;
-    let itemCount = 0;
-
-    Object.entries(selectedItems).forEach(([key, isSelected]) => {
-      if (!isSelected) return;
-
-      const quantity = quantities[key] || 1;
-      itemCount += quantity;
-
-      if (key.includes('-')) {
-        // Accessory
-        const [terminalId, accessoryId] = key.split('-');
-        const terminal = hardwareItems.find(item => item.id === terminalId);
-        const accessory = terminal?.accessories.find(acc => acc.id === accessoryId);
-        if (accessory) {
-          rentTotal += accessory.price.rent * quantity;
-          buyTotal += accessory.price.buy * quantity;
+    hardwareItems.forEach(product => {
+      if (!product.sku) return;
+      
+      const skuParts = product.sku.toUpperCase().split('-');
+      if (skuParts.length < 2) return;
+      
+      const [terminalFamily, type, option] = skuParts;
+      
+      if (!groups[terminalFamily]) {
+        groups[terminalFamily] = {
+          name: terminalFamily,
+          terminals: { buy: null, rent: null },
+          accessories: []
+        };
+      }
+      
+      if (type === 'T') {
+        if (option === 'B') {
+          groups[terminalFamily].terminals.buy = product;
+        } else if (option === 'R') {
+          groups[terminalFamily].terminals.rent = product;
         }
-      } else {
-        // Terminal
-        const terminal = hardwareItems.find(item => item.id === key);
-        if (terminal) {
-          rentTotal += terminal.price.rent * quantity;
-          buyTotal += terminal.price.buy * quantity;
-        }
+      } else if (type === 'A') {
+        groups[terminalFamily].accessories.push(product);
       }
     });
+    
+    return groups;
+  };
 
-    return { rentTotal, buyTotal, itemCount };
+  // Product Image Component
+  const ProductImage = ({ product, className = "" }) => {
+    const [imageError, setImageError] = useState(false);
+    const [imageLoading, setImageLoading] = useState(true);
+    
+    const handleImageError = () => {
+      setImageError(true);
+      setImageLoading(false);
+    };
+    
+    const handleImageLoad = () => {
+      setImageLoading(false);
+    };
+    
+    const shouldUseFallback = !product.imageUrl || imageError || !product.hasImage;
+    
+    return (
+      <div className={`relative overflow-hidden bg-gray-100 ${className}`}>
+        {imageLoading && !shouldUseFallback && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+          </div>
+        )}
+        
+        {shouldUseFallback ? (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+            <div className="text-center">
+              <svg className="w-12 h-12 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+              </svg>
+              <p className="text-xs text-gray-500 font-medium">{product.sku}</p>
+            </div>
+          </div>
+        ) : (
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="w-full h-full object-cover"
+            onError={handleImageError}
+            onLoad={handleImageLoad}
+            loading="lazy"
+          />
+        )}
+      </div>
+    );
+  };
+
+  // Quantity Controls Component
+  const QuantityControls = ({ itemId, className = "" }) => {
+    const quantity = getQuantity(itemId);
+    
+    return (
+      <div className={`flex items-center space-x-2 ${className}`}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            updateQuantity(itemId, quantity - 1);
+          }}
+          className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600 font-bold transition-colors"
+          disabled={quantity <= 1}
+        >
+          -
+        </button>
+        <div className="w-12 text-center">
+          <input
+            type="number"
+            value={quantity}
+            onChange={(e) => {
+              e.stopPropagation();
+              updateQuantity(itemId, parseInt(e.target.value) || 1);
+            }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full text-center font-semibold bg-transparent border-none outline-none"
+            min="1"
+            max="99"
+          />
+        </div>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            updateQuantity(itemId, quantity + 1);
+          }}
+          className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600 font-bold transition-colors"
+          disabled={quantity >= 99}
+        >
+          +
+        </button>
+      </div>
+    );
+  };
+
+  // Terminal Selection Component
+  const TerminalSelector = ({ terminalFamily, terminals }) => {
+    return (
+      <div className="mb-8">
+        <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+          <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mr-3">
+            {terminalFamily}
+          </span>
+          Terminal Options
+          <span className="text-sm text-gray-500 ml-2">(Select purchase, rental, or both)</span>
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {/* Purchase Option */}
+          {terminals.buy && (
+            <div className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+              selectedTerminals[terminals.buy.id] 
+                ? 'border-green-500 bg-green-50 shadow-md' 
+                : 'border-gray-200 hover:border-green-300'
+            }`}>
+              <div 
+                onClick={() => handleTerminalSelection(terminals.buy.id, !selectedTerminals[terminals.buy.id])}
+                className="cursor-pointer"
+              >
+                <div className="flex items-start space-x-4">
+                  <ProductImage 
+                    product={terminals.buy} 
+                    className="w-20 h-20 rounded-lg flex-shrink-0"
+                  />
+                  
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-semibold text-gray-800">{terminals.buy.name}</h4>
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">
+                        PURCHASE
+                      </span>
+                    </div>
+                    
+                    <p className="text-sm text-gray-600 mb-2">{terminals.buy.description}</p>
+                    
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-lg font-bold text-green-600">
+                        ${terminals.buy.price.toFixed(2)}
+                      </span>
+                      <span className="text-xs text-gray-500">SKU: {terminals.buy.sku}</span>
+                    </div>
+                    
+                    <div className="flex items-center mb-3">
+                      <input
+                        type="checkbox"
+                        checked={selectedTerminals[terminals.buy.id] || false}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          handleTerminalSelection(terminals.buy.id, e.target.checked);
+                        }}
+                        className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
+                      />
+                      <span className="ml-2 text-sm font-medium text-gray-700">Select for purchase</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {selectedTerminals[terminals.buy.id] && (
+                <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700">Quantity:</span>
+                    <QuantityControls itemId={terminals.buy.id} />
+                  </div>
+                  
+                  <div className="mt-2 text-sm text-gray-600">
+                    Subtotal: <span className="font-semibold text-green-600">
+                      ${(terminals.buy.price * getQuantity(terminals.buy.id)).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+          
+          {/* Rental Option */}
+          {terminals.rent && (
+            <div className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+              selectedTerminals[terminals.rent.id] 
+                ? 'border-blue-500 bg-blue-50 shadow-md' 
+                : 'border-gray-200 hover:border-blue-300'
+            }`}>
+              <div 
+                onClick={() => handleTerminalSelection(terminals.rent.id, !selectedTerminals[terminals.rent.id])}
+                className="cursor-pointer"
+              >
+                <div className="flex items-start space-x-4">
+                  <ProductImage 
+                    product={terminals.rent} 
+                    className="w-20 h-20 rounded-lg flex-shrink-0"
+                  />
+                  
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-semibold text-gray-800">{terminals.rent.name}</h4>
+                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold">
+                        RENTAL
+                      </span>
+                    </div>
+                    
+                    <p className="text-sm text-gray-600 mb-2">{terminals.rent.description}</p>
+                    
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-lg font-bold text-blue-600">
+                        ${terminals.rent.price.toFixed(2)}/mo
+                      </span>
+                      <span className="text-xs text-gray-500">SKU: {terminals.rent.sku}</span>
+                    </div>
+                    
+                    <div className="flex items-center mb-3">
+                      <input
+                        type="checkbox"
+                        checked={selectedTerminals[terminals.rent.id] || false}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          handleTerminalSelection(terminals.rent.id, e.target.checked);
+                        }}
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                      />
+                      <span className="ml-2 text-sm font-medium text-gray-700">Select for rental</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {selectedTerminals[terminals.rent.id] && (
+                <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700">Quantity:</span>
+                    <QuantityControls itemId={terminals.rent.id} />
+                  </div>
+                  
+                  <div className="mt-2 text-sm text-gray-600">
+                    Subtotal: <span className="font-semibold text-blue-600">
+                      ${(terminals.rent.price * getQuantity(terminals.rent.id)).toFixed(2)}/mo
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  // Accessory Grid Component
+  const AccessoryGrid = ({ terminalFamily, accessories }) => {
+    if (accessories.length === 0) return null;
+    
+    return (
+      <div className="mb-8">
+        <h4 className="text-lg font-semibold text-gray-700 mb-4 flex items-center">
+          <svg className="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+          {terminalFamily} Accessories
+          <span className="text-sm text-gray-500 ml-2">(Select multiple)</span>
+        </h4>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {accessories.map((accessory) => (
+            <div
+              key={accessory.id}
+              className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                selectedItems[accessory.id]
+                  ? 'border-orange-500 bg-orange-50 shadow-md'
+                  : 'border-gray-200 hover:border-orange-300'
+              }`}
+            >
+              <div 
+                onClick={() => handleAccessorySelection(accessory.id, !selectedItems[accessory.id])}
+                className="cursor-pointer"
+              >
+                <div className="text-center">
+                  <ProductImage 
+                    product={accessory} 
+                    className="w-full h-32 rounded-lg mb-3"
+                  />
+                  
+                  <h5 className="font-semibold text-gray-800 mb-2">{accessory.name}</h5>
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{accessory.description}</p>
+                  
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={selectedItems[accessory.id] || false}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          handleAccessorySelection(accessory.id, e.target.checked);
+                        }}
+                        className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
+                      />
+                      <span className="ml-2 text-sm font-medium text-gray-700">Select</span>
+                    </label>
+                    
+                    <span className="text-lg font-bold text-orange-600">
+                      ${accessory.price.toFixed(2)}
+                    </span>
+                  </div>
+                  
+                  <div className="mt-2">
+                    <span className="text-xs text-gray-500">SKU: {accessory.sku}</span>
+                  </div>
+                </div>
+              </div>
+              
+              {selectedItems[accessory.id] && (
+                <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700">Quantity:</span>
+                    <QuantityControls itemId={accessory.id} />
+                  </div>
+                  
+                  <div className="mt-2 text-sm text-gray-600">
+                    Subtotal: <span className="font-semibold text-orange-600">
+                      ${(accessory.price * getQuantity(accessory.id)).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  // Customer Information Form Component
+  const CustomerForm = () => {
+    return (
+      <div className="space-y-6">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Contact Information</h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
+              First Name *
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              required
+              value={contactInfo.firstName}
+              onChange={handleContactChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="John"
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
+              Last Name *
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              required
+              value={contactInfo.lastName}
+              onChange={handleContactChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Doe"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              value={contactInfo.email}
+              onChange={handleContactChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="john@example.com"
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={contactInfo.phone}
+              onChange={handleContactChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="(555) 123-4567"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
+            Company Name
+          </label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            value={contactInfo.company}
+            onChange={handleContactChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Your Company"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+            Additional Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows={3}
+            value={contactInfo.message}
+            onChange={handleContactChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            placeholder="Any specific requirements or questions about your hardware needs..."
+          />
+        </div>
+      </div>
+    );
   };
 
   // Handle form submission
@@ -271,91 +598,82 @@ function HardwareCartModal({ isOpen, onClose }) {
     setSubmitStatus(null);
 
     try {
-      const { rentTotal, buyTotal, itemCount } = calculateTotals();
-      const quoteId = `QUOTE-${Date.now()}`;
+      // Generate a unique quote ID
+      const quoteId = `HW-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       
-      // Prepare line items for submission
-      const lineItems = [];
-      let lineNumber = 1;
-
-      Object.entries(selectedItems).forEach(([key, isSelected]) => {
-        if (!isSelected) return;
-
-        const quantity = quantities[key] || 1;
-        let itemName, category, unitPrice, parentTerminal = '';
-
-        if (key.includes('-')) {
-          // Accessory
-          const [terminalId, accessoryId] = key.split('-');
+      // Prepare selected items in the format expected by the API
+      const selectedItemsArray = [];
+      
+      // Add selected terminals
+      Object.entries(selectedTerminals).forEach(([terminalId, isSelected]) => {
+        if (isSelected) {
           const terminal = hardwareItems.find(item => item.id === terminalId);
-          const accessory = terminal?.accessories.find(acc => acc.id === accessoryId);
-          if (accessory) {
-            itemName = accessory.name;
-            category = 'accessory';
-            unitPrice = `Rent: $${accessory.price.rent}/mo, Buy: $${accessory.price.buy}`;
-            parentTerminal = terminal.name;
-          }
-        } else {
-          // Terminal
-          const terminal = hardwareItems.find(item => item.id === key);
           if (terminal) {
-            itemName = terminal.name;
-            category = 'terminal';
-            unitPrice = `Rent: $${terminal.price.rent}/mo, Buy: $${terminal.price.buy}`;
+            const quantity = getQuantity(terminalId);
+            const isRental = terminal.sku.includes('-T-R');
+            selectedItemsArray.push({
+              itemId: terminalId,
+              itemName: terminal.name,
+              itemCategory: 'Terminal',
+              sku: terminal.sku,
+              unitPrice: terminal.price,
+              quantity: quantity,
+              lineTotal: terminal.price * quantity,
+              purchaseOption: isRental ? 'rent' : 'buy'
+            });
           }
         }
-
-        lineItems.push({
-          quoteId,
-          lineNumber: lineNumber++,
-          itemName,
-          itemCategory: category,
-          parentTerminal,
-          purchaseOption: 'rent/buy',
-          quantity,
-          unitPrice,
-          lineTotal: `Rent: $${quantity * (itemName.includes('Terminal') ? 
-            hardwareItems.find(t => t.name === itemName)?.price.rent || 0 : 
-            hardwareItems.find(t => t.accessories?.find(a => a.name === itemName))?.accessories.find(a => a.name === itemName)?.price.rent || 0
-          )}/mo, Buy: $${quantity * (itemName.includes('Terminal') ? 
-            hardwareItems.find(t => t.name === itemName)?.price.buy || 0 : 
-            hardwareItems.find(t => t.accessories?.find(a => a.name === itemName))?.accessories.find(a => a.name === itemName)?.price.buy || 0
-          )}`,
-          customerFirstName: contactInfo.firstName,
-          customerLastName: contactInfo.lastName,
-          customerEmail: contactInfo.email,
-          customerCompany: contactInfo.company || '',
-          customerPhone: contactInfo.phone || '',
-          customerMessage: contactInfo.message || '',
-          quoteTotalItems: itemCount,
-          quoteTotalAmount: `Rent: $${rentTotal}/mo, Buy: $${buyTotal}`,
-          timestamp: new Date().toISOString()
-        });
+      });
+      
+      // Add selected accessories
+      Object.entries(selectedItems).forEach(([itemId, isSelected]) => {
+        if (isSelected) {
+          const item = hardwareItems.find(item => item.id === itemId);
+          if (item) {
+            const quantity = getQuantity(itemId);
+            selectedItemsArray.push({
+              itemId: itemId,
+              itemName: item.name,
+              itemCategory: 'Accessory',
+              sku: item.sku,
+              unitPrice: item.price,
+              quantity: quantity,
+              lineTotal: item.price * quantity,
+              purchaseOption: 'buy'
+            });
+          }
+        }
       });
 
-      // Submit each line item
-      for (const lineItem of lineItems) {
-        const formData = new FormData();
-        Object.entries(lineItem).forEach(([key, value]) => {
-          formData.append(key, value);
-        });
+      const quoteData = {
+        quoteId: quoteId,
+        contactInfo: contactInfo,
+        selectedItems: selectedItemsArray,
+        quoteTotalAmount: calculateTotal(),
+        totalItems: getTotalItemCount(),
+        timestamp: new Date().toISOString()
+      };
 
-        const response = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData).toString()
-        });
+      console.log('Submitting quote to HubSpot:', quoteData);
 
-        if (!response.ok) {
-          throw new Error(`Failed to submit line item ${lineItem.lineNumber}`);
-        }
-      }
+      // Submit to HubSpot integration endpoint
+      const response = await fetch('/.netlify/functions/create-quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quoteData)
+      });
 
-      setSubmitStatus('success');
-      
-      // Reset form after successful submission
-      setTimeout(() => {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        console.log('✅ Quote submitted successfully to HubSpot');
+        setSubmitStatus('success');
+        
+        // Reset form
         setSelectedItems({});
+        setSelectedTerminals({});
         setQuantities({});
         setContactInfo({
           firstName: '',
@@ -365,94 +683,119 @@ function HardwareCartModal({ isOpen, onClose }) {
           company: '',
           message: ''
         });
-        setShowContactForm(false);
-        setSubmitStatus(null);
-        onClose();
-      }, 2000);
-
+        
+        // Close modal after 3 seconds
+        setTimeout(() => {
+          onClose();
+          setSubmitStatus(null);
+          setShowContactForm(false);
+        }, 3000);
+      } else {
+        console.error('❌ Quote submission failed:', result.message);
+        setSubmitStatus('error');
+      }
     } catch (error) {
-      console.error('Error submitting quote:', error);
+      console.error('❌ Network error:', error);
       setSubmitStatus('error');
     } finally {
       setSubmitting(false);
     }
   };
 
-  // Handle proceed to contact form
-  const handleProceedToContact = () => {
-    const hasSelectedItems = Object.values(selectedItems).some(selected => selected);
-    if (hasSelectedItems) {
-      setShowContactForm(true);
-    }
+  // Calculate totals
+  const calculateTotal = () => {
+    let total = 0;
+    
+    Object.entries(selectedTerminals).forEach(([terminalId, isSelected]) => {
+      if (isSelected) {
+        const terminal = hardwareItems.find(item => item.id === terminalId);
+        if (terminal) {
+          const quantity = getQuantity(terminalId);
+          total += terminal.price * quantity;
+        }
+      }
+    });
+    
+    Object.entries(selectedItems).forEach(([itemId, isSelected]) => {
+      if (isSelected) {
+        const item = hardwareItems.find(item => item.id === itemId);
+        const quantity = getQuantity(itemId);
+        if (item) {
+          total += item.price * quantity;
+        }
+      }
+    });
+    
+    return total;
+  };
+
+  // Get total item count
+  const getTotalItemCount = () => {
+    let count = 0;
+    
+    Object.entries(selectedTerminals).forEach(([terminalId, isSelected]) => {
+      if (isSelected) {
+        count += getQuantity(terminalId);
+      }
+    });
+    
+    Object.entries(selectedItems).forEach(([itemId, isSelected]) => {
+      if (isSelected) {
+        count += getQuantity(itemId);
+      }
+    });
+    
+    return count;
   };
 
   if (!isOpen) return null;
 
-  const { rentTotal, buyTotal, itemCount } = calculateTotals();
-  const hasSelectedItems = Object.values(selectedItems).some(selected => selected);
+  const groupedProducts = getGroupedProducts();
+  const totalAmount = calculateTotal();
+  const totalItems = getTotalItemCount();
+  const hasSelections = Object.keys(selectedTerminals).some(key => selectedTerminals[key]) || Object.keys(selectedItems).some(key => selectedItems[key]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-6xl max-h-[90vh] overflow-hidden">
+      <div className="bg-white rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <div className="flex items-center">
-            <ShoppingCart className="h-6 w-6 text-blue-600 mr-2" />
-            <h2 className="text-2xl font-bold text-gray-900">
-              {showContactForm ? 'Contact Information' : 'Hardware Quote Builder'}
-            </h2>
-          </div>
+        <div className="flex justify-between items-center p-6 border-b border-gray-200">
+          <h2 className="text-2xl font-bold text-gray-800">
+            {showContactForm ? 'Contact Information' : 'Select Hardware Items'}
+          </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
           >
-            <X className="h-6 w-6" />
+            ×
           </button>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto">
-          {loading ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-              <span className="ml-2 text-gray-600">Loading hardware options...</span>
-            </div>
-          ) : error ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="text-center">
-                <p className="text-red-600 mb-4">{error}</p>
-                <button
-                  onClick={loadHardwareData}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-                >
-                  Try Again
-                </button>
-              </div>
-            </div>
-          ) : showContactForm ? (
-            <form onSubmit={handleSubmit} className="p-6">
-              <CustomerForm 
-                contactInfo={contactInfo} 
-                handleContactChange={handleContactChange} 
-              />
+        <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
+          {showContactForm ? (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <CustomerForm />
               
+              {/* Submit Status */}
               {submitStatus === 'success' && (
-                <div className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-md">
-                  Quote request submitted successfully! We'll contact you soon.
+                <div className="bg-green-50 border border-green-200 rounded-md p-3">
+                  <p className="text-green-800 text-sm">✅ Quote request submitted successfully! Our sales team will contact you soon.</p>
                 </div>
               )}
-              
+
               {submitStatus === 'error' && (
-                <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
-                  There was an error submitting your quote. Please try again.
+                <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                  <p className="text-red-800 text-sm">❌ Something went wrong. Please try again or contact support.</p>
                 </div>
               )}
-              
-              <div className="flex gap-4 pt-6">
+
+              {/* Submit Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
                 <button
                   type="button"
                   onClick={() => setShowContactForm(false)}
-                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-4 rounded-md transition-colors"
+                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
                 >
                   Back to Selection
                 </button>
@@ -473,149 +816,83 @@ function HardwareCartModal({ isOpen, onClose }) {
               </div>
             </form>
           ) : (
-            <div className="p-6">
-              {/* Hardware Selection Content */}
-              <div className="space-y-8">
-                {hardwareItems.map((item) => (
-                  <div key={item.id} className="border border-gray-200 rounded-lg p-6">
-                    <div className="flex items-start space-x-4">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-24 h-24 object-cover rounded-md"
-                      />
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-xl font-semibold text-gray-900">{item.name}</h3>
-                          <div className="flex items-center space-x-4">
-                            <label className="flex items-center">
-                              <input
-                                type="checkbox"
-                                checked={selectedItems[item.id] || false}
-                                onChange={() => handleItemSelect(item.id)}
-                                className="mr-2"
-                              />
-                              <span className="text-sm font-medium">
-                                Rent: ${item.price.rent}/mo | Buy: ${item.price.buy}
-                              </span>
-                            </label>
-                            {selectedItems[item.id] && (
-                              <div className="flex items-center space-x-2">
-                                <button
-                                  type="button"
-                                  onClick={() => handleQuantityChange(item.id, -1)}
-                                  className="p-1 rounded-md border border-gray-300 hover:bg-gray-50"
-                                >
-                                  <Minus className="h-4 w-4" />
-                                </button>
-                                <span className="w-8 text-center">{quantities[item.id] || 1}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => handleQuantityChange(item.id, 1)}
-                                  className="p-1 rounded-md border border-gray-300 hover:bg-gray-50"
-                                >
-                                  <Plus className="h-4 w-4" />
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <p className="text-gray-600 mb-4">{item.description}</p>
-                        
-                        {/* Accessories */}
-                        {item.accessories && item.accessories.length > 0 && (
-                          <div className="mt-4">
-                            <h4 className="text-lg font-medium text-gray-900 mb-2">Available Accessories</h4>
-                            <div className="space-y-2">
-                              {item.accessories.map((accessory) => {
-                                const accessoryKey = `${item.id}-${accessory.id}`;
-                                return (
-                                  <div key={accessory.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-md">
-                                    <div className="flex items-center">
-                                      <input
-                                        type="checkbox"
-                                        checked={selectedItems[accessoryKey] || false}
-                                        onChange={() => handleItemSelect(item.id, accessory.id)}
-                                        className="mr-3"
-                                      />
-                                      <span className="font-medium">{accessory.name}</span>
-                                    </div>
-                                    <div className="flex items-center space-x-4">
-                                      <span className="text-sm">
-                                        Rent: ${accessory.price.rent}/mo | Buy: ${accessory.price.buy}
-                                      </span>
-                                      {selectedItems[accessoryKey] && (
-                                        <div className="flex items-center space-x-2">
-                                          <button
-                                            type="button"
-                                            onClick={() => handleQuantityChange(accessoryKey, -1)}
-                                            className="p-1 rounded-md border border-gray-300 hover:bg-gray-50"
-                                          >
-                                            <Minus className="h-3 w-3" />
-                                          </button>
-                                          <span className="w-6 text-center text-sm">{quantities[accessoryKey] || 1}</span>
-                                          <button
-                                            type="button"
-                                            onClick={() => handleQuantityChange(accessoryKey, 1)}
-                                            className="p-1 rounded-md border border-gray-300 hover:bg-gray-50"
-                                          >
-                                            <Plus className="h-3 w-3" />
-                                          </button>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+            <>
+              {loading ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                  <span className="ml-3 text-gray-600">Loading products...</span>
+                </div>
+              ) : error ? (
+                <div className="text-center py-12">
+                  <div className="text-red-600 mb-4">
+                    <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 className="text-lg font-semibold">Error Loading Products</h3>
+                    <p className="text-gray-600 mt-2">{error}</p>
                   </div>
-                ))}
-              </div>
-            </div>
+                  <button
+                    onClick={fetchProducts}
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  >
+                    Try Again
+                  </button>
+                </div>
+              ) : Object.keys(groupedProducts).length === 0 ? (
+                <div className="text-center py-12">
+                  <svg className="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                  <h3 className="text-lg font-semibold text-gray-600">No Products Found</h3>
+                  <p className="text-gray-500 mt-2">Please check your HubSpot product catalog or contact support.</p>
+                </div>
+              ) : (
+                <div className="space-y-8">
+                  {Object.entries(groupedProducts).map(([family, group]) => (
+                    <div key={family} className="border border-gray-200 rounded-lg p-6">
+                      <TerminalSelector 
+                        terminalFamily={family} 
+                        terminals={group.terminals} 
+                      />
+                      <AccessoryGrid 
+                        terminalFamily={family} 
+                        accessories={group.accessories} 
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
 
         {/* Footer */}
-        {!loading && !error && !showContactForm && (
+        {!loading && !error && hasSelections && !showContactForm && (
           <div className="border-t border-gray-200 p-6 bg-gray-50">
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-600">
-                {itemCount > 0 ? (
-                  <>
-                    {itemCount} item{itemCount !== 1 ? 's' : ''} selected
-                    <div className="mt-1">
-                      <span className="font-medium">Total: Rent ${rentTotal}/mo | Buy ${buyTotal}</span>
-                    </div>
-                  </>
-                ) : (
-                  'Select hardware items to get started'
-                )}
+            <div className="flex justify-between items-center">
+              <div className="text-lg">
+                <div className="text-gray-600 text-sm mb-1">
+                  {totalItems} item{totalItems !== 1 ? 's' : ''} selected
+                </div>
+                <div>
+                  <span className="text-gray-600">Total: </span>
+                  <span className="font-bold text-2xl text-green-600">
+                    ${totalAmount.toFixed(2)}
+                  </span>
+                </div>
               </div>
-              <div className="flex gap-4">
-                <button
-                  onClick={onClose}
-                  className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleProceedToContact}
-                  disabled={!hasSelectedItems}
-                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition-colors"
-                >
-                  Continue to Contact Info
-                </button>
-              </div>
+              <button
+                onClick={() => setShowContactForm(true)}
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold transition-colors"
+              >
+                Get Quote
+              </button>
             </div>
           </div>
         )}
       </div>
     </div>
   );
-}
+};
 
 export default HardwareCartModal;
