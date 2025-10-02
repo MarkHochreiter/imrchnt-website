@@ -52,7 +52,7 @@ const Button = ({ children, className = '', size = 'default', onClick, ...props 
   );
 };
 
-function RoadmapPage({ onSignupClick, onNavigate, handleSignupClick }) {
+function RoadmapPage({ onSignupClick, onNavigate }) {
   const [currentMilestone, setCurrentMilestone] = useState(0);
 
   // Auto-scroll through milestones
@@ -582,7 +582,7 @@ function RoadmapPage({ onSignupClick, onNavigate, handleSignupClick }) {
                            <Button 
                 size="lg" 
                 className="bg-[#f08e80] hover:bg-violet-400 text-white"
-                onClick={handleSignupClick}
+                onClick={onSignupClick}
               >
                 Request Access
               </Button>
