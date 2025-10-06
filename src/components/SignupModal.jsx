@@ -238,7 +238,7 @@ const SignupModal = ({ isOpen, onClose }) => {
             disabled={isSubmitting}
             className="w-full bg-[#f08e80] hover:bg-[#e07d70] disabled:bg-gray-400 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200"
           >
-            {isSubmitting ? 'Creating Account...' : 'Start Free Trial'}
+            {isSubmitting ? 'Creating Account...' : 'Request Access'}
           </button>
 
           {/* Terms */}
