@@ -96,10 +96,10 @@ function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-houschka-extrabold text-gray-900 mb-4">
-              Everything you need to run your bookstore
+              Everything you need to run your offsite or pop up
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From inventory management to customer relationships, our platform handles it all
+            
             </p>
           </div>
           
@@ -109,7 +109,7 @@ function HomePage() {
                 <span className="text-2xl">📱</span>
               </div>
               <h3 className="text-xl font-houschka-bold mb-2">Mobile First</h3>
-              <p className="text-gray-600">Designed for tablets and mobile devices, perfect for any retail environment</p>
+              <p className="text-gray-600">Designed for tablets and mobile devices, perfect for any off site sale</p>
             </div>
             
             <div className="text-center p-6">
@@ -266,17 +266,15 @@ function Navigation({ onContactSales }) {
   // Mobile menu data
   const mobileSolutionsData = [
     {
-      title: "System",
+      title: "Back Office",
       items: [
-        { name: "POS", page: "system", section: "pos" },
         { name: "Admin", page: "system", section: "admin" },
         { name: "Reports", page: "system", section: "reports" },
-        { name: "Products", page: "system", section: "products" },
-        { name: "Customers", page: "system", section: "customers" }
+        { name: "Inventory", page: "system", section: "products" }
       ]
     },
     {
-      title: "InStore",
+      title: "Sales Floor",
       items: [
         { name: "POS", page: "instore", section: "pos" },
         { name: "Customers", page: "instore", section: "customers" },
@@ -287,8 +285,8 @@ function Navigation({ onContactSales }) {
       title: "Offsite",
       items: [
         { name: "Single Device", page: "offsite", section: "single-device" },
-        { name: "Multi Device", page: "offsite", section: "multi-device" },
-        { name: "Credit Card Processing", page: "offsite", section: "credit-card-processing" }
+        { name: "Import items", page: "offsite", section: "multi-device" },
+        { name: "Export sales", page: "offsite", section: "credit-card-processing" }
       ]
     }
   ];
