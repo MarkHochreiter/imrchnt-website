@@ -100,8 +100,8 @@ function HomePage() {
                   Cross platform point of sale
                 </h2>
                 <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-                   Web, Client, PC, Mac, Android or iOS.  
- Sell on desktop, mobile, tablet, or card reader. 
+                   Web, Client, PC, Mac, Android or iOS. <br /> 
+                   Sell on desktop, mobile, tablet, or card reader. 
                 </p>
                 
              <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -171,46 +171,6 @@ function HomePage() {
                 </Button>
               </div>
             </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-houschka-extrabold text-gray-900 mb-4">
-              Everything you need to run your offsite or pop up
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-[#f08e80] rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📱</span>
-              </div>
-              <h3 className="text-xl font-houschka-bold mb-2">Mobile First</h3>
-              <p className="text-gray-600">Designed for tablets and mobile devices, perfect for any off site sale</p>
-            </div>
-            
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-[#f08e80] rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🔄</span>
-              </div>
-              <h3 className="text-xl font-houschka-bold mb-2">Works Offline</h3>
-              <p className="text-gray-600">Continue selling even when the internet goes down. Sync when reconnected</p>
-            </div>
-            
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-[#f08e80] rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📊</span>
-              </div>
-              <h3 className="text-xl font-houschka-bold mb-2">Real-time Analytics</h3>
-              <p className="text-gray-600">Track sales, inventory, and customer data in real-time across all locations</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-16">
