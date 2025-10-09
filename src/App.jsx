@@ -136,6 +136,41 @@ function HomePage() {
               </div>
             </section>
 
+       {/* CTA Section */}
+            <section className="py-20 bg-[#f08e80] text-white">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  Start selling in no time
+                </h2>
+                <div className="grid md:grid-cols-3 gap-3 mb-12">
+                  <div className="flex items-center justify-center">
+                    <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
+                      1
+                    </div>
+                    <span>Get approved</span>
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
+                      2
+                    </div>
+                    <span>Add items</span>
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
+                      3
+                    </div>
+                    <span>Start selling</span>
+                  </div>
+                </div>
+                <Button 
+                  size="lg" 
+                  className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4"
+                  onClick={handleSignupClick}
+                >
+                  Request access
+                </Button>
+              </div>
+            </section>
 
       {/* Features Section */}
       <section className="py-20 bg-white">
