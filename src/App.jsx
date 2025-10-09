@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom'
-import { ChevronDown, Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, X, ArrowRight, Check, Star, Globe, Smartphone, ShoppingCart, BarChart3, Users, Zap, ChevronRight } from 'lucide-react'
 import logo from './assets/logo.png'
 import PricingPage from './components/PricingPage.jsx'
 import MegaMenu from './components/MegaMenu.jsx'
