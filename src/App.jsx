@@ -92,6 +92,50 @@ function HomePage() {
               </div>
             </section>
 
+      
+{/* Platform Overview */}
+            <section className="py-20 bg-white">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                  Cross platform point of sale
+                </h2>
+                <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
+                   Web, Client, PC, Mac, Android or iOS.  
+ Sell on desktop, mobile, tablet, or card reader. 
+                </p>
+                
+             <div className="grid md:grid-cols-3 gap-8 mb-16">
+                  <div className="text-center">
+                    <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Zap className="h-8 w-8 text-[#f08e80]" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2">Start fast</h3>
+                    <p className="text-gray-600">
+                      Instant KYC and Tap to Pay on smartphone gets you selling rapidly. 
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <BarChart3 className="h-8 w-8 text-blue-600" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2">Go big</h3>
+                    <p className="text-gray-600">
+                      A single platform that scales seamlessly from Pop Up to Multistore.
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Users className="h-8 w-8 text-purple-600" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2">Go home</h3>
+                    <p className="text-gray-600">
+                      Track sales in real time from any device at home or anywhere you might be.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
 
       {/* Features Section */}
       <section className="py-20 bg-white">
