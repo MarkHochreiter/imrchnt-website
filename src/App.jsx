@@ -59,37 +59,39 @@ function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-6">
-              Seamless POS <br />
-              Intuitive Design <br />
-              Built for Bookstores
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-              In store, Pop up, Off site. Network connection or not.  
-              Sell anywhere, anytime.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                className="bg-[#f08e80] hover:bg-violet-400 text-white"
-                onClick={handleSignupClick}
-              >
-                Request Access
-              </Button>
-              <Button 
-                size="lg" 
-                className="border border-white text-white hover:bg-white hover:text-gray-900"
-                onClick={() => navigate('/pricing')}
-              >
-                View Pricing
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+     <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 lg:py-32">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-4xl">
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-6">
+                    Seamless POS <br />
+                    Intuitive Design <br />
+                    Built for Bookstores
+                  </h1>
+                  <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
+                    In store, Pop up, Off site. Network connection or not.  
+                    Sell anywhere, anytime.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button 
+                      size="lg" 
+                      className="bg-[#f08e80] hover:bg-violet-400 text-white text-lg px-8 py-4"
+                      onClick={handleSignupClick}
+                    >
+                      Request access
+                    </Button>
+                    <p className="text-base md:text-right text-gray-300 font-houschka-medium mb-8 max-w-2xl ml-auto">
+                   "I've never had such a smooth time at a large offsite and I can't tell you how excited I am about it!"
+                    </p>
+                  </div>
+                  <p className="text-base md:text-right text-gray-300 font-houschka-medium mb-8 max-w-2xl ml-auto">
+                    H - Bookstore Manager  
+
+                    Still North Books & Bar Hanover, NH
+                  </p>
+                </div>
+              </div>
+            </section>
+
 
       {/* Features Section */}
       <section className="py-20 bg-white">
