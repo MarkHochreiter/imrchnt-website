@@ -56,7 +56,7 @@ function EpsonT88Page({ onNavigateBack, onContactSales }) {
             </div>
             <div className="bg-gray-100 rounded-lg p-8 flex items-center justify-center">
                 <img 
-                src= epsonT88Image 
+                src= {epsonT88Image} 
                 alt="Epson TM-T88V Receipt Printer" 
                 className="max-w-full h-auto"
                 width="600"
