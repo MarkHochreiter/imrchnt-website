@@ -231,34 +231,107 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     });
   };
 
-  // Group products by terminal family
+  /**
+   * ENHANCED SKU PARSING - Supports multiple models and colors
+   * Format: FAMILY-TYPE-OPTION[-MODEL][-COLOR]
+   * Examples:
+   *   SCAN-T-B-S740-BLACK
+   *   SCAN-T-B-S740-RED
+   *   SCAN-T-R-ELITE-SILVER
+   */
+  const parseSKU = (sku) => {
+    if (!sku) return null;
+    
+    const parts = sku.toUpperCase().split('-');
+    if (parts.length < 3) return null;
+    
+    const [family, type, option, ...rest] = parts;
+    
+    let model = null;
+    let color = null;
+    
+    if (rest.length > 0) {
+      const lastPart = rest[rest.length - 1];
+      const knownColors = ['BLACK', 'WHITE', 'RED', 'BLUE', 'GREEN', 'GRAY', 'GREY', 'SILVER', 'GOLD', 'BRONZE', 'PINK', 'PURPLE', 'ORANGE', 'YELLOW', 'BROWN'];
+      
+      if (knownColors.includes(lastPart)) {
+        color = lastPart;
+        model = rest.slice(0, -1).join('-');
+      } else {
+        model = rest.join('-');
+      }
+    }
+    
+    return {
+      family,
+      type,
+      option,
+      model: model || 'DEFAULT',
+      color: color || null,
+      fullSKU: sku
+    };
+  };
+
+  /**
+   * ENHANCED PRODUCT GROUPING - Groups by family, then model, then color variants
+   */
   const getGroupedProducts = () => {
     const groups = {};
     
     hardwareItems.forEach(product => {
-      if (!product.sku) return;
+      const parsed = parseSKU(product.sku);
+      if (!parsed) return;
       
-      const skuParts = product.sku.toUpperCase().split('-');
-      if (skuParts.length < 2) return;
+      const { family, type, option, model, color } = parsed;
       
-      const [terminalFamily, type, option] = skuParts;
-      
-      if (!groups[terminalFamily]) {
-        groups[terminalFamily] = {
-          name: terminalFamily,
-          terminals: { buy: null, rent: null },
-          accessories: []
+      // Initialize family group
+      if (!groups[family]) {
+        groups[family] = {
+          name: family,
+          terminals: { buy: {}, rent: {} },
+          accessories: {}
         };
       }
       
       if (type === 'T') {
-        if (option === 'B') {
-          groups[terminalFamily].terminals.buy = product;
-        } else if (option === 'R') {
-          groups[terminalFamily].terminals.rent = product;
+        // Terminal product
+        const purchaseType = option === 'B' ? 'buy' : option === 'R' ? 'rent' : null;
+        if (!purchaseType) return;
+        
+        // Initialize model group
+        if (!groups[family].terminals[purchaseType][model]) {
+          groups[family].terminals[purchaseType][model] = {
+            modelName: model,
+            variants: []
+          };
         }
+        
+        // Add product as a variant
+        groups[family].terminals[purchaseType][model].variants.push({
+          ...product,
+          color: color,
+          model: model
+        });
+        
       } else if (type === 'A') {
-        groups[terminalFamily].accessories.push(product);
+        // Accessory product
+        const accessoryType = option;
+        
+        // Initialize accessory type group
+        if (!groups[family].accessories[accessoryType]) {
+          groups[family].accessories[accessoryType] = {
+            typeName: accessoryType,
+            model: model,
+            variants: []
+          };
+        }
+        
+        // Add product as a variant
+        groups[family].accessories[accessoryType].variants.push({
+          ...product,
+          color: color,
+          model: model
+        });
       }
     });
     
@@ -326,7 +399,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600 font-bold transition-colors"
           disabled={quantity <= 1}
         >
-          -
+          −
         </button>
         <div className="w-12 text-center">
           <input
@@ -334,10 +407,11 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             value={quantity}
             onChange={(e) => {
               e.stopPropagation();
-              updateQuantity(itemId, parseInt(e.target.value) || 1);
+              const val = parseInt(e.target.value) || 1;
+              updateQuantity(itemId, val);
             }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full text-center font-semibold bg-transparent border-none outline-none"
+            className="w-full text-center border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             min="1"
             max="99"
           />
@@ -356,8 +430,120 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // Terminal Selection Component
+  /**
+   * ENHANCED TERMINAL SELECTOR - Displays all models and color variants
+   */
   const TerminalSelector = ({ terminalFamily, terminals }) => {
+    const renderTerminalOption = (purchaseType, models) => {
+      const modelEntries = Object.entries(models);
+      if (modelEntries.length === 0) return null;
+      
+      const isPurchase = purchaseType === 'buy';
+      const label = isPurchase ? 'PURCHASE' : 'RENTAL';
+      const colorClass = isPurchase ? 'green' : 'blue';
+      
+      return (
+        <div className="space-y-4">
+          <h4 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
+            {label} Options
+          </h4>
+          
+          {modelEntries.map(([modelName, modelData]) => {
+            return (
+              <div key={modelName} className="space-y-2">
+                {modelData.variants.map((variant) => {
+                  const isSelected = selectedTerminals[variant.id];
+                  
+                  return (
+                    <div
+                      key={variant.id}
+                      className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                        isSelected
+                          ? `border-${colorClass}-500 bg-${colorClass}-50 shadow-md`
+                          : 'border-gray-200 hover:border-' + colorClass + '-300'
+                      }`}
+                    >
+                      <div
+                        onClick={() => handleTerminalSelection(variant.id, !isSelected)}
+                        className="cursor-pointer"
+                      >
+                        <div className="flex items-start space-x-4">
+                          <ProductImage
+                            product={variant}
+                            className="w-20 h-20 rounded-lg flex-shrink-0"
+                          />
+                          
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-2">
+                              <h5 className="font-semibold text-gray-800">
+                                {variant.name}
+                                {variant.color && (
+                                  <span className="ml-2 text-sm text-gray-600">
+                                    ({variant.color})
+                                  </span>
+                                )}
+                              </h5>
+                              <span className={`bg-${colorClass}-100 text-${colorClass}-800 px-2 py-1 rounded text-xs font-semibold`}>
+                                {label}
+                              </span>
+                            </div>
+                            
+                            <p className="text-sm text-gray-600 mb-2">{variant.description}</p>
+                            
+                            <div className="flex items-center justify-between mb-3">
+                              <span className={`text-lg font-bold text-${colorClass}-600`}>
+                                ${variant.price.toFixed(2)}{isPurchase ? '' : '/mo'}
+                              </span>
+                              <span className="text-xs text-gray-500">SKU: {variant.sku}</span>
+                            </div>
+                            
+                            <div className="flex items-center mb-3">
+                              <input
+                                type="checkbox"
+                                checked={isSelected || false}
+                                onChange={(e) => {
+                                  e.stopPropagation();
+                                  handleTerminalSelection(variant.id, e.target.checked);
+                                }}
+                                className={`w-4 h-4 text-${colorClass}-600 bg-gray-100 border-gray-300 rounded focus:ring-${colorClass}-500 focus:ring-2`}
+                              />
+                              <span className="ml-2 text-sm font-medium text-gray-700">
+                                Select for {label.toLowerCase()}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {isSelected && (
+                        <div className="border-t pt-3 mt-3" onClick={(e) => e.stopPropagation()}>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-gray-700">Quantity:</span>
+                            <QuantityControls itemId={variant.id} />
+                          </div>
+                          
+                          <div className="mt-2 text-sm text-gray-600">
+                            Subtotal: <span className={`font-semibold text-${colorClass}-600`}>
+                              ${(variant.price * getQuantity(variant.id)).toFixed(2)}{isPurchase ? '' : '/mo'}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      );
+    };
+    
+    const hasBuyOptions = Object.keys(terminals.buy).length > 0;
+    const hasRentOptions = Object.keys(terminals.rent).length > 0;
+    
+    if (!hasBuyOptions && !hasRentOptions) return null;
+    
     return (
       <div className="mb-8">
         <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
@@ -365,141 +551,19 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
             {terminalFamily}
           </span>
           Terminal Options
-          <span className="text-sm text-gray-500 ml-2">(Select purchase, rental, or both)</span>
+          <span className="text-sm text-gray-500 ml-2">(Select any combination)</span>
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          {/* Purchase Option */}
-          {terminals.buy && (
-            <div className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
-              selectedTerminals[terminals.buy.id] 
-                ? 'border-green-500 bg-green-50 shadow-md' 
-                : 'border-gray-200 hover:border-green-300'
-            }`}>
-              <div 
-                onClick={() => handleTerminalSelection(terminals.buy.id, !selectedTerminals[terminals.buy.id])}
-                className="cursor-pointer"
-              >
-                <div className="flex items-start space-x-4">
-                  <ProductImage 
-                    product={terminals.buy} 
-                    className="w-20 h-20 rounded-lg flex-shrink-0"
-                  />
-                  
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-gray-800">{terminals.buy.name}</h4>
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">
-                        PURCHASE
-                      </span>
-                    </div>
-                    
-                    <p className="text-sm text-gray-600 mb-2">{terminals.buy.description}</p>
-                    
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-lg font-bold text-green-600">
-                        ${terminals.buy.price.toFixed(2)}
-                      </span>
-                      <span className="text-xs text-gray-500">SKU: {terminals.buy.sku}</span>
-                    </div>
-                    
-                    <div className="flex items-center mb-3">
-                      <input
-                        type="checkbox"
-                        checked={selectedTerminals[terminals.buy.id] || false}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          handleTerminalSelection(terminals.buy.id, e.target.checked);
-                        }}
-                        className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-                      />
-                      <span className="ml-2 text-sm font-medium text-gray-700">Select for purchase</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {selectedTerminals[terminals.buy.id] && (
-                <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700">Quantity:</span>
-                    <QuantityControls itemId={terminals.buy.id} />
-                  </div>
-                  
-                  <div className="mt-2 text-sm text-gray-600">
-                    Subtotal: <span className="font-semibold text-green-600">
-                      ${(terminals.buy.price * getQuantity(terminals.buy.id)).toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-              )}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {hasBuyOptions && (
+            <div>
+              {renderTerminalOption('buy', terminals.buy)}
             </div>
           )}
           
-          {/* Rental Option */}
-          {terminals.rent && (
-            <div className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
-              selectedTerminals[terminals.rent.id] 
-                ? 'border-blue-500 bg-blue-50 shadow-md' 
-                : 'border-gray-200 hover:border-blue-300'
-            }`}>
-              <div 
-                onClick={() => handleTerminalSelection(terminals.rent.id, !selectedTerminals[terminals.rent.id])}
-                className="cursor-pointer"
-              >
-                <div className="flex items-start space-x-4">
-                  <ProductImage 
-                    product={terminals.rent} 
-                    className="w-20 h-20 rounded-lg flex-shrink-0"
-                  />
-                  
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-gray-800">{terminals.rent.name}</h4>
-                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold">
-                        RENTAL
-                      </span>
-                    </div>
-                    
-                    <p className="text-sm text-gray-600 mb-2">{terminals.rent.description}</p>
-                    
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-lg font-bold text-blue-600">
-                        ${terminals.rent.price.toFixed(2)}/mo
-                      </span>
-                      <span className="text-xs text-gray-500">SKU: {terminals.rent.sku}</span>
-                    </div>
-                    
-                    <div className="flex items-center mb-3">
-                      <input
-                        type="checkbox"
-                        checked={selectedTerminals[terminals.rent.id] || false}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          handleTerminalSelection(terminals.rent.id, e.target.checked);
-                        }}
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-                      />
-                      <span className="ml-2 text-sm font-medium text-gray-700">Select for rental</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {selectedTerminals[terminals.rent.id] && (
-                <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700">Quantity:</span>
-                    <QuantityControls itemId={terminals.rent.id} />
-                  </div>
-                  
-                  <div className="mt-2 text-sm text-gray-600">
-                    Subtotal: <span className="font-semibold text-blue-600">
-                      ${(terminals.rent.price * getQuantity(terminals.rent.id)).toFixed(2)}/mo
-                    </span>
-                  </div>
-                </div>
-              )}
+          {hasRentOptions && (
+            <div>
+              {renderTerminalOption('rent', terminals.rent)}
             </div>
           )}
         </div>
@@ -507,9 +571,12 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     );
   };
 
-  // Accessory Grid Component
+  /**
+   * ENHANCED ACCESSORY GRID - Supports multiple accessory types with color variants
+   */
   const AccessoryGrid = ({ terminalFamily, accessories }) => {
-    if (accessories.length === 0) return null;
+    const accessoryEntries = Object.entries(accessories);
+    if (accessoryEntries.length === 0) return null;
     
     return (
       <div className="mb-8">
@@ -521,68 +588,91 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           <span className="text-sm text-gray-500 ml-2">(Select multiple)</span>
         </h4>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {accessories.map((accessory) => (
-            <div
-              key={accessory.id}
-              className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
-                selectedItems[accessory.id]
-                  ? 'border-orange-500 bg-orange-50 shadow-md'
-                  : 'border-gray-200 hover:border-orange-300'
-              }`}
-            >
-              <div 
-                onClick={() => handleAccessorySelection(accessory.id, !selectedItems[accessory.id])}
-                className="cursor-pointer"
-              >
-                <div className="text-center">
-                  <ProductImage 
-                    product={accessory} 
-                    className="w-full h-32 rounded-lg mb-3"
-                  />
-                  
-                  <h5 className="font-semibold text-gray-800 mb-2">{accessory.name}</h5>
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{accessory.description}</p>
-                  
-                  <div className="flex items-center justify-between mb-3">
-                    <label className="flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={selectedItems[accessory.id] || false}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          handleAccessorySelection(accessory.id, e.target.checked);
-                        }}
-                        className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
-                      />
-                      <span className="ml-2 text-sm font-medium text-gray-700">Select</span>
-                    </label>
-                    
-                    <span className="text-lg font-bold text-orange-600">
-                      ${accessory.price.toFixed(2)}
-                    </span>
-                  </div>
-                  
-                  <div className="mt-2">
-                    <span className="text-xs text-gray-500">SKU: {accessory.sku}</span>
-                  </div>
-                </div>
-              </div>
+        <div className="space-y-6">
+          {accessoryEntries.map(([accessoryType, accessoryData]) => (
+            <div key={accessoryType}>
+              <h5 className="text-md font-semibold text-gray-600 mb-3 capitalize">
+                {accessoryType.replace(/_/g, ' ')}
+              </h5>
               
-              {selectedItems[accessory.id] && (
-                <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700">Quantity:</span>
-                    <QuantityControls itemId={accessory.id} />
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {accessoryData.variants.map((variant) => {
+                  const isSelected = selectedItems[variant.id];
                   
-                  <div className="mt-2 text-sm text-gray-600">
-                    Subtotal: <span className="font-semibold text-orange-600">
-                      ${(accessory.price * getQuantity(accessory.id)).toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-              )}
+                  return (
+                    <div
+                      key={variant.id}
+                      className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                        isSelected
+                          ? 'border-orange-500 bg-orange-50 shadow-md'
+                          : 'border-gray-200 hover:border-orange-300'
+                      }`}
+                    >
+                      <div
+                        onClick={() => handleAccessorySelection(variant.id, !isSelected)}
+                        className="cursor-pointer"
+                      >
+                        <div className="text-center">
+                          <ProductImage
+                            product={variant}
+                            className="w-full h-32 rounded-lg mb-3"
+                          />
+                          
+                          <h6 className="font-semibold text-gray-800 mb-1">
+                            {variant.name}
+                          </h6>
+                          {variant.color && (
+                            <p className="text-xs text-gray-600 mb-2">
+                              Color: {variant.color}
+                            </p>
+                          )}
+                          <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                            {variant.description}
+                          </p>
+                          
+                          <div className="flex items-center justify-between mb-3">
+                            <label className="flex items-center cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={isSelected || false}
+                                onChange={(e) => {
+                                  e.stopPropagation();
+                                  handleAccessorySelection(variant.id, e.target.checked);
+                                }}
+                                className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
+                              />
+                              <span className="ml-2 text-sm font-medium text-gray-700">Select</span>
+                            </label>
+                            
+                            <span className="text-lg font-bold text-orange-600">
+                              ${variant.price.toFixed(2)}
+                            </span>
+                          </div>
+                          
+                          <div className="mt-2">
+                            <span className="text-xs text-gray-500">SKU: {variant.sku}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {isSelected && (
+                        <div className="border-t pt-3 mt-3" onClick={(e) => e.stopPropagation()}>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-gray-700">Quantity:</span>
+                            <QuantityControls itemId={variant.id} />
+                          </div>
+                          
+                          <div className="mt-2 text-sm text-gray-600">
+                            Subtotal: <span className="font-semibold text-orange-600">
+                              ${(variant.price * getQuantity(variant.id)).toFixed(2)}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ))}
         </div>
@@ -597,10 +687,7 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
     setSubmitStatus(null);
 
     try {
-      // Generate a unique quote ID
       const quoteId = `HW-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-      
-      // Prepare selected items in the format expected by the API
       const selectedItemsArray = [];
       
       // Add selected terminals
@@ -610,11 +697,15 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           if (terminal) {
             const quantity = getQuantity(terminalId);
             const isRental = terminal.sku.includes('-T-R');
+            const parsed = parseSKU(terminal.sku);
+            
             selectedItemsArray.push({
               itemId: terminalId,
               itemName: terminal.name,
               itemCategory: 'Terminal',
               sku: terminal.sku,
+              model: parsed?.model || 'DEFAULT',
+              color: parsed?.color || null,
               unitPrice: terminal.price,
               quantity: quantity,
               lineTotal: terminal.price * quantity,
@@ -630,11 +721,15 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
           const item = hardwareItems.find(item => item.id === itemId);
           if (item) {
             const quantity = getQuantity(itemId);
+            const parsed = parseSKU(item.sku);
+            
             selectedItemsArray.push({
               itemId: itemId,
               itemName: item.name,
               itemCategory: 'Accessory',
               sku: item.sku,
+              model: parsed?.model || 'DEFAULT',
+              color: parsed?.color || null,
               unitPrice: item.price,
               quantity: quantity,
               lineTotal: item.price * quantity,
@@ -655,7 +750,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
 
       console.log('Submitting quote to HubSpot:', quoteData);
 
-      // Submit to HubSpot integration endpoint
       const response = await fetch('/.netlify/functions/create-quote', {
         method: 'POST',
         headers: {
@@ -664,20 +758,13 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         body: JSON.stringify(quoteData)
       });
 
-      console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
-
       const result = await response.json();
-      console.log('Response result:', result);
 
       if (response.ok && result.success) {
-        console.log('✅ Quote submitted successfully to HubSpot');
-        console.log('HubSpot response data:', result.data);
+        console.log('✅ Quote submitted successfully');
         setSubmitStatus('success');
         
-        // Close modal after 3 seconds and reset form when closing
         setTimeout(() => {
-          // Reset form
           setSelectedItems({});
           setSelectedTerminals({});
           setQuantities({});
@@ -694,7 +781,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         }, 3000);
       } else {
         console.error('❌ Quote submission failed:', result);
-        console.error('Error message:', result.error || result.message);
         setSubmitStatus('error');
       }
     } catch (error) {
@@ -828,10 +914,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
                 contactInfo={contactInfo}
                 handleContactChange={handleContactChange}
               />
-
-
-
-
             </form>
           )}
         </div>
@@ -839,7 +921,6 @@ const HardwareCartModal = ({ isOpen, onClose }) => {
         {/* Footer with totals and submit button */}
         {!loading && !error && (hasSelections || submitStatus) && (
           <div className="border-t border-gray-200 p-6 bg-gray-50">
-            {/* Submit Status Messages */}
             {submitStatus === 'success' && (
               <div className="bg-green-50 border border-green-200 rounded-md p-3 mb-4">
                 <p className="text-green-800 text-sm">✅ Quote request submitted successfully! Our sales team will contact you soon.</p>
