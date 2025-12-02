@@ -3,7 +3,7 @@ import { Scan, Wifi, Smartphone, Zap, Shield, ArrowLeft, Bluetooth, Battery, QrC
 import socketScanImage from '../assets/socketscans840.png'
 import socketScanImage1 from '../assets/s840_1.png'
 import socketScanImage2 from '../assets/s840_2.png'
-import socketScanImage2 from '../assets/s840_3.png'
+import socketScanImage3 from '../assets/s840_3.png'
 import socketScanImage4 from '../assets/s840_4.png'
 
 // Button component to match your design system
