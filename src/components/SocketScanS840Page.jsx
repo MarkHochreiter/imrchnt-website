@@ -52,11 +52,11 @@ const ImageCarousel = ({ images, alt }) => {
   return (
     <div className="relative bg-gray-100 rounded-lg p-8">
       {/* Main Image Display */}
-      <div className="flex items-center justify-center min-h-[400px] relative">
+      <div className="flex items-center justify-center w-full h-[500px] relative overflow-hidden">
         <img 
           src={images[currentIndex]} 
           alt={`${alt} - Image ${currentIndex + 1}`} 
-          className="max-w-full h-auto transition-opacity duration-300"
+          className="w-full h-full object-contain transition-opacity duration-300"
         />
         
         {/* Navigation Arrows - Only show if more than 1 image */}
