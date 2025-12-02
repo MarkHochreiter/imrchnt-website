@@ -340,7 +340,8 @@ function Navigation({ onContactSales }) {
     { name: "Receipt Printer", page: "epson-t88" },
     { name: "Label Printer", page: "honeywell-pc43d" },
     { name: "Cash Drawer", page: "apg-cash-drawer" },
-    { name: "Socket Scan", page: "socket-scan-s720" }
+    { name: "Socket Scan S720", page: "socket-scan-s720" },
+    { name: "Socket Scan S840", page: "socket-scan-s840" }
   ];
   
   const mobileSupportData = [
@@ -650,6 +651,7 @@ function App() {
           <Route path="/honeywell-pc43d" element={<HoneywellPC43dPage onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
           <Route path="/apg-cash-drawer" element={<APGCashDrawerPage onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
           <Route path="/socket-scan-s720" element={<SocketScanS720Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
+          <Route path="/socket-scan-s840" element={<SocketScanS840Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
           <Route path="/pos-diagram" element={<POSDiagramPage onNavigateBack={() => navigateTo('system')} />} />
           <Route path="/roadmap" element={<RoadMapPage onSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} onNavigate={navigateTo} />} />
         </Routes>
