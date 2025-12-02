@@ -126,7 +126,7 @@ function SocketScanS840Page({ onNavigateBack, onContactSales }) {
     socketScanImage2,
     socketScanImage3,
     socketScanImage4
-
+]
   return (
     <div className="min-h-screen bg-gray-50">
       
