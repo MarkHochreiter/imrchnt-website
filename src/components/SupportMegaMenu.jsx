@@ -103,7 +103,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           icon: <FileText className="h-5 w-5" />,
           description: "supports .txt and .csv",
           onClick: () => {
-            if (onNavigate) onNavigate('roadmap')
+            if (onNavigate) onNavigate('spi-converter')
             if (onClose) onClose()
         },
         {
