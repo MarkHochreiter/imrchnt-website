@@ -129,25 +129,9 @@ const toast = {
   }
 }
 
-interface ParsedData {
-  headers: string[];
-  rows: string[][];
-}
-
-interface FieldMapping {
-  FIELD: string;
-  SEQUENCE: string;
-  BARCODE: string;
-  QUANTITY: string;
-  DEPTCAT: string;
-  USER: string;
-  PRICE: string;
-  AREA: string;
-}
-
 const NONE_VALUE = '__NONE__';
 
-const SPI_FIELDS = ['FIELD', 'SEQUENCE', 'BARCODE', 'QUANTITY', 'DEPTCAT', 'USER', 'PRICE', 'AREA'] as const;
+const SPI_FIELDS = ['FIELD', 'SEQUENCE', 'BARCODE', 'QUANTITY', 'DEPTCAT', 'USER', 'PRICE', 'AREA'];
 
 const DELIMITERS = {
   auto: 'Auto-detect',
@@ -156,17 +140,15 @@ const DELIMITERS = {
   pipe: 'Pipe (|)',
   semicolon: 'Semicolon (;)',
   space: 'Space',
-} as const;
-
-type DelimiterType = keyof typeof DELIMITERS;
+};
 
 function SPIConverterPage({ onNavigateBack }) {
-  const [file, setFile] = useState<File | null>(null);
-  const [fileContent, setFileContent] = useState<string>('');
-  const [parsedData, setParsedData] = useState<ParsedData | null>(null);
-  const [delimiter, setDelimiter] = useState<DelimiterType>('auto');
-  const [detectedDelimiter, setDetectedDelimiter] = useState<string>('');
-  const [mapping, setMapping] = useState<FieldMapping>({
+  const [file, setFile] = useState(null);
+  const [fileContent, setFileContent] = useState('');
+  const [parsedData, setParsedData] = useState(null);
+  const [delimiter, setDelimiter] = useState('auto');
+  const [detectedDelimiter, setDetectedDelimiter] = useState('');
+  const [mapping, setMapping] = useState({
     FIELD: NONE_VALUE,
     SEQUENCE: NONE_VALUE,
     BARCODE: NONE_VALUE,
@@ -178,7 +160,7 @@ function SPIConverterPage({ onNavigateBack }) {
   });
   const [isDragging, setIsDragging] = useState(false);
 
-  const detectDelimiter = (line: string): string => {
+  const detectDelimiter = (line) => {
     const tabCount = (line.match(/\t/g) || []).length;
     const commaCount = (line.match(/,/g) || []).length;
     const pipeCount = (line.match(/\|/g) || []).length;
@@ -197,7 +179,7 @@ function SPIConverterPage({ onNavigateBack }) {
     return counts[0].count > 0 ? counts[0].delimiter : ',';
   };
 
-  const getDelimiterChar = (delimiterType: DelimiterType, text: string): string => {
+  const getDelimiterChar = (delimiterType, text) => {
     if (delimiterType === 'comma') return ',';
     if (delimiterType === 'tab') return '\t';
     if (delimiterType === 'pipe') return '|';
@@ -211,9 +193,9 @@ function SPIConverterPage({ onNavigateBack }) {
     return detectDelimiter(lines[0]);
   };
 
-  const splitCSVLine = (line: string, delimiter: string): string[] => {
+  const splitCSVLine = (line, delimiter) => {
     if (delimiter === ',') {
-      const result: string[] = [];
+      const result = [];
       let current = '';
       let inQuotes = false;
       
@@ -240,7 +222,7 @@ function SPIConverterPage({ onNavigateBack }) {
     return line.split(delimiter).map(field => field.trim());
   };
 
-  const parseFile = (text: string, delimiterType: DelimiterType): ParsedData => {
+  const parseFile = (text, delimiterType) => {
     const lines = text.trim().split('\n').filter(line => line.trim());
     if (lines.length === 0) {
       throw new Error('File is empty');
@@ -264,7 +246,7 @@ function SPIConverterPage({ onNavigateBack }) {
     return { headers, rows };
   };
 
-  const handleFileUpload = useCallback((uploadedFile: File) => {
+  const handleFileUpload = useCallback((uploadedFile) => {
     setFile(uploadedFile);
     const reader = new FileReader();
     
@@ -301,7 +283,7 @@ function SPIConverterPage({ onNavigateBack }) {
     reader.readAsText(uploadedFile);
   }, [delimiter]);
 
-  const handleDelimiterChange = (newDelimiter: DelimiterType) => {
+  const handleDelimiterChange = (newDelimiter) => {
     setDelimiter(newDelimiter);
     if (fileContent) {
       try {
@@ -330,7 +312,7 @@ function SPIConverterPage({ onNavigateBack }) {
     }
   };
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
+  const handleDrop = useCallback((e) => {
     e.preventDefault();
     setIsDragging(false);
     
@@ -344,24 +326,24 @@ function SPIConverterPage({ onNavigateBack }) {
     }
   }, [handleFileUpload]);
 
-  const handleDragOver = useCallback((e: React.DragEvent) => {
+  const handleDragOver = useCallback((e) => {
     e.preventDefault();
     setIsDragging(true);
   }, []);
 
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
+  const handleDragLeave = useCallback((e) => {
     e.preventDefault();
     setIsDragging(false);
   }, []);
 
-  const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInput = useCallback((e) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       handleFileUpload(selectedFile);
     }
   }, [handleFileUpload]);
 
-  const getSampleValue = (columnName: string): string => {
+  const getSampleValue = (columnName) => {
     if (!parsedData || columnName === NONE_VALUE) return '';
     const columnIndex = parsedData.headers.indexOf(columnName);
     if (columnIndex === -1) return '';
@@ -374,17 +356,17 @@ function SPIConverterPage({ onNavigateBack }) {
     return '(empty)';
   };
 
-  const convertToSPI = (includeHeader: boolean = false): string => {
+  const convertToSPI = (includeHeader = false) => {
     if (!parsedData) return '';
     
-    const spiRows: string[] = [];
+    const spiRows = [];
     
     if (includeHeader) {
       spiRows.push(SPI_FIELDS.join(','));
     }
     
     parsedData.rows.forEach(row => {
-      const spiRow: string[] = [];
+      const spiRow = [];
       SPI_FIELDS.forEach(spiField => {
         const sourceField = mapping[spiField];
         if (sourceField && sourceField !== NONE_VALUE) {
