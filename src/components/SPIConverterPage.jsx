@@ -251,7 +251,7 @@ function SPIConverterPage({ onNavigateBack }) {
     const reader = new FileReader();
     
     reader.onload = (e) => {
-      const text = e.target?.result as string;
+      const text = e.target?.result;
       setFileContent(text);
       
       try {
