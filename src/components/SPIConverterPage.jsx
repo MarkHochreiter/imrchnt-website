@@ -258,7 +258,7 @@ function SPIConverterPage({ onNavigateBack }) {
         const data = parseFile(text, delimiter);
         setParsedData(data);
         
-        const autoMapping: Partial<FieldMapping> = {};
+        const autoMapping = {};
         SPI_FIELDS.forEach(spiField => {
           const matchingHeader = data.headers.find(h => 
             h.toUpperCase() === spiField.toUpperCase() ||
