@@ -131,7 +131,7 @@ const toast = {
 
 const NONE_VALUE = '__NONE__';
 
-const SPI_FIELDS = ['FIELD', 'SEQUENCE', 'BARCODE', 'QUANTITY', 'DEPTCAT', 'USER', 'PRICE', 'AREA'];
+const SPI_FIELDS = ['FIELD', 'SEQUENCE', 'BARCODE* (number produced by the scan)', 'QUANTITY*', 'DEPTCAT', 'USER', 'PRICE', 'AREA'];
 
 const DELIMITERS = {
   auto: 'Auto-detect',
@@ -570,6 +570,8 @@ function SPIConverterPage({ onNavigateBack }) {
               </CardTitle>
               <CardDescription>
                 Map your source columns to the SPI format fields
+                <br />
+                * = Required Fields
               </CardDescription>
             </CardHeader>
             <CardContent>
