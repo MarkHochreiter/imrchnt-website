@@ -313,39 +313,6 @@ function SocketScanS840Page({ onNavigateBack, onContactSales }) {
         </div>
       </section>
 
-      {/* Available Colors */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Available Colors</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-black rounded-full mx-auto mb-2"></div>
-              <span className="text-gray-700">Black</span>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gray-100 border-2 border-gray-300 rounded-full mx-auto mb-2"></div>
-              <span className="text-gray-700">White</span>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-500 rounded-full mx-auto mb-2"></div>
-              <span className="text-gray-700">Red</span>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-500 rounded-full mx-auto mb-2"></div>
-              <span className="text-gray-700">Blue</span>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gray-600 rounded-full mx-auto mb-2"></div>
-              <span className="text-gray-700">Gray</span>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-2"></div>
-              <span className="text-gray-700">Green</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Bundle Options */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
