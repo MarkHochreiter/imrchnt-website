@@ -98,10 +98,13 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
       icon: <Clock className="h-8 w-8 text-[#f08e80]" />,
       items: [
         {
-          title: "Release Notes - COMING SOON",
-          subtitle: "Latest updates and features",
+          title: ".SPI Converter",
+          subtitle: "Convert files to .SPI",
           icon: <FileText className="h-5 w-5" />,
-          description: "Stay informed about new releases"
+          description: "supports .txt and .csv",
+          onClick: () => {
+            if (onNavigate) onNavigate('roadmap')
+            if (onClose) onClose()
         },
         {
           title: "Road Map",
