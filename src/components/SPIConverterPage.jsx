@@ -491,7 +491,7 @@ function SPIConverterPage({ onNavigateBack }) {
                     <p className="text-xs text-blue-700 mb-3">
                       Header is auto-detected. Select delimiter for data rows if auto-detection is incorrect.
                     </p>
-                    <Select value={delimiter} onValueChange={(value) => handleDelimiterChange(value as DelimiterType)}>
+                    <Select value={delimiter} onValueChange={(value) => handleDelimiterChange(value)}>
                       {Object.entries(DELIMITERS).map(([key, label]) => (
                         <SelectItem key={key} value={key}>
                           {label}
