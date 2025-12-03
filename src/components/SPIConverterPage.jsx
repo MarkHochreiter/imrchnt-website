@@ -131,7 +131,8 @@ const toast = {
 
 const NONE_VALUE = '__NONE__';
 
-const SPI_FIELDS = ['FIELD', 'SEQUENCE', 'BARCODE* (number produced by the scan)', 'QUANTITY*', 'DEPTCAT', 'USER', 'PRICE', 'AREA'];
+const SPI_FIELDS = ['FIELD', 'SEQUENCE', 'BARCODE', 'QUANTITY', 'DEPTCAT', 'USER', 'PRICE', 'AREA'];
+const REQUIRED_FIELDS = ['BARCODE', 'QUANTITY'];
 
 const DELIMITERS = {
   auto: 'Auto-detect',
@@ -410,7 +411,12 @@ function SPIConverterPage({ onNavigateBack }) {
     });
   };
 
-  const isReadyToConvert = parsedData && Object.values(mapping).some(v => v !== NONE_VALUE);
+  // Check if all required fields are mapped
+  const missingRequiredFields = REQUIRED_FIELDS.filter(field => 
+    !mapping[field] || mapping[field] === NONE_VALUE
+  );
+  const hasRequiredFields = missingRequiredFields.length === 0;
+  const isReadyToConvert = parsedData && hasRequiredFields;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -570,8 +576,6 @@ function SPIConverterPage({ onNavigateBack }) {
               </CardTitle>
               <CardDescription>
                 Map your source columns to the SPI format fields
-                <br />
-                * = Required Fields
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -581,6 +585,9 @@ function SPIConverterPage({ onNavigateBack }) {
                     <div>
                       <Label className="mb-2">
                         {spiField}
+                        {REQUIRED_FIELDS.includes(spiField) && (
+                          <span className="text-red-600 ml-1">*</span>
+                        )}
                       </Label>
                       <Select
                         value={mapping[spiField]}
@@ -610,13 +617,13 @@ function SPIConverterPage({ onNavigateBack }) {
                 ))}
               </div>
               
-              {!isReadyToConvert && (
-                <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-start gap-3">
-                  <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+              {parsedData && missingRequiredFields.length > 0 && (
+                <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+                  <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-amber-900">Map at least one field</p>
-                    <p className="text-sm text-amber-700">
-                      Select source columns for the SPI fields you want to include
+                    <p className="font-medium text-red-900">Required fields missing</p>
+                    <p className="text-sm text-red-700">
+                      You must map the following required fields: {missingRequiredFields.join(', ')}
                     </p>
                   </div>
                 </div>
