@@ -1,9 +1,10 @@
 // Fixed Netlify function for creating quotes in HubSpot
 // Ultra-simple version that avoids association issues during quote creation
+// Uses environment variables for sender information
 
 const HUBSPOT_API_BASE = "https://api.hubapi.com";
 
-// ✅ ADD THIS: Your HubSpot Owner ID
+// HubSpot Owner ID
 const HUBSPOT_OWNER_ID = "160148205";
 
 // ======= Helper: HubSpot API request =======
@@ -37,7 +38,6 @@ async function createOrUpdateContact(contactInfo) {
       phone: contactInfo.phone || "",
       company: contactInfo.company || "",
       hs_lead_status: "NEW",
-      // ✅ ADDED: Assign owner to contact
       hubspot_owner_id: HUBSPOT_OWNER_ID,
     },
   };
@@ -86,7 +86,6 @@ async function createOrUpdateCompany(companyName, contactId) {
       name: companyName,
       domain: "",
       industry: "INFORMATION_TECHNOLOGY_AND_SERVICES",
-      // ✅ ADDED: Assign owner to company
       hubspot_owner_id: HUBSPOT_OWNER_ID,
     },
   };
@@ -139,7 +138,6 @@ async function createDeal(contactId, companyId, quoteData) {
       dealstage: "qualifiedtobuy",
       pipeline: "default",
       closedate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      // ✅ ADDED: Assign owner to deal
       hubspot_owner_id: HUBSPOT_OWNER_ID,
     },
   };
@@ -210,6 +208,7 @@ async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
   const expirationDate = new Date();
   expirationDate.setDate(expirationDate.getDate() + 30);
 
+  // ✅ NEW: Build sender information from environment variables
   const quoteRequestData = {
     properties: {
       hs_title: `Hardware Quote - ${quoteData.quoteId}`,
@@ -219,8 +218,23 @@ async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
       hs_status: "DRAFT",
       hs_quote_number: quoteData.quoteId,
       hs_terms: quoteData.contactInfo.message || "Standard terms and conditions apply.",
-      // ✅ ADDED: Assign owner to quote - THIS IS THE KEY PROPERTY FOR "YOUR INFO"
       hs_quote_owner_id: HUBSPOT_OWNER_ID,
+      
+      // ✅ CRITICAL: Sender information (pulled from environment variables)
+      hs_sender_firstname: process.env.SENDER_FIRSTNAME || "",
+      hs_sender_lastname: process.env.SENDER_LASTNAME || "",
+      hs_sender_email: process.env.SENDER_EMAIL || "",
+      hs_sender_phone: process.env.SENDER_PHONE || "",
+      hs_sender_jobtitle: process.env.SENDER_JOBTITLE || "",
+      
+      // ✅ CRITICAL: Company information (pulled from environment variables)
+      hs_sender_company_name: process.env.SENDER_COMPANY_NAME || "",
+      hs_sender_company_address: process.env.SENDER_COMPANY_ADDRESS || "",
+      hs_sender_company_address2: process.env.SENDER_COMPANY_ADDRESS2 || "",
+      hs_sender_company_city: process.env.SENDER_COMPANY_CITY || "",
+      hs_sender_company_state: process.env.SENDER_COMPANY_STATE || "",
+      hs_sender_company_zip: process.env.SENDER_COMPANY_ZIP || "",
+      hs_sender_company_country: process.env.SENDER_COMPANY_COUNTRY || "",
     },
   };
 
