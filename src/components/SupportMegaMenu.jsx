@@ -105,6 +105,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           onClick: () => {
             if (onNavigate) onNavigate('spi-converter')
             if (onClose) onClose()
+          }
         },
         {
           title: "Road Map",
