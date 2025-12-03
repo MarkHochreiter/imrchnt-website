@@ -3,6 +3,9 @@
 
 const HUBSPOT_API_BASE = "https://api.hubapi.com";
 
+// ✅ ADD THIS: Your HubSpot Owner ID
+const HUBSPOT_OWNER_ID = "160148205";
+
 // ======= Helper: HubSpot API request =======
 async function hubspotRequest(endpoint, options = {}) {
   if (!process.env.HUBSPOT_ACCESS_TOKEN) {
@@ -34,6 +37,8 @@ async function createOrUpdateContact(contactInfo) {
       phone: contactInfo.phone || "",
       company: contactInfo.company || "",
       hs_lead_status: "NEW",
+      // ✅ ADDED: Assign owner to contact
+      hubspot_owner_id: HUBSPOT_OWNER_ID,
     },
   };
 
@@ -81,6 +86,8 @@ async function createOrUpdateCompany(companyName, contactId) {
       name: companyName,
       domain: "",
       industry: "INFORMATION_TECHNOLOGY_AND_SERVICES",
+      // ✅ ADDED: Assign owner to company
+      hubspot_owner_id: HUBSPOT_OWNER_ID,
     },
   };
 
@@ -132,6 +139,8 @@ async function createDeal(contactId, companyId, quoteData) {
       dealstage: "qualifiedtobuy",
       pipeline: "default",
       closedate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      // ✅ ADDED: Assign owner to deal
+      hubspot_owner_id: HUBSPOT_OWNER_ID,
     },
   };
 
@@ -210,6 +219,8 @@ async function createQuote(quoteData, contactId, companyId, dealId, lineItems) {
       hs_status: "DRAFT",
       hs_quote_number: quoteData.quoteId,
       hs_terms: quoteData.contactInfo.message || "Standard terms and conditions apply.",
+      // ✅ ADDED: Assign owner to quote - THIS IS THE KEY PROPERTY FOR "YOUR INFO"
+      hs_quote_owner_id: HUBSPOT_OWNER_ID,
     },
   };
 
