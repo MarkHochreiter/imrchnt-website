@@ -388,7 +388,18 @@ function SPIConverterPage({ onNavigateBack }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = file?.name.replace(/\.(csv|txt)$/, '.spi') || 'output.spi';
+    
+    // Generate timestamp filename: yyyymmddhhmmss.spi
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const timestamp = `${year}${month}${day}${hours}${minutes}${seconds}`;
+    
+    a.download = `${timestamp}.spi`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
