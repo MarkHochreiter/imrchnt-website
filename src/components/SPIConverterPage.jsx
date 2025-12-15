@@ -686,39 +686,6 @@ function SPIConverterPage({ onNavigateBack }) {
           </CardContent>
         </Card>
 
-        {/* ✅ NEW: Manual Header Editor */}
-        {isEditingHeaders && parsedData && (
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Edit2 className="h-5 w-5 text-[#f08e80]" />
-                Edit Column Headers
-              </CardTitle>
-              <CardDescription>
-                Enter custom names for each column
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {manualHeaders.map((header, index) => (
-                  <div key={index}>
-                    <Label className="mb-2">Column {index + 1}</Label>
-                    <Input
-                      value={header}
-                      onChange={(e) => handleHeaderChange(index, e.target.value)}
-                      placeholder={`Column ${index + 1}`}
-                    />
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 flex justify-end">
-                <Button onClick={applyManualHeaders}>
-                  Apply Headers
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
 
         {/* Data Preview */}
         {parsedData && (
