@@ -1,22 +1,24 @@
 import React, { useState, useCallback } from 'react';
-import { Upload, Download, FileText, CheckCircle2, AlertCircle, Settings, Eye, ArrowLeft } from 'lucide-react';
+import { Upload, Download, FileText, CheckCircle2, AlertCircle, Settings, Eye, ArrowLeft, Edit2 } from 'lucide-react';
+import * as XLSX from 'xlsx';
 
 // Button component to match design system
-const Button = ({ children, className = '', size = 'default', variant = 'default', onClick, ...props }) => {
+const Button = ({ children, className = '', size = 'default', variant = 'default', onClick, disabled, ...props }) => {
   const sizeClasses = {
     default: 'px-4 py-2',
     lg: 'px-6 py-3 text-lg'
   }
   
   const variantClasses = {
-    default: 'bg-[#f08e80] hover:bg-[#e07d70] text-white',
-    outline: 'border-2 border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white bg-transparent'
+    default: 'bg-[#f08e80] hover:bg-[#e07d70] text-white disabled:bg-gray-300 disabled:cursor-not-allowed',
+    outline: 'border-2 border-[#f08e80] text-[#f08e80] hover:bg-[#f08e80] hover:text-white bg-transparent disabled:border-gray-300 disabled:text-gray-300'
   }
   
   return (
     <button
       className={`inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#f08e80] focus:ring-offset-2 ${sizeClasses[size]} ${variantClasses[variant]} ${className}`}
       onClick={onClick}
+      disabled={disabled}
       {...props}
     >
       {children}
@@ -55,13 +57,21 @@ const CardContent = ({ children, className = '' }) => (
   </div>
 )
 
+// Input component
+const Input = ({ className = '', ...props }) => (
+  <input
+    className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f08e80] focus:border-transparent ${className}`}
+    {...props}
+  />
+)
+
 // Select components
-const Select = ({ value, onValueChange, children }) => {
+const Select = ({ value, onValueChange, children, className = '' }) => {
   return (
     <select
       value={value}
       onChange={(e) => onValueChange(e.target.value)}
-      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f08e80] focus:border-transparent bg-white"
+      className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f08e80] focus:border-transparent bg-white ${className}`}
     >
       {children}
     </select>
@@ -77,6 +87,17 @@ const Label = ({ children, htmlFor, className = '' }) => (
   <label htmlFor={htmlFor} className={`block text-sm font-medium text-gray-700 ${className}`}>
     {children}
   </label>
+)
+
+// Checkbox component
+const Checkbox = ({ checked, onCheckedChange, id, className = '' }) => (
+  <input
+    type="checkbox"
+    id={id}
+    checked={checked}
+    onChange={(e) => onCheckedChange(e.target.checked)}
+    className={`h-4 w-4 text-[#f08e80] focus:ring-[#f08e80] border-gray-300 rounded ${className}`}
+  />
 )
 
 // Table components
@@ -122,14 +143,16 @@ const TableCell = ({ children, className = '' }) => (
 const toast = {
   success: (title, options) => {
     console.log('Success:', title, options?.description);
-    // In production, you'd integrate with your toast library
+    alert(`✅ ${title}\n${options?.description || ''}`);
   },
   error: (title, options) => {
     console.error('Error:', title, options?.description);
+    alert(`❌ ${title}\n${options?.description || ''}`);
   }
 }
 
 const NONE_VALUE = '__NONE__';
+const DEFAULT_VALUE = '__DEFAULT__';
 
 const SPI_FIELDS = ['FIELD', 'SEQUENCE', 'BARCODE', 'QUANTITY', 'DEPTCAT', 'USER', 'PRICE', 'AREA'];
 const REQUIRED_FIELDS = ['BARCODE', 'QUANTITY'];
@@ -159,7 +182,13 @@ function SPIConverterPage({ onNavigateBack }) {
     PRICE: NONE_VALUE,
     AREA: NONE_VALUE,
   });
+  const [defaultValues, setDefaultValues] = useState({});
   const [isDragging, setIsDragging] = useState(false);
+  
+  // ✅ NEW: Header detection state
+  const [hasHeaders, setHasHeaders] = useState(true);
+  const [manualHeaders, setManualHeaders] = useState([]);
+  const [isEditingHeaders, setIsEditingHeaders] = useState(false);
 
   const detectDelimiter = (line) => {
     const tabCount = (line.match(/\t/g) || []).length;
@@ -223,17 +252,63 @@ function SPIConverterPage({ onNavigateBack }) {
     return line.split(delimiter).map(field => field.trim());
   };
 
+  // ✅ NEW: Parse Excel files
+  const parseExcelFile = (arrayBuffer) => {
+    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+    const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: '' });
+    
+    if (jsonData.length === 0) {
+      throw new Error('Excel file is empty');
+    }
+    
+    let headers, rows;
+    
+    if (hasHeaders) {
+      headers = jsonData[0].map(h => String(h || ''));
+      rows = jsonData.slice(1).map(row => row.map(cell => String(cell || '')));
+    } else {
+      // Generate column names: Column 1, Column 2, etc.
+      const columnCount = jsonData[0].length;
+      headers = Array.from({ length: columnCount }, (_, i) => `Column ${i + 1}`);
+      rows = jsonData.map(row => row.map(cell => String(cell || '')));
+      setManualHeaders(headers);
+      setIsEditingHeaders(true);
+    }
+    
+    return { headers, rows };
+  };
+
+  // ✅ NEW: Parse PDF files (basic text extraction)
+  const parsePDFFile = async (arrayBuffer) => {
+    // For PDF parsing, we'll use a simple text extraction approach
+    // In production, you'd want to use pdf-parse or pdfjs-dist
+    // For now, we'll show an error and suggest conversion
+    throw new Error('PDF parsing requires additional setup. Please convert your PDF to Excel or CSV first.');
+  };
+
   const parseFile = (text, delimiterType) => {
     const lines = text.trim().split('\n').filter(line => line.trim());
     if (lines.length === 0) {
       throw new Error('File is empty');
     }
     
-    const headerDelimiter = detectDelimiter(lines[0]);
     const dataDelimiter = getDelimiterChar(delimiterType, text);
     
-    const headers = splitCSVLine(lines[0], headerDelimiter);
-    const rows = lines.slice(1).map(line => splitCSVLine(line, dataDelimiter));
+    let headers, rows;
+    
+    if (hasHeaders) {
+      const headerDelimiter = detectDelimiter(lines[0]);
+      headers = splitCSVLine(lines[0], headerDelimiter);
+      rows = lines.slice(1).map(line => splitCSVLine(line, dataDelimiter));
+    } else {
+      // No headers - generate column names
+      const firstRow = splitCSVLine(lines[0], dataDelimiter);
+      headers = Array.from({ length: firstRow.length }, (_, i) => `Column ${i + 1}`);
+      rows = lines.map(line => splitCSVLine(line, dataDelimiter));
+      setManualHeaders(headers);
+      setIsEditingHeaders(true);
+    }
     
     const delimiterName = 
       dataDelimiter === '\t' ? 'Tab' :
@@ -249,40 +324,80 @@ function SPIConverterPage({ onNavigateBack }) {
 
   const handleFileUpload = useCallback((uploadedFile) => {
     setFile(uploadedFile);
-    const reader = new FileReader();
+    const fileName = uploadedFile.name.toLowerCase();
     
-    reader.onload = (e) => {
-      const text = e.target?.result;
-      setFileContent(text);
-      
-      try {
-        const data = parseFile(text, delimiter);
-        setParsedData(data);
+    // ✅ NEW: Handle different file types
+    if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = parseExcelFile(e.target.result);
+          setParsedData(data);
+          autoMapFields(data);
+          toast.success('Excel file uploaded successfully', {
+            description: `Found ${data.headers.length} columns and ${data.rows.length} rows`
+          });
+        } catch (error) {
+          toast.error('Failed to parse Excel file', {
+            description: error instanceof Error ? error.message : 'Please ensure your file is properly formatted'
+          });
+        }
+      };
+      reader.readAsArrayBuffer(uploadedFile);
+    } else if (fileName.endsWith('.pdf')) {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const data = await parsePDFFile(e.target.result);
+          setParsedData(data);
+          autoMapFields(data);
+          toast.success('PDF file uploaded successfully', {
+            description: `Found ${data.headers.length} columns and ${data.rows.length} rows`
+          });
+        } catch (error) {
+          toast.error('Failed to parse PDF file', {
+            description: error instanceof Error ? error.message : 'PDF parsing is not yet fully supported'
+          });
+        }
+      };
+      reader.readAsArrayBuffer(uploadedFile);
+    } else {
+      // CSV/TXT files
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target?.result;
+        setFileContent(text);
         
-        const autoMapping = {};
-        SPI_FIELDS.forEach(spiField => {
-          const matchingHeader = data.headers.find(h => 
-            h.toUpperCase() === spiField.toUpperCase() ||
-            h.toUpperCase().includes(spiField.toUpperCase())
-          );
-          if (matchingHeader) {
-            autoMapping[spiField] = matchingHeader;
-          }
-        });
-        setMapping(prev => ({ ...prev, ...autoMapping }));
-        
-        toast.success('File uploaded successfully', {
-          description: `Found ${data.headers.length} columns and ${data.rows.length} rows`
-        });
-      } catch (error) {
-        toast.error('Failed to parse file', {
-          description: error instanceof Error ? error.message : 'Please ensure your file is properly formatted'
-        });
+        try {
+          const data = parseFile(text, delimiter);
+          setParsedData(data);
+          autoMapFields(data);
+          toast.success('File uploaded successfully', {
+            description: `Found ${data.headers.length} columns and ${data.rows.length} rows`
+          });
+        } catch (error) {
+          toast.error('Failed to parse file', {
+            description: error instanceof Error ? error.message : 'Please ensure your file is properly formatted'
+          });
+        }
+      };
+      reader.readAsText(uploadedFile);
+    }
+  }, [delimiter, hasHeaders]);
+
+  const autoMapFields = (data) => {
+    const autoMapping = {};
+    SPI_FIELDS.forEach(spiField => {
+      const matchingHeader = data.headers.find(h => 
+        h.toUpperCase() === spiField.toUpperCase() ||
+        h.toUpperCase().includes(spiField.toUpperCase())
+      );
+      if (matchingHeader) {
+        autoMapping[spiField] = matchingHeader;
       }
-    };
-    
-    reader.readAsText(uploadedFile);
-  }, [delimiter]);
+    });
+    setMapping(prev => ({ ...prev, ...autoMapping }));
+  };
 
   const handleDelimiterChange = (newDelimiter) => {
     setDelimiter(newDelimiter);
@@ -313,16 +428,40 @@ function SPIConverterPage({ onNavigateBack }) {
     }
   };
 
+  // ✅ NEW: Handle header changes
+  const handleHeaderChange = (index, value) => {
+    const newHeaders = [...manualHeaders];
+    newHeaders[index] = value;
+    setManualHeaders(newHeaders);
+  };
+
+  const applyManualHeaders = () => {
+    if (parsedData) {
+      setParsedData({
+        ...parsedData,
+        headers: manualHeaders
+      });
+      setIsEditingHeaders(false);
+      toast.success('Headers updated', {
+        description: 'Your custom headers have been applied'
+      });
+    }
+  };
+
   const handleDrop = useCallback((e) => {
     e.preventDefault();
     setIsDragging(false);
     
     const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile && (droppedFile.name.endsWith('.csv') || droppedFile.name.endsWith('.txt'))) {
+    const fileName = droppedFile.name.toLowerCase();
+    const validExtensions = ['.csv', '.txt', '.xlsx', '.xls', '.pdf'];
+    const isValid = validExtensions.some(ext => fileName.endsWith(ext));
+    
+    if (droppedFile && isValid) {
       handleFileUpload(droppedFile);
     } else {
       toast.error('Invalid file type', {
-        description: 'Please upload a .csv or .txt file'
+        description: 'Please upload a .csv, .txt, .xlsx, .xls, or .pdf file'
       });
     }
   }, [handleFileUpload]);
@@ -345,7 +484,7 @@ function SPIConverterPage({ onNavigateBack }) {
   }, [handleFileUpload]);
 
   const getSampleValue = (columnName) => {
-    if (!parsedData || columnName === NONE_VALUE) return '';
+    if (!parsedData || columnName === NONE_VALUE || columnName === DEFAULT_VALUE) return '';
     const columnIndex = parsedData.headers.indexOf(columnName);
     if (columnIndex === -1) return '';
     
@@ -357,6 +496,7 @@ function SPIConverterPage({ onNavigateBack }) {
     return '(empty)';
   };
 
+  // ✅ NEW: Updated conversion with default values
   const convertToSPI = (includeHeader = false) => {
     if (!parsedData) return '';
     
@@ -370,7 +510,11 @@ function SPIConverterPage({ onNavigateBack }) {
       const spiRow = [];
       SPI_FIELDS.forEach(spiField => {
         const sourceField = mapping[spiField];
-        if (sourceField && sourceField !== NONE_VALUE) {
+        
+        // ✅ NEW: Check if it's a default value
+        if (sourceField === DEFAULT_VALUE) {
+          spiRow.push(defaultValues[spiField] || '');
+        } else if (sourceField && sourceField !== NONE_VALUE) {
           const sourceIndex = parsedData.headers.indexOf(sourceField);
           spiRow.push(sourceIndex >= 0 ? row[sourceIndex] || '' : '');
         } else {
@@ -437,7 +581,7 @@ function SPIConverterPage({ onNavigateBack }) {
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">SPI File Converter</h1>
             <p className="text-xl text-gray-600">
-              Convert your CSV or TXT files to SPI format with custom field mapping
+              Convert your CSV, TXT, Excel, or PDF files to SPI format with custom field mapping
             </p>
           </div>
         </div>
@@ -453,10 +597,28 @@ function SPIConverterPage({ onNavigateBack }) {
               Upload File
             </CardTitle>
             <CardDescription>
-              Upload a .csv or .txt file to begin the conversion process
+              Upload a .csv, .txt, .xlsx, .xls, or .pdf file to begin the conversion process
             </CardDescription>
           </CardHeader>
           <CardContent>
+            {/* ✅ NEW: Header checkbox */}
+            <div className="mb-4 flex items-center gap-2">
+              <Checkbox
+                id="has-headers"
+                checked={hasHeaders}
+                onCheckedChange={(checked) => {
+                  setHasHeaders(checked);
+                  if (file) {
+                    // Re-parse file with new header setting
+                    handleFileUpload(file);
+                  }
+                }}
+              />
+              <Label htmlFor="has-headers" className="cursor-pointer">
+                File has headers in first row
+              </Label>
+            </div>
+
             <div
               onDrop={handleDrop}
               onDragOver={handleDragOver}
@@ -470,7 +632,7 @@ function SPIConverterPage({ onNavigateBack }) {
               <input
                 type="file"
                 id="file-upload"
-                accept=".csv,.txt"
+                accept=".csv,.txt,.xlsx,.xls,.pdf"
                 onChange={handleFileInput}
                 className="hidden"
               />
@@ -480,7 +642,7 @@ function SPIConverterPage({ onNavigateBack }) {
                   {file ? file.name : 'Drop your file here or click to browse'}
                 </p>
                 <p className="text-sm text-gray-500">
-                  Supports CSV and TXT files
+                  Supports CSV, TXT, Excel (.xlsx, .xls), and PDF files
                 </p>
               </label>
             </div>
@@ -498,41 +660,91 @@ function SPIConverterPage({ onNavigateBack }) {
                   </div>
                 </div>
                 
-                {/* Delimiter Selector */}
-                <div className="flex items-start gap-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <Settings className="h-5 w-5 text-blue-600 mt-1 flex-shrink-0" />
-                  <div className="flex-1">
-                    <Label htmlFor="delimiter-select" className="text-sm font-medium text-blue-900 mb-2">
-                      Data Row Delimiter
-                    </Label>
-                    <p className="text-xs text-blue-700 mb-3">
-                      Header is auto-detected. Select delimiter for data rows if auto-detection is incorrect.
-                    </p>
-                    <Select value={delimiter} onValueChange={(value) => handleDelimiterChange(value)}>
-                      {Object.entries(DELIMITERS).map(([key, label]) => (
-                        <SelectItem key={key} value={key}>
-                          {label}
-                        </SelectItem>
-                      ))}
-                    </Select>
+                {/* Delimiter Selector - only show for CSV/TXT */}
+                {file.name.toLowerCase().endsWith('.csv') || file.name.toLowerCase().endsWith('.txt') ? (
+                  <div className="flex items-start gap-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <Settings className="h-5 w-5 text-blue-600 mt-1 flex-shrink-0" />
+                    <div className="flex-1">
+                      <Label htmlFor="delimiter-select" className="text-sm font-medium text-blue-900 mb-2">
+                        Data Row Delimiter
+                      </Label>
+                      <p className="text-xs text-blue-700 mb-3">
+                        {hasHeaders ? 'Header is auto-detected. Select delimiter for data rows if auto-detection is incorrect.' : 'Select the delimiter used in your data rows.'}
+                      </p>
+                      <Select value={delimiter} onValueChange={(value) => handleDelimiterChange(value)}>
+                        {Object.entries(DELIMITERS).map(([key, label]) => (
+                          <SelectItem key={key} value={key}>
+                            {label}
+                          </SelectItem>
+                        ))}
+                      </Select>
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
             )}
           </CardContent>
         </Card>
 
-        {/* Data Preview */}
-        {parsedData && (
+        {/* ✅ NEW: Manual Header Editor */}
+        {isEditingHeaders && parsedData && (
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Eye className="h-5 w-5 text-[#f08e80]" />
-                Data Preview
+                <Edit2 className="h-5 w-5 text-[#f08e80]" />
+                Edit Column Headers
               </CardTitle>
               <CardDescription>
-                Verify your columns are parsed correctly (showing first 5 rows)
+                Enter custom names for each column
               </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {manualHeaders.map((header, index) => (
+                  <div key={index}>
+                    <Label className="mb-2">Column {index + 1}</Label>
+                    <Input
+                      value={header}
+                      onChange={(e) => handleHeaderChange(index, e.target.value)}
+                      placeholder={`Column ${index + 1}`}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 flex justify-end">
+                <Button onClick={applyManualHeaders}>
+                  Apply Headers
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Data Preview */}
+        {parsedData && !isEditingHeaders && (
+          <Card className="mb-8">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <Eye className="h-5 w-5 text-[#f08e80]" />
+                    Data Preview
+                  </CardTitle>
+                  <CardDescription>
+                    Verify your columns are parsed correctly (showing first 5 rows)
+                  </CardDescription>
+                </div>
+                {!hasHeaders && (
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsEditingHeaders(true)}
+                    className="text-sm"
+                  >
+                    <Edit2 className="h-4 w-4 mr-2" />
+                    Edit Headers
+                  </Button>
+                )}
+              </div>
             </CardHeader>
             <CardContent>
               <Table>
@@ -567,7 +779,7 @@ function SPIConverterPage({ onNavigateBack }) {
         )}
 
         {/* Field Mapping Section */}
-        {parsedData && (
+        {parsedData && !isEditingHeaders && (
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -575,7 +787,7 @@ function SPIConverterPage({ onNavigateBack }) {
                 Field Mapping
               </CardTitle>
               <CardDescription>
-                Map your source columns to the SPI format fields
+                Map your source columns to the SPI format fields, or set default values
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -594,6 +806,7 @@ function SPIConverterPage({ onNavigateBack }) {
                         onValueChange={(value) => setMapping(prev => ({ ...prev, [spiField]: value }))}
                       >
                         <SelectItem value={NONE_VALUE}>None</SelectItem>
+                        <SelectItem value={DEFAULT_VALUE}>Default Value</SelectItem>
                         {parsedData.headers.map(header => (
                           <SelectItem key={header} value={header}>
                             {header}
@@ -602,7 +815,20 @@ function SPIConverterPage({ onNavigateBack }) {
                       </Select>
                     </div>
                     <div className="md:col-span-2">
-                      {mapping[spiField] !== NONE_VALUE && (
+                      {/* ✅ NEW: Show default value input or sample value */}
+                      {mapping[spiField] === DEFAULT_VALUE ? (
+                        <div>
+                          <Label className="text-xs text-gray-500 mb-2">
+                            Default Value (applied to all rows)
+                          </Label>
+                          <Input
+                            value={defaultValues[spiField] || ''}
+                            onChange={(e) => setDefaultValues(prev => ({ ...prev, [spiField]: e.target.value }))}
+                            placeholder="Enter default value"
+                            className="mt-2"
+                          />
+                        </div>
+                      ) : mapping[spiField] !== NONE_VALUE && (
                         <div>
                           <Label className="text-xs text-gray-500 mb-2">
                             Sample Value
@@ -633,7 +859,7 @@ function SPIConverterPage({ onNavigateBack }) {
         )}
 
         {/* Preview Section */}
-        {parsedData && isReadyToConvert && (
+        {parsedData && isReadyToConvert && !isEditingHeaders && (
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -656,7 +882,7 @@ function SPIConverterPage({ onNavigateBack }) {
         )}
 
         {/* Download Button */}
-        {isReadyToConvert && (
+        {isReadyToConvert && !isEditingHeaders && (
           <div className="flex justify-center">
             <Button
               onClick={handleDownload}
