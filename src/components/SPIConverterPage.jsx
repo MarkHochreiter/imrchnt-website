@@ -721,7 +721,7 @@ function SPIConverterPage({ onNavigateBack }) {
         )}
 
         {/* Data Preview */}
-        {parsedData && !isEditingHeaders && (
+        {parsedData && (
           <Card className="mb-8">
             <CardHeader>
               <div className="flex items-center justify-between">
@@ -731,28 +731,42 @@ function SPIConverterPage({ onNavigateBack }) {
                     Data Preview
                   </CardTitle>
                   <CardDescription>
-                    Verify your columns are parsed correctly (showing first 5 rows)
+                    {isEditingHeaders ? 'Click on any header to edit it' : 'Verify your columns are parsed correctly (showing first 5 rows)'}
                   </CardDescription>
                 </div>
-                {!hasHeaders && (
-                  <Button
-                    variant="outline"
-                    onClick={() => setIsEditingHeaders(true)}
-                    className="text-sm"
-                  >
-                    <Edit2 className="h-4 w-4 mr-2" />
-                    Edit Headers
-                  </Button>
-                )}
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    if (isEditingHeaders) {
+                      applyManualHeaders();
+                    } else {
+                      setManualHeaders([...parsedData.headers]);
+                      setIsEditingHeaders(true);
+                    }
+                  }}
+                  className="text-sm"
+                >
+                  <Edit2 className="h-4 w-4 mr-2" />
+                  {isEditingHeaders ? 'Save Headers' : 'Edit Headers'}
+                </Button>
               </div>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {parsedData.headers.map((header, idx) => (
-                      <TableHead key={idx}>
-                        {header || `(Column ${idx + 1})`}
+                    {(isEditingHeaders ? manualHeaders : parsedData.headers).map((header, idx) => (
+                      <TableHead key={idx} className="p-2">
+                        {isEditingHeaders ? (
+                          <Input
+                            value={manualHeaders[idx] || ''}
+                            onChange={(e) => handleHeaderChange(idx, e.target.value)}
+                            placeholder={`Column ${idx + 1}`}
+                            className="text-xs font-medium uppercase min-w-[120px]"
+                          />
+                        ) : (
+                          header || `(Column ${idx + 1})`
+                        )}
                       </TableHead>
                     ))}
                   </TableRow>
