@@ -343,36 +343,79 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       }
     }
 
-    // Extract interchange fees (enhanced)
-    const interchangePatterns = [
-      /Interchange[\s\S]{0,50}[-\$]?\s*([\d,]+\.?\d*)/i,
-      /IC\s+Fees?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
-      /Interchange\s+Fees?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i
-    ];
-    for (const pattern of interchangePatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        const value = parseCurrency(match[1]);
-        if (value > 0) {
-          data.interchangeFees = value;
-          break;
+    // Extract interchange fees (CardConnect specific)
+    // CardConnect shows: TOTAL TRANSACTION FEES (mostly interchange) + DEBIT NETWORK FEES
+    let totalTransactionFees = 0;
+    let debitNetworkFees = 0;
+    
+    // Look for TOTAL TRANSACTION FEES
+    const txnFeesMatch = text.match(/TOTAL\s+TRANSACTION\s+FEES[\s\S]{0,50}-?\$?([\d,]+\.\d{2})/i);
+    if (txnFeesMatch) {
+      totalTransactionFees = parseCurrency(txnFeesMatch[1]);
+    }
+    
+    // Look for TOTAL DEBIT NETWORK FEES
+    const debitFeesMatch = text.match(/TOTAL\s+DEBIT\s+NETWORK\s+FEES[\s\S]{0,50}-?\$?([\d,]+\.\d{2})/i);
+    if (debitFeesMatch) {
+      debitNetworkFees = parseCurrency(debitFeesMatch[1]);
+    }
+    
+    // Interchange = Transaction Fees + Debit Network Fees
+    if (totalTransactionFees > 0 || debitNetworkFees > 0) {
+      data.interchangeFees = totalTransactionFees + debitNetworkFees;
+    } else {
+      // Fallback to generic patterns for other processors
+      const interchangePatterns = [
+        /Interchange[\s\S]{0,50}[-\$]?\s*([\d,]+\.?\d*)/i,
+        /IC\s+Fees?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+        /Interchange\s+Fees?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i
+      ];
+      for (const pattern of interchangePatterns) {
+        const match = text.match(pattern);
+        if (match) {
+          const value = parseCurrency(match[1]);
+          if (value > 0) {
+            data.interchangeFees = value;
+            break;
+          }
         }
       }
     }
 
-    // Extract monthly/equipment fees (enhanced)
-    const monthlyPatterns = [
-      /(?:Monthly|Equipment|Account)\s+Fee[s]?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
-      /Statement\s+Fee[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
-      /Service\s+Fee[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i
-    ];
-    for (const pattern of monthlyPatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        const value = parseCurrency(match[1]);
-        if (value > 0 && value < 1000) { // Monthly fees typically under $1000
-          data.monthlyFees = value;
-          break;
+    // Extract monthly/equipment fees (CardConnect specific)
+    // CardConnect has an ACCOUNT FEES section with multiple line items
+    const accountFeesSection = text.match(/ACCOUNT\s+FEES[\s\S]{0,2000}?(?=TOTAL|$)/i);
+    
+    if (accountFeesSection) {
+      // Extract all individual fee amounts from the ACCOUNT FEES section
+      const feeMatches = accountFeesSection[0].matchAll(/-\$([\d,]+\.\d{2})/g);
+      let totalAccountFees = 0;
+      
+      for (const match of feeMatches) {
+        const feeAmount = parseCurrency(match[1]);
+        if (feeAmount > 0 && feeAmount < 1000) { // Individual fees typically under $1000
+          totalAccountFees += feeAmount;
+        }
+      }
+      
+      if (totalAccountFees > 0) {
+        data.monthlyFees = totalAccountFees;
+      }
+    } else {
+      // Fallback to generic patterns for other processors
+      const monthlyPatterns = [
+        /(?:Monthly|Equipment|Account)\s+Fee[s]?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+        /Statement\s+Fee[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+        /Service\s+Fee[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i
+      ];
+      for (const pattern of monthlyPatterns) {
+        const match = text.match(pattern);
+        if (match) {
+          const value = parseCurrency(match[1]);
+          if (value > 0 && value < 1000) {
+            data.monthlyFees = value;
+            break;
+          }
         }
       }
     }
