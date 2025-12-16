@@ -29,6 +29,7 @@ import CustomerPage from './components/Customers.jsx'
 import SingleDevicePage from './components/singledevice.jsx'
 import RoadMapPage from './components/RoadmapPage.jsx'
 import SPIConverterPage from './components/SPIConverterPage.jsx'
+import StatementAnalyzerPage from './components/StatementAnalyzerPage.jsx'
 import './App.css'
 
 // Button component
@@ -656,6 +657,7 @@ function App() {
           <Route path="/pos-diagram" element={<POSDiagramPage onNavigateBack={() => navigateTo('system')} />} />
           <Route path="/roadmap" element={<RoadMapPage onSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} onNavigate={navigateTo} />} />
           <Route path="/spi-converter" element={<SPIConverterPage onNavigateBack={() => navigateTo('/')} />} />
+          <Route path="/statement-analyzer" element={<StatementAnalyzerPage onNavigateBack={() => navigateTo('/')} />} />
         </Routes>
 
         {/* Global Hardware Cart Modal */}
