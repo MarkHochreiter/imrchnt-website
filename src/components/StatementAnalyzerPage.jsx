@@ -261,23 +261,53 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       data.totalFees = Math.max(...foundFees);
     }
 
-    // Extract transaction count (enhanced)
-    const txnPatterns = [
-      // CardConnect - look for total items in Summary By Card Type
-      /Total[\s\S]{0,100}(\d{3,})\s+\$[\d,]+\.[\d]{2}/i,
-      /(\d{3,})\s+transactions?/i,
-      /Transaction\s+Count[:\s]+(\d{3,})/i,
-      /Number\s+of\s+Transactions[:\s]+(\d{3,})/i,
-      /Total\s+Transactions[:\s]+(\d{3,})/i
-    ];
+    // Extract transaction count and average ticket from Summary By Batch
+    const summaryByBatchSection = text.match(/SUMMARY\s+BY\s+BATCH[\s\S]{0,3000}?(?=CHARGEBACKS|ADJUSTMENTS|FEES)/i);
     
-    for (const pattern of txnPatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        const count = parseInt(match[1]);
-        if (count > 0 && count < 1000000) { // Reasonable range
-          data.transactionCount = count;
-          break;
+    if (summaryByBatchSection) {
+      const section = summaryByBatchSection[0];
+      
+      // Extract transaction count from Total row
+      const totalMatch = section.match(/Total[\s\S]{0,100}(\d{3,})\s+\$[\d,]+\.[\d]{2}/i);
+      if (totalMatch) {
+        data.transactionCount = parseInt(totalMatch[1]);
+      }
+      
+      // Extract average ticket - calculate weighted average from all batches
+      const batchMatches = section.matchAll(/\$(\d+\.\d{2})[\s\S]{0,50}(\d+)\s+\$(\d+\.\d{2})/g);
+      let totalSalesForAvg = 0;
+      let totalItemsForAvg = 0;
+      
+      for (const match of batchMatches) {
+        const avgTicket = parseFloat(match[1]);
+        const items = parseInt(match[2]);
+        if (avgTicket > 0 && items > 0) {
+          totalSalesForAvg += avgTicket * items;
+          totalItemsForAvg += items;
+        }
+      }
+      
+      if (totalItemsForAvg > 0) {
+        data.avgTicket = totalSalesForAvg / totalItemsForAvg;
+      }
+    } else {
+      // Fallback to generic patterns
+      const txnPatterns = [
+        /Total[\s\S]{0,100}(\d{3,})\s+\$[\d,]+\.[\d]{2}/i,
+        /(\d{3,})\s+transactions?/i,
+        /Transaction\s+Count[:\s]+(\d{3,})/i,
+        /Number\s+of\s+Transactions[:\s]+(\d{3,})/i,
+        /Total\s+Transactions[:\s]+(\d{3,})/i
+      ];
+      
+      for (const pattern of txnPatterns) {
+        const match = text.match(pattern);
+        if (match) {
+          const count = parseInt(match[1]);
+          if (count > 0 && count < 1000000) { // Reasonable range
+            data.transactionCount = count;
+            break;
+          }
         }
       }
     }
@@ -405,29 +435,41 @@ function StatementAnalyzerPage({ onNavigateBack }) {
     }
 
     // Extract monthly/equipment fees (CardConnect specific)
-    // CardConnect has an ACCOUNT FEES section - these also go into processor markup
-    const accountFeesSection = text.match(/ACCOUNT\s+FEES[\s\S]{0,2000}?(?=TOTAL|$)/i);
+    // CardConnect has ACCOUNT FEES and EQUIPMENT sections - these also go into processor markup
+    const accountFeesSection = text.match(/ACCOUNT\s+FEES[\s\S]{0,2000}?(?=EQUIPMENT|$)/i);
+    const equipmentSection = text.match(/EQUIPMENT[\s\S]{0,500}?TOTAL\s+EQUIPMENT\s+FEES[\s\S]{0,50}-?\$?([\d,]+\.\d{2})/i);
+    
+    let totalMonthlyFees = 0;
     
     if (accountFeesSection) {
       // Extract all individual fee amounts from the ACCOUNT FEES section
       const feeMatches = accountFeesSection[0].matchAll(/-\$([\d,]+\.\d{2})/g);
-      let totalAccountFees = 0;
       
       for (const match of feeMatches) {
         const feeAmount = parseCurrency(match[1]);
         if (feeAmount > 0 && feeAmount < 1000) { // Individual fees typically under $1000
-          totalAccountFees += feeAmount;
+          totalMonthlyFees += feeAmount;
         }
       }
-      
-      if (totalAccountFees > 0) {
-        data.monthlyFees = totalAccountFees;
-        // Add account fees to processor markup total
-        if (data.processorFees > 0) {
-          data.processorFees += totalAccountFees;
-        }
+    }
+    
+    // Add equipment fees
+    if (equipmentSection) {
+      const equipmentFees = parseCurrency(equipmentSection[1]);
+      if (equipmentFees > 0) {
+        totalMonthlyFees += equipmentFees;
       }
-    } else {
+    }
+    
+    if (totalMonthlyFees > 0) {
+      data.monthlyFees = totalMonthlyFees;
+      // Add monthly fees to processor markup total
+      if (data.processorFees > 0) {
+        data.processorFees += totalMonthlyFees;
+      }
+    }
+    
+    if (!accountFeesSection && !equipmentSection) {
       // Fallback to generic patterns for other processors
       const monthlyPatterns = [
         /(?:Monthly|Equipment|Account)\s+Fee[s]?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
