@@ -1,7 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { Upload, Download, FileText, CheckCircle2, AlertCircle, TrendingUp, DollarSign, CreditCard, ArrowLeft, PieChart, BarChart3 } from 'lucide-react';
+import { Upload, Download, FileText, CheckCircle2, AlertCircle, TrendingUp, DollarSign, CreditCard, ArrowLeft, PieChart, BarChart3, Loader2 } from 'lucide-react';
+import * as pdfjsLib from 'pdfjs-dist';
 
-// UI Components (matching your existing design system)
+// Set up PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
+// UI Components
 const Button = ({ children, className = '', size = 'default', variant = 'default', onClick, disabled, ...props }) => {
   const sizeClasses = {
     default: 'px-4 py-2',
@@ -56,23 +60,9 @@ const CardContent = ({ children, className = '' }) => (
   </div>
 )
 
-const Input = ({ className = '', ...props }) => (
-  <input
-    className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f08e80] focus:border-transparent ${className}`}
-    {...props}
-  />
-)
-
-const Label = ({ children, htmlFor, className = '' }) => (
-  <label htmlFor={htmlFor} className={`block text-sm font-medium text-gray-700 mb-2 ${className}`}>
-    {children}
-  </label>
-)
-
 const toast = {
   success: (title, options) => {
     console.log('Success:', title, options?.description);
-    alert(`✅ ${title}\n${options?.description || ''}`);
   },
   error: (title, options) => {
     console.error('Error:', title, options?.description);
@@ -84,32 +74,7 @@ function StatementAnalyzerPage({ onNavigateBack }) {
   const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [analysisData, setAnalysisData] = useState(null);
-  const [manualEntry, setManualEntry] = useState(false);
-  
-  // Manual entry fields
-  const [formData, setFormData] = useState({
-    merchantName: '',
-    statementPeriod: '',
-    totalSales: '',
-    totalFees: '',
-    chargebacks: '',
-    adjustments: '',
-    // Card type breakdowns
-    visaSales: '',
-    visaFees: '',
-    mastercardSales: '',
-    mastercardFees: '',
-    amexSales: '',
-    amexFees: '',
-    discoverSales: '',
-    discoverFees: '',
-    // Fee categories
-    interchangeFees: '',
-    assessmentFees: '',
-    processorFees: '',
-    monthlyFees: '',
-    transactionCount: '',
-  });
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleDrop = useCallback((e) => {
     e.preventDefault();
@@ -142,60 +107,191 @@ function StatementAnalyzerPage({ onNavigateBack }) {
     }
   }, []);
 
-  const handleFileUpload = (uploadedFile) => {
-    setFile(uploadedFile);
+  const extractTextFromPDF = async (file) => {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     
-    // For now, we'll show manual entry since PDF parsing is complex
-    // In production, you'd attempt to parse the PDF first
-    toast.success('File uploaded', {
-      description: 'Please enter the key figures from your statement below'
-    });
-    setManualEntry(true);
+    let fullText = '';
+    
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items.map(item => item.str).join(' ');
+      fullText += pageText + '\n';
+    }
+    
+    return fullText;
   };
 
-  const handleInputChange = (field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
+  const parseCurrency = (text) => {
+    // Remove currency symbols, commas, and convert to number
+    const cleaned = text.replace(/[$,]/g, '');
+    return parseFloat(cleaned) || 0;
   };
 
-  const calculateAnalysis = () => {
-    // Parse numeric values
-    const totalSales = parseFloat(formData.totalSales) || 0;
-    const totalFees = parseFloat(formData.totalFees) || 0;
-    const chargebacks = parseFloat(formData.chargebacks) || 0;
-    const adjustments = parseFloat(formData.adjustments) || 0;
-    
-    const visaSales = parseFloat(formData.visaSales) || 0;
-    const visaFees = parseFloat(formData.visaFees) || 0;
-    const mastercardSales = parseFloat(formData.mastercardSales) || 0;
-    const mastercardFees = parseFloat(formData.mastercardFees) || 0;
-    const amexSales = parseFloat(formData.amexSales) || 0;
-    const amexFees = parseFloat(formData.amexFees) || 0;
-    const discoverSales = parseFloat(formData.discoverSales) || 0;
-    const discoverFees = parseFloat(formData.discoverFees) || 0;
-    
-    const interchangeFees = parseFloat(formData.interchangeFees) || 0;
-    const assessmentFees = parseFloat(formData.assessmentFees) || 0;
-    const processorFees = parseFloat(formData.processorFees) || 0;
-    const monthlyFees = parseFloat(formData.monthlyFees) || 0;
-    const transactionCount = parseInt(formData.transactionCount) || 0;
+  const extractDataFromText = (text) => {
+    const data = {
+      merchantName: '',
+      statementPeriod: '',
+      totalSales: 0,
+      totalFees: 0,
+      chargebacks: 0,
+      transactionCount: 0,
+      visaSales: 0,
+      visaFees: 0,
+      mastercardSales: 0,
+      mastercardFees: 0,
+      amexSales: 0,
+      amexFees: 0,
+      discoverSales: 0,
+      discoverFees: 0,
+      interchangeFees: 0,
+      processorFees: 0,
+      monthlyFees: 0
+    };
 
-    // Validate
-    if (totalSales === 0) {
-      toast.error('Missing data', {
-        description: 'Please enter at least the total sales amount'
-      });
-      return;
+    // Extract merchant name (look for common patterns)
+    const merchantMatch = text.match(/Merchant\s+Name[:\s]+([^\n]+)/i) || 
+                         text.match(/Business\s+Name[:\s]+([^\n]+)/i);
+    if (merchantMatch) {
+      data.merchantName = merchantMatch[1].trim();
     }
 
-    // Calculate effective rate
+    // Extract statement period
+    const periodMatch = text.match(/Statement\s+Period[:\s]+([^\n]+)/i) ||
+                       text.match(/(\d{1,2}\/\d{1,2}\/\d{2,4}\s*-\s*\d{1,2}\/\d{1,2}\/\d{2,4})/);
+    if (periodMatch) {
+      data.statementPeriod = periodMatch[1].trim();
+    }
+
+    // Extract total sales/volume (look for various patterns)
+    const salesPatterns = [
+      /Total\s+(?:Sales|Volume|Amount\s+Submitted)[:\s]+\$?([\d,]+\.?\d*)/i,
+      /Gross\s+Sales[:\s]+\$?([\d,]+\.?\d*)/i,
+      /Total\s+Transactions[:\s]+\$?([\d,]+\.?\d*)/i
+    ];
+    
+    for (const pattern of salesPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        data.totalSales = parseCurrency(match[1]);
+        if (data.totalSales > 0) break;
+      }
+    }
+
+    // Extract total fees
+    const feePatterns = [
+      /Total\s+Fees[:\s]+[-\$]?([\d,]+\.?\d*)/i,
+      /Total\s+Service\s+Charges[:\s]+[-\$]?([\d,]+\.?\d*)/i,
+      /Processing\s+Fees[:\s]+[-\$]?([\d,]+\.?\d*)/i
+    ];
+    
+    for (const pattern of feePatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        data.totalFees = parseCurrency(match[1]);
+        if (data.totalFees > 0) break;
+      }
+    }
+
+    // Extract transaction count
+    const txnMatch = text.match(/(\d+)\s+transactions?/i);
+    if (txnMatch) {
+      data.transactionCount = parseInt(txnMatch[1]);
+    }
+
+    // Extract Visa data
+    const visaSalesMatch = text.match(/VISA[^\n]*\$?([\d,]+\.?\d*)/i);
+    if (visaSalesMatch) {
+      data.visaSales = parseCurrency(visaSalesMatch[1]);
+    }
+
+    // Extract Mastercard data
+    const mcSalesMatch = text.match(/(?:MASTERCARD|MC)[^\n]*\$?([\d,]+\.?\d*)/i);
+    if (mcSalesMatch) {
+      data.mastercardSales = parseCurrency(mcSalesMatch[1]);
+    }
+
+    // Extract Amex data
+    const amexSalesMatch = text.match(/(?:AMEX|AMERICAN\s+EXPRESS)[^\n]*\$?([\d,]+\.?\d*)/i);
+    if (amexSalesMatch) {
+      data.amexSales = parseCurrency(amexSalesMatch[1]);
+    }
+
+    // Extract Discover data
+    const discoverSalesMatch = text.match(/DISCOVER[^\n]*\$?([\d,]+\.?\d*)/i);
+    if (discoverSalesMatch) {
+      data.discoverSales = parseCurrency(discoverSalesMatch[1]);
+    }
+
+    // Extract interchange fees
+    const interchangeMatch = text.match(/Interchange[^\n]*[-\$]?([\d,]+\.?\d*)/i);
+    if (interchangeMatch) {
+      data.interchangeFees = parseCurrency(interchangeMatch[1]);
+    }
+
+    // Extract monthly/equipment fees
+    const monthlyMatch = text.match(/(?:Monthly|Equipment)\s+Fee[s]?[:\s]+[-\$]?([\d,]+\.?\d*)/i);
+    if (monthlyMatch) {
+      data.monthlyFees = parseCurrency(monthlyMatch[1]);
+    }
+
+    return data;
+  };
+
+  const handleFileUpload = async (uploadedFile) => {
+    setFile(uploadedFile);
+    setIsProcessing(true);
+    
+    try {
+      // Extract text from PDF
+      const pdfText = await extractTextFromPDF(uploadedFile);
+      
+      // Parse the extracted text
+      const extractedData = extractDataFromText(pdfText);
+      
+      // If we got meaningful data, analyze it
+      if (extractedData.totalSales > 0 && extractedData.totalFees > 0) {
+        analyzeData(extractedData);
+        toast.success('Statement analyzed successfully');
+      } else {
+        toast.error('Could not extract data', {
+          description: 'Unable to automatically parse this statement format. Please try a different file or contact support.'
+        });
+        setIsProcessing(false);
+      }
+    } catch (error) {
+      console.error('Error processing PDF:', error);
+      toast.error('Error processing PDF', {
+        description: 'There was an error reading the PDF file. Please try again.'
+      });
+      setIsProcessing(false);
+    }
+  };
+
+  const analyzeData = (formData) => {
+    const totalSales = formData.totalSales;
+    const totalFees = formData.totalFees;
+    const chargebacks = formData.chargebacks || 0;
+    
+    const visaSales = formData.visaSales;
+    const visaFees = formData.visaFees || (visaSales > 0 ? totalFees * (visaSales / totalSales) : 0);
+    const mastercardSales = formData.mastercardSales;
+    const mastercardFees = formData.mastercardFees || (mastercardSales > 0 ? totalFees * (mastercardSales / totalSales) : 0);
+    const amexSales = formData.amexSales;
+    const amexFees = formData.amexFees || (amexSales > 0 ? totalFees * (amexSales / totalSales) : 0);
+    const discoverSales = formData.discoverSales;
+    const discoverFees = formData.discoverFees || (discoverSales > 0 ? totalFees * (discoverSales / totalSales) : 0);
+    
+    const interchangeFees = formData.interchangeFees;
+    const processorFees = formData.processorFees || (totalFees - interchangeFees - formData.monthlyFees);
+    const monthlyFees = formData.monthlyFees;
+    const transactionCount = formData.transactionCount;
+
     const effectiveRate = totalSales > 0 ? (totalFees / totalSales) * 100 : 0;
-    const netAmount = totalSales - totalFees + chargebacks + adjustments;
+    const netAmount = totalSales - totalFees + chargebacks;
     const avgTicket = transactionCount > 0 ? totalSales / transactionCount : 0;
 
-    // Calculate by card type
     const cardTypeBreakdown = [];
     if (visaSales > 0) {
       cardTypeBreakdown.push({
@@ -234,7 +330,6 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       });
     }
 
-    // Fee breakdown
     const feeBreakdown = [];
     if (interchangeFees > 0) {
       feeBreakdown.push({
@@ -242,14 +337,6 @@ function StatementAnalyzerPage({ onNavigateBack }) {
         amount: interchangeFees,
         percentage: (interchangeFees / totalFees) * 100,
         description: 'Fees paid to card-issuing banks (non-negotiable)'
-      });
-    }
-    if (assessmentFees > 0) {
-      feeBreakdown.push({
-        category: 'Assessment Fees',
-        amount: assessmentFees,
-        percentage: (assessmentFees / totalFees) * 100,
-        description: 'Fees paid to card networks (Visa, Mastercard, etc.)'
       });
     }
     if (processorFees > 0) {
@@ -269,11 +356,9 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       });
     }
 
-    // Calculate processor markup rate
     const processorMarkupRate = totalSales > 0 ? (processorFees / totalSales) * 100 : 0;
     const interchangeRate = totalSales > 0 ? (interchangeFees / totalSales) * 100 : 0;
 
-    // Generate recommendations
     const recommendations = generateRecommendations({
       effectiveRate,
       processorMarkupRate,
@@ -290,7 +375,7 @@ function StatementAnalyzerPage({ onNavigateBack }) {
         totalSales,
         totalFees,
         chargebacks,
-        adjustments,
+        adjustments: 0,
         netAmount,
         effectiveRate,
         transactionCount,
@@ -306,15 +391,12 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       recommendations
     });
 
-    toast.success('Analysis complete', {
-      description: 'Your statement has been analyzed'
-    });
+    setIsProcessing(false);
   };
 
   const generateRecommendations = (data) => {
     const recommendations = [];
 
-    // Rate comparison
     if (data.effectiveRate > 3.0) {
       recommendations.push({
         type: 'warning',
@@ -338,7 +420,6 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       });
     }
 
-    // Processor markup
     if (data.processorMarkupRate > 1.0) {
       recommendations.push({
         type: 'warning',
@@ -346,7 +427,7 @@ function StatementAnalyzerPage({ onNavigateBack }) {
         description: `Your processor is charging ${data.processorMarkupRate.toFixed(2)}% over interchange. Industry standard is 0.30-0.75%. This is negotiable.`,
         potentialSavings: ((data.processorMarkupRate - 0.5) / 100) * data.totalSales
       });
-    } else if (data.processorMarkupRate < 0.5) {
+    } else if (data.processorMarkupRate < 0.5 && data.processorMarkupRate > 0) {
       recommendations.push({
         type: 'success',
         title: 'Excellent Processor Markup',
@@ -355,18 +436,16 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       });
     }
 
-    // Monthly fees
     if (data.monthlyFees > 200) {
       recommendations.push({
         type: 'warning',
         title: 'High Monthly Fees',
         description: `Monthly fees of $${data.monthlyFees.toFixed(2)} seem high. Review equipment rental and account fees for potential savings.`,
-        potentialSavings: (data.monthlyFees - 100) * 12 // Annual savings
+        potentialSavings: (data.monthlyFees - 100) * 12
       });
     }
 
-    // Average ticket
-    if (data.avgTicket < 10) {
+    if (data.avgTicket < 10 && data.avgTicket > 0) {
       recommendations.push({
         type: 'info',
         title: 'Low Average Ticket',
@@ -375,7 +454,6 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       });
     }
 
-    // Card mix
     const amexCard = data.cardTypeBreakdown.find(c => c.type === 'American Express');
     if (amexCard && amexCard.percentage > 20) {
       recommendations.push({
@@ -404,10 +482,6 @@ function StatementAnalyzerPage({ onNavigateBack }) {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    
-    toast.success('Report downloaded', {
-      description: 'Your analysis report has been saved'
-    });
   };
 
   const generateReportText = (data) => {
@@ -507,7 +581,7 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       {/* Main Content */}
       <div className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         {/* Upload Section */}
-        {!manualEntry && (
+        {!analysisData && !isProcessing && (
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -515,7 +589,7 @@ function StatementAnalyzerPage({ onNavigateBack }) {
                 Upload Statement
               </CardTitle>
               <CardDescription>
-                Upload your credit card processing statement (PDF format)
+                Upload your credit card processing statement (PDF format) for automatic analysis
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -546,271 +620,18 @@ function StatementAnalyzerPage({ onNavigateBack }) {
                   </p>
                 </label>
               </div>
-              
-              <div className="mt-6 text-center">
-                <p className="text-sm text-gray-600 mb-4">Or enter your data manually</p>
-                <Button
-                  variant="outline"
-                  onClick={() => setManualEntry(true)}
-                >
-                  Manual Entry
-                </Button>
-              </div>
             </CardContent>
           </Card>
         )}
 
-        {/* Manual Entry Form */}
-        {manualEntry && !analysisData && (
+        {/* Processing Indicator */}
+        {isProcessing && (
           <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-[#f08e80]" />
-                Enter Statement Data
-              </CardTitle>
-              <CardDescription>
-                Fill in the key figures from your processing statement
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {/* Basic Info */}
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-4">Basic Information</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="merchantName">Merchant Name</Label>
-                      <Input
-                        id="merchantName"
-                        value={formData.merchantName}
-                        onChange={(e) => handleInputChange('merchantName', e.target.value)}
-                        placeholder="Your Business Name"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="statementPeriod">Statement Period</Label>
-                      <Input
-                        id="statementPeriod"
-                        value={formData.statementPeriod}
-                        onChange={(e) => handleInputChange('statementPeriod', e.target.value)}
-                        placeholder="e.g., December 2024"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Summary Figures */}
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-4">Summary Figures <span className="text-red-600">*</span></h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="totalSales">Total Sales <span className="text-red-600">*</span></Label>
-                      <Input
-                        id="totalSales"
-                        type="number"
-                        step="0.01"
-                        value={formData.totalSales}
-                        onChange={(e) => handleInputChange('totalSales', e.target.value)}
-                        placeholder="923961.37"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="totalFees">Total Fees <span className="text-red-600">*</span></Label>
-                      <Input
-                        id="totalFees"
-                        type="number"
-                        step="0.01"
-                        value={formData.totalFees}
-                        onChange={(e) => handleInputChange('totalFees', e.target.value)}
-                        placeholder="21091.06"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="transactionCount">Transaction Count</Label>
-                      <Input
-                        id="transactionCount"
-                        type="number"
-                        value={formData.transactionCount}
-                        onChange={(e) => handleInputChange('transactionCount', e.target.value)}
-                        placeholder="14568"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="chargebacks">Chargebacks (if any)</Label>
-                      <Input
-                        id="chargebacks"
-                        type="number"
-                        step="0.01"
-                        value={formData.chargebacks}
-                        onChange={(e) => handleInputChange('chargebacks', e.target.value)}
-                        placeholder="0.00"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card Type Breakdown */}
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Breakdown by Card Type (Optional)</h4>
-                  <p className="text-sm text-gray-600 mb-4">If your statement shows breakdown by card brand, enter it here for more detailed analysis</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="visaSales">Visa Sales</Label>
-                      <Input
-                        id="visaSales"
-                        type="number"
-                        step="0.01"
-                        value={formData.visaSales}
-                        onChange={(e) => handleInputChange('visaSales', e.target.value)}
-                        placeholder="498706.12"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="visaFees">Visa Fees</Label>
-                      <Input
-                        id="visaFees"
-                        type="number"
-                        step="0.01"
-                        value={formData.visaFees}
-                        onChange={(e) => handleInputChange('visaFees', e.target.value)}
-                        placeholder="8800.00"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="mastercardSales">Mastercard Sales</Label>
-                      <Input
-                        id="mastercardSales"
-                        type="number"
-                        step="0.01"
-                        value={formData.mastercardSales}
-                        onChange={(e) => handleInputChange('mastercardSales', e.target.value)}
-                        placeholder="254691.82"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="mastercardFees">Mastercard Fees</Label>
-                      <Input
-                        id="mastercardFees"
-                        type="number"
-                        step="0.01"
-                        value={formData.mastercardFees}
-                        onChange={(e) => handleInputChange('mastercardFees', e.target.value)}
-                        placeholder="4900.00"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="amexSales">American Express Sales</Label>
-                      <Input
-                        id="amexSales"
-                        type="number"
-                        step="0.01"
-                        value={formData.amexSales}
-                        onChange={(e) => handleInputChange('amexSales', e.target.value)}
-                        placeholder="147769.62"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="amexFees">American Express Fees</Label>
-                      <Input
-                        id="amexFees"
-                        type="number"
-                        step="0.01"
-                        value={formData.amexFees}
-                        onChange={(e) => handleInputChange('amexFees', e.target.value)}
-                        placeholder="3100.00"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="discoverSales">Discover Sales</Label>
-                      <Input
-                        id="discoverSales"
-                        type="number"
-                        step="0.01"
-                        value={formData.discoverSales}
-                        onChange={(e) => handleInputChange('discoverSales', e.target.value)}
-                        placeholder="22793.81"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="discoverFees">Discover Fees</Label>
-                      <Input
-                        id="discoverFees"
-                        type="number"
-                        step="0.01"
-                        value={formData.discoverFees}
-                        onChange={(e) => handleInputChange('discoverFees', e.target.value)}
-                        placeholder="520.00"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Fee Category Breakdown */}
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Fee Categories (Optional)</h4>
-                  <p className="text-sm text-gray-600 mb-4">If your statement breaks down fees by category, enter them here</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="interchangeFees">Interchange Fees</Label>
-                      <Input
-                        id="interchangeFees"
-                        type="number"
-                        step="0.01"
-                        value={formData.interchangeFees}
-                        onChange={(e) => handleInputChange('interchangeFees', e.target.value)}
-                        placeholder="17569.66"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="assessmentFees">Assessment/Network Fees</Label>
-                      <Input
-                        id="assessmentFees"
-                        type="number"
-                        step="0.01"
-                        value={formData.assessmentFees}
-                        onChange={(e) => handleInputChange('assessmentFees', e.target.value)}
-                        placeholder="0.00"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="processorFees">Processor Service Charges</Label>
-                      <Input
-                        id="processorFees"
-                        type="number"
-                        step="0.01"
-                        value={formData.processorFees}
-                        onChange={(e) => handleInputChange('processorFees', e.target.value)}
-                        placeholder="1841.97"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="monthlyFees">Monthly/Equipment Fees</Label>
-                      <Input
-                        id="monthlyFees"
-                        type="number"
-                        step="0.01"
-                        value={formData.monthlyFees}
-                        onChange={(e) => handleInputChange('monthlyFees', e.target.value)}
-                        placeholder="549.52"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-4 justify-end">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setManualEntry(false);
-                      setFile(null);
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button onClick={calculateAnalysis}>
-                    Analyze Statement
-                  </Button>
-                </div>
+            <CardContent className="py-12">
+              <div className="flex flex-col items-center justify-center">
+                <Loader2 className="h-16 w-16 text-[#f08e80] animate-spin mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Analyzing Your Statement...</h3>
+                <p className="text-gray-600">This may take a few moments</p>
               </div>
             </CardContent>
           </Card>
@@ -1001,29 +822,7 @@ function StatementAnalyzerPage({ onNavigateBack }) {
                 size="lg"
                 onClick={() => {
                   setAnalysisData(null);
-                  setManualEntry(false);
                   setFile(null);
-                  setFormData({
-                    merchantName: '',
-                    statementPeriod: '',
-                    totalSales: '',
-                    totalFees: '',
-                    chargebacks: '',
-                    adjustments: '',
-                    visaSales: '',
-                    visaFees: '',
-                    mastercardSales: '',
-                    mastercardFees: '',
-                    amexSales: '',
-                    amexFees: '',
-                    discoverSales: '',
-                    discoverFees: '',
-                    interchangeFees: '',
-                    assessmentFees: '',
-                    processorFees: '',
-                    monthlyFees: '',
-                    transactionCount: '',
-                  });
                 }}
               >
                 Analyze Another Statement
