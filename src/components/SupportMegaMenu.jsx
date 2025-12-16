@@ -65,10 +65,14 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           onClick: () => window.open('https://243943054.hs-sites-na2.com/', '_blank')
         },
         {
-          title: "Video Tutorials - COMING SOON",
-          subtitle: "Visual learning resources",
-          icon: <Monitor className="h-5 w-5" />,
-          description: "Watch and learn at your own pace"
+          title: "Road Map",
+          subtitle: "Future development plans",
+          icon: <Map className="h-5 w-5" />,
+          description: "Real-time status of our services",
+          onClick: () => {
+            if (onNavigate) onNavigate('roadmap')
+            if (onClose) onClose()
+          }
         }
       ]
     },
@@ -117,16 +121,7 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
             if (onNavigate) onNavigate('statement-analyzer')
             if (onClose) onClose()
           }
-        },
-        {
-          title: "Road Map",
-          subtitle: "Future development plans",
-          icon: <Map className="h-5 w-5" />,
-          description: "Real-time status of our services",
-          onClick: () => {
-            if (onNavigate) onNavigate('roadmap')
-            if (onClose) onClose()
-          }
+        }
         },
       ]
     }
