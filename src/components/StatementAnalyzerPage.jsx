@@ -283,86 +283,108 @@ function StatementAnalyzerPage({ onNavigateBack }) {
     }
 
     // Extract card type data (enhanced)
-    const visaPatterns = [
-      /VISA[\s\S]{0,50}\$?\s*([\d,]+\.?\d*)/i,
-      /Visa\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i
-    ];
-    for (const pattern of visaPatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        const value = parseCurrency(match[1]);
-        if (value > 0) {
-          data.visaSales = value;
-          break;
-        }
-      }
-    }
-
-    const mcPatterns = [
-      /(?:MASTERCARD|MasterCard|MC)[\s\S]{0,50}\$?\s*([\d,]+\.?\d*)/i,
-      /Mastercard\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i
-    ];
-    for (const pattern of mcPatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        const value = parseCurrency(match[1]);
-        if (value > 0) {
-          data.mastercardSales = value;
-          break;
-        }
-      }
-    }
-
-    const amexPatterns = [
-      /(?:AMEX|American\s+Express)[\s\S]{0,50}\$?\s*([\d,]+\.?\d*)/i,
-      /Amex\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i
-    ];
-    for (const pattern of amexPatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        const value = parseCurrency(match[1]);
-        if (value > 0) {
-          data.amexSales = value;
-          break;
-        }
-      }
-    }
-
-    const discoverPatterns = [
-      /DISCOVER[\s\S]{0,50}\$?\s*([\d,]+\.?\d*)/i,
-      /Discover\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i
-    ];
-    for (const pattern of discoverPatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        const value = parseCurrency(match[1]);
-        if (value > 0) {
-          data.discoverSales = value;
-          break;
-        }
-      }
-    }
-
-    // Extract interchange fees (CardConnect specific)
-    // CardConnect shows: TOTAL TRANSACTION FEES (mostly interchange) + DEBIT NETWORK FEES
-    let totalTransactionFees = 0;
-    let debitNetworkFees = 0;
+    // Extract card type sales from Summary By Card Type table
+    // CardConnect format: Card Type | Avg Ticket | Items | Amount | Items | Amount | Items | Amount (LAST)
+    // We want the LAST amount column (Total Amount You Submitted)
     
-    // Look for TOTAL TRANSACTION FEES
-    const txnFeesMatch = text.match(/TOTAL\s+TRANSACTION\s+FEES[\s\S]{0,50}-?\$?([\d,]+\.\d{2})/i);
-    if (txnFeesMatch) {
-      totalTransactionFees = parseCurrency(txnFeesMatch[1]);
+    // VISA - look for line with VISA, then get the last dollar amount on that line
+    const visaMatch = text.match(/VISA[\s\S]{0,200}\$([\d,]+\.\d{2})[\s\n]/i);
+    if (visaMatch) {
+      // Get all dollar amounts in the VISA row
+      const visaLine = text.match(/VISA.*?(?=\n|Discover|Mastercard|AMEX)/i);
+      if (visaLine) {
+        const amounts = [...visaLine[0].matchAll(/\$([\d,]+\.\d{2})/g)];
+        if (amounts.length > 0) {
+          // Take the last amount (Total Amount You Submitted column)
+          data.visaSales = parseCurrency(amounts[amounts.length - 1][1]);
+        }
+      }
+    }
+
+    // Mastercard
+    const mcMatch = text.match(/Mastercard[\s\S]{0,200}\$([\d,]+\.\d{2})[\s\n]/i);
+    if (mcMatch) {
+      const mcLine = text.match(/Mastercard.*?(?=\n|VISA|Discover|AMEX)/i);
+      if (mcLine) {
+        const amounts = [...mcLine[0].matchAll(/\$([\d,]+\.\d{2})/g)];
+        if (amounts.length > 0) {
+          data.mastercardSales = parseCurrency(amounts[amounts.length - 1][1]);
+        }
+      }
+    }
+
+    // AMEX ACQ
+    const amexMatch = text.match(/AMEX\s+ACQ[\s\S]{0,200}\$([\d,]+\.\d{2})[\s\n]/i);
+    if (amexMatch) {
+      const amexLine = text.match(/AMEX\s+ACQ.*?(?=\n|Total)/i);
+      if (amexLine) {
+        const amounts = [...amexLine[0].matchAll(/\$([\d,]+\.\d{2})/g)];
+        if (amounts.length > 0) {
+          data.amexSales = parseCurrency(amounts[amounts.length - 1][1]);
+        }
+      }
+    }
+
+    // Discover
+    const discoverMatch = text.match(/Discover[\s\S]{0,200}\$([\d,]+\.\d{2})[\s\n]/i);
+    if (discoverMatch) {
+      const discoverLine = text.match(/Discover.*?(?=\n|AMEX|Total)/i);
+      if (discoverLine) {
+        const amounts = [...discoverLine[0].matchAll(/\$([\d,]+\.\d{2})/g)];
+        if (amounts.length > 0) {
+          data.discoverSales = parseCurrency(amounts[amounts.length - 1][1]);
+        }
+      }
+    }
+
+    // Extract interchange fees (CardConnect specific - parse by Type column)
+    // CardConnect's TRANSACTION FEES section has Type column:
+    // - "Interchange charges" = pure interchange (non-negotiable)
+    // - "Service charges", "Fees", "Program Fees" = processor markup (negotiable)
+    
+    let interchangeTotal = 0;
+    let processorMarkupTotal = 0;
+    
+    // Extract the TRANSACTION FEES section
+    const transactionFeesSection = text.match(/TRANSACTION\s+FEES[\s\S]{0,10000}?TOTAL\s+TRANSACTION\s+FEES/i);
+    
+    if (transactionFeesSection) {
+      const section = transactionFeesSection[0];
+      
+      // Find all lines with "Interchange charges" and extract amounts
+      const interchangeMatches = section.matchAll(/Interchange\s+charges\s+-?\$([\d,]+\.\d{2})/gi);
+      for (const match of interchangeMatches) {
+        interchangeTotal += parseCurrency(match[1]);
+      }
+      
+      // Find all lines with "Service charges" and extract amounts
+      const serviceMatches = section.matchAll(/Service\s+charges\s+-?\$([\d,]+\.\d{2})/gi);
+      for (const match of serviceMatches) {
+        processorMarkupTotal += parseCurrency(match[1]);
+      }
+      
+      // Find all lines with "Fees" (not "TRANSACTION FEES") and extract amounts
+      const feeMatches = section.matchAll(/(?<!TRANSACTION\s)Fees\s+-?\$([\d,]+\.\d{2})/gi);
+      for (const match of feeMatches) {
+        processorMarkupTotal += parseCurrency(match[1]);
+      }
+      
+      // Find all lines with "Program Fees" (Amex) and extract amounts
+      const programMatches = section.matchAll(/Program\s+Fees\s+-?\$([\d,]+\.\d{2})/gi);
+      for (const match of programMatches) {
+        processorMarkupTotal += parseCurrency(match[1]);
+      }
     }
     
-    // Look for TOTAL DEBIT NETWORK FEES
+    // Add DEBIT NETWORK FEES to processor markup (these are processor fees, not interchange)
     const debitFeesMatch = text.match(/TOTAL\s+DEBIT\s+NETWORK\s+FEES[\s\S]{0,50}-?\$?([\d,]+\.\d{2})/i);
     if (debitFeesMatch) {
-      debitNetworkFees = parseCurrency(debitFeesMatch[1]);
+      processorMarkupTotal += parseCurrency(debitFeesMatch[1]);
     }
     
-    // Interchange = Transaction Fees + Debit Network Fees
-    if (totalTransactionFees > 0 || debitNetworkFees > 0) {
-      data.interchangeFees = totalTransactionFees + debitNetworkFees;
+    if (interchangeTotal > 0) {
+      data.interchangeFees = interchangeTotal;
+      data.processorFees = processorMarkupTotal;
     } else {
       // Fallback to generic patterns for other processors
       const interchangePatterns = [
@@ -383,7 +405,7 @@ function StatementAnalyzerPage({ onNavigateBack }) {
     }
 
     // Extract monthly/equipment fees (CardConnect specific)
-    // CardConnect has an ACCOUNT FEES section with multiple line items
+    // CardConnect has an ACCOUNT FEES section - these also go into processor markup
     const accountFeesSection = text.match(/ACCOUNT\s+FEES[\s\S]{0,2000}?(?=TOTAL|$)/i);
     
     if (accountFeesSection) {
@@ -400,6 +422,10 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       
       if (totalAccountFees > 0) {
         data.monthlyFees = totalAccountFees;
+        // Add account fees to processor markup total
+        if (data.processorFees > 0) {
+          data.processorFees += totalAccountFees;
+        }
       }
     } else {
       // Fallback to generic patterns for other processors
