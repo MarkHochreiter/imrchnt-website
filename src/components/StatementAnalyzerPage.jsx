@@ -267,28 +267,24 @@ function StatementAnalyzerPage({ onNavigateBack }) {
     if (summaryByBatchSection) {
       const section = summaryByBatchSection[0];
       
-      // Extract transaction count from Total row
-      const totalMatch = section.match(/Total[\s\S]{0,100}(\d{3,})\s+\$[\d,]+\.[\d]{2}/i);
-      if (totalMatch) {
-        data.transactionCount = parseInt(totalMatch[1]);
-      }
-      
-      // Extract average ticket - calculate weighted average from all batches
-      const batchMatches = section.matchAll(/\$(\d+\.\d{2})[\s\S]{0,50}(\d+)\s+\$(\d+\.\d{2})/g);
-      let totalSalesForAvg = 0;
-      let totalItemsForAvg = 0;
-      
-      for (const match of batchMatches) {
-        const avgTicket = parseFloat(match[1]);
-        const items = parseInt(match[2]);
-        if (avgTicket > 0 && items > 0) {
-          totalSalesForAvg += avgTicket * items;
-          totalItemsForAvg += items;
+      // Extract transaction count from Total row - look for the LAST number before the final amount
+      // Format: "Total ... 7,184 $334,650.01 33 -$1,066.03 7,217 $333,583.98"
+      // We want the 7,217 (last Items column)
+      const totalRowMatch = section.match(/Total[\s\S]{0,200}\$[\d,]+\.[\d]{2}/i);
+      if (totalRowMatch) {
+        const totalRow = totalRowMatch[0];
+        // Find all numbers with 3+ digits in the Total row
+        const numbers = totalRow.match(/([\d,]{3,})(?=\s+\$[\d,]+\.[\d]{2}\s*$)/g);
+        if (numbers && numbers.length > 0) {
+          // Take the last number before the final amount
+          const lastNumber = numbers[numbers.length - 1];
+          data.transactionCount = parseInt(lastNumber.replace(/,/g, ''));
         }
       }
       
-      if (totalItemsForAvg > 0) {
-        data.avgTicket = totalSalesForAvg / totalItemsForAvg;
+      // Calculate average ticket from total sales / total transactions
+      if (data.transactionCount > 0 && data.totalSales > 0) {
+        data.avgTicket = data.totalSales / data.transactionCount;
       }
     } else {
       // Fallback to generic patterns
