@@ -8,7 +8,8 @@ import {
   Users,
   BookOpen,
   Monitor,
-  Map
+  Map,
+  TrendingUp
 } from 'lucide-react'
 
 // Button component to match your design system
@@ -104,6 +105,16 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
           description: "supports .txt and .csv",
           onClick: () => {
             if (onNavigate) onNavigate('spi-converter')
+            if (onClose) onClose()
+          }
+        },
+        {
+          title: "Statement Analyzer",
+          subtitle: "Analyze processing rates",
+          icon: <TrendingUp className="h-5 w-5" />,
+          description: "Get insights on your credit card fees",
+          onClick: () => {
+            if (onNavigate) onNavigate('statement-analyzer')
             if (onClose) onClose()
           }
         },
