@@ -270,14 +270,31 @@ function StatementAnalyzerPage({ onNavigateBack }) {
     
     // If we have the total sales, look for a number that makes sense as transaction count
     if (data.totalSales > 0 && parsedNumbers.length > 0) {
-      // Transaction count should give us an average ticket between $10-$500
+      // Transaction count should give us an average ticket between $20-$200 (most common range)
+      // Prefer higher transaction counts as they're more typical for merchants
+      let bestMatch = null;
+      let bestScore = 0;
+      
       for (const num of parsedNumbers) {
         const avgTicket = data.totalSales / num;
-        if (avgTicket >= 10 && avgTicket <= 500) {
-          data.transactionCount = num;
-          data.avgTicket = avgTicket;
-          break;
+        // Average ticket should be between $20-$200 for most merchants
+        if (avgTicket >= 20 && avgTicket <= 200) {
+          // Score based on how close to ideal range ($30-$80) and prefer higher counts
+          let score = num; // Higher transaction count = higher score
+          if (avgTicket >= 30 && avgTicket <= 80) {
+            score *= 2; // Bonus for being in ideal average ticket range
+          }
+          
+          if (score > bestScore) {
+            bestScore = score;
+            bestMatch = num;
+          }
         }
+      }
+      
+      if (bestMatch) {
+        data.transactionCount = bestMatch;
+        data.avgTicket = data.totalSales / bestMatch;
       }
     }
     
