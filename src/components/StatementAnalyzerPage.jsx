@@ -192,42 +192,44 @@ function StatementAnalyzerPage({ onNavigateBack }) {
 
     // Extract total sales/volume (ENHANCED with many more patterns)
     const salesPatterns = [
+      // CardConnect specific - MUST come first to avoid YTD numbers
+      /Total\s+Amount\s+Submitted[\s\S]{0,50}\$([\d,]+\.\d{2})/i,
+      /^\s*Total\s+Amount\s+Submitted\s+\$?([\d,]+\.\d{2})/im,
+      
       // Standard patterns
-      /Total\s+(?:Sales|Volume|Amount\s+Submitted|Charged?)[:\s]+\$?\s*([\d,]+\.?\d*)/i,
+      /Total\s+(?:Sales|Volume|Charged?)[:\s]+\$?\s*([\d,]+\.?\d*)/i,
       /Gross\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i,
       /Total\s+Transactions?[:\s]+\$?\s*([\d,]+\.?\d*)/i,
       /Sales\s+Volume[:\s]+\$?\s*([\d,]+\.?\d*)/i,
       /Total\s+Card\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i,
       
-      // CardConnect specific
+      // Other processor patterns
       /Gross\s+Amount[:\s]+\$?\s*([\d,]+\.?\d*)/i,
       /Total\s+Deposits?[:\s]+\$?\s*([\d,]+\.?\d*)/i,
-      
-      // Table-based extraction (look for large dollar amounts)
-      /(?:Sales?|Volume|Amount)\s+\$?\s*([\d,]+\.\d{2})\s/i,
       
       // Summary section patterns
       /Summary[\s\S]{0,200}(?:Sales|Volume)[:\s]+\$?\s*([\d,]+\.?\d*)/i
     ];
     
-    const foundSales = [];
+    // Try patterns in order, stop at first reasonable match
     for (const pattern of salesPatterns) {
-      const matches = text.matchAll(new RegExp(pattern.source, 'gi'));
-      for (const match of matches) {
+      const match = text.match(pattern);
+      if (match) {
         const value = parseCurrency(match[1]);
         if (value > 100) { // Reasonable threshold for total sales
-          foundSales.push(value);
+          data.totalSales = value;
+          break; // Take the first match (patterns are ordered by priority)
         }
       }
     }
-    
-    // Take the largest value found (likely the total)
-    if (foundSales.length > 0) {
-      data.totalSales = Math.max(...foundSales);
-    }
 
-    // Extract total fees (ENHANCED)
+    // Extract total fees (ENHANCED for CardConnect and other formats)
     const feePatterns = [
+      // CardConnect specific - fees shown as negative in summary table
+      /Fees[\s\S]{0,50}-\$?\s*([\d,]+\.\d{2})/i,
+      /^\s*Fees\s+[-\$]\s*([\d,]+\.\d{2})/im,
+      
+      // Standard patterns
       /Total\s+Fees[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
       /Total\s+Service\s+Charges?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
       /Processing\s+Fees[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
@@ -238,6 +240,7 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       
       // Look for fees in parentheses (accounting format)
       /Total\s+Fees[:\s]+\(\$?\s*([\d,]+\.?\d*)\)/i,
+      /Fees[:\s]+\(\$?\s*([\d,]+\.?\d*)\)/i,
       
       // Summary section
       /Summary[\s\S]{0,200}Fees[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i
@@ -260,10 +263,12 @@ function StatementAnalyzerPage({ onNavigateBack }) {
 
     // Extract transaction count (enhanced)
     const txnPatterns = [
-      /(\d+)\s+transactions?/i,
-      /Transaction\s+Count[:\s]+(\d+)/i,
-      /Number\s+of\s+Transactions[:\s]+(\d+)/i,
-      /Total\s+Transactions[:\s]+(\d+)/i
+      // CardConnect - look for total items in Summary By Card Type
+      /Total[\s\S]{0,100}(\d{3,})\s+\$[\d,]+\.[\d]{2}/i,
+      /(\d{3,})\s+transactions?/i,
+      /Transaction\s+Count[:\s]+(\d{3,})/i,
+      /Number\s+of\s+Transactions[:\s]+(\d{3,})/i,
+      /Total\s+Transactions[:\s]+(\d{3,})/i
     ];
     
     for (const pattern of txnPatterns) {
