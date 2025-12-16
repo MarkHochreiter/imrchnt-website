@@ -122,7 +122,6 @@ function SupportMegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate, on
             if (onClose) onClose()
           }
         }
-        },
       ]
     }
   ]
