@@ -261,32 +261,23 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       data.totalFees = Math.max(...foundFees);
     }
 
-    // Extract transaction count from Summary By Batch
-    // PDF text format is vertical - the transaction count appears on the line immediately before total sales
-    // Format:
-    // 7,217
-    // $333,583.98
+    // Extract transaction count - simple approach
+    // Look for numbers between 1000-100000 (reasonable transaction count range)
+    // that appear near the total sales amount
     
-    if (data.totalSales > 0) {
-      // Find the total sales amount in the text
-      const salesAmountStr = data.totalSales.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      const pattern = new RegExp(`([\\d,]{3,})\\s*\\n\\s*\\$${salesAmountStr.replace(/,/g, ',')}`, 'i');
-      const match = text.match(pattern);
-      
-      if (match) {
-        data.transactionCount = parseInt(match[1].replace(/,/g, ''));
-      } else {
-        // Fallback: look for pattern "number\n$amount" near the total sales value
-        const fallbackPattern = /([\d,]{3,})\s*\n\s*\$333,583\.98/i;
-        const fallbackMatch = text.match(fallbackPattern);
-        if (fallbackMatch) {
-          data.transactionCount = parseInt(fallbackMatch[1].replace(/,/g, ''));
+    const allNumbers = text.match(/[\d,]+/g) || [];
+    const parsedNumbers = allNumbers.map(n => parseInt(n.replace(/,/g, ''))).filter(n => n >= 1000 && n <= 100000);
+    
+    // If we have the total sales, look for a number that makes sense as transaction count
+    if (data.totalSales > 0 && parsedNumbers.length > 0) {
+      // Transaction count should give us an average ticket between $10-$500
+      for (const num of parsedNumbers) {
+        const avgTicket = data.totalSales / num;
+        if (avgTicket >= 10 && avgTicket <= 500) {
+          data.transactionCount = num;
+          data.avgTicket = avgTicket;
+          break;
         }
-      }
-      
-      // Calculate average ticket from total sales / total transactions
-      if (data.transactionCount > 0) {
-        data.avgTicket = data.totalSales / data.transactionCount;
       }
     }
     
