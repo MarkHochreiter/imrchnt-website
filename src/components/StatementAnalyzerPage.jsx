@@ -261,43 +261,34 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       data.totalFees = Math.max(...foundFees);
     }
 
-    // Extract transaction count - simple approach
-    // Look for numbers between 1000-100000 (reasonable transaction count range)
-    // IMPORTANT: Exclude numbers that are part of dollar amounts (preceded by $)
+    // Extract transaction count from Summary By Card Type table
+    // CardConnect format: The Total row shows transaction count right before the total sales amount
+    // Pattern: [number]\n$[total sales]\nTotal
     
-    // Remove all dollar amounts first to avoid false matches
-    const textWithoutDollarAmounts = text.replace(/\$[\d,]+\.\d{2}/g, '');
-    
-    const allNumbers = textWithoutDollarAmounts.match(/[\d,]+/g) || [];
-    const parsedNumbers = allNumbers.map(n => parseInt(n.replace(/,/g, ''))).filter(n => n >= 1000 && n <= 100000);
-    
-    // If we have the total sales, look for a number that makes sense as transaction count
-    if (data.totalSales > 0 && parsedNumbers.length > 0) {
-      // Transaction count should give us an average ticket between $20-$200 (most common range)
-      // Prefer higher transaction counts as they're more typical for merchants
-      let bestMatch = null;
-      let bestScore = 0;
+    if (data.totalSales > 0) {
+      const salesAmountStr = data.totalSales.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       
-      for (const num of parsedNumbers) {
-        const avgTicket = data.totalSales / num;
-        // Average ticket should be between $20-$200 for most merchants
-        if (avgTicket >= 20 && avgTicket <= 200) {
-          // Score based on how close to ideal range ($30-$80) and prefer higher counts
-          let score = num; // Higher transaction count = higher score
-          if (avgTicket >= 30 && avgTicket <= 80) {
-            score *= 2; // Bonus for being in ideal average ticket range
-          }
-          
-          if (score > bestScore) {
-            bestScore = score;
-            bestMatch = num;
+      // Look for: number (newlines/spaces) $amount (newlines/spaces) Total
+      // This captures the transaction count in the Summary By Card Type table
+      const pattern = new RegExp(`([\\d,]+)\\s*\\$${salesAmountStr.replace(/[.,]/g, '[.,]')}\\s*Total`, 'i');
+      const match = text.match(pattern);
+      
+      if (match) {
+        data.transactionCount = parseInt(match[1].replace(/,/g, ''));
+        data.avgTicket = data.totalSales / data.transactionCount;
+      } else {
+        // Fallback: look for any number immediately before the total sales amount
+        const fallbackPattern = new RegExp(`([\\d,]+)\\s+\\$${salesAmountStr.replace(/[.,]/g, '[.,]')}`, 'i');
+        const fallbackMatch = text.match(fallbackPattern);
+        if (fallbackMatch) {
+          const count = parseInt(fallbackMatch[1].replace(/,/g, ''));
+          // Verify it's a reasonable transaction count (gives avg ticket $10-$500)
+          const avgTicket = data.totalSales / count;
+          if (count >= 100 && count <= 100000 && avgTicket >= 10 && avgTicket <= 500) {
+            data.transactionCount = count;
+            data.avgTicket = avgTicket;
           }
         }
-      }
-      
-      if (bestMatch) {
-        data.transactionCount = bestMatch;
-        data.avgTicket = data.totalSales / bestMatch;
       }
     }
     
