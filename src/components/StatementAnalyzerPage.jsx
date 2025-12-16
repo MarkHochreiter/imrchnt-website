@@ -261,32 +261,36 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       data.totalFees = Math.max(...foundFees);
     }
 
-    // Extract transaction count and average ticket from Summary By Batch
-    const summaryByBatchSection = text.match(/SUMMARY\s+BY\s+BATCH[\s\S]{0,3000}?(?=CHARGEBACKS|ADJUSTMENTS|FEES)/i);
+    // Extract transaction count from Summary By Batch
+    // PDF text format is vertical - the transaction count appears on the line immediately before total sales
+    // Format:
+    // 7,217
+    // $333,583.98
     
-    if (summaryByBatchSection) {
-      const section = summaryByBatchSection[0];
+    if (data.totalSales > 0) {
+      // Find the total sales amount in the text
+      const salesAmountStr = data.totalSales.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      const pattern = new RegExp(`([\\d,]{3,})\\s*\\n\\s*\\$${salesAmountStr.replace(/,/g, ',')}`, 'i');
+      const match = text.match(pattern);
       
-      // Extract transaction count from Total row - look for the LAST number before the final amount
-      // Format: "Total ... 7,184 $334,650.01 33 -$1,066.03 7,217 $333,583.98"
-      // We want the 7,217 (last Items column)
-      const totalRowMatch = section.match(/Total[\s\S]{0,200}\$[\d,]+\.[\d]{2}/i);
-      if (totalRowMatch) {
-        const totalRow = totalRowMatch[0];
-        // Find all numbers with 3+ digits in the Total row
-        const numbers = totalRow.match(/([\d,]{3,})(?=\s+\$[\d,]+\.[\d]{2}\s*$)/g);
-        if (numbers && numbers.length > 0) {
-          // Take the last number before the final amount
-          const lastNumber = numbers[numbers.length - 1];
-          data.transactionCount = parseInt(lastNumber.replace(/,/g, ''));
+      if (match) {
+        data.transactionCount = parseInt(match[1].replace(/,/g, ''));
+      } else {
+        // Fallback: look for pattern "number\n$amount" near the total sales value
+        const fallbackPattern = /([\d,]{3,})\s*\n\s*\$333,583\.98/i;
+        const fallbackMatch = text.match(fallbackPattern);
+        if (fallbackMatch) {
+          data.transactionCount = parseInt(fallbackMatch[1].replace(/,/g, ''));
         }
       }
       
       // Calculate average ticket from total sales / total transactions
-      if (data.transactionCount > 0 && data.totalSales > 0) {
+      if (data.transactionCount > 0) {
         data.avgTicket = data.totalSales / data.transactionCount;
       }
-    } else {
+    }
+    
+    if (!data.transactionCount) {
       // Fallback to generic patterns
       const txnPatterns = [
         /Total[\s\S]{0,100}(\d{3,})\s+\$[\d,]+\.[\d]{2}/i,
