@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Upload, Download, FileText, CheckCircle2, AlertCircle, TrendingUp, DollarSign, CreditCard, ArrowLeft, PieChart, BarChart3, Loader2 } from 'lucide-react';
+import { Upload, Download, FileText, CheckCircle2, AlertCircle, TrendingUp, DollarSign, CreditCard, ArrowLeft, PieChart, BarChart3, Loader2, Eye, EyeOff } from 'lucide-react';
 import * as pdfjsLib from 'pdfjs-dist';
 
 // Set up PDF.js worker
@@ -67,6 +67,9 @@ const toast = {
   error: (title, options) => {
     console.error('Error:', title, options?.description);
     alert(`❌ ${title}\n${options?.description || ''}`);
+  },
+  warning: (title, options) => {
+    console.warn('Warning:', title, options?.description);
   }
 }
 
@@ -75,6 +78,13 @@ function StatementAnalyzerPage({ onNavigateBack }) {
   const [isDragging, setIsDragging] = useState(false);
   const [analysisData, setAnalysisData] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [extractedText, setExtractedText] = useState('');
+  const [showManualEntry, setShowManualEntry] = useState(false);
+  const [showExtractedText, setShowExtractedText] = useState(false);
+  const [manualData, setManualData] = useState({
+    totalSales: '',
+    totalFees: ''
+  });
 
   const handleDrop = useCallback((e) => {
     e.preventDefault();
@@ -124,8 +134,8 @@ function StatementAnalyzerPage({ onNavigateBack }) {
   };
 
   const parseCurrency = (text) => {
-    // Remove currency symbols, commas, and convert to number
-    const cleaned = text.replace(/[$,]/g, '');
+    // Remove currency symbols, commas, parentheses, and convert to number
+    const cleaned = text.replace(/[$,()]/g, '').trim();
     return parseFloat(cleaned) || 0;
   };
 
@@ -150,90 +160,216 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       monthlyFees: 0
     };
 
-    // Extract merchant name (look for common patterns)
-    const merchantMatch = text.match(/Merchant\s+Name[:\s]+([^\n]+)/i) || 
-                         text.match(/Business\s+Name[:\s]+([^\n]+)/i);
-    if (merchantMatch) {
-      data.merchantName = merchantMatch[1].trim();
+    // Extract merchant name (enhanced patterns)
+    const merchantPatterns = [
+      /Merchant\s+Name[:\s]+([^\n]+)/i,
+      /Business\s+Name[:\s]+([^\n]+)/i,
+      /DBA[:\s]+([^\n]+)/i,
+      /Location[:\s]+([^\n]+)/i
+    ];
+    for (const pattern of merchantPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        data.merchantName = match[1].trim();
+        break;
+      }
     }
 
-    // Extract statement period
-    const periodMatch = text.match(/Statement\s+Period[:\s]+([^\n]+)/i) ||
-                       text.match(/(\d{1,2}\/\d{1,2}\/\d{2,4}\s*-\s*\d{1,2}\/\d{1,2}\/\d{2,4})/);
-    if (periodMatch) {
-      data.statementPeriod = periodMatch[1].trim();
+    // Extract statement period (enhanced patterns)
+    const periodPatterns = [
+      /Statement\s+Period[:\s]+([^\n]+)/i,
+      /Period[:\s]+([^\n]+)/i,
+      /(\d{1,2}\/\d{1,2}\/\d{2,4}\s*[-–]\s*\d{1,2}\/\d{1,2}\/\d{2,4})/,
+      /(\w+\s+\d{1,2},?\s+\d{4}\s*[-–]\s*\w+\s+\d{1,2},?\s+\d{4})/
+    ];
+    for (const pattern of periodPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        data.statementPeriod = match[1].trim();
+        break;
+      }
     }
 
-    // Extract total sales/volume (look for various patterns)
+    // Extract total sales/volume (ENHANCED with many more patterns)
     const salesPatterns = [
-      /Total\s+(?:Sales|Volume|Amount\s+Submitted)[:\s]+\$?([\d,]+\.?\d*)/i,
-      /Gross\s+Sales[:\s]+\$?([\d,]+\.?\d*)/i,
-      /Total\s+Transactions[:\s]+\$?([\d,]+\.?\d*)/i
+      // Standard patterns
+      /Total\s+(?:Sales|Volume|Amount\s+Submitted|Charged?)[:\s]+\$?\s*([\d,]+\.?\d*)/i,
+      /Gross\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i,
+      /Total\s+Transactions?[:\s]+\$?\s*([\d,]+\.?\d*)/i,
+      /Sales\s+Volume[:\s]+\$?\s*([\d,]+\.?\d*)/i,
+      /Total\s+Card\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i,
+      
+      // CardConnect specific
+      /Gross\s+Amount[:\s]+\$?\s*([\d,]+\.?\d*)/i,
+      /Total\s+Deposits?[:\s]+\$?\s*([\d,]+\.?\d*)/i,
+      
+      // Table-based extraction (look for large dollar amounts)
+      /(?:Sales?|Volume|Amount)\s+\$?\s*([\d,]+\.\d{2})\s/i,
+      
+      // Summary section patterns
+      /Summary[\s\S]{0,200}(?:Sales|Volume)[:\s]+\$?\s*([\d,]+\.?\d*)/i
     ];
     
+    const foundSales = [];
     for (const pattern of salesPatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        data.totalSales = parseCurrency(match[1]);
-        if (data.totalSales > 0) break;
+      const matches = text.matchAll(new RegExp(pattern.source, 'gi'));
+      for (const match of matches) {
+        const value = parseCurrency(match[1]);
+        if (value > 100) { // Reasonable threshold for total sales
+          foundSales.push(value);
+        }
       }
     }
+    
+    // Take the largest value found (likely the total)
+    if (foundSales.length > 0) {
+      data.totalSales = Math.max(...foundSales);
+    }
 
-    // Extract total fees
+    // Extract total fees (ENHANCED)
     const feePatterns = [
-      /Total\s+Fees[:\s]+[-\$]?([\d,]+\.?\d*)/i,
-      /Total\s+Service\s+Charges[:\s]+[-\$]?([\d,]+\.?\d*)/i,
-      /Processing\s+Fees[:\s]+[-\$]?([\d,]+\.?\d*)/i
+      /Total\s+Fees[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+      /Total\s+Service\s+Charges?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+      /Processing\s+Fees[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+      /Total\s+Charges?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+      /Fees\s+(?:and\s+)?Charges?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+      /Net\s+Fees[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+      /(?:Total\s+)?Discount[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+      
+      // Look for fees in parentheses (accounting format)
+      /Total\s+Fees[:\s]+\(\$?\s*([\d,]+\.?\d*)\)/i,
+      
+      // Summary section
+      /Summary[\s\S]{0,200}Fees[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i
     ];
     
+    const foundFees = [];
     for (const pattern of feePatterns) {
+      const matches = text.matchAll(new RegExp(pattern.source, 'gi'));
+      for (const match of matches) {
+        const value = parseCurrency(match[1]);
+        if (value > 0 && value < data.totalSales * 0.1) { // Fees should be < 10% of sales
+          foundFees.push(value);
+        }
+      }
+    }
+    
+    if (foundFees.length > 0) {
+      data.totalFees = Math.max(...foundFees);
+    }
+
+    // Extract transaction count (enhanced)
+    const txnPatterns = [
+      /(\d+)\s+transactions?/i,
+      /Transaction\s+Count[:\s]+(\d+)/i,
+      /Number\s+of\s+Transactions[:\s]+(\d+)/i,
+      /Total\s+Transactions[:\s]+(\d+)/i
+    ];
+    
+    for (const pattern of txnPatterns) {
       const match = text.match(pattern);
       if (match) {
-        data.totalFees = parseCurrency(match[1]);
-        if (data.totalFees > 0) break;
+        const count = parseInt(match[1]);
+        if (count > 0 && count < 1000000) { // Reasonable range
+          data.transactionCount = count;
+          break;
+        }
       }
     }
 
-    // Extract transaction count
-    const txnMatch = text.match(/(\d+)\s+transactions?/i);
-    if (txnMatch) {
-      data.transactionCount = parseInt(txnMatch[1]);
+    // Extract card type data (enhanced)
+    const visaPatterns = [
+      /VISA[\s\S]{0,50}\$?\s*([\d,]+\.?\d*)/i,
+      /Visa\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i
+    ];
+    for (const pattern of visaPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        const value = parseCurrency(match[1]);
+        if (value > 0) {
+          data.visaSales = value;
+          break;
+        }
+      }
     }
 
-    // Extract Visa data
-    const visaSalesMatch = text.match(/VISA[^\n]*\$?([\d,]+\.?\d*)/i);
-    if (visaSalesMatch) {
-      data.visaSales = parseCurrency(visaSalesMatch[1]);
+    const mcPatterns = [
+      /(?:MASTERCARD|MasterCard|MC)[\s\S]{0,50}\$?\s*([\d,]+\.?\d*)/i,
+      /Mastercard\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i
+    ];
+    for (const pattern of mcPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        const value = parseCurrency(match[1]);
+        if (value > 0) {
+          data.mastercardSales = value;
+          break;
+        }
+      }
     }
 
-    // Extract Mastercard data
-    const mcSalesMatch = text.match(/(?:MASTERCARD|MC)[^\n]*\$?([\d,]+\.?\d*)/i);
-    if (mcSalesMatch) {
-      data.mastercardSales = parseCurrency(mcSalesMatch[1]);
+    const amexPatterns = [
+      /(?:AMEX|American\s+Express)[\s\S]{0,50}\$?\s*([\d,]+\.?\d*)/i,
+      /Amex\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i
+    ];
+    for (const pattern of amexPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        const value = parseCurrency(match[1]);
+        if (value > 0) {
+          data.amexSales = value;
+          break;
+        }
+      }
     }
 
-    // Extract Amex data
-    const amexSalesMatch = text.match(/(?:AMEX|AMERICAN\s+EXPRESS)[^\n]*\$?([\d,]+\.?\d*)/i);
-    if (amexSalesMatch) {
-      data.amexSales = parseCurrency(amexSalesMatch[1]);
+    const discoverPatterns = [
+      /DISCOVER[\s\S]{0,50}\$?\s*([\d,]+\.?\d*)/i,
+      /Discover\s+Sales[:\s]+\$?\s*([\d,]+\.?\d*)/i
+    ];
+    for (const pattern of discoverPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        const value = parseCurrency(match[1]);
+        if (value > 0) {
+          data.discoverSales = value;
+          break;
+        }
+      }
     }
 
-    // Extract Discover data
-    const discoverSalesMatch = text.match(/DISCOVER[^\n]*\$?([\d,]+\.?\d*)/i);
-    if (discoverSalesMatch) {
-      data.discoverSales = parseCurrency(discoverSalesMatch[1]);
+    // Extract interchange fees (enhanced)
+    const interchangePatterns = [
+      /Interchange[\s\S]{0,50}[-\$]?\s*([\d,]+\.?\d*)/i,
+      /IC\s+Fees?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+      /Interchange\s+Fees?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i
+    ];
+    for (const pattern of interchangePatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        const value = parseCurrency(match[1]);
+        if (value > 0) {
+          data.interchangeFees = value;
+          break;
+        }
+      }
     }
 
-    // Extract interchange fees
-    const interchangeMatch = text.match(/Interchange[^\n]*[-\$]?([\d,]+\.?\d*)/i);
-    if (interchangeMatch) {
-      data.interchangeFees = parseCurrency(interchangeMatch[1]);
-    }
-
-    // Extract monthly/equipment fees
-    const monthlyMatch = text.match(/(?:Monthly|Equipment)\s+Fee[s]?[:\s]+[-\$]?([\d,]+\.?\d*)/i);
-    if (monthlyMatch) {
-      data.monthlyFees = parseCurrency(monthlyMatch[1]);
+    // Extract monthly/equipment fees (enhanced)
+    const monthlyPatterns = [
+      /(?:Monthly|Equipment|Account)\s+Fee[s]?[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+      /Statement\s+Fee[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i,
+      /Service\s+Fee[:\s]+[-\$]?\s*([\d,]+\.?\d*)/i
+    ];
+    for (const pattern of monthlyPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        const value = parseCurrency(match[1]);
+        if (value > 0 && value < 1000) { // Monthly fees typically under $1000
+          data.monthlyFees = value;
+          break;
+        }
+      }
     }
 
     return data;
@@ -242,10 +378,13 @@ function StatementAnalyzerPage({ onNavigateBack }) {
   const handleFileUpload = async (uploadedFile) => {
     setFile(uploadedFile);
     setIsProcessing(true);
+    setShowManualEntry(false);
+    setAnalysisData(null);
     
     try {
       // Extract text from PDF
       const pdfText = await extractTextFromPDF(uploadedFile);
+      setExtractedText(pdfText);
       
       // Parse the extracted text
       const extractedData = extractDataFromText(pdfText);
@@ -255,9 +394,11 @@ function StatementAnalyzerPage({ onNavigateBack }) {
         analyzeData(extractedData);
         toast.success('Statement analyzed successfully');
       } else {
-        toast.error('Could not extract data', {
-          description: 'Unable to automatically parse this statement format. Please try a different file or contact support.'
+        // Show manual entry form with extracted text
+        toast.warning('Could not auto-extract all data', {
+          description: 'Please enter the key values manually'
         });
+        setShowManualEntry(true);
         setIsProcessing(false);
       }
     } catch (error) {
@@ -267,6 +408,50 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       });
       setIsProcessing(false);
     }
+  };
+
+  const handleManualSubmit = (e) => {
+    e.preventDefault();
+    
+    const totalSales = parseFloat(manualData.totalSales);
+    const totalFees = parseFloat(manualData.totalFees);
+    
+    if (!totalSales || !totalFees || totalSales <= 0 || totalFees <= 0) {
+      toast.error('Invalid input', {
+        description: 'Please enter valid positive numbers for both fields'
+      });
+      return;
+    }
+    
+    if (totalFees > totalSales) {
+      toast.error('Invalid input', {
+        description: 'Total fees cannot exceed total sales'
+      });
+      return;
+    }
+    
+    const formData = {
+      merchantName: '',
+      statementPeriod: '',
+      totalSales,
+      totalFees,
+      chargebacks: 0,
+      transactionCount: 0,
+      visaSales: 0,
+      visaFees: 0,
+      mastercardSales: 0,
+      mastercardFees: 0,
+      amexSales: 0,
+      amexFees: 0,
+      discoverSales: 0,
+      discoverFees: 0,
+      interchangeFees: 0,
+      processorFees: 0,
+      monthlyFees: 0
+    };
+    
+    analyzeData(formData);
+    setShowManualEntry(false);
   };
 
   const analyzeData = (formData) => {
@@ -496,8 +681,10 @@ function StatementAnalyzerPage({ onNavigateBack }) {
     report += `Total Sales:              $${data.summary.totalSales.toLocaleString('en-US', {minimumFractionDigits: 2})}\n`;
     report += `Total Fees:               $${data.summary.totalFees.toLocaleString('en-US', {minimumFractionDigits: 2})}\n`;
     report += `Effective Rate:           ${data.summary.effectiveRate.toFixed(2)}%\n`;
-    report += `Transaction Count:        ${data.summary.transactionCount.toLocaleString()}\n`;
-    report += `Average Ticket:           $${data.summary.avgTicket.toFixed(2)}\n`;
+    if (data.summary.transactionCount > 0) {
+      report += `Transaction Count:        ${data.summary.transactionCount.toLocaleString()}\n`;
+      report += `Average Ticket:           $${data.summary.avgTicket.toFixed(2)}\n`;
+    }
     report += `Net Amount Processed:     $${data.summary.netAmount.toLocaleString('en-US', {minimumFractionDigits: 2})}\n\n`;
     
     if (data.cardTypeBreakdown.length > 0) {
@@ -524,8 +711,13 @@ function StatementAnalyzerPage({ onNavigateBack }) {
     report += `RATE ANALYSIS\n`;
     report += `${'-'.repeat(60)}\n`;
     report += `Effective Rate:           ${data.rates.effectiveRate.toFixed(2)}%\n`;
-    report += `Interchange Component:    ${data.rates.interchangeRate.toFixed(2)}%\n`;
-    report += `Processor Markup:         ${data.rates.processorMarkupRate.toFixed(2)}%\n\n`;
+    if (data.rates.interchangeRate > 0) {
+      report += `Interchange Component:    ${data.rates.interchangeRate.toFixed(2)}%\n`;
+    }
+    if (data.rates.processorMarkupRate > 0) {
+      report += `Processor Markup:         ${data.rates.processorMarkupRate.toFixed(2)}%\n`;
+    }
+    report += `\n`;
     
     if (data.recommendations.length > 0) {
       report += `RECOMMENDATIONS\n`;
@@ -581,7 +773,7 @@ function StatementAnalyzerPage({ onNavigateBack }) {
       {/* Main Content */}
       <div className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         {/* Upload Section */}
-        {!analysisData && !isProcessing && (
+        {!analysisData && !isProcessing && !showManualEntry && (
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -637,6 +829,111 @@ function StatementAnalyzerPage({ onNavigateBack }) {
           </Card>
         )}
 
+        {/* Manual Entry Form (Fallback) */}
+        {showManualEntry && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {/* Manual Entry Form */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <AlertCircle className="h-5 w-5 text-yellow-500" />
+                  Enter Key Values
+                </CardTitle>
+                <CardDescription>
+                  We couldn't auto-extract all data. Please enter the total sales and total fees from your statement.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleManualSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Total Sales / Volume
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-2.5 text-gray-500">$</span>
+                      <input
+                        type="number"
+                        step="0.01"
+                        value={manualData.totalSales}
+                        onChange={(e) => setManualData({...manualData, totalSales: e.target.value})}
+                        className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-[#f08e80] focus:border-[#f08e80]"
+                        placeholder="0.00"
+                        required
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Total Fees / Charges
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-2.5 text-gray-500">$</span>
+                      <input
+                        type="number"
+                        step="0.01"
+                        value={manualData.totalFees}
+                        onChange={(e) => setManualData({...manualData, totalFees: e.target.value})}
+                        className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-[#f08e80] focus:border-[#f08e80]"
+                        placeholder="0.00"
+                        required
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3 pt-4">
+                    <Button type="submit" className="flex-1">
+                      Analyze
+                    </Button>
+                    <Button 
+                      type="button" 
+                      variant="outline"
+                      onClick={() => {
+                        setShowManualEntry(false);
+                        setFile(null);
+                        setExtractedText('');
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* Extracted Text Display */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-[#f08e80]" />
+                    Extracted Text
+                  </CardTitle>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setShowExtractedText(!showExtractedText)}
+                  >
+                    {showExtractedText ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </Button>
+                </div>
+                <CardDescription>
+                  Text extracted from your PDF - use this to find the values
+                </CardDescription>
+              </CardHeader>
+              {showExtractedText && (
+                <CardContent>
+                  <div className="bg-gray-50 p-4 rounded-md max-h-96 overflow-y-auto">
+                    <pre className="text-xs text-gray-700 whitespace-pre-wrap font-mono">
+                      {extractedText || 'No text extracted'}
+                    </pre>
+                  </div>
+                </CardContent>
+              )}
+            </Card>
+          </div>
+        )}
+
         {/* Analysis Results */}
         {analysisData && (
           <>
@@ -684,9 +981,14 @@ function StatementAnalyzerPage({ onNavigateBack }) {
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Avg Ticket</p>
+                      <p className="text-sm font-medium text-gray-600">
+                        {analysisData.summary.transactionCount > 0 ? 'Avg Ticket' : 'Net Amount'}
+                      </p>
                       <p className="text-3xl font-bold text-gray-900 mt-2">
-                        {formatCurrency(analysisData.summary.avgTicket)}
+                        {analysisData.summary.transactionCount > 0 
+                          ? formatCurrency(analysisData.summary.avgTicket)
+                          : formatCurrency(analysisData.summary.netAmount)
+                        }
                       </p>
                     </div>
                     <div className="h-12 w-12 bg-[#f08e80]/10 rounded-full flex items-center justify-center">
@@ -694,7 +996,10 @@ function StatementAnalyzerPage({ onNavigateBack }) {
                     </div>
                   </div>
                   <p className="text-sm text-gray-500 mt-2">
-                    {analysisData.summary.transactionCount.toLocaleString()} transactions
+                    {analysisData.summary.transactionCount > 0 
+                      ? `${analysisData.summary.transactionCount.toLocaleString()} transactions`
+                      : 'After fees'
+                    }
                   </p>
                 </CardContent>
               </Card>
@@ -823,6 +1128,8 @@ function StatementAnalyzerPage({ onNavigateBack }) {
                 onClick={() => {
                   setAnalysisData(null);
                   setFile(null);
+                  setExtractedText('');
+                  setManualData({ totalSales: '', totalFees: '' });
                 }}
               >
                 Analyze Another Statement
