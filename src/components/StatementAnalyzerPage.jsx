@@ -263,9 +263,12 @@ function StatementAnalyzerPage({ onNavigateBack }) {
 
     // Extract transaction count - simple approach
     // Look for numbers between 1000-100000 (reasonable transaction count range)
-    // that appear near the total sales amount
+    // IMPORTANT: Exclude numbers that are part of dollar amounts (preceded by $)
     
-    const allNumbers = text.match(/[\d,]+/g) || [];
+    // Remove all dollar amounts first to avoid false matches
+    const textWithoutDollarAmounts = text.replace(/\$[\d,]+\.\d{2}/g, '');
+    
+    const allNumbers = textWithoutDollarAmounts.match(/[\d,]+/g) || [];
     const parsedNumbers = allNumbers.map(n => parseInt(n.replace(/,/g, ''))).filter(n => n >= 1000 && n <= 100000);
     
     // If we have the total sales, look for a number that makes sense as transaction count
