@@ -255,7 +255,7 @@ function SPIConverterPage({ onNavigateBack }) {
   };
 
   // ✅ NEW: Parse Excel files
-  const parseExcelFile = (arrayBuffer) => {
+  const parseExcelFile = (arrayBuffer, useHeaders = hasHeaders, useIgnoreFirstLine = ignoreFirstLine) => {
     const workbook = XLSX.read(arrayBuffer, { type: 'array' });
     const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
     const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: '' });
@@ -268,7 +268,7 @@ function SPIConverterPage({ onNavigateBack }) {
     let startIndex = 0;
     
     // Handle ignore first line
-    if (ignoreFirstLine) {
+    if (useIgnoreFirstLine) {
       ignoredLine = jsonData[0].map(cell => String(cell || ''));
       setIgnoredFirstLine(ignoredLine);
       startIndex = 1;
@@ -276,7 +276,7 @@ function SPIConverterPage({ onNavigateBack }) {
       setIgnoredFirstLine(null);
     }
     
-    if (hasHeaders) {
+    if (useHeaders) {
       headers = jsonData[startIndex].map(h => String(h || ''));
       rows = jsonData.slice(startIndex + 1).map(row => row.map(cell => String(cell || '')));
     } else {
@@ -299,7 +299,7 @@ function SPIConverterPage({ onNavigateBack }) {
     throw new Error('PDF parsing requires additional setup. Please convert your PDF to Excel or CSV first.');
   };
 
-  const parseFile = (text, delimiterType) => {
+  const parseFile = (text, delimiterType, useHeaders = hasHeaders, useIgnoreFirstLine = ignoreFirstLine) => {
     const lines = text.trim().split('\n').filter(line => line.trim());
     if (lines.length === 0) {
       throw new Error('File is empty');
@@ -311,7 +311,7 @@ function SPIConverterPage({ onNavigateBack }) {
     let startIndex = 0;
     
     // Handle ignore first line
-    if (ignoreFirstLine) {
+    if (useIgnoreFirstLine) {
       ignoredLine = splitCSVLine(lines[0], dataDelimiter);
       setIgnoredFirstLine(ignoredLine);
       startIndex = 1;
@@ -319,7 +319,7 @@ function SPIConverterPage({ onNavigateBack }) {
       setIgnoredFirstLine(null);
     }
     
-    if (hasHeaders) {
+    if (useHeaders) {
       const headerDelimiter = detectDelimiter(lines[startIndex]);
       headers = splitCSVLine(lines[startIndex], headerDelimiter);
       rows = lines.slice(startIndex + 1).map(line => splitCSVLine(line, dataDelimiter));
@@ -732,9 +732,15 @@ function SPIConverterPage({ onNavigateBack }) {
                     checked={hasHeaders}
                     onCheckedChange={(checked) => {
                       setHasHeaders(checked);
-                      if (file) {
-                        // Re-parse file with new header setting
-                        handleFileUpload(file);
+                      if (file && fileContent) {
+                        // Re-parse file immediately with new header setting
+                        try {
+                          const data = parseFile(fileContent, delimiter, checked, ignoreFirstLine);
+                          setParsedData(data);
+                          autoMapFields(data);
+                        } catch (error) {
+                          console.error('Failed to reparse:', error);
+                        }
                       }
                     }}
                   />
@@ -749,9 +755,15 @@ function SPIConverterPage({ onNavigateBack }) {
                     checked={ignoreFirstLine}
                     onCheckedChange={(checked) => {
                       setIgnoreFirstLine(checked);
-                      if (file) {
-                        // Re-parse file with new ignore first line setting
-                        handleFileUpload(file);
+                      if (file && fileContent) {
+                        // Re-parse file immediately with new ignore first line setting
+                        try {
+                          const data = parseFile(fileContent, delimiter, hasHeaders, checked);
+                          setParsedData(data);
+                          autoMapFields(data);
+                        } catch (error) {
+                          console.error('Failed to reparse:', error);
+                        }
                       }
                     }}
                   />
