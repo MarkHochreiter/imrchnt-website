@@ -623,43 +623,6 @@ function SPIConverterPage({ onNavigateBack }) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {/* ✅ NEW: Header checkbox */}
-            <div className="mb-4 space-y-3">
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id="has-headers"
-                  checked={hasHeaders}
-                  onCheckedChange={(checked) => {
-                    setHasHeaders(checked);
-                    if (file) {
-                      // Re-parse file with new header setting
-                      handleFileUpload(file);
-                    }
-                  }}
-                />
-                <Label htmlFor="has-headers" className="cursor-pointer">
-                  File has headers in first row
-                </Label>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id="ignore-first-line"
-                  checked={ignoreFirstLine}
-                  onCheckedChange={(checked) => {
-                    setIgnoreFirstLine(checked);
-                    if (file) {
-                      // Re-parse file with new ignore first line setting
-                      handleFileUpload(file);
-                    }
-                  }}
-                />
-                <Label htmlFor="ignore-first-line" className="cursor-pointer">
-                  Ignore first line (exclude from data)
-                </Label>
-              </div>
-            </div>
-
             <div
               onDrop={handleDrop}
               onDragOver={handleDragOver}
@@ -760,6 +723,44 @@ function SPIConverterPage({ onNavigateBack }) {
               </div>
             </CardHeader>
             <CardContent>
+              {/* File parsing options */}
+              <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg space-y-3">
+                <p className="text-sm font-medium text-blue-900 mb-3">File Parsing Options</p>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id="has-headers"
+                    checked={hasHeaders}
+                    onCheckedChange={(checked) => {
+                      setHasHeaders(checked);
+                      if (file) {
+                        // Re-parse file with new header setting
+                        handleFileUpload(file);
+                      }
+                    }}
+                  />
+                  <Label htmlFor="has-headers" className="cursor-pointer text-sm">
+                    File has headers in first row
+                  </Label>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id="ignore-first-line"
+                    checked={ignoreFirstLine}
+                    onCheckedChange={(checked) => {
+                      setIgnoreFirstLine(checked);
+                      if (file) {
+                        // Re-parse file with new ignore first line setting
+                        handleFileUpload(file);
+                      }
+                    }}
+                  />
+                  <Label htmlFor="ignore-first-line" className="cursor-pointer text-sm">
+                    Ignore first line (exclude from data)
+                  </Label>
+                </div>
+              </div>
+              
               {/* Display ignored first line if present */}
               {ignoredFirstLine && (
                 <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
