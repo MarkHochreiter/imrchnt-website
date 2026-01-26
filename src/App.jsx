@@ -111,7 +111,7 @@ function HomePage() {
             </div>
 
             {/* Image with effects */}
-            <div className="flex-1 relative max-w-2xl hero-image-container">
+            <div className="flex-1 relative max-w-2xl hero-image-container lg:-mt-16">
               {/* Glow effect behind image */}
               <div className="hero-glow absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-[#f08e80] rounded-3xl blur-3xl opacity-40"></div>
 
