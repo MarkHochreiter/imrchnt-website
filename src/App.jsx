@@ -63,54 +63,77 @@ function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 lg:py-32 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-gradient-to-br from-[#2d3748] via-[#3d4a5e] to-[#1a202c] text-white py-20 lg:py-32 overflow-hidden">
+        {/* Subtle gradient overlays for depth */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-pink-900/20"></div>
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-black/30 to-transparent"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left side - Text content */}
-            <div className="relative z-10">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-6">
-                Seamless POS <br />
-                Intuitive Design <br />
-                Built for Bookstores
+            <div className="relative z-20">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-8 tracking-tight">
+                Seamless POS<br />
+                Intuitive Design<br />
+                Built for<br />
+                Bookstores
               </h1>
-              <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-                In store, Pop up, Off site. Network connection or not.  
-                Sell anywhere, anytime.
+              <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-xl leading-relaxed">
+                In store, Pop up, Off site. Network connection or not. Sell anywhere, anytime.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <div className="mb-12">
                 <Button 
                   size="lg" 
-                  className="bg-[#f08e80] hover:bg-violet-400 text-white text-lg px-8 py-4"
+                  className="bg-[#f08e80] hover:bg-[#e07d6d] text-white text-lg px-10 py-4 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
                   onClick={handleSignupClick}
                 >
                   Request access
                 </Button>
               </div>
-              <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-6 border border-gray-700">
-                <p className="text-base text-gray-300 font-houschka-medium mb-2 italic">
+              
+              {/* Testimonial Card */}
+              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 shadow-2xl max-w-xl">
+                <p className="text-base md:text-lg text-gray-200 font-houschka-medium mb-4 italic leading-relaxed">
                   "I've never had such a smooth time at a large offsite and I can't tell you how excited I am about it!"
                 </p>
-                <p className="text-sm text-gray-400 font-houschka-medium">
-                  H - Bookstore Manager<br />
-                  Still North Books & Bar, Hanover, NH
-                </p>
+                <div className="text-sm text-gray-400 font-houschka-medium">
+                  <p className="text-gray-300">H - Bookstore Manager</p>
+                  <p>Still North Books & Bar, Hanover, NH</p>
+                </div>
               </div>
             </div>
             
-            {/* Right side - Payment terminal image */}
-            <div className="relative lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-1/2 lg:h-full flex items-center justify-center lg:justify-end lg:pr-8">
-              <div className="relative w-full max-w-md lg:max-w-lg">
-                <img 
-                  src={allinone} 
-                  alt="Payment Terminal" 
-                  className="w-full h-auto drop-shadow-2xl transform hover:scale-105 transition-transform duration-300"
-                />
-                {/* Subtle glow effect behind the image */}
-                <div className="absolute inset-0 bg-[#f08e80]/20 blur-3xl -z-10 scale-110"></div>
+            {/* Right side - Payment terminal with dramatic positioning */}
+            <div className="relative lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-[55%] lg:h-full flex items-center justify-end z-10">
+              <div className="relative w-full max-w-lg lg:max-w-2xl">
+                {/* Glow effects behind terminal */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-radial from-[#f08e80]/30 via-purple-500/20 to-transparent blur-3xl opacity-60"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] bg-gradient-radial from-pink-500/20 via-transparent to-transparent blur-2xl"></div>
+                
+                {/* Terminal Image */}
+                <div className="relative transform lg:rotate-[-2deg] lg:scale-110">
+                  <img 
+                    src={allinone} 
+                    alt="Payment Terminal" 
+                    className="w-full h-auto drop-shadow-[0_35px_60px_rgba(0,0,0,0.7)] transform transition-all duration-500 hover:scale-105 hover:rotate-0"
+                    style={{
+                      filter: 'brightness(1.05) contrast(1.1)'
+                    }}
+                  />
+                  
+                  {/* Reflection effect */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent opacity-30 pointer-events-none"></div>
+                </div>
+                
+                {/* Additional accent glow on the right edge */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-32 h-96 bg-gradient-to-l from-[#f08e80]/40 to-transparent blur-2xl"></div>
               </div>
             </div>
           </div>
         </div>
+        
+        {/* Bottom gradient fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent opacity-10"></div>
       </section>
 
       
