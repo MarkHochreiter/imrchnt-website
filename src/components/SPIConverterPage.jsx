@@ -189,6 +189,8 @@ function SPIConverterPage({ onNavigateBack }) {
   const [hasHeaders, setHasHeaders] = useState(false);
   const [manualHeaders, setManualHeaders] = useState([]);
   const [isEditingHeaders, setIsEditingHeaders] = useState(false);
+  const [ignoreFirstLine, setIgnoreFirstLine] = useState(false);
+  const [ignoredFirstLine, setIgnoredFirstLine] = useState(null);
 
   const detectDelimiter = (line) => {
     const tabCount = (line.match(/\t/g) || []).length;
@@ -262,16 +264,26 @@ function SPIConverterPage({ onNavigateBack }) {
       throw new Error('Excel file is empty');
     }
     
-    let headers, rows;
+    let headers, rows, ignoredLine = null;
+    let startIndex = 0;
+    
+    // Handle ignore first line
+    if (ignoreFirstLine) {
+      ignoredLine = jsonData[0].map(cell => String(cell || ''));
+      setIgnoredFirstLine(ignoredLine);
+      startIndex = 1;
+    } else {
+      setIgnoredFirstLine(null);
+    }
     
     if (hasHeaders) {
-      headers = jsonData[0].map(h => String(h || ''));
-      rows = jsonData.slice(1).map(row => row.map(cell => String(cell || '')));
+      headers = jsonData[startIndex].map(h => String(h || ''));
+      rows = jsonData.slice(startIndex + 1).map(row => row.map(cell => String(cell || '')));
     } else {
       // Generate column names: Column 1, Column 2, etc.
-      const columnCount = jsonData[0].length;
+      const columnCount = jsonData[startIndex].length;
       headers = Array.from({ length: columnCount }, (_, i) => `Column ${i + 1}`);
-      rows = jsonData.map(row => row.map(cell => String(cell || '')));
+      rows = jsonData.slice(startIndex).map(row => row.map(cell => String(cell || '')));
       setManualHeaders(headers);
       setIsEditingHeaders(true);
     }
@@ -295,17 +307,27 @@ function SPIConverterPage({ onNavigateBack }) {
     
     const dataDelimiter = getDelimiterChar(delimiterType, text);
     
-    let headers, rows;
+    let headers, rows, ignoredLine = null;
+    let startIndex = 0;
+    
+    // Handle ignore first line
+    if (ignoreFirstLine) {
+      ignoredLine = splitCSVLine(lines[0], dataDelimiter);
+      setIgnoredFirstLine(ignoredLine);
+      startIndex = 1;
+    } else {
+      setIgnoredFirstLine(null);
+    }
     
     if (hasHeaders) {
-      const headerDelimiter = detectDelimiter(lines[0]);
-      headers = splitCSVLine(lines[0], headerDelimiter);
-      rows = lines.slice(1).map(line => splitCSVLine(line, dataDelimiter));
+      const headerDelimiter = detectDelimiter(lines[startIndex]);
+      headers = splitCSVLine(lines[startIndex], headerDelimiter);
+      rows = lines.slice(startIndex + 1).map(line => splitCSVLine(line, dataDelimiter));
     } else {
       // No headers - generate column names
-      const firstRow = splitCSVLine(lines[0], dataDelimiter);
+      const firstRow = splitCSVLine(lines[startIndex], dataDelimiter);
       headers = Array.from({ length: firstRow.length }, (_, i) => `Column ${i + 1}`);
-      rows = lines.map(line => splitCSVLine(line, dataDelimiter));
+      rows = lines.slice(startIndex).map(line => splitCSVLine(line, dataDelimiter));
       setManualHeaders(headers);
       setIsEditingHeaders(true);
     }
@@ -383,7 +405,7 @@ function SPIConverterPage({ onNavigateBack }) {
       };
       reader.readAsText(uploadedFile);
     }
-  }, [delimiter, hasHeaders]);
+  }, [delimiter, hasHeaders, ignoreFirstLine]);
 
   const autoMapFields = (data) => {
     const autoMapping = {};
