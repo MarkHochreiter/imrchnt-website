@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom'
 import { ChevronDown, Menu, X, ArrowRight, Check, Star, Globe, Smartphone, ShoppingCart, BarChart3, Users, Zap, ChevronRight } from 'lucide-react'
 import logo from './assets/logo.png'
+import allinone from './assets/allinone.png'
 import PricingPage from './components/PricingPage.jsx'
 import MegaMenu from './components/MegaMenu.jsx'
 import HardwareMegaMenu from './components/HardwareMegaMenu.jsx'
@@ -62,38 +63,55 @@ function HomePage() {
   return (
     <>
       {/* Hero Section */}
-     <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 lg:py-32">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-4xl">
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-6">
-                    Seamless POS <br />
-                    Intuitive Design <br />
-                    Built for Bookstores
-                  </h1>
-                  <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
-                    In store, Pop up, Off site. Network connection or not.  
-                    Sell anywhere, anytime.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button 
-                      size="lg" 
-                      className="bg-[#f08e80] hover:bg-violet-400 text-white text-lg px-8 py-4"
-                      onClick={handleSignupClick}
-                    >
-                      Request access
-                    </Button>
-                    <p className="text-base md:text-right text-gray-300 font-houschka-medium mb-8 max-w-2xl ml-auto">
-                   "I've never had such a smooth time at a large offsite and I can't tell you how excited I am about it!"
-                    </p>
-                  </div>
-                  <p className="text-base md:text-right text-gray-300 font-houschka-medium mb-8 max-w-2xl ml-auto">
-                    H - Bookstore Manager  
-
-                    Still North Books & Bar Hanover, NH
-                  </p>
-                </div>
+      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 lg:py-32 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Text content */}
+            <div className="relative z-10">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-6">
+                Seamless POS <br />
+                Intuitive Design <br />
+                Built for Bookstores
+              </h1>
+              <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl">
+                In store, Pop up, Off site. Network connection or not.  
+                Sell anywhere, anytime.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <Button 
+                  size="lg" 
+                  className="bg-[#f08e80] hover:bg-violet-400 text-white text-lg px-8 py-4"
+                  onClick={handleSignupClick}
+                >
+                  Request access
+                </Button>
               </div>
-            </section>
+              <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-6 border border-gray-700">
+                <p className="text-base text-gray-300 font-houschka-medium mb-2 italic">
+                  "I've never had such a smooth time at a large offsite and I can't tell you how excited I am about it!"
+                </p>
+                <p className="text-sm text-gray-400 font-houschka-medium">
+                  H - Bookstore Manager<br />
+                  Still North Books & Bar, Hanover, NH
+                </p>
+              </div>
+            </div>
+            
+            {/* Right side - Payment terminal image */}
+            <div className="relative lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-1/2 lg:h-full flex items-center justify-center lg:justify-end lg:pr-8">
+              <div className="relative w-full max-w-md lg:max-w-lg">
+                <img 
+                  src={allinone} 
+                  alt="Payment Terminal" 
+                  className="w-full h-auto drop-shadow-2xl transform hover:scale-105 transition-transform duration-300"
+                />
+                {/* Subtle glow effect behind the image */}
+                <div className="absolute inset-0 bg-[#f08e80]/20 blur-3xl -z-10 scale-110"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       
 {/* Platform Overview */}
@@ -222,451 +240,237 @@ function HomePage() {
   )
 }
 
-// Navigation component that uses React Router
-function Navigation({ onContactSales }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [megaMenuVisible, setMegaMenuVisible] = useState(false)
-  const [hardwareMegaMenuVisible, setHardwareMegaMenuVisible] = useState(false)
-  const [supportMegaMenuVisible, setSupportMegaMenuVisible] = useState(false)
-  const [signupModalOpen, setSignupModalOpen] = useState(false)
-  const [featureRequestModalOpen, setFeatureRequestModalOpen] = useState(false)
-  
-  // Mobile menu states
-  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
-  const [mobileHardwareOpen, setMobileHardwareOpen] = useState(false)
-  const [mobileSupportOpen, setMobileSupportOpen] = useState(false)
+// Main App Component
+function App() {
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false)
+  const [isFeatureRequestModalOpen, setIsFeatureRequestModalOpen] = useState(false)
+  const [isHardwareCartOpen, setIsHardwareCartOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [activeMegaMenu, setActiveMegaMenu] = useState(null)
+  const [hardwareCart, setHardwareCart] = useState([])
 
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  // Listen for global events to open modals
   useEffect(() => {
-    const handleOpenSignupModal = () => setSignupModalOpen(true)
-    const handleOpenFeatureRequestModal = () => setFeatureRequestModalOpen(true)
+    const handleOpenSignupModal = () => setIsSignupModalOpen(true)
+    const handleOpenFeatureRequestModal = () => setIsFeatureRequestModalOpen(true)
+    const handleOpenHardwareCart = () => setIsHardwareCartOpen(true)
     
     window.addEventListener('openSignupModal', handleOpenSignupModal)
     window.addEventListener('openFeatureRequestModal', handleOpenFeatureRequestModal)
-    
-    // Set up global function for opening feature request modal
-    window.openFeatureRequestModal = () => {
-      setFeatureRequestModalOpen(true)
-      setSupportMegaMenuVisible(false)
-    }
+    window.addEventListener('openHardwareCart', handleOpenHardwareCart)
     
     return () => {
       window.removeEventListener('openSignupModal', handleOpenSignupModal)
       window.removeEventListener('openFeatureRequestModal', handleOpenFeatureRequestModal)
-      delete window.openFeatureRequestModal
+      window.removeEventListener('openHardwareCart', handleOpenHardwareCart)
     }
   }, [])
 
-  const handleSolutionsMenuClick = () => {
-    setMegaMenuVisible(!megaMenuVisible)
-    setHardwareMegaMenuVisible(false)
-    setSupportMegaMenuVisible(false)
+  const addToCart = (item) => {
+    setHardwareCart(prev => {
+      const existingItem = prev.find(i => i.id === item.id)
+      if (existingItem) {
+        return prev.map(i => i.id === item.id ? {...i, quantity: i.quantity + 1} : i)
+      }
+      return [...prev, {...item, quantity: 1}]
+    })
   }
 
-  const handleHardwareMenuClick = () => {
-    setHardwareMegaMenuVisible(!hardwareMegaMenuVisible)
-    setMegaMenuVisible(false)
-    setSupportMegaMenuVisible(false)
-  }
-
-  const handleSupportMenuClick = () => {
-    setSupportMegaMenuVisible(!supportMegaMenuVisible)
-    setMegaMenuVisible(false)
-    setHardwareMegaMenuVisible(false)
-  }
-
-  const handleHardwareNavigation = (page) => {
-    navigate(`/${page}`)
-    setHardwareMegaMenuVisible(false)
-    setMobileMenuOpen(false)
-  }
-
-  const handleNavigation = (page, section = null) => {
-    navigate(`/${page}`)
-    setMegaMenuVisible(false)
-    setMobileMenuOpen(false)
-    // Scroll to section after page loads
-    if (section) {
-      setTimeout(() => {
-        const element = document.getElementById(section)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
-        }
-      }, 100)
+  const updateCartQuantity = (id, quantity) => {
+    if (quantity <= 0) {
+      setHardwareCart(prev => prev.filter(item => item.id !== id))
+    } else {
+      setHardwareCart(prev => prev.map(item => 
+        item.id === id ? {...item, quantity} : item
+      ))
     }
   }
 
-  const handleSignupClick = () => {
-    setSignupModalOpen(true)
+  const removeFromCart = (id) => {
+    setHardwareCart(prev => prev.filter(item => item.id !== id))
   }
 
-  const handleFeatureRequestClick = () => {
-    setFeatureRequestModalOpen(true)
-  }
-
-  // Mobile menu data
-  const mobileSolutionsData = [
-    {
-      title: "Back Office",
-      items: [
-        { name: "Admin", page: "system", section: "admin" },
-        { name: "Reports", page: "system", section: "reports" },
-        { name: "Inventory", page: "system", section: "products" }
-      ]
-    },
-    {
-      title: "Sales Floor",
-      items: [
-        { name: "POS", page: "instore", section: "pos" },
-        { name: "Customers", page: "instore", section: "customers" },
-        { name: "On Floor Assistance", page: "instore", section: "on-floor-assistance" }
-      ]
-    },
-    {
-      title: "Offsite",
-      items: [
-        { name: "Single Device", page: "offsite", section: "single-device" },
-        { name: "Import items", page: "offsite", section: "multi-device" },
-        { name: "Export sales", page: "offsite", section: "credit-card-processing" }
-      ]
-    }
-  ];
-
-  const mobileHardwareData = [
-    { name: "S1F2", page: "s1f2" },
-    { name: "AMS1", page: "ams1" },
-    { name: "SFO1", page: "sfo1" },
-    { name: "Receipt Printer", page: "epson-t88" },
-    { name: "Label Printer", page: "honeywell-pc43d" },
-    { name: "Cash Drawer", page: "apg-cash-drawer" },
-    { name: "Socket Scan S720", page: "socket-scan-s720" },
-    { name: "Socket Scan S840", page: "socket-scan-s840" }
-  ];
-  
-  const mobileSupportData = [
-    { name: "Submit Ticket", onClick: () => window.open('https://imrchnt-243943054.hs-sites-na2.com/tickets-view', '_blank') },
-    { name: "User Guides", onClick: () => window.open('https://imrchnt.screenstepslive.com/s/17626/a/1988030-welcome-to-im', '_blank') },
-    { name: "Feature Requests", onClick: handleFeatureRequestClick },
-    { name: "Road Map", page: "roadmap" }
-  ];
-
-  return (
-    <>
-      {/* Navigation Header */}
-      <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex items-center">
-              <Link to="/" className="flex items-center">
-                <img src={logo} alt="Implus Offsite POS Logo" className="h-8" />
-              </Link>
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              <div className="relative">
-                <button
-                  onClick={handleSolutionsMenuClick}
-                  className="flex items-center text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium"
-                >
-                  Solutions
-                  <ChevronDown className="ml-1 h-4 w-4" />
-                </button>
-                <MegaMenu 
-                  isVisible={megaMenuVisible}
-                  onMouseEnter={() => setMegaMenuVisible(true)}
-                  onMouseLeave={() => setMegaMenuVisible(false)}
-                  onNavigate={handleNavigation}
-                />
-              </div>
-              
-              <Link 
-                to="/pricing"
-                className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium"
-              >
-                Pricing
-              </Link>
-              
-              <div className="relative">
-                <button
-                  onClick={handleHardwareMenuClick}
-                  className="flex items-center text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium"
-                >
-                  Hardware
-                  <ChevronDown className="ml-1 h-4 w-4" />
-                </button>
-                <HardwareMegaMenu 
-                  isVisible={hardwareMegaMenuVisible}
-                  onMouseEnter={() => setHardwareMegaMenuVisible(true)}
-                  onMouseLeave={() => setHardwareMegaMenuVisible(false)}
-                  onNavigate={handleHardwareNavigation}
-                />
-              </div>
-              
-              <div className="relative">
-                <button
-                  onClick={handleSupportMenuClick}
-                  className="flex items-center text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium"
-                >
-                  Support
-                  <ChevronDown className="ml-1 h-4 w-4" />
-                </button>
-                <SupportMegaMenu 
-                  isVisible={supportMegaMenuVisible}
-                  onMouseEnter={() => setSupportMegaMenuVisible(true)}
-                  onMouseLeave={() => setSupportMegaMenuVisible(false)}
-                  onNavigate={handleNavigation}
-                  onClose={() => setSupportMegaMenuVisible(false)}
-                  onFeatureRequest={() => {
-                    setFeatureRequestModalOpen(true)
-                    setSupportMegaMenuVisible(false)
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Desktop CTA */}
-            <div className="hidden md:flex items-center space-x-4">
-              <a 
-                href="https://pos.imrchnt.com/auth/sign-in"
-                className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium"
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                Log in
-              </a>
-              <Button 
-                className="bg-[#f08e80] hover:bg-violet-400 text-white"
-                onClick={handleSignupClick}
-              >
-                Request Access
-              </Button>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-700 hover:text-gray-900 p-2"
-              >
-                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-200">
-            <div className="px-4 py-6 space-y-4">
-              {/* Solutions */}
-              <div>
-                <button
-                  onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                  className="flex items-center justify-between w-full px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                >
-                  <span>Solutions</span>
-                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
-                </button>
-                
-                {mobileSolutionsOpen && (
-                  <div className="pl-4 space-y-1">
-                    {mobileSolutionsData.map((category) => (
-                      <div key={category.title}>
-                        <div className="font-medium text-gray-900 px-3 py-1">{category.title}</div>
-                        {category.items.map((item) => (
-                          <button
-                            key={item.name}
-                            onClick={() => {
-                              navigate(`/${item.page}`)
-                              setMobileMenuOpen(false)
-                              if (item.section) {
-                                setTimeout(() => {
-                                  const element = document.getElementById(item.section)
-                                  if (element) {
-                                    element.scrollIntoView({ behavior: 'smooth' })
-                                  }
-                                }, 100)
-                              }
-                            }}
-                            className="block w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                          >
-                            {item.name}
-                          </button>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Pricing */}
-              <Link
-                to="/pricing"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-              >
-                Pricing
-              </Link>
-
-              {/* Hardware */}
-              <div>
-                <button
-                  onClick={() => setMobileHardwareOpen(!mobileHardwareOpen)}
-                  className="flex items-center justify-between w-full px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                >
-                  <span>Hardware</span>
-                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileHardwareOpen ? 'rotate-180' : ''}`} />
-                </button>
-                
-                {mobileHardwareOpen && (
-                  <div className="pl-4 space-y-1">
-                    {mobileHardwareData.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={`/${item.page}`}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Support */}
-              <div>
-                <button
-                  onClick={() => setMobileSupportOpen(!mobileSupportOpen)}
-                  className="flex items-center justify-between w-full px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                >
-                  <span>Support</span>
-                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileSupportOpen ? 'rotate-180' : ''}`} />
-                </button>
-                
-                {mobileSupportOpen && (
-                  <div className="pl-4 space-y-1">
-                    {mobileSupportData.map((item) => (
-                      <button
-                        key={item.name}
-                        onClick={() => {
-                          if (item.onClick) {
-                            item.onClick()
-                          } else if (item.page) {
-                            navigate(`/${item.page}`)
-                          }
-                          setMobileMenuOpen(false)
-                        }}
-                        className="block w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                      >
-                        {item.name}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Divider */}
-              <div className="border-t border-gray-200 my-2"></div>
-
-              {/* Login */}
-              <a 
-                href="https://pos.imrchnt.com/auth/sign-in"
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                Log in
-              </a>
-
-              {/* Request Access Button */}
-              <div className="px-3 py-2">
-                <Button 
-                  className="w-full bg-[#f08e80] hover:bg-violet-400 text-white"
-                  onClick={() => {
-                    handleSignupClick()
-                    setMobileMenuOpen(false)
-                  }}
-                >
-                  Request Access
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* Navigation-level Modals */}
-      <SignupModal 
-        isOpen={signupModalOpen} 
-        onClose={() => setSignupModalOpen(false)} 
-      />
-      
-      <FeatureRequestModal 
-        isOpen={featureRequestModalOpen}
-        onClose={() => setFeatureRequestModalOpen(false)}
-      />
-    </>
-  )
-}
-
-// Main App component with Router
-function App() {
-  const [hardwareCartModalOpen, setHardwareCartModalOpen] = useState(false)
-
-  const handleContactSalesClick = () => {
-    setHardwareCartModalOpen(true)
-  }
-
-  // A generic function to navigate between pages
-  const navigateTo = (page) => {
-    // This will be handled by React Router
-    window.location.href = `/${page}`
+  const getTotalItems = () => {
+    return hardwareCart.reduce((sum, item) => sum + item.quantity, 0)
   }
 
   return (
     <Router>
-      <div className="min-h-screen bg-white">
-        <Navigation onContactSales={handleContactSalesClick} />
+      <div className="min-h-screen flex flex-col">
+        <Navigation 
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+          activeMegaMenu={activeMegaMenu}
+          setActiveMegaMenu={setActiveMegaMenu}
+          hardwareCartCount={getTotalItems()}
+        />
         
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/system" element={<SystemPage onNavigate={navigateTo} handleSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} />} />
-          <Route path="/admin" element={<AdminPage onNavigateBack={() => navigateTo('system')} />} />
-          <Route path="/reports" element={<ReportsPage onNavigateBack={() => navigateTo('system')} />} />
-          <Route path="/inventory" element={<InventoryPage onNavigateBack={() => navigateTo('system')} />} />
-          <Route path="/customer" element={<CustomerPage onNavigateBack={() => navigateTo('instore')} />} />
-          <Route path="/single" element={<SingleDevicePage onNavigateBack={() => navigateTo('offsite')} />} />
-          <Route path="/instore" element={<InStorePage onNavigate={navigateTo} handleSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} />} />
-          <Route path="/offsite" element={<OffsitePage onNavigate={navigateTo} handleSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} />} />
-          <Route path="/credit-cards" element={<CreditCardProcessingPage onNavigate={navigateTo} handleSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} />} />
-          <Route path="/s1f2" element={<S1f2Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
-          <Route path="/ams1" element={<Ams1Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
-          <Route path="/sfo1" element={<Sfo1Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
-          <Route path="/epson-t88" element={<EpsonT88Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
-          <Route path="/honeywell-pc43d" element={<HoneywellPC43dPage onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
-          <Route path="/apg-cash-drawer" element={<APGCashDrawerPage onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
-          <Route path="/socket-scan-s720" element={<SocketScanS720Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
-          <Route path="/socket-scan-s840" element={<SocketScanS840Page onNavigateBack={() => navigateTo('/')} onContactSales={handleContactSalesClick} />} />
-          <Route path="/pos-diagram" element={<POSDiagramPage onNavigateBack={() => navigateTo('system')} />} />
-          <Route path="/roadmap" element={<RoadMapPage onSignupClick={() => window.dispatchEvent(new CustomEvent('openSignupModal'))} onNavigate={navigateTo} />} />
-          <Route path="/spi-converter" element={<SPIConverterPage onNavigateBack={() => navigateTo('/')} />} />
-          <Route path="/statement-analyzer" element={<StatementAnalyzerPage onNavigateBack={() => navigateTo('/')} />} />
-        </Routes>
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/instore" element={<InStorePage />} />
+            <Route path="/offsite" element={<OffsitePage />} />
+            <Route path="/credit-card-processing" element={<CreditCardProcessingPage />} />
+            <Route path="/s1f2" element={<S1f2Page addToCart={addToCart} />} />
+            <Route path="/ams1" element={<Ams1Page addToCart={addToCart} />} />
+            <Route path="/sfo1" element={<Sfo1Page addToCart={addToCart} />} />
+            <Route path="/epson-t88" element={<EpsonT88Page addToCart={addToCart} />} />
+            <Route path="/honeywell-pc43d" element={<HoneywellPC43dPage addToCart={addToCart} />} />
+            <Route path="/apg-cash-drawer" element={<APGCashDrawerPage addToCart={addToCart} />} />
+            <Route path="/socketscan-s720" element={<SocketScanS720Page addToCart={addToCart} />} />
+            <Route path="/socketscan-s840" element={<SocketScanS840Page addToCart={addToCart} />} />
+            <Route path="/pos-diagram" element={<POSDiagramPage />} />
+            <Route path="/system" element={<SystemPage />} />
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/inventory" element={<InventoryPage />} />
+            <Route path="/customers" element={<CustomerPage />} />
+            <Route path="/singledevice" element={<SingleDevicePage />} />
+            <Route path="/roadmap" element={<RoadMapPage />} />
+            <Route path="/spi-converter" element={<SPIConverterPage />} />
+            <Route path="/statement-analyzer" element={<StatementAnalyzerPage />} />
+          </Routes>
+        </main>
 
-        {/* Global Hardware Cart Modal */}
-        <HardwareCartModal 
-          isOpen={hardwareCartModalOpen}
-          onClose={() => setHardwareCartModalOpen(false)}
+        <SignupModal 
+          isOpen={isSignupModalOpen} 
+          onClose={() => setIsSignupModalOpen(false)} 
+        />
+        
+        <FeatureRequestModal 
+          isOpen={isFeatureRequestModalOpen} 
+          onClose={() => setIsFeatureRequestModalOpen(false)} 
+        />
+
+        <HardwareCartModal
+          isOpen={isHardwareCartOpen}
+          onClose={() => setIsHardwareCartOpen(false)}
+          cartItems={hardwareCart}
+          updateQuantity={updateCartQuantity}
+          removeItem={removeFromCart}
         />
       </div>
     </Router>
+  )
+}
+
+// Navigation Component
+function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, setActiveMegaMenu, hardwareCartCount }) {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleSignupClick = () => {
+    window.dispatchEvent(new CustomEvent('openSignupModal'))
+  }
+
+  const handleHardwareCartClick = () => {
+    window.dispatchEvent(new CustomEvent('openHardwareCart'))
+  }
+
+  return (
+    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center">
+              <img src={logo} alt="Implus Logo" className="h-8" />
+            </Link>
+          </div>
+
+          <div className="hidden md:flex items-center space-x-8">
+            <div 
+              className="relative"
+              onMouseEnter={() => setActiveMegaMenu('product')}
+              onMouseLeave={() => setActiveMegaMenu(null)}
+            >
+              <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
+                Product <ChevronDown className="ml-1 h-4 w-4" />
+              </button>
+              {activeMegaMenu === 'product' && <MegaMenu />}
+            </div>
+
+            <div 
+              className="relative"
+              onMouseEnter={() => setActiveMegaMenu('hardware')}
+              onMouseLeave={() => setActiveMegaMenu(null)}
+            >
+              <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
+                Hardware <ChevronDown className="ml-1 h-4 w-4" />
+              </button>
+              {activeMegaMenu === 'hardware' && <HardwareMegaMenu />}
+            </div>
+
+            <Link to="/pricing" className="text-gray-700 hover:text-gray-900 font-houschka-medium">
+              Pricing
+            </Link>
+
+            <div 
+              className="relative"
+              onMouseEnter={() => setActiveMegaMenu('support')}
+              onMouseLeave={() => setActiveMegaMenu(null)}
+            >
+              <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
+                Support <ChevronDown className="ml-1 h-4 w-4" />
+              </button>
+              {activeMegaMenu === 'support' && <SupportMegaMenu />}
+            </div>
+
+            <button
+              onClick={handleHardwareCartClick}
+              className="relative text-gray-700 hover:text-gray-900"
+            >
+              <ShoppingCart className="h-5 w-5" />
+              {hardwareCartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#f08e80] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {hardwareCartCount}
+                </span>
+              )}
+            </button>
+          </div>
+
+          <div className="hidden md:flex items-center space-x-4">
+            <Button 
+              className="bg-[#f08e80] hover:bg-violet-400 text-white"
+              onClick={handleSignupClick}
+            >
+              Request access
+            </Button>
+          </div>
+
+          <button
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+      </div>
+
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-gray-200">
+          <div className="px-4 py-4 space-y-4">
+            <Link to="/system" className="block text-gray-700 hover:text-gray-900 font-houschka-medium">
+              Product
+            </Link>
+            <Link to="/s1f2" className="block text-gray-700 hover:text-gray-900 font-houschka-medium">
+              Hardware
+            </Link>
+            <Link to="/pricing" className="block text-gray-700 hover:text-gray-900 font-houschka-medium">
+              Pricing
+            </Link>
+            <Link to="/roadmap" className="block text-gray-700 hover:text-gray-900 font-houschka-medium">
+              Support
+            </Link>
+            <Button 
+              className="w-full bg-[#f08e80] hover:bg-violet-400 text-white"
+              onClick={handleSignupClick}
+            >
+              Request access
+            </Button>
+          </div>
+        </div>
+      )}
+    </nav>
   )
 }
 
