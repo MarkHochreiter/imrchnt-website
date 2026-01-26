@@ -624,21 +624,40 @@ function SPIConverterPage({ onNavigateBack }) {
           </CardHeader>
           <CardContent>
             {/* ✅ NEW: Header checkbox */}
-            <div className="mb-4 flex items-center gap-2">
-              <Checkbox
-                id="has-headers"
-                checked={hasHeaders}
-                onCheckedChange={(checked) => {
-                  setHasHeaders(checked);
-                  if (file) {
-                    // Re-parse file with new header setting
-                    handleFileUpload(file);
-                  }
-                }}
-              />
-              <Label htmlFor="has-headers" className="cursor-pointer">
-                File has headers in first row
-              </Label>
+            <div className="mb-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="has-headers"
+                  checked={hasHeaders}
+                  onCheckedChange={(checked) => {
+                    setHasHeaders(checked);
+                    if (file) {
+                      // Re-parse file with new header setting
+                      handleFileUpload(file);
+                    }
+                  }}
+                />
+                <Label htmlFor="has-headers" className="cursor-pointer">
+                  File has headers in first row
+                </Label>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="ignore-first-line"
+                  checked={ignoreFirstLine}
+                  onCheckedChange={(checked) => {
+                    setIgnoreFirstLine(checked);
+                    if (file) {
+                      // Re-parse file with new ignore first line setting
+                      handleFileUpload(file);
+                    }
+                  }}
+                />
+                <Label htmlFor="ignore-first-line" className="cursor-pointer">
+                  Ignore first line (exclude from data)
+                </Label>
+              </div>
             </div>
 
             <div
@@ -741,6 +760,29 @@ function SPIConverterPage({ onNavigateBack }) {
               </div>
             </CardHeader>
             <CardContent>
+              {/* Display ignored first line if present */}
+              {ignoredFirstLine && (
+                <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+                    <div className="flex-1">
+                      <p className="font-medium text-yellow-900 mb-2">Ignored First Line</p>
+                      <p className="text-sm text-yellow-700 mb-3">This line is excluded from the data:</p>
+                      <div className="bg-white border border-yellow-300 rounded p-3 overflow-x-auto">
+                        <div className="flex gap-4 font-mono text-sm">
+                          {ignoredFirstLine.map((value, idx) => (
+                            <div key={idx} className="flex-shrink-0">
+                              <span className="text-gray-500 text-xs">Col {idx + 1}:</span>
+                              <span className="ml-2 text-gray-900">{value || <span className="text-gray-400 italic">(empty)</span>}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
               <Table>
                 <TableHeader>
                   <TableRow>
