@@ -186,7 +186,7 @@ function SPIConverterPage({ onNavigateBack }) {
   const [isDragging, setIsDragging] = useState(false);
   
   // ✅ NEW: Header detection state
-  const [hasHeaders, setHasHeaders] = useState(true);
+  const [hasHeaders, setHasHeaders] = useState(false);
   const [manualHeaders, setManualHeaders] = useState([]);
   const [isEditingHeaders, setIsEditingHeaders] = useState(false);
 
