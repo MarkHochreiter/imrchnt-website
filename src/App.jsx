@@ -32,6 +32,7 @@ import RoadMapPage from './components/RoadmapPage.jsx'
 import SPIConverterPage from './components/SPIConverterPage.jsx'
 import StatementAnalyzerPage from './components/StatementAnalyzerPage.jsx'
 import './App.css'
+import './HeroAnimations.css'
 
 // Button component
 const Button = ({ children, className = '', size = 'default', onClick, ...props }) => {
@@ -73,14 +74,13 @@ function HomePage() {
 
         {/* Hero content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12">
             {/* Text content */}
             <div className="flex-1 max-w-2xl hero-text">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-8 tracking-tight hero-gradient-text">
                 Seamless POS<br />
                 Intuitive Design<br />
-                Built for<br />
-                Bookstores
+                Built for Bookstores
               </h1>
 
               <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-xl leading-relaxed hero-description">
