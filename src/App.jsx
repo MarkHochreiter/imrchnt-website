@@ -84,7 +84,9 @@ function HomePage() {
               </h1>
 
               <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-xl leading-relaxed hero-description">
-                In store, Pop up, Off site. Network connection or not. Sell anywhere, anytime.
+                In store, Pop up, Off site. <br />
+                Network connection or not. <br />
+                Sell anywhere, anytime.
               </p>
 
               <div className="mb-12 hero-button">
