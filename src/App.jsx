@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation 
 import { ChevronDown, Menu, X, ArrowRight, Check, Star, Globe, Smartphone, ShoppingCart, BarChart3, Users, Zap, ChevronRight } from 'lucide-react'
 import logo from './assets/logo.png'
 import allinone from './assets/allinone.png'
+import androidpos from './assets/androidpos.png'
 import PricingPage from './components/PricingPage.jsx'
 import MegaMenu from './components/MegaMenu.jsx'
 import HardwareMegaMenu from './components/HardwareMegaMenu.jsx'
@@ -110,7 +111,7 @@ function HomePage() {
               </div>
             </div>
 
-            {/* Image with effects */}
+            {/* Image Carousel with effects */}
             <div className="flex-1 relative max-w-2xl hero-image-container lg:self-start">
               {/* Glow effect behind image */}
               <div className="hero-glow absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-[#f08e80] rounded-3xl blur-3xl opacity-40"></div>
@@ -118,16 +119,26 @@ function HomePage() {
               {/* Spotlight effect */}
               <div className="hero-spotlight absolute -top-20 -right-20 w-64 h-64 bg-[#f08e80] rounded-full filter blur-3xl opacity-30"></div>
 
-              {/* Main image container */}
-              <div className="relative z-10 hero-image-wrapper">
-                <img
-                  src={allinone}
-                  alt="Payment Terminal"
-                  className="hero-terminal-image w-full h-auto drop-shadow-2xl"
-                  style={{
-                    filter: 'brightness(1.05) contrast(1.1)'
-                  }}
-                />
+              {/* Carousel container */}
+              <div className="relative z-10 hero-carousel-wrapper">
+                <div className="hero-carousel">
+                  <div className="carousel-item carousel-item-1">
+                    <img
+                      src={allinone}
+                      alt="Payment Terminal"
+                      className="w-full h-auto drop-shadow-2xl"
+                      style={{ filter: 'brightness(1.05) contrast(1.1)' }}
+                    />
+                  </div>
+                  <div className="carousel-item carousel-item-2">
+                    <img
+                      src={androidpos}
+                      alt="Android POS"
+                      className="w-full h-auto drop-shadow-2xl"
+                      style={{ filter: 'brightness(1.05) contrast(1.1)' }}
+                    />
+                  </div>
+                </div>
 
                 {/* Floating accent elements */}
                 <div className="hero-accent-1 absolute -top-8 -left-8 w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full opacity-60 blur-sm"></div>
