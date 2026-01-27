@@ -58,16 +58,6 @@ const Button = ({ children, className = '', size = 'default', onClick, ...props 
 function HomePage() {
   const navigate = useNavigate()
   
-  // Randomly select one of the three images on component mount
-  const [randomImage] = useState(() => {
-    const images = [
-      { src: ipadpos, alt: 'iPad POS' },
-      { src: androidpos, alt: 'Android POS' },
-      { src: allinone, alt: 'Payment Terminal' }
-    ]
-    return images[Math.floor(Math.random() * images.length)]
-  })
-  
   const handleSignupClick = () => {
     // Trigger global signup modal
     window.dispatchEvent(new CustomEvent('openSignupModal'))
@@ -130,11 +120,11 @@ function HomePage() {
               {/* Spotlight effect */}
               <div className="hero-spotlight absolute -top-20 -right-20 w-64 h-64 bg-[#f08e80] rounded-full filter blur-3xl opacity-30"></div>
 
-              {/* Single random image */}
+              {/* Hero image */}
               <div className="relative z-10 hero-image-wrapper">
                 <img
-                  src={randomImage.src}
-                  alt={randomImage.alt}
+                  src={allinone}
+                  alt="Payment Terminal"
                   className="hero-terminal-image w-full h-auto drop-shadow-2xl"
                   style={{ filter: 'brightness(1.05) contrast(1.1)' }}
                 />
@@ -462,7 +452,11 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
               />
             </div>
 
-            <Link to="/pricing" className="text-gray-700 hover:text-gray-900 font-houschka-medium">
+            <Link 
+              to="/pricing" 
+              className="text-gray-700 hover:text-gray-900 font-houschka-medium"
+              onMouseEnter={() => setActiveMegaMenu(null)}
+            >
               Pricing
             </Link>
 
@@ -480,18 +474,6 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
                 onNavigate={handleNavigation}
               />
             </div>
-
-            <button
-              onClick={handleHardwareCartClick}
-              className="relative text-gray-700 hover:text-gray-900"
-            >
-              <ShoppingCart className="h-5 w-5" />
-              {hardwareCartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#f08e80] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {hardwareCartCount}
-                </span>
-              )}
-            </button>
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
