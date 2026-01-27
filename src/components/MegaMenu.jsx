@@ -119,7 +119,7 @@ function MegaMenu({ isVisible, onMouseEnter, onMouseLeave, onNavigate }) {
 
   return (
   <div 
-    className="fixed top-16 left-0 w-full bg-white shadow-2xl border-t border-gray-200 z-[999] font-varela"
+    className="fixed top-16 left-0 w-full bg-white shadow-2xl border-t border-gray-200 z-[9999] font-varela"
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
   >
