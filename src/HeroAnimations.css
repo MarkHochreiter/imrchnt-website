@@ -307,27 +307,27 @@ nav a {
 
 @keyframes carousel-rotate-1 {
   0% {
-    transform: translateX(0) translateZ(0) scale(1);
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 2;
   }
-  45% {
-    transform: translateX(0) translateZ(0) scale(1);
-    opacity: 1;
-    z-index: 2;
-  }
-  50% {
-    transform: translateX(100px) translateZ(-300px) scale(0.6);
-    opacity: 0.4;
+  25% {
+    transform: translate(150px, -80px) translateZ(-200px) scale(0.5) rotateY(30deg);
+    opacity: 0.5;
     z-index: 1;
   }
-  95% {
-    transform: translateX(100px) translateZ(-300px) scale(0.6);
-    opacity: 0.4;
+  50% {
+    transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
+    opacity: 0.3;
+    z-index: 1;
+  }
+  75% {
+    transform: translate(150px, 80px) translateZ(-200px) scale(0.5) rotateY(30deg);
+    opacity: 0.5;
     z-index: 1;
   }
   100% {
-    transform: translateX(0) translateZ(0) scale(1);
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 2;
   }
@@ -335,28 +335,28 @@ nav a {
 
 @keyframes carousel-rotate-2 {
   0% {
-    transform: translateX(100px) translateZ(-300px) scale(0.6);
-    opacity: 0.4;
+    transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
+    opacity: 0.3;
     z-index: 1;
   }
-  45% {
-    transform: translateX(100px) translateZ(-300px) scale(0.6);
-    opacity: 0.4;
+  25% {
+    transform: translate(150px, 80px) translateZ(-200px) scale(0.5) rotateY(30deg);
+    opacity: 0.5;
     z-index: 1;
   }
   50% {
-    transform: translateX(0) translateZ(0) scale(1);
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 2;
   }
-  95% {
-    transform: translateX(0) translateZ(0) scale(1);
-    opacity: 1;
-    z-index: 2;
+  75% {
+    transform: translate(150px, -80px) translateZ(-200px) scale(0.5) rotateY(30deg);
+    opacity: 0.5;
+    z-index: 1;
   }
   100% {
-    transform: translateX(100px) translateZ(-300px) scale(0.6);
-    opacity: 0.4;
+    transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
+    opacity: 0.3;
     z-index: 1;
   }
 }
