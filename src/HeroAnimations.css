@@ -175,7 +175,7 @@
   }
 }
 
-/* 3D Carousel Styles */
+/* 3D Carousel Styles - Three Position Layout */
 .hero-carousel-wrapper {
   perspective: 1500px;
   position: relative;
@@ -206,128 +206,124 @@
   object-fit: contain;
 }
 
-/* Three-item carousel animations */
+/* Three-position carousel - 15 second cycle (5s pause in foreground) */
 .carousel-item-1 {
-  animation: carousel-rotate-1 18s ease-in-out infinite;
+  animation: carousel-rotate-1 15s ease-in-out infinite;
 }
 
 .carousel-item-2 {
-  animation: carousel-rotate-2 18s ease-in-out infinite;
+  animation: carousel-rotate-2 15s ease-in-out infinite;
 }
 
 .carousel-item-3 {
-  animation: carousel-rotate-3 18s ease-in-out infinite;
+  animation: carousel-rotate-3 15s ease-in-out infinite;
 }
 
-/* Item 1: Foreground -> Top-right -> Far right -> Bottom-right -> Foreground */
+/* Position definitions:
+   - Left background: translateX(-250px) translateZ(-300px) scale(0.4)
+   - Center foreground: translate(0, 0) translateZ(0) scale(1)
+   - Right background: translateX(250px) translateZ(-300px) scale(0.4)
+*/
+
+/* Item 1: Starts left background → foreground (pause 5s) → right background → left background */
 @keyframes carousel-rotate-1 {
-  0%, 30% {
-    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
-    opacity: 1;
-    z-index: 3;
-  }
-  45% {
-    transform: translate(150px, -80px) translateZ(-200px) scale(0.5) rotateY(30deg);
-    opacity: 0.5;
-    z-index: 2;
-  }
-  60% {
-    transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
+  0% {
+    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
     opacity: 0.3;
     z-index: 1;
   }
-  75% {
-    transform: translate(150px, 80px) translateZ(-200px) scale(0.5) rotateY(30deg);
-    opacity: 0.5;
-    z-index: 2;
-  }
-  90% {
-    transform: translate(50px, 40px) translateZ(-100px) scale(0.7) rotateY(15deg);
-    opacity: 0.7;
-    z-index: 2;
-  }
-  100% {
+  20% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 3;
   }
+  53.33% {
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
+    opacity: 1;
+    z-index: 3;
+  }
+  73.33% {
+    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
+    opacity: 0.3;
+    z-index: 1;
+  }
+  86.67% {
+    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
+    opacity: 0.3;
+    z-index: 1;
+  }
+  100% {
+    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
+    opacity: 0.3;
+    z-index: 1;
+  }
 }
 
-/* Item 2: Far right -> Bottom-right -> Foreground -> Top-right -> Far right */
+/* Item 2: Starts foreground (pause 5s) → right background → left background → foreground */
 @keyframes carousel-rotate-2 {
   0% {
-    transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
-    opacity: 0.3;
-    z-index: 1;
-  }
-  15% {
-    transform: translate(150px, 80px) translateZ(-200px) scale(0.5) rotateY(30deg);
-    opacity: 0.5;
-    z-index: 2;
-  }
-  30% {
-    transform: translate(50px, 40px) translateZ(-100px) scale(0.7) rotateY(15deg);
-    opacity: 0.7;
-    z-index: 2;
-  }
-  33%, 63% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 3;
   }
-  78% {
-    transform: translate(150px, -80px) translateZ(-200px) scale(0.5) rotateY(30deg);
-    opacity: 0.5;
-    z-index: 2;
+  33.33% {
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
+    opacity: 1;
+    z-index: 3;
   }
-  93%, 100% {
-    transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
+  53.33% {
+    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
     opacity: 0.3;
     z-index: 1;
+  }
+  66.67% {
+    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
+    opacity: 0.3;
+    z-index: 1;
+  }
+  86.67% {
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
+    opacity: 1;
+    z-index: 3;
+  }
+  100% {
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
+    opacity: 1;
+    z-index: 3;
   }
 }
 
-/* Item 3: Bottom-right -> Foreground -> Top-right -> Far right -> Bottom-right */
+/* Item 3: Starts right background → left background → foreground (pause 5s) → right background */
 @keyframes carousel-rotate-3 {
   0% {
-    transform: translate(150px, 80px) translateZ(-200px) scale(0.5) rotateY(30deg);
-    opacity: 0.5;
-    z-index: 2;
+    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
+    opacity: 0.3;
+    z-index: 1;
   }
-  15% {
-    transform: translate(50px, 40px) translateZ(-100px) scale(0.7) rotateY(15deg);
-    opacity: 0.7;
-    z-index: 2;
+  13.33% {
+    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
+    opacity: 0.3;
+    z-index: 1;
   }
-  30% {
+  33.33% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 3;
   }
-  33%, 63% {
+  66.67% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 3;
   }
-  66%, 96% {
-    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
-    opacity: 1;
-    z-index: 3;
-  }
-  78% {
-    transform: translate(150px, -80px) translateZ(-200px) scale(0.5) rotateY(30deg);
-    opacity: 0.5;
-    z-index: 2;
-  }
-  93% {
-    transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
+  86.67% {
+    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
     opacity: 0.3;
     z-index: 1;
   }
   100% {
-    transform: translate(150px, 80px) translateZ(-200px) scale(0.5) rotateY(30deg);
-    opacity: 0.5;
-    z-index: 2;
+    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
+    opacity: 0.3;
+    z-index: 1;
   }
 }
 
@@ -338,51 +334,63 @@
   }
   
   @keyframes carousel-rotate-1 {
-    0%, 30% {
-      transform: translate(0, 0) translateZ(0) scale(1);
-      opacity: 1;
-    }
-    50%, 90% {
-      transform: translate(80px, 0) translateZ(-250px) scale(0.5);
+    0% {
+      transform: translateX(-150px) translateZ(-200px) scale(0.5);
       opacity: 0.4;
     }
-    100% {
+    20% {
       transform: translate(0, 0) translateZ(0) scale(1);
       opacity: 1;
+    }
+    53.33% {
+      transform: translate(0, 0) translateZ(0) scale(1);
+      opacity: 1;
+    }
+    73.33% {
+      transform: translateX(150px) translateZ(-200px) scale(0.5);
+      opacity: 0.4;
+    }
+    86.67%, 100% {
+      transform: translateX(-150px) translateZ(-200px) scale(0.5);
+      opacity: 0.4;
     }
   }
   
   @keyframes carousel-rotate-2 {
-    0%, 30% {
-      transform: translate(80px, 0) translateZ(-250px) scale(0.5);
-      opacity: 0.4;
-    }
-    33%, 63% {
+    0%, 33.33% {
       transform: translate(0, 0) translateZ(0) scale(1);
       opacity: 1;
     }
-    93%, 100% {
-      transform: translate(80px, 0) translateZ(-250px) scale(0.5);
+    53.33% {
+      transform: translateX(150px) translateZ(-200px) scale(0.5);
       opacity: 0.4;
+    }
+    66.67% {
+      transform: translateX(-150px) translateZ(-200px) scale(0.5);
+      opacity: 0.4;
+    }
+    86.67%, 100% {
+      transform: translate(0, 0) translateZ(0) scale(1);
+      opacity: 1;
     }
   }
   
   @keyframes carousel-rotate-3 {
-    0%, 30% {
-      transform: translate(0, 0) translateZ(0) scale(1);
-      opacity: 1;
-    }
-    33%, 63% {
-      transform: translate(80px, 0) translateZ(-250px) scale(0.5);
+    0% {
+      transform: translateX(150px) translateZ(-200px) scale(0.5);
       opacity: 0.4;
     }
-    66%, 96% {
+    13.33% {
+      transform: translateX(-150px) translateZ(-200px) scale(0.5);
+      opacity: 0.4;
+    }
+    33.33%, 66.67% {
       transform: translate(0, 0) translateZ(0) scale(1);
       opacity: 1;
     }
-    100% {
-      transform: translate(0, 0) translateZ(0) scale(1);
-      opacity: 1;
+    86.67%, 100% {
+      transform: translateX(150px) translateZ(-200px) scale(0.5);
+      opacity: 0.4;
     }
   }
 }
