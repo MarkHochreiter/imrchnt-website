@@ -227,27 +227,32 @@
 
 /* Item 1: Starts left background → foreground (pause 5s) → right background → left background */
 @keyframes carousel-rotate-1 {
-  0% {
+  0%, 5% {
     transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
     opacity: 0.3;
     z-index: 1;
   }
-  20% {
+  15% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 3;
   }
-  53.33% {
+  38.33% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 3;
   }
-  73.33% {
+  48.33% {
     transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
     opacity: 0.3;
     z-index: 1;
   }
-  86.67% {
+  71.67% {
+    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
+    opacity: 0.3;
+    z-index: 1;
+  }
+  81.67% {
     transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
     opacity: 0.3;
     z-index: 1;
@@ -261,27 +266,32 @@
 
 /* Item 2: Starts foreground (pause 5s) → right background → left background → foreground */
 @keyframes carousel-rotate-2 {
-  0% {
+  0%, 5% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 3;
   }
-  33.33% {
+  38.33% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 3;
   }
-  53.33% {
+  48.33% {
     transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
     opacity: 0.3;
     z-index: 1;
   }
-  66.67% {
+  71.67% {
+    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
+    opacity: 0.3;
+    z-index: 1;
+  }
+  81.67% {
     transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
     opacity: 0.3;
     z-index: 1;
   }
-  86.67% {
+  91.67% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 3;
@@ -295,35 +305,35 @@
 
 /* Item 3: Starts right background → left background → foreground (pause 5s) → right background */
 @keyframes carousel-rotate-3 {
-  0% {
+  0%, 5% {
     transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
     opacity: 0.3;
     z-index: 1;
   }
-  13.33% {
+  38.33% {
+    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
+    opacity: 0.3;
+    z-index: 1;
+  }
+  48.33% {
     transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
     opacity: 0.3;
     z-index: 1;
   }
-  33.33% {
-    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
-    opacity: 1;
-    z-index: 3;
-  }
-  66.67% {
-    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
-    opacity: 1;
-    z-index: 3;
-  }
-  86.67% {
-    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
+  71.67% {
+    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
     opacity: 0.3;
     z-index: 1;
+  }
+  81.67% {
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
+    opacity: 1;
+    z-index: 3;
   }
   100% {
-    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
-    opacity: 0.3;
-    z-index: 1;
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
+    opacity: 1;
+    z-index: 3;
   }
 }
 
