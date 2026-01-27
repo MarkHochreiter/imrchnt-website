@@ -398,6 +398,19 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
     window.dispatchEvent(new CustomEvent('openHardwareCart'))
   }
 
+  const handleNavigation = (page, section = null) => {
+    navigate(`/${page}`)
+    setActiveMegaMenu(null)
+    if (section) {
+      setTimeout(() => {
+        const element = document.getElementById(section)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+    }
+  }
+
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-[100]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -417,7 +430,12 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
               <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
                 Product <ChevronDown className="ml-1 h-4 w-4" />
               </button>
-              {activeMegaMenu === 'product' && <MegaMenu />}
+              <MegaMenu 
+                isVisible={activeMegaMenu === 'product'}
+                onMouseEnter={() => setActiveMegaMenu('product')}
+                onMouseLeave={() => setActiveMegaMenu(null)}
+                onNavigate={handleNavigation}
+              />
             </div>
 
             <div 
@@ -428,7 +446,12 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
               <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
                 Hardware <ChevronDown className="ml-1 h-4 w-4" />
               </button>
-              {activeMegaMenu === 'hardware' && <HardwareMegaMenu />}
+              <HardwareMegaMenu 
+                isVisible={activeMegaMenu === 'hardware'}
+                onMouseEnter={() => setActiveMegaMenu('hardware')}
+                onMouseLeave={() => setActiveMegaMenu(null)}
+                onNavigate={handleNavigation}
+              />
             </div>
 
             <Link to="/pricing" className="text-gray-700 hover:text-gray-900 font-houschka-medium">
@@ -443,7 +466,12 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
               <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
                 Support <ChevronDown className="ml-1 h-4 w-4" />
               </button>
-              {activeMegaMenu === 'support' && <SupportMegaMenu />}
+              <SupportMegaMenu 
+                isVisible={activeMegaMenu === 'support'}
+                onMouseEnter={() => setActiveMegaMenu('support')}
+                onMouseLeave={() => setActiveMegaMenu(null)}
+                onNavigate={handleNavigation}
+              />
             </div>
 
             <button
