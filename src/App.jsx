@@ -4,6 +4,7 @@ import { ChevronDown, Menu, X, ArrowRight, Check, Star, Globe, Smartphone, Shopp
 import logo from './assets/logo.png'
 import allinone from './assets/allinone.png'
 import androidpos from './assets/androidpos.png'
+import ipadpos from './assets/ipadpos.png'
 import PricingPage from './components/PricingPage.jsx'
 import MegaMenu from './components/MegaMenu.jsx'
 import HardwareMegaMenu from './components/HardwareMegaMenu.jsx'
@@ -134,6 +135,14 @@ function HomePage() {
                     <img
                       src={androidpos}
                       alt="Android POS"
+                      className="w-full h-auto drop-shadow-2xl"
+                      style={{ filter: 'brightness(1.05) contrast(1.1)' }}
+                    />
+                  </div>
+                  <div className="carousel-item carousel-item-3">
+                    <img
+                      src={ipadpos}
+                      alt="iPad POS"
                       className="w-full h-auto drop-shadow-2xl"
                       style={{ filter: 'brightness(1.05) contrast(1.1)' }}
                     />
