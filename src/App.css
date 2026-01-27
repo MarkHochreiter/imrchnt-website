@@ -164,3 +164,16 @@ nav > * {
   pointer-events: auto !important;
   cursor: pointer !important;
 }
+
+/* Mega menu dropdowns must appear above hero section */
+nav .relative > div,
+nav [class*="MegaMenu"],
+nav [class*="mega-menu"] {
+  z-index: 9999 !important;
+  position: absolute;
+}
+
+/* Ensure all dropdown content is above everything */
+nav .relative {
+  z-index: 9999 !important;
+}
