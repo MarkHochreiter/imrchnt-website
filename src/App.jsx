@@ -64,7 +64,7 @@ function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="hero-section relative min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white py-20 lg:py-32 overflow-hidden">
+      <section className="hero-section relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white py-20 lg:py-32 overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="blob blob-purple"></div>
