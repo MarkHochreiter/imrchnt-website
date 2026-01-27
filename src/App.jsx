@@ -58,6 +58,16 @@ const Button = ({ children, className = '', size = 'default', onClick, ...props 
 function HomePage() {
   const navigate = useNavigate()
   
+  // Randomly select one of the three images on component mount
+  const [randomImage] = useState(() => {
+    const images = [
+      { src: ipadpos, alt: 'iPad POS' },
+      { src: androidpos, alt: 'Android POS' },
+      { src: allinone, alt: 'Payment Terminal' }
+    ]
+    return images[Math.floor(Math.random() * images.length)]
+  })
+  
   const handleSignupClick = () => {
     // Trigger global signup modal
     window.dispatchEvent(new CustomEvent('openSignupModal'))
@@ -112,7 +122,7 @@ function HomePage() {
               </div>
             </div>
 
-            {/* Image Carousel with effects */}
+            {/* Random Hero Image with effects */}
             <div className="flex-1 relative max-w-2xl hero-image-container lg:self-start">
               {/* Glow effect behind image */}
               <div className="hero-glow absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-[#f08e80] rounded-3xl blur-3xl opacity-40"></div>
@@ -120,34 +130,14 @@ function HomePage() {
               {/* Spotlight effect */}
               <div className="hero-spotlight absolute -top-20 -right-20 w-64 h-64 bg-[#f08e80] rounded-full filter blur-3xl opacity-30"></div>
 
-              {/* Carousel container */}
-              <div className="relative z-10 hero-carousel-wrapper">
-                <div className="hero-carousel">
-                  <div className="carousel-item carousel-item-1">
-                    <img
-                      src={allinone}
-                      alt="Payment Terminal"
-                      className="w-full h-auto drop-shadow-2xl"
-                      style={{ filter: 'brightness(1.05) contrast(1.1)' }}
-                    />
-                  </div>
-                  <div className="carousel-item carousel-item-2">
-                    <img
-                      src={androidpos}
-                      alt="Android POS"
-                      className="w-full h-auto drop-shadow-2xl"
-                      style={{ filter: 'brightness(1.05) contrast(1.1)' }}
-                    />
-                  </div>
-                  <div className="carousel-item carousel-item-3">
-                    <img
-                      src={ipadpos}
-                      alt="iPad POS"
-                      className="w-full h-auto drop-shadow-2xl"
-                      style={{ filter: 'brightness(1.05) contrast(1.1)' }}
-                    />
-                  </div>
-                </div>
+              {/* Single random image */}
+              <div className="relative z-10 hero-image-wrapper">
+                <img
+                  src={randomImage.src}
+                  alt={randomImage.alt}
+                  className="hero-terminal-image w-full h-auto drop-shadow-2xl"
+                  style={{ filter: 'brightness(1.05) contrast(1.1)' }}
+                />
 
                 {/* Floating accent elements */}
                 <div className="hero-accent-1 absolute -top-8 -left-8 w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full opacity-60 blur-sm"></div>
