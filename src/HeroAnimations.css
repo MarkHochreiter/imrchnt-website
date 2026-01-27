@@ -297,12 +297,12 @@ nav a {
 
 /* Item 1 - starts in foreground, rotates to back */
 .carousel-item-1 {
-  animation: carousel-rotate-1 8s ease-in-out infinite;
+  animation: carousel-rotate-1 10s ease-in-out infinite;
 }
 
 /* Item 2 - starts in back, rotates to foreground */
 .carousel-item-2 {
-  animation: carousel-rotate-2 8s ease-in-out infinite;
+  animation: carousel-rotate-2 10s ease-in-out infinite;
 }
 
 @keyframes carousel-rotate-1 {
