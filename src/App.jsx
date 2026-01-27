@@ -183,38 +183,44 @@ function HomePage() {
             </section>
 
        {/* CTA Section */}
-            <section className="py-20 bg-[#f08e80] text-white">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <section className="relative py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden">
+              {/* Animated background elements */}
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="blob blob-purple"></div>
+                <div className="blob blob-cyan"></div>
+                <div className="blob blob-pink"></div>
+              </div>
+              
+              <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
                   Start selling in no time
                 </h2>
                 <div className="grid md:grid-cols-3 gap-3 mb-12">
                   <div className="flex items-center justify-center">
-                    <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
+                    <div className="bg-white/90 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
                       1
                     </div>
                     <span>Get approved</span>
                   </div>
                   <div className="flex items-center justify-center">
-                    <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
+                    <div className="bg-white/90 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
                       2
                     </div>
                     <span>Add items</span>
                   </div>
                   <div className="flex items-center justify-center">
-                    <div className="bg-white text-[#f08e80] w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
+                    <div className="bg-white/90 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
                       3
                     </div>
                     <span>Start selling</span>
                   </div>
                 </div>
-                <Button 
-                  size="lg" 
-                  className="bg-white text-[#f08e80] hover:bg-gray-100 text-lg px-8 py-4"
+                <button
                   onClick={handleSignupClick}
+                  className="px-10 py-4 bg-gradient-to-r from-[#f08e80] to-pink-500 rounded-full hover:shadow-2xl hover:shadow-pink-500/50 transition-all duration-300 hover:scale-105 text-white text-lg font-houschka-medium"
                 >
                   Request access
-                </Button>
+                </button>
               </div>
             </section>
 
@@ -393,7 +399,7 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
   }
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-white border-b border-gray-200 sticky top-0 z-[100]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
