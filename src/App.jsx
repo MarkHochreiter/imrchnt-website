@@ -425,7 +425,6 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
             <div 
               className="relative z-50"
               onMouseEnter={() => setActiveMegaMenu('product')}
-              onMouseLeave={() => setActiveMegaMenu(null)}
             >
               <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
                 Product <ChevronDown className="ml-1 h-4 w-4" />
@@ -441,7 +440,6 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
             <div 
               className="relative z-50"
               onMouseEnter={() => setActiveMegaMenu('hardware')}
-              onMouseLeave={() => setActiveMegaMenu(null)}
             >
               <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
                 Hardware <ChevronDown className="ml-1 h-4 w-4" />
@@ -461,7 +459,6 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
             <div 
               className="relative z-50"
               onMouseEnter={() => setActiveMegaMenu('support')}
-              onMouseLeave={() => setActiveMegaMenu(null)}
             >
               <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
                 Support <ChevronDown className="ml-1 h-4 w-4" />
