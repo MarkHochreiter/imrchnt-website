@@ -175,7 +175,7 @@
   }
 }
 
-/* 3D Carousel Styles - Three Position Layout */
+/* 3D Carousel Styles - Simplified Three Position */
 .hero-carousel-wrapper {
   perspective: 1500px;
   position: relative;
@@ -206,7 +206,7 @@
   object-fit: contain;
 }
 
-/* Three-position carousel - 15 second cycle (5s pause in foreground) */
+/* Simplified carousel - 15 second cycle (5s per position) */
 .carousel-item-1 {
   animation: carousel-rotate-1 15s ease-in-out infinite;
 }
@@ -219,83 +219,79 @@
   animation: carousel-rotate-3 15s ease-in-out infinite;
 }
 
-/* Position definitions:
-   - Left background: translateX(-350px) translateZ(-500px) scale(0.25)
-   - Center foreground: translate(0, 0) translateZ(0) scale(1)
-   - Right background: translateX(350px) translateZ(-500px) scale(0.25)
+/* Three positions:
+   LEFT BACKGROUND: translateX(-350px) translateZ(-500px) scale(0.3)
+   FOREGROUND: translate(0, 0) translateZ(0) scale(1)
+   RIGHT BACKGROUND: translateX(350px) translateZ(-500px) scale(0.3)
 */
 
-/* Item 1: Starts left background → foreground (pause 5s) → right background → left background */
+/* Item 1 (iPad): Position A → Position C → Position B → Position A */
 @keyframes carousel-rotate-1 {
-  0%, 5% {
-    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
-    opacity: 0.2;
+  /* Position A: Left background */
+  0%, 33.33% {
+    transform: translateX(-350px) translateZ(-500px) scale(0.3) rotateY(-30deg);
+    opacity: 0.25;
     z-index: 1;
   }
-  15% {
+  /* Transition to Position C */
+  40% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 10;
   }
-  38.33% {
+  /* Position C: Foreground */
+  66.67% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 10;
   }
-  48.33% {
-    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
-    opacity: 0.2;
+  /* Transition to Position B */
+  73.33% {
+    transform: translateX(350px) translateZ(-500px) scale(0.3) rotateY(30deg);
+    opacity: 0.25;
     z-index: 1;
   }
-  71.67% {
-    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
-    opacity: 0.2;
-    z-index: 1;
-  }
-  81.67% {
-    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
-    opacity: 0.2;
-    z-index: 1;
-  }
+  /* Position B: Right background */
   100% {
-    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
-    opacity: 0.2;
+    transform: translateX(-350px) translateZ(-500px) scale(0.3) rotateY(-30deg);
+    opacity: 0.25;
     z-index: 1;
   }
 }
 
-/* Item 2: Starts foreground (pause 5s) → right background → left background → foreground */
+/* Item 2 (Android): Position A → Position B → Position C → Position A */
 @keyframes carousel-rotate-2 {
-  0%, 5% {
+  /* Position A: Foreground */
+  0%, 33.33% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 10;
   }
-  38.33% {
-    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
-    opacity: 1;
-    z-index: 10;
-  }
-  48.33% {
-    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
-    opacity: 0.2;
+  /* Transition to Position B */
+  40% {
+    transform: translateX(350px) translateZ(-500px) scale(0.3) rotateY(30deg);
+    opacity: 0.25;
     z-index: 1;
   }
-  71.67% {
-    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
-    opacity: 0.2;
+  /* Position B: Right background */
+  66.67% {
+    transform: translateX(350px) translateZ(-500px) scale(0.3) rotateY(30deg);
+    opacity: 0.25;
     z-index: 1;
   }
-  81.67% {
-    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
-    opacity: 0.2;
+  /* Transition to Position C */
+  73.33% {
+    transform: translateX(-350px) translateZ(-500px) scale(0.3) rotateY(-30deg);
+    opacity: 0.25;
     z-index: 1;
   }
-  91.67% {
-    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
-    opacity: 1;
-    z-index: 10;
+  /* Position C: Left background */
+  93.33% {
+    transform: translateX(-350px) translateZ(-500px) scale(0.3) rotateY(-30deg);
+    opacity: 0.25;
+    z-index: 1;
   }
+  /* Transition back to Position A */
   100% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
@@ -303,33 +299,33 @@
   }
 }
 
-/* Item 3: Starts right background → left background → foreground (pause 5s) → right background */
+/* Item 3 (All-in-one): Position A → Position C → Position B → Position A */
 @keyframes carousel-rotate-3 {
-  0%, 5% {
-    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
-    opacity: 0.2;
+  /* Position A: Right background */
+  0%, 33.33% {
+    transform: translateX(350px) translateZ(-500px) scale(0.3) rotateY(30deg);
+    opacity: 0.25;
     z-index: 1;
   }
-  38.33% {
-    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
-    opacity: 0.2;
+  /* Transition to Position C */
+  40% {
+    transform: translateX(-350px) translateZ(-500px) scale(0.3) rotateY(-30deg);
+    opacity: 0.25;
     z-index: 1;
   }
-  48.33% {
-    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
-    opacity: 0.2;
+  /* Position C: Left background */
+  66.67% {
+    transform: translateX(-350px) translateZ(-500px) scale(0.3) rotateY(-30deg);
+    opacity: 0.25;
     z-index: 1;
   }
-  71.67% {
-    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
-    opacity: 0.2;
-    z-index: 1;
-  }
-  81.67% {
+  /* Transition to Position B */
+  73.33% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
     z-index: 10;
   }
+  /* Position B: Foreground */
   100% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
@@ -344,25 +340,17 @@
   }
   
   @keyframes carousel-rotate-1 {
-    0% {
-      transform: translateX(-150px) translateZ(-200px) scale(0.5);
-      opacity: 0.4;
+    0%, 33.33% {
+      transform: translateX(-200px) translateZ(-300px) scale(0.4);
+      opacity: 0.3;
     }
-    20% {
+    40%, 66.67% {
       transform: translate(0, 0) translateZ(0) scale(1);
       opacity: 1;
     }
-    53.33% {
-      transform: translate(0, 0) translateZ(0) scale(1);
-      opacity: 1;
-    }
-    73.33% {
-      transform: translateX(150px) translateZ(-200px) scale(0.5);
-      opacity: 0.4;
-    }
-    86.67%, 100% {
-      transform: translateX(-150px) translateZ(-200px) scale(0.5);
-      opacity: 0.4;
+    73.33%, 100% {
+      transform: translateX(200px) translateZ(-300px) scale(0.4);
+      opacity: 0.3;
     }
   }
   
@@ -371,36 +359,28 @@
       transform: translate(0, 0) translateZ(0) scale(1);
       opacity: 1;
     }
-    53.33% {
-      transform: translateX(150px) translateZ(-200px) scale(0.5);
-      opacity: 0.4;
+    40%, 66.67% {
+      transform: translateX(200px) translateZ(-300px) scale(0.4);
+      opacity: 0.3;
     }
-    66.67% {
-      transform: translateX(-150px) translateZ(-200px) scale(0.5);
-      opacity: 0.4;
-    }
-    86.67%, 100% {
-      transform: translate(0, 0) translateZ(0) scale(1);
-      opacity: 1;
+    73.33%, 100% {
+      transform: translateX(-200px) translateZ(-300px) scale(0.4);
+      opacity: 0.3;
     }
   }
   
   @keyframes carousel-rotate-3 {
-    0% {
-      transform: translateX(150px) translateZ(-200px) scale(0.5);
-      opacity: 0.4;
+    0%, 33.33% {
+      transform: translateX(200px) translateZ(-300px) scale(0.4);
+      opacity: 0.3;
     }
-    13.33% {
-      transform: translateX(-150px) translateZ(-200px) scale(0.5);
-      opacity: 0.4;
+    40%, 66.67% {
+      transform: translateX(-200px) translateZ(-300px) scale(0.4);
+      opacity: 0.3;
     }
-    33.33%, 66.67% {
+    73.33%, 100% {
       transform: translate(0, 0) translateZ(0) scale(1);
       opacity: 1;
-    }
-    86.67%, 100% {
-      transform: translateX(150px) translateZ(-200px) scale(0.5);
-      opacity: 0.4;
     }
   }
 }
