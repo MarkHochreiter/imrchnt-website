@@ -220,46 +220,46 @@
 }
 
 /* Position definitions:
-   - Left background: translateX(-250px) translateZ(-300px) scale(0.4)
+   - Left background: translateX(-350px) translateZ(-500px) scale(0.25)
    - Center foreground: translate(0, 0) translateZ(0) scale(1)
-   - Right background: translateX(250px) translateZ(-300px) scale(0.4)
+   - Right background: translateX(350px) translateZ(-500px) scale(0.25)
 */
 
 /* Item 1: Starts left background → foreground (pause 5s) → right background → left background */
 @keyframes carousel-rotate-1 {
   0%, 5% {
-    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
-    opacity: 0.3;
+    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   15% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
-    z-index: 3;
+    z-index: 10;
   }
   38.33% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
-    z-index: 3;
+    z-index: 10;
   }
   48.33% {
-    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
-    opacity: 0.3;
+    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   71.67% {
-    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
-    opacity: 0.3;
+    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   81.67% {
-    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
-    opacity: 0.3;
+    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   100% {
-    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
-    opacity: 0.3;
+    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
+    opacity: 0.2;
     z-index: 1;
   }
 }
@@ -269,71 +269,71 @@
   0%, 5% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
-    z-index: 3;
+    z-index: 10;
   }
   38.33% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
-    z-index: 3;
+    z-index: 10;
   }
   48.33% {
-    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
-    opacity: 0.3;
+    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   71.67% {
-    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
-    opacity: 0.3;
+    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   81.67% {
-    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
-    opacity: 0.3;
+    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   91.67% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
-    z-index: 3;
+    z-index: 10;
   }
   100% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
-    z-index: 3;
+    z-index: 10;
   }
 }
 
 /* Item 3: Starts right background → left background → foreground (pause 5s) → right background */
 @keyframes carousel-rotate-3 {
   0%, 5% {
-    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
-    opacity: 0.3;
+    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   38.33% {
-    transform: translateX(250px) translateZ(-300px) scale(0.4) rotateY(25deg);
-    opacity: 0.3;
+    transform: translateX(350px) translateZ(-500px) scale(0.25) rotateY(35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   48.33% {
-    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
-    opacity: 0.3;
+    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   71.67% {
-    transform: translateX(-250px) translateZ(-300px) scale(0.4) rotateY(-25deg);
-    opacity: 0.3;
+    transform: translateX(-350px) translateZ(-500px) scale(0.25) rotateY(-35deg);
+    opacity: 0.2;
     z-index: 1;
   }
   81.67% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
-    z-index: 3;
+    z-index: 10;
   }
   100% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
-    z-index: 3;
+    z-index: 10;
   }
 }
 
