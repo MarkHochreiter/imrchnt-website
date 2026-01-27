@@ -82,7 +82,7 @@ function HomePage() {
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-houschka-extrabold leading-tight mb-8 tracking-tight hero-gradient-text">
                 Seamless POS<br />
                 Intuitive Design<br />
-                Built for Bookstores
+                <span className="whitespace-nowrap">Built for Bookstores</span>
               </h1>
 
               <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-xl leading-relaxed hero-description">
@@ -474,6 +474,18 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
                 onNavigate={handleNavigation}
               />
             </div>
+
+            <button
+              onClick={handleHardwareCartClick}
+              className="relative text-gray-700 hover:text-gray-900"
+            >
+              <ShoppingCart className="h-5 w-5" />
+              {hardwareCartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#f08e80] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {hardwareCartCount}
+                </span>
+              )}
+            </button>
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
