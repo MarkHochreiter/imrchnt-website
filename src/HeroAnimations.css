@@ -1,164 +1,156 @@
-/* Hero Section Animations - Pure CSS */
+/* Import this CSS file in your App.jsx */
 
 /* Animated background blobs */
 .blob {
   position: absolute;
-  width: 384px;
-  height: 384px;
   border-radius: 50%;
   mix-blend-mode: multiply;
-  filter: blur(60px);
-  opacity: 0.2;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
-.blob-purple {
-  top: 25%;
-  left: -192px;
-  background: rgb(168, 85, 247);
-  animation: float-blob-1 20s ease-in-out infinite;
+.blob-1 {
+  width: 600px;
+  height: 600px;
+  background: linear-gradient(180deg, rgba(147, 51, 234, 0.4) 0%, rgba(147, 51, 234, 0.1) 100%);
+  top: -10%;
+  left: -10%;
+  animation: float-1 20s ease-in-out infinite;
 }
 
-.blob-cyan {
-  top: 33%;
-  right: -192px;
-  background: rgb(6, 182, 212);
-  animation: float-blob-2 25s ease-in-out infinite;
+.blob-2 {
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(180deg, rgba(6, 182, 212, 0.3) 0%, rgba(6, 182, 212, 0.1) 100%);
+  top: 40%;
+  right: -5%;
+  animation: float-2 25s ease-in-out infinite;
 }
 
-.blob-pink {
-  bottom: -192px;
-  left: 33%;
-  background: rgb(236, 72, 153);
-  animation: float-blob-3 22s ease-in-out infinite;
+.blob-3 {
+  width: 550px;
+  height: 550px;
+  background: linear-gradient(180deg, rgba(236, 72, 153, 0.3) 0%, rgba(236, 72, 153, 0.1) 100%);
+  bottom: -10%;
+  left: 30%;
+  animation: float-3 22s ease-in-out infinite;
 }
 
-@keyframes float-blob-1 {
+@keyframes float-1 {
   0%, 100% {
-    transform: translate(0, 0);
+    transform: translate(0, 0) scale(1);
   }
-  50% {
-    transform: translate(100px, 50px);
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
   }
-}
-
-@keyframes float-blob-2 {
-  0%, 100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(-100px, 100px);
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
   }
 }
 
-@keyframes float-blob-3 {
+@keyframes float-2 {
   0%, 100% {
-    transform: translate(0, 0);
+    transform: translate(0, 0) scale(1);
   }
-  50% {
-    transform: translate(50px, -50px);
+  33% {
+    transform: translate(-40px, 30px) scale(1.15);
+  }
+  66% {
+    transform: translate(30px, -40px) scale(0.85);
+  }
+}
+
+@keyframes float-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(40px, 20px) scale(0.9);
+  }
+  66% {
+    transform: translate(-30px, -30px) scale(1.1);
+  }
+}
+
+/* Text animations */
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.fade-in-up-delay-1 {
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.fade-in-up-delay-2 {
+  animation: fadeInUp 0.8s ease-out 0.4s forwards;
+  opacity: 0;
+}
+
+.fade-in-up-delay-3 {
+  animation: fadeInUp 0.8s ease-out 0.6s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 /* Gradient text effect */
-.hero-gradient-text {
-  background: linear-gradient(to right, #ffffff, #e9d5ff, #fbcfe8);
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #ec4899 100%);
   -webkit-background-clip: text;
-  background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: fadeInUp 0.8s ease-out 0.4s both;
+  background-clip: text;
 }
 
-/* Text animations */
-.hero-text {
-  animation: fadeInLeft 0.8s ease-out 0.2s both;
-}
-
-.hero-description {
-  animation: fadeInUp 0.8s ease-out 0.6s both;
-}
-
-.hero-button {
-  animation: fadeInUp 0.8s ease-out 0.8s both;
-}
-
-.hero-testimonial {
-  animation: fadeInUp 0.8s ease-out 1s both;
-}
-
-/* Button hover effect */
-.hero-cta-button {
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 40px rgba(240, 142, 128, 0.3);
-}
-
-.hero-cta-button:hover {
+/* Button hover effects */
+.button-glow:hover {
+  box-shadow: 0 0 30px rgba(240, 142, 128, 0.6);
   transform: scale(1.05);
-  box-shadow: 0 20px 60px rgba(240, 142, 128, 0.5);
 }
 
-/* Image container animations */
-.hero-image-container {
-  animation: fadeInScale 1s ease-out 0.4s both;
-}
-
-/* Pulsing glow behind image */
+/* Hero image animations */
 .hero-glow {
   animation: pulse-glow 4s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {
   0%, 100% {
-    transform: scale(1);
     opacity: 0.4;
+    transform: scale(1);
   }
   50% {
-    transform: scale(1.1);
     opacity: 0.6;
+    transform: scale(1.05);
   }
 }
 
-/* Spotlight effect */
 .hero-spotlight {
   animation: pulse-spotlight 3s ease-in-out infinite;
 }
 
 @keyframes pulse-spotlight {
   0%, 100% {
-    transform: scale(1);
     opacity: 0.3;
+    transform: scale(1);
   }
   50% {
-    transform: scale(1.2);
     opacity: 0.5;
+    transform: scale(1.1);
   }
 }
 
-/* Main terminal image */
-.hero-terminal-image {
-  animation: float-terminal 4s ease-in-out infinite;
-  transition: transform 0.4s ease;
-}
-
-.hero-image-wrapper:hover .hero-terminal-image {
-  transform: scale(1.05);
-}
-
-@keyframes float-terminal {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-/* Floating accent orbs */
 .hero-accent-1 {
-  animation: float-accent-1 5s ease-in-out infinite;
-}
-
-.hero-accent-2 {
-  animation: float-accent-2 6s ease-in-out infinite;
+  animation: float-accent-1 6s ease-in-out infinite;
 }
 
 @keyframes float-accent-1 {
@@ -166,8 +158,12 @@
     transform: translate(0, 0);
   }
   50% {
-    transform: translate(10px, -20px);
+    transform: translate(-10px, -10px);
   }
+}
+
+.hero-accent-2 {
+  animation: float-accent-2 7s ease-in-out infinite;
 }
 
 @keyframes float-accent-2 {
@@ -175,94 +171,9 @@
     transform: translate(0, 0);
   }
   50% {
-    transform: translate(-10px, 20px);
+    transform: translate(10px, 10px);
   }
 }
-
-/* Entry animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .blob {
-    width: 256px;
-    height: 256px;
-  }
-  
-  .blob-purple {
-    left: -128px;
-  }
-  
-  .blob-cyan {
-    right: -128px;
-  }
-  
-  .blob-pink {
-    bottom: -128px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-gradient-text {
-    font-size: 2.5rem;
-  }
-  
-  .blob {
-    width: 192px;
-    height: 192px;
-    opacity: 0.15;
-  }
-}
-
-
-/* Navigation fixes */
-nav {
-  pointer-events: auto !important;
-  position: relative;
-}
-
-nav * {
-  pointer-events: auto !important;
-}
-
-nav button,
-nav a {
-  cursor: pointer;
-  position: relative;
-  z-index: 1000;
-}
-
 
 /* 3D Carousel Styles */
 .hero-carousel-wrapper {
@@ -295,28 +206,32 @@ nav a {
   object-fit: contain;
 }
 
-/* Item 1 - starts in foreground, rotates to back */
+/* Three-item carousel animations */
 .carousel-item-1 {
-  animation: carousel-rotate-1 20s ease-in-out infinite;
+  animation: carousel-rotate-1 18s ease-in-out infinite;
 }
 
-/* Item 2 - starts in back, rotates to foreground */
 .carousel-item-2 {
-  animation: carousel-rotate-2 20s ease-in-out infinite;
+  animation: carousel-rotate-2 18s ease-in-out infinite;
 }
 
+.carousel-item-3 {
+  animation: carousel-rotate-3 18s ease-in-out infinite;
+}
+
+/* Item 1: Foreground -> Top-right -> Far right -> Bottom-right -> Foreground */
 @keyframes carousel-rotate-1 {
-  0% {
+  0%, 30% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
+    z-index: 3;
+  }
+  45% {
+    transform: translate(150px, -80px) translateZ(-200px) scale(0.5) rotateY(30deg);
+    opacity: 0.5;
     z-index: 2;
   }
-  35% {
-    transform: translate(150px, -80px) translateZ(-200px) scale(1) rotateY(30deg);
-    opacity: 1;
-    z-index: 1;
-  }
-  50% {
+  60% {
     transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
     opacity: 0.3;
     z-index: 1;
@@ -324,15 +239,21 @@ nav a {
   75% {
     transform: translate(150px, 80px) translateZ(-200px) scale(0.5) rotateY(30deg);
     opacity: 0.5;
-    z-index: 1;
+    z-index: 2;
+  }
+  90% {
+    transform: translate(50px, 40px) translateZ(-100px) scale(0.7) rotateY(15deg);
+    opacity: 0.7;
+    z-index: 2;
   }
   100% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
-    z-index: 2;
+    z-index: 3;
   }
 }
 
+/* Item 2: Far right -> Bottom-right -> Foreground -> Top-right -> Far right */
 @keyframes carousel-rotate-2 {
   0% {
     transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
@@ -342,22 +263,71 @@ nav a {
   15% {
     transform: translate(150px, 80px) translateZ(-200px) scale(0.5) rotateY(30deg);
     opacity: 0.5;
+    z-index: 2;
+  }
+  30% {
+    transform: translate(50px, 40px) translateZ(-100px) scale(0.7) rotateY(15deg);
+    opacity: 0.7;
+    z-index: 2;
+  }
+  33%, 63% {
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
+    opacity: 1;
+    z-index: 3;
+  }
+  78% {
+    transform: translate(150px, -80px) translateZ(-200px) scale(0.5) rotateY(30deg);
+    opacity: 0.5;
+    z-index: 2;
+  }
+  93%, 100% {
+    transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
+    opacity: 0.3;
     z-index: 1;
+  }
+}
+
+/* Item 3: Bottom-right -> Foreground -> Top-right -> Far right -> Bottom-right */
+@keyframes carousel-rotate-3 {
+  0% {
+    transform: translate(150px, 80px) translateZ(-200px) scale(0.5) rotateY(30deg);
+    opacity: 0.5;
+    z-index: 2;
+  }
+  15% {
+    transform: translate(50px, 40px) translateZ(-100px) scale(0.7) rotateY(15deg);
+    opacity: 0.7;
+    z-index: 2;
   }
   30% {
     transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
-    z-index: 2;
+    z-index: 3;
   }
-  65% {
-    transform: translate(150px, -80px) translateZ(-200px) scale(1) rotateY(30deg);
+  33%, 63% {
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
     opacity: 1;
+    z-index: 3;
+  }
+  66%, 96% {
+    transform: translate(0, 0) translateZ(0) scale(1) rotateY(0deg);
+    opacity: 1;
+    z-index: 3;
+  }
+  78% {
+    transform: translate(150px, -80px) translateZ(-200px) scale(0.5) rotateY(30deg);
+    opacity: 0.5;
     z-index: 2;
   }
-  100% {
+  93% {
     transform: translate(220px, 0) translateZ(-400px) scale(0.35) rotateY(45deg);
     opacity: 0.3;
     z-index: 1;
+  }
+  100% {
+    transform: translate(150px, 80px) translateZ(-200px) scale(0.5) rotateY(30deg);
+    opacity: 0.5;
+    z-index: 2;
   }
 }
 
@@ -368,32 +338,51 @@ nav a {
   }
   
   @keyframes carousel-rotate-1 {
-    0%, 40% {
-      transform: translateX(0) translateZ(0) scale(1);
+    0%, 30% {
+      transform: translate(0, 0) translateZ(0) scale(1);
       opacity: 1;
     }
     50%, 90% {
-      transform: translateX(50px) translateZ(-200px) scale(0.7);
-      opacity: 0.5;
+      transform: translate(80px, 0) translateZ(-250px) scale(0.5);
+      opacity: 0.4;
     }
     100% {
-      transform: translateX(0) translateZ(0) scale(1);
+      transform: translate(0, 0) translateZ(0) scale(1);
       opacity: 1;
     }
   }
   
   @keyframes carousel-rotate-2 {
-    0%, 40% {
-      transform: translateX(50px) translateZ(-200px) scale(0.7);
-      opacity: 0.5;
+    0%, 30% {
+      transform: translate(80px, 0) translateZ(-250px) scale(0.5);
+      opacity: 0.4;
     }
-    50%, 90% {
-      transform: translateX(0) translateZ(0) scale(1);
+    33%, 63% {
+      transform: translate(0, 0) translateZ(0) scale(1);
+      opacity: 1;
+    }
+    93%, 100% {
+      transform: translate(80px, 0) translateZ(-250px) scale(0.5);
+      opacity: 0.4;
+    }
+  }
+  
+  @keyframes carousel-rotate-3 {
+    0%, 30% {
+      transform: translate(0, 0) translateZ(0) scale(1);
+      opacity: 1;
+    }
+    33%, 63% {
+      transform: translate(80px, 0) translateZ(-250px) scale(0.5);
+      opacity: 0.4;
+    }
+    66%, 96% {
+      transform: translate(0, 0) translateZ(0) scale(1);
       opacity: 1;
     }
     100% {
-      transform: translateX(50px) translateZ(-200px) scale(0.7);
-      opacity: 0.5;
+      transform: translate(0, 0) translateZ(0) scale(1);
+      opacity: 1;
     }
   }
 }
