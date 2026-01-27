@@ -170,10 +170,15 @@ nav .relative > div,
 nav [class*="MegaMenu"],
 nav [class*="mega-menu"] {
   z-index: 9999 !important;
-  position: absolute;
 }
 
 /* Ensure all dropdown content is above everything */
 nav .relative {
   z-index: 9999 !important;
+}
+
+/* Hero section should not overlap navigation */
+.hero-section {
+  position: relative;
+  z-index: 1;
 }
