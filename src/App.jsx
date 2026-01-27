@@ -410,7 +410,7 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
 
           <div className="hidden md:flex items-center space-x-8">
             <div 
-              className="relative"
+              className="relative z-50"
               onMouseEnter={() => setActiveMegaMenu('product')}
               onMouseLeave={() => setActiveMegaMenu(null)}
             >
@@ -421,7 +421,7 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
             </div>
 
             <div 
-              className="relative"
+              className="relative z-50"
               onMouseEnter={() => setActiveMegaMenu('hardware')}
               onMouseLeave={() => setActiveMegaMenu(null)}
             >
@@ -436,7 +436,7 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
             </Link>
 
             <div 
-              className="relative"
+              className="relative z-50"
               onMouseEnter={() => setActiveMegaMenu('support')}
               onMouseLeave={() => setActiveMegaMenu(null)}
             >
