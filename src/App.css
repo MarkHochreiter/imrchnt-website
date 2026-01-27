@@ -149,4 +149,18 @@ body, p, span, div {
 button {
   font-family: 'Varela Round', sans-serif !important;
   font-weight: 500 !important;
+  cursor: pointer;
+}
+
+/* Navigation fixes */
+nav {
+  pointer-events: auto !important;
+  isolation: isolate;
+}
+
+nav button,
+nav a,
+nav > * {
+  pointer-events: auto !important;
+  cursor: pointer !important;
 }
