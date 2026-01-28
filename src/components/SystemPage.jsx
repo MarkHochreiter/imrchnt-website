@@ -1,4 +1,5 @@
 import { Monitor, Users, BarChart3, Package, ChevronRight, Zap, Settings, Database, Shield } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 // Button component
 const Button = ({ children, className = '', size = 'default', onClick, ...props }) => {
@@ -18,7 +19,9 @@ const Button = ({ children, className = '', size = 'default', onClick, ...props 
   )
 }
 
-function SystemPage({ handleSignupClick, onNavigate }) {
+function SystemPage({ handleSignupClick }) {
+  const navigate = useNavigate()
+  
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -84,7 +87,7 @@ function SystemPage({ handleSignupClick, onNavigate }) {
               </div>
               <Button 
                 className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                onClick={() => onNavigate('admin')}
+                onClick={() => navigate('/admin')}
               >
                 Access Admin Panel
               </Button>
@@ -127,7 +130,7 @@ function SystemPage({ handleSignupClick, onNavigate }) {
                 </div>
               </div>
               <Button  className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                onClick={() => onNavigate('reports')}
+                onClick={() => navigate('/reports')}
                 >
                 View Reports
               </Button>
@@ -182,7 +185,7 @@ function SystemPage({ handleSignupClick, onNavigate }) {
                 </div>
               </div>
               <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                 onClick={() => onNavigate('inventory')}
+                 onClick={() => navigate('/inventory')}
                 >
                 Manage Inventory
               </Button>
