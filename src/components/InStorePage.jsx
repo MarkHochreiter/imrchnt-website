@@ -1,4 +1,4 @@
-import { Monitor, Users, ShoppingCart, CreditCard, ChevronRight, zap } from 'lucide-react'
+import { Monitor, Users, ShoppingCart, CreditCard, ChevronRight, Zap } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 // It's good practice to define or import the Button component here as well.
