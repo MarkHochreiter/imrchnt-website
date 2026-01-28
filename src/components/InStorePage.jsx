@@ -1,4 +1,5 @@
-import { Monitor, Users, Zap, ChevronRight } from 'lucide-react';
+import { Monitor, Users, ShoppingCart, CreditCard, ChevronRight } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 // It's good practice to define or import the Button component here as well.
 // If it's not imported, it should be passed in as a prop or defined locally.
@@ -19,7 +20,9 @@ const Button = ({ children, className = '', size = 'default', onClick, ...props 
   );
 };
 
-function InStorePage({ onSignupClick, onNavigate }) {
+function InStorePage({ onSignupClick }) {
+  const navigate = useNavigate()
+  
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -79,7 +82,7 @@ function InStorePage({ onSignupClick, onNavigate }) {
               </div>
               <Button 
                 className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                onClick={() => onNavigate('pos-diagram')}
+                onClick={() => navigate('/pos-diagram')}
               >
                 Learn More About POS
               </Button>
@@ -127,7 +130,7 @@ function InStorePage({ onSignupClick, onNavigate }) {
                 </div>
               </div>
               <Button className="bg-[#f08e80] hover:bg-[#e07d70] text-white"
-                onClick={() => onNavigate('customer')}>
+                onClick={() => navigate('/customers')}>
                 Manage Customers
               </Button>
             </div>
