@@ -42,7 +42,7 @@ const Button = ({ children, className = '', size = 'default', onClick, ...props 
     default: 'px-4 py-2',
     lg: 'px-6 py-3 text-lg'
   }
-  
+
   return (
     <button
       className={`inline-flex items-center justify-center rounded-md font-houschka-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${sizeClasses[size]} ${className}`}
@@ -57,9 +57,8 @@ const Button = ({ children, className = '', size = 'default', onClick, ...props 
 // Home Page Component
 function HomePage() {
   const navigate = useNavigate()
-  
+
   const handleSignupClick = () => {
-    // Trigger global signup modal
     window.dispatchEvent(new CustomEvent('openSignupModal'))
   }
 
@@ -112,7 +111,7 @@ function HomePage() {
               </div>
             </div>
 
-            {/* Random Hero Image with effects */}
+            {/* Hero Image with effects */}
             <div className="flex-1 relative max-w-2xl hero-image-container lg:self-start">
               {/* Glow effect behind image */}
               <div className="hero-glow absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-[#f08e80] rounded-3xl blur-3xl opacity-40"></div>
@@ -138,91 +137,90 @@ function HomePage() {
         </div>
       </section>
 
-      
-{/* Platform Overview */}
-            <section className="py-20 bg-white">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                  Cross platform point of sale
-                </h2>
-                <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-                   Web, Client, PC, Mac, Android or iOS. <br /> 
-                   Sell on desktop, mobile, tablet, or card reader. 
-                </p>
-                
-             <div className="grid md:grid-cols-3 gap-8 mb-16">
-                  <div className="text-center">
-                    <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Zap className="h-8 w-8 text-[#f08e80]" />
-                    </div>
-                    <h3 className="text-xl font-semibold mb-2">Start fast</h3>
-                    <p className="text-gray-600">
-                      Instant KYC and Tap to Pay on smartphone gets you selling rapidly. 
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <BarChart3 className="h-8 w-8 text-blue-600" />
-                    </div>
-                    <h3 className="text-xl font-semibold mb-2">Go big</h3>
-                    <p className="text-gray-600">
-                      A single platform that scales seamlessly from Pop Up to Multistore.
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Users className="h-8 w-8 text-purple-600" />
-                    </div>
-                    <h3 className="text-xl font-semibold mb-2">Go home</h3>
-                    <p className="text-gray-600">
-                      Track sales in real time from any device at home or anywhere you might be.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
+      {/* Platform Overview */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Cross platform point of sale
+          </h2>
+          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
+            Web, Client, PC, Mac, Android or iOS. <br />
+            Sell on desktop, mobile, tablet, or card reader.
+          </p>
 
-       {/* CTA Section */}
-            <section className="relative py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden">
-              {/* Animated background elements */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="blob blob-purple"></div>
-                <div className="blob blob-cyan"></div>
-                <div className="blob blob-pink"></div>
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="text-center">
+              <div className="bg-[#f08e80]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Zap className="h-8 w-8 text-[#f08e80]" />
               </div>
-              
-              <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Start selling in no time
-                </h2>
-                <div className="grid md:grid-cols-3 gap-3 mb-12">
-                  <div className="flex items-center justify-center">
-                    <div className="bg-white/90 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
-                      1
-                    </div>
-                    <span>Get approved</span>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <div className="bg-white/90 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
-                      2
-                    </div>
-                    <span>Add items</span>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <div className="bg-white/90 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
-                      3
-                    </div>
-                    <span>Start selling</span>
-                  </div>
-                </div>
-                <button
-                  onClick={handleSignupClick}
-                  className="px-10 py-4 bg-gradient-to-r from-[#f08e80] to-pink-500 rounded-full hover:shadow-2xl hover:shadow-pink-500/50 transition-all duration-300 hover:scale-105 text-white text-lg font-houschka-medium"
-                >
-                  Request access
-                </button>
+              <h3 className="text-xl font-semibold mb-2">Start fast</h3>
+              <p className="text-gray-600">
+                Instant KYC and Tap to Pay on smartphone gets you selling rapidly.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BarChart3 className="h-8 w-8 text-blue-600" />
               </div>
-            </section>
+              <h3 className="text-xl font-semibold mb-2">Go big</h3>
+              <p className="text-gray-600">
+                A single platform that scales seamlessly from Pop Up to Multistore.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-purple-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Go home</h3>
+              <p className="text-gray-600">
+                Track sales in real time from any device at home or anywhere you might be.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="relative py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="blob blob-purple"></div>
+          <div className="blob blob-cyan"></div>
+          <div className="blob blob-pink"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Start selling in no time
+          </h2>
+          <div className="grid md:grid-cols-3 gap-3 mb-12">
+            <div className="flex items-center justify-center">
+              <div className="bg-white/90 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
+                1
+              </div>
+              <span>Get approved</span>
+            </div>
+            <div className="flex items-center justify-center">
+              <div className="bg-white/90 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
+                2
+              </div>
+              <span>Add items</span>
+            </div>
+            <div className="flex items-center justify-center">
+              <div className="bg-white/90 text-purple-900 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">
+                3
+              </div>
+              <span>Start selling</span>
+            </div>
+          </div>
+          <button
+            onClick={handleSignupClick}
+            className="px-10 py-4 bg-gradient-to-r from-[#f08e80] to-pink-500 rounded-full hover:shadow-2xl hover:shadow-pink-500/50 transition-all duration-300 hover:scale-105 text-white text-lg font-houschka-medium"
+          >
+            Request access
+          </button>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-16">
@@ -284,11 +282,11 @@ function App() {
     const handleOpenSignupModal = () => setIsSignupModalOpen(true)
     const handleOpenFeatureRequestModal = () => setIsFeatureRequestModalOpen(true)
     const handleOpenHardwareCart = () => setIsHardwareCartOpen(true)
-    
+
     window.addEventListener('openSignupModal', handleOpenSignupModal)
     window.addEventListener('openFeatureRequestModal', handleOpenFeatureRequestModal)
     window.addEventListener('openHardwareCart', handleOpenHardwareCart)
-    
+
     return () => {
       window.removeEventListener('openSignupModal', handleOpenSignupModal)
       window.removeEventListener('openFeatureRequestModal', handleOpenFeatureRequestModal)
@@ -300,9 +298,9 @@ function App() {
     setHardwareCart(prev => {
       const existingItem = prev.find(i => i.id === item.id)
       if (existingItem) {
-        return prev.map(i => i.id === item.id ? {...i, quantity: i.quantity + 1} : i)
+        return prev.map(i => i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i)
       }
-      return [...prev, {...item, quantity: 1}]
+      return [...prev, { ...item, quantity: 1 }]
     })
   }
 
@@ -310,8 +308,8 @@ function App() {
     if (quantity <= 0) {
       setHardwareCart(prev => prev.filter(item => item.id !== id))
     } else {
-      setHardwareCart(prev => prev.map(item => 
-        item.id === id ? {...item, quantity} : item
+      setHardwareCart(prev => prev.map(item =>
+        item.id === id ? { ...item, quantity } : item
       ))
     }
   }
@@ -327,14 +325,14 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        <Navigation 
+        <Navigation
           isMobileMenuOpen={isMobileMenuOpen}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
           activeMegaMenu={activeMegaMenu}
           setActiveMegaMenu={setActiveMegaMenu}
           hardwareCartCount={getTotalItems()}
         />
-        
+
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -348,8 +346,9 @@ function App() {
             <Route path="/epson-t88" element={<EpsonT88Page addToCart={addToCart} />} />
             <Route path="/honeywell-pc43d" element={<HoneywellPC43dPage addToCart={addToCart} />} />
             <Route path="/apg-cash-drawer" element={<APGCashDrawerPage addToCart={addToCart} />} />
-            <Route path="/socketscan-s720" element={<SocketScanS720Page addToCart={addToCart} />} />
-            <Route path="/socketscan-s840" element={<SocketScanS840Page addToCart={addToCart} />} />
+            {/* FIXED: routes updated from socketscan- to socket-scan- to match HardwareMegaMenu page values */}
+            <Route path="/socket-scan-s720" element={<SocketScanS720Page addToCart={addToCart} />} />
+            <Route path="/socket-scan-s840" element={<SocketScanS840Page addToCart={addToCart} />} />
             <Route path="/pos-diagram" element={<POSDiagramPage />} />
             <Route path="/system" element={<SystemPage />} />
             <Route path="/admin" element={<AdminPage />} />
@@ -363,14 +362,14 @@ function App() {
           </Routes>
         </main>
 
-        <SignupModal 
-          isOpen={isSignupModalOpen} 
-          onClose={() => setIsSignupModalOpen(false)} 
+        <SignupModal
+          isOpen={isSignupModalOpen}
+          onClose={() => setIsSignupModalOpen(false)}
         />
-        
-        <FeatureRequestModal 
-          isOpen={isFeatureRequestModalOpen} 
-          onClose={() => setIsFeatureRequestModalOpen(false)} 
+
+        <FeatureRequestModal
+          isOpen={isFeatureRequestModalOpen}
+          onClose={() => setIsFeatureRequestModalOpen(false)}
         />
 
         <HardwareCartModal
@@ -422,14 +421,14 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
           </div>
 
           <div className="hidden md:flex items-center space-x-8">
-            <div 
+            <div
               className="relative z-50"
               onMouseEnter={() => setActiveMegaMenu('product')}
             >
               <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
                 Product <ChevronDown className="ml-1 h-4 w-4" />
               </button>
-              <MegaMenu 
+              <MegaMenu
                 isVisible={activeMegaMenu === 'product'}
                 onMouseEnter={() => setActiveMegaMenu('product')}
                 onMouseLeave={() => setActiveMegaMenu(null)}
@@ -437,14 +436,14 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
               />
             </div>
 
-            <div 
+            <div
               className="relative z-50"
               onMouseEnter={() => setActiveMegaMenu('hardware')}
             >
               <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
                 Hardware <ChevronDown className="ml-1 h-4 w-4" />
               </button>
-              <HardwareMegaMenu 
+              <HardwareMegaMenu
                 isVisible={activeMegaMenu === 'hardware'}
                 onMouseEnter={() => setActiveMegaMenu('hardware')}
                 onMouseLeave={() => setActiveMegaMenu(null)}
@@ -452,22 +451,22 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
               />
             </div>
 
-            <Link 
-              to="/pricing" 
+            <Link
+              to="/pricing"
               className="text-gray-700 hover:text-gray-900 font-houschka-medium"
               onMouseEnter={() => setActiveMegaMenu(null)}
             >
               Pricing
             </Link>
 
-            <div 
+            <div
               className="relative z-50"
               onMouseEnter={() => setActiveMegaMenu('support')}
             >
               <button className="flex items-center text-gray-700 hover:text-gray-900 font-houschka-medium">
                 Support <ChevronDown className="ml-1 h-4 w-4" />
               </button>
-              <SupportMegaMenu 
+              <SupportMegaMenu
                 isVisible={activeMegaMenu === 'support'}
                 onMouseEnter={() => setActiveMegaMenu('support')}
                 onMouseLeave={() => setActiveMegaMenu(null)}
@@ -489,7 +488,7 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Button 
+            <Button
               className="bg-[#f08e80] hover:bg-violet-400 text-white"
               onClick={handleSignupClick}
             >
@@ -521,7 +520,7 @@ function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen, activeMegaMenu, set
             <Link to="/roadmap" className="block text-gray-700 hover:text-gray-900 font-houschka-medium">
               Support
             </Link>
-            <Button 
+            <Button
               className="w-full bg-[#f08e80] hover:bg-violet-400 text-white"
               onClick={handleSignupClick}
             >
