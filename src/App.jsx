@@ -348,7 +348,7 @@ function App() {
             <Route path="/apg-cash-drawer" element={<APGCashDrawerPage addToCart={addToCart} />} />
             {/* FIXED: routes updated from socketscan- to socket-scan- to match HardwareMegaMenu page values */}
             <Route path="/socket-scan-s720" element={<SocketScanS720Page addToCart={addToCart} />} />
-            <Route path="/socket-scan-s840" element={<SocketScanS840Page addToCart={addToCart} />} />
+            <Route path="/socket-scan-s840" element={<SocketScanS840Page addToCart={addToCart} onContactSales={() => window.dispatchEvent(new CustomEvent('openHardwareCart'))} />} />
             <Route path="/pos-diagram" element={<POSDiagramPage />} />
             <Route path="/system" element={<SystemPage />} />
             <Route path="/admin" element={<AdminPage />} />
