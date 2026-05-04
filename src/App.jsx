@@ -340,14 +340,14 @@ function App() {
             <Route path="/instore" element={<InStorePage />} />
             <Route path="/offsite" element={<OffsitePage />} />
             <Route path="/credit-card-processing" element={<CreditCardProcessingPage />} />
-            <Route path="/s1f2" element={<S1f2Page addToCart={addToCart} />} />
-            <Route path="/ams1" element={<Ams1Page addToCart={addToCart} />} />
-            <Route path="/sfo1" element={<Sfo1Page addToCart={addToCart} />} />
-            <Route path="/epson-t88" element={<EpsonT88Page addToCart={addToCart} />} />
-            <Route path="/honeywell-pc43d" element={<HoneywellPC43dPage addToCart={addToCart} />} />
-            <Route path="/apg-cash-drawer" element={<APGCashDrawerPage addToCart={addToCart} />} />
+            <Route path="/s1f2" element={<S1f2Page addToCart={addToCart} onContactSales={() => window.dispatchEvent(new CustomEvent('openHardwareCart'))} />} />
+            <Route path="/ams1" element={<Ams1Page addToCart={addToCart} onContactSales={() => window.dispatchEvent(new CustomEvent('openHardwareCart'))} />} />
+            <Route path="/sfo1" element={<Sfo1Page addToCart={addToCart} onContactSales={() => window.dispatchEvent(new CustomEvent('openHardwareCart'))} />} />
+            <Route path="/epson-t88" element={<EpsonT88Page addToCart={addToCart} onContactSales={() => window.dispatchEvent(new CustomEvent('openHardwareCart'))} />} />
+            <Route path="/honeywell-pc43d" element={<HoneywellPC43dPage addToCart={addToCart} onContactSales={() => window.dispatchEvent(new CustomEvent('openHardwareCart'))} />} />
+            <Route path="/apg-cash-drawer" element={<APGCashDrawerPage addToCart={addToCart} onContactSales={() => window.dispatchEvent(new CustomEvent('openHardwareCart'))} />} />
             {/* FIXED: routes updated from socketscan- to socket-scan- to match HardwareMegaMenu page values */}
-            <Route path="/socket-scan-s720" element={<SocketScanS720Page addToCart={addToCart} />} />
+            <Route path="/socket-scan-s720" element={<SocketScanS720Page addToCart={addToCart} onContactSales={() => window.dispatchEvent(new CustomEvent('openHardwareCart'))} />} />
             <Route path="/socket-scan-s840" element={<SocketScanS840Page addToCart={addToCart} onContactSales={() => window.dispatchEvent(new CustomEvent('openHardwareCart'))} />} />
             <Route path="/pos-diagram" element={<POSDiagramPage />} />
             <Route path="/system" element={<SystemPage />} />
